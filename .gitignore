@@ -1,0 +1,45 @@
+# use glob syntax
+syntax: glob
+
+# Ignore .orig files
+*.orig
+
+# Ignore Visual Studio 2008 files
+*.obj
+#*.exe
+#*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.lib
+*.sbr
+*.scc
+logs/*
+[Bb]in
+[Dd]ebug*/
+Data
+obj/
+[Rr]elease*/
+[Tt]est[Rr]esult*
+[Bb]uild[Ll]og.*
+*.[Pp]ublish.xml
+StyleCop.Cache
+
+# Resharper
+_ReSharper*/
+*.[Rr]esharper
+*.[Rr]esharper.user
+
+# DotCover
+*.dotCover
