@@ -1,0 +1,96 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>title</h2>
+
+<style type="text/css">
+    table {
+        width: 700px;
+    }
+
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 12px;
+    }
+
+    .highCpu {
+        background: red;
+        color: white;
+    }
+</style>
+
+<div id="computerInfo">
+
+    <h2>My Computer Info</h2>
+
+    <table border="0">
+        <tr>
+            <th>Machine</th>
+            <th>CPU %</th>
+            <th>Memory Available (Mb)</th>
+            <th>Total Memory (Mb)</th>
+            <th>Mem Available %</th>
+        </tr>
+
+        <!-- ko foreach: machines -->
+        <tr data-bind="css: { highCpu: cpu() > 90 }">
+            <td data-bind="text: machineName"></td>
+            <td data-bind="text: cpu"></td>
+            <td data-bind="text: memUsage"></td>
+            <td data-bind="text: memTotal"></td>
+            <td data-bind="text: memPercent"></td>
+        </tr>
+        <!-- /ko -->
+
+    </table>
+
+</div>
+
+@section CustomScripts {
+ 
+<script type="text/javascript">
+
+    var createRingBuffer = function (length) {
+
+        var pointer = 0, buffer = [];
+
+        return {
+            get: function (key) { return buffer[key]; },
+            push: function (item) {
+                buffer[pointer] = item;
+                pointer = (length + pointer + 1) % length;
+            }
+        };
+    };
+
+    var buffer = createRingBuffer(10);
+    $(function () {
+        // Get a reference to our hub
+        var hub = $.connection.hardwareStatus;
+
+        $.extend(hub, {
+            displayHardwareInfo: function (hardwareInfo) {
+
+                var machine = {
+                    machineName: hardwareInfo.MachineName,
+                    cpu: hardwareInfo.Processor.toFixed(0),
+                    memUsage: (hardwareInfo.MemUsage / 1024).toFixed(2),
+                    memTotal: (hardwareInfo.TotalMemory / 1024).toFixed(2),
+                    memPercent: ((hardwareInfo.MemUsage / hardwareInfo.TotalMemory) * 100).toFixed(1) + "%"
+                };
+
+                buffer.push(machine);
+            }
+        });
+
+        // Start the connectio
+        $.connection.hub.start();
+    });
+
+</script>
+    
+}
+

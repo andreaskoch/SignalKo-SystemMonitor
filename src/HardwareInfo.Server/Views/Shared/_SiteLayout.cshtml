@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_Layout</title>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    
+    <script type="text/javascript" src="/Scripts/jquery-1.6.4.js"></script>
+    <script type="text/javascript" src="/Scripts/jquery.signalR-0.5.3.js"></script>
+    <script type="text/javascript" src="/signalr/hubs"></script>
+    
+    <script type="text/javascript" src="/Scripts/knockout-2.1.0.js"></script>
+    <script type="text/javascript" src="/Scripts/knockout.mapping-latest.js"></script>
+    
+    @RenderSection("CustomScripts")
+</body>
+</html>
