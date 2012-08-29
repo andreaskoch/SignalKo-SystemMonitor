@@ -72,71 +72,9 @@
         var self = this;
         self.maxValues = 15;
         self.machines = ko.observableArray([]);
-        self.cpuUsage = ko.observableArray([]);
         
         // Get a reference to our hub
         self.hub = $.connection.hardwareStatus;
-
-        new Highcharts.Chart({
-            chart: {
-                renderTo: 'livechart',
-                type: 'line',
-                marginRight: 130,
-                marginBottom: 25,
-                events: {
-                    load: function () {
-                        var series = this.series[0];
-                        setInterval(function () {
-                            var x = (new Date()).getTime(), // current time
-                                y = Math.random();
-                            series.addPoint([x, y], true, true);
-                        }, 1000);
-                    }
-                }                
-            },
-
-            title: {
-                text: 'Hardware Info',
-                x: -20 //center
-            },
-            xAxis: {
-                categories: []
-            },
-
-            yAxis: {
-                title: {
-                    text: 'Counter'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                x: -10,
-                y: 100,
-                borderWidth: 0
-            },
-            series: [{
-                name: 'CPU',
-                data: (function () {
-                    var data = [], i;
-
-                    for (i = 0; i < self.maxValues; i++) {
-                        data.push({
-                            x: i,
-                            y: 0
-                        });
-                    }
-                    
-                    return data;
-                })()
-            }]
-        });
 
         $.extend(self.hub, {
             displayHardwareInfo: function (hardwareInfo) {
@@ -150,10 +88,8 @@
                 };
 
                 if (self.machines().length <= self.maxValues) {
-                    self.cpuUsage.push(machine.cpu);
                     self.machines.push(machine);
                 } else {
-                    self.cpuUsage.shift(machine.cpu);
                     self.machines.shift(machine);
                 }
             }
