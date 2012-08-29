@@ -38,7 +38,7 @@ namespace HardwareStatus.Agent
                 request.AddBody(hardwareInfo);
                 restClient.ExecuteAsync<HardwareInfo>(request, response => { });
 
-                Thread.Sleep(500);
+                Thread.Sleep(50);
             }
             while (true);
         }
