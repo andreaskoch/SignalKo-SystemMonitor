@@ -36,7 +36,7 @@
         </tr>
 
         <!-- ko foreach: machines -->
-        <tr data-bind="css: { highCpu: cpu() > 90 }">
+        <tr>
             <td data-bind="text: machineName"></td>
             <td data-bind="text: cpu"></td>
             <td data-bind="text: memUsage"></td>
@@ -66,12 +66,15 @@
         };
     };
 
-    var buffer = createRingBuffer(10);
-    $(function () {
+    function HardwareInfoViewModel() {
+        var self = this;
+        self.machines = ko.observableArray([]);
+        self.maxValues = 15;
+        
         // Get a reference to our hub
-        var hub = $.connection.hardwareStatus;
+        self.hub = $.connection.hardwareStatus;
 
-        $.extend(hub, {
+        $.extend(self.hub, {
             displayHardwareInfo: function (hardwareInfo) {
 
                 var machine = {
@@ -82,13 +85,20 @@
                     memPercent: ((hardwareInfo.MemUsage / hardwareInfo.TotalMemory) * 100).toFixed(1) + "%"
                 };
 
-                buffer.push(machine);
+                if (self.machines().length <= self.maxValues) {
+                    self.machines.push(machine);
+                } else {
+                    self.machines.shift(machine);
+                }
+                
             }
         });
 
         // Start the connectio
         $.connection.hub.start();
-    });
+    }
+
+    ko.applyBindings(new HardwareInfoViewModel());
 
 </script>
     
