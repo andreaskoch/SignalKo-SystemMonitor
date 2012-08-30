@@ -43,3 +43,5 @@ _ReSharper*/
 
 # DotCover
 *.dotCover
+*.dotSettings
+*.dotSettings.User

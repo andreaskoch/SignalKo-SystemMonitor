@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HardwareStatus.Server</RootNamespace>
-    <AssemblyName>HardwareStatus.Server</AssemblyName>
+    <RootNamespace>SignalKo.SystemMonitor.Monitor.Web</RootNamespace>
+    <AssemblyName>SignalKo.SystemMonitor.Monitor.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -162,7 +162,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HardwareInfo.Common\HardwareStatus.Common.csproj">
+    <ProjectReference Include="..\Common\Common.csproj">
       <Project>{934F2D76-0D1D-4E96-8DD2-67690DCCBC8C}</Project>
       <Name>HardwareStatus.Common</Name>
     </ProjectReference>

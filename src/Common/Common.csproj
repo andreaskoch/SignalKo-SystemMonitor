@@ -8,8 +8,8 @@
     <ProjectGuid>{934F2D76-0D1D-4E96-8DD2-67690DCCBC8C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HardwareStatus.Common</RootNamespace>
-    <AssemblyName>HardwareStatus.Common</AssemblyName>
+    <RootNamespace>SignalKo.SystemMonitor.Common</RootNamespace>
+    <AssemblyName>SignalKo.SystemMonitor.Common</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
