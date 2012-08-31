@@ -36,14 +36,14 @@ namespace SignalKo.SystemMonitor.Agent.Console
                 var request = new RestRequest("api/HardwareInfo/", Method.PUT);
                 request.RequestFormat = DataFormat.Json;
                 request.AddBody(hardwareInfo);
-                restClient.ExecuteAsync<HardwareInfo>(request, response => { });
+                restClient.ExecuteAsync<SystemInformation>(request, response => { });
 
                 Thread.Sleep(100);
             }
             while (true);
         }
 
-        static HardwareInfo GetHardwareInfo()
+        static SystemInformation GetHardwareInfo()
         {
             var processorTime = (double)processorCounter.NextValue();
             var memUsage = (ulong)memoryCounter.NextValue();
@@ -57,12 +57,12 @@ namespace SignalKo.SystemMonitor.Agent.Console
                 totalMemory += (ulong)item["TotalVisibleMemorySize"];
             }
 
-            return new HardwareInfo
+            return new SystemInformation
                 {
                     MachineName = Environment.MachineName, 
-                    MemUsage = memUsage, 
-                    Processor = processorTime,
-                    TotalMemory = totalMemory
+                    //MemUsage = memUsage, 
+                    //Processor = processorTime,
+                    //TotalMemory = totalMemory
                 };
         }
     }

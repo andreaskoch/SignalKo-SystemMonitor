@@ -38,7 +38,10 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Model\HardwareInfo.cs" />
+    <Compile Include="Model\SystemInformation.cs" />
+    <Compile Include="Model\SystemMemoryInformation.cs" />
+    <Compile Include="Model\SystemStorageDeviceInformation.cs" />
+    <Compile Include="Model\SystemStorageInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

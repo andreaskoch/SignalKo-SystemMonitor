@@ -8,10 +8,10 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 {
     public class HardwareInfoController : ApiController
     {
-        public void Put(HardwareInfo hardwareInfo)
+        public void Put(SystemInformation systemInformation)
         {
             var context = SignalR.GlobalHost.ConnectionManager.GetHubContext<HardwareStatusHub>();
-            context.Clients.displayHardwareInfo(hardwareInfo);
+            context.Clients.displayHardwareInfo(systemInformation);
         }
     }
 }
