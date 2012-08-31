@@ -20,6 +20,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7E380953-20C1-4929-AB80-EFEA4545C325}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,9 +58,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8A4C0279-DF94-4DC5-B387-7E3F1171F812} = {C69FDA20-2C11-4B0C-B062-87647DCD469F}
-		{3D2B39FE-4E97-4261-85FA-FD4020F32C18} = {C69FDA20-2C11-4B0C-B062-87647DCD469F}
-		{E3953B37-DF1E-4BE2-AE69-8B560E5D82F7} = {C69FDA20-2C11-4B0C-B062-87647DCD469F}
 		{A8DEA277-AAFA-4E1E-A043-17C03472B3E4} = {94BD8C5E-6EE9-4444-969C-9EFA2FF0CF3C}
+		{3D2B39FE-4E97-4261-85FA-FD4020F32C18} = {C69FDA20-2C11-4B0C-B062-87647DCD469F}
+		{8A4C0279-DF94-4DC5-B387-7E3F1171F812} = {C69FDA20-2C11-4B0C-B062-87647DCD469F}
+		{E3953B37-DF1E-4BE2-AE69-8B560E5D82F7} = {C69FDA20-2C11-4B0C-B062-87647DCD469F}
 	EndGlobalSection
 EndGlobal
