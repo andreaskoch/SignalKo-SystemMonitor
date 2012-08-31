@@ -67,6 +67,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Controllers\HardwareInfoController.cs" />
     <Compile Include="Controllers\OverviewController.cs" />
     <Compile Include="Global.asax.cs">
