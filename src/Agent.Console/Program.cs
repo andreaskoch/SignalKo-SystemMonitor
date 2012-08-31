@@ -4,13 +4,13 @@ using System.Diagnostics;
 using System.Management;
 using System.Threading;
 
-using HardwareStatus.Common.Model;
-
 using RestSharp;
 
-namespace HardwareStatus.Agent
+namespace SignalKo.SystemMonitor.Agent.Console
 {
-    class Program
+    using SignalKo.SystemMonitor.Common.Model;
+
+    public class Program
     {
         private static PerformanceCounter processorCounter;
 

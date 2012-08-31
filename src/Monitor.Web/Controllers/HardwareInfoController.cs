@@ -1,9 +1,10 @@
 ﻿using System.Web.Http;
 
-using HardwareStatus.Common.Model;
 using HardwareStatus.Server.Hubs;
 
-namespace HardwareStatus.Server.Controllers
+using SignalKo.SystemMonitor.Common.Model;
+
+namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 {
     public class HardwareInfoController : ApiController
     {

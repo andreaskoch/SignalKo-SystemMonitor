@@ -1,4 +1,4 @@
-namespace HardwareStatus.Common.Model
+namespace SignalKo.SystemMonitor.Common.Model
 {
     public class HardwareInfo
     {

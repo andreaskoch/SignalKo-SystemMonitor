@@ -3,9 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitor.Web", "Monitor.Web\Monitor.Web.csproj", "{A8DEA277-AAFA-4E1E-A043-17C03472B3E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agent", "Agent\Agent.csproj", "{8A4C0279-DF94-4DC5-B387-7E3F1171F812}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agent.Console", "Agent.Console\Agent.Console.csproj", "{8A4C0279-DF94-4DC5-B387-7E3F1171F812}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{934F2D76-0D1D-4E96-8DD2-67690DCCBC8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agent.Core", "Agent.Core\Agent.Core.csproj", "{3D2B39FE-4E97-4261-85FA-FD4020F32C18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Agents", "Agents", "{C69FDA20-2C11-4B0C-B062-87647DCD469F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Monitors", "Monitors", "{94BD8C5E-6EE9-4444-969C-9EFA2FF0CF3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agent.Service", "Agent.Service\Agent.Service.csproj", "{E3953B37-DF1E-4BE2-AE69-8B560E5D82F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,8 +33,22 @@ Global
 		{934F2D76-0D1D-4E96-8DD2-67690DCCBC8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{934F2D76-0D1D-4E96-8DD2-67690DCCBC8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{934F2D76-0D1D-4E96-8DD2-67690DCCBC8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D2B39FE-4E97-4261-85FA-FD4020F32C18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D2B39FE-4E97-4261-85FA-FD4020F32C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D2B39FE-4E97-4261-85FA-FD4020F32C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D2B39FE-4E97-4261-85FA-FD4020F32C18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3953B37-DF1E-4BE2-AE69-8B560E5D82F7}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E3953B37-DF1E-4BE2-AE69-8B560E5D82F7}.Debug|Any CPU.Build.0 = Debug|x86
+		{E3953B37-DF1E-4BE2-AE69-8B560E5D82F7}.Release|Any CPU.ActiveCfg = Release|x86
+		{E3953B37-DF1E-4BE2-AE69-8B560E5D82F7}.Release|Any CPU.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8A4C0279-DF94-4DC5-B387-7E3F1171F812} = {C69FDA20-2C11-4B0C-B062-87647DCD469F}
+		{3D2B39FE-4E97-4261-85FA-FD4020F32C18} = {C69FDA20-2C11-4B0C-B062-87647DCD469F}
+		{E3953B37-DF1E-4BE2-AE69-8B560E5D82F7} = {C69FDA20-2C11-4B0C-B062-87647DCD469F}
+		{A8DEA277-AAFA-4E1E-A043-17C03472B3E4} = {94BD8C5E-6EE9-4444-969C-9EFA2FF0CF3C}
 	EndGlobalSection
 EndGlobal
