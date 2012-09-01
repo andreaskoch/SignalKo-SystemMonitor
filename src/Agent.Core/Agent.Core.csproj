@@ -46,15 +46,18 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EnvironmentMachineNameProvider.cs" />
+    <Compile Include="Services\ILogicalDiscInstanceNameProvider.cs" />
     <Compile Include="Services\IMachineNameProvider.cs" />
     <Compile Include="Services\IProcessorStatusProvider.cs" />
     <Compile Include="Services\ISystemInformationProvider.cs" />
     <Compile Include="Services\ISystemMemoryStatusProvider.cs" />
     <Compile Include="Services\ISystemStorageStatusProvider.cs" />
     <Compile Include="Services\ITimeProvider.cs" />
+    <Compile Include="Services\LogicalDiscInstanceNameProvider.cs" />
     <Compile Include="Services\ProcessorStatusProvider.cs" />
     <Compile Include="Services\SystemInformationProvider.cs" />
     <Compile Include="Services\SystemMemoryStatusProvider.cs" />
+    <Compile Include="Services\SystemStorageStatusProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

@@ -40,8 +40,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IntegrationTests\LogicalDiscInstanceNameProviderTests.cs" />
     <Compile Include="IntegrationTests\ProcessorStatusProviderTests.cs" />
     <Compile Include="IntegrationTests\SystemMemoryStatusProviderTests.cs" />
+    <Compile Include="IntegrationTests\SystemStorageStatusProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\EnvironmentMachineNameProviderTests.cs" />
   </ItemGroup>
