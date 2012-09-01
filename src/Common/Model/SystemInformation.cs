@@ -1,10 +1,8 @@
-using System;
-
 namespace SignalKo.SystemMonitor.Common.Model
 {
     public class SystemInformation
     {
-        public DateTimeOffset Timestamp { get; set; }
+        public DataCollectionTimeFrame TimeFrame { get; set; }
 
         public string MachineName { get; set; }
 

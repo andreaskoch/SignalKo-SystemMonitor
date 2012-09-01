@@ -1,3 +1,5 @@
+using System;
+
 using SignalKo.SystemMonitor.Common.Model;
 
 namespace SignalKo.SystemMonitor.Agent.Core.Services
@@ -25,13 +27,28 @@ namespace SignalKo.SystemMonitor.Agent.Core.Services
 
         public SystemInformation GetSystemInfo()
         {
+            DateTimeOffset startTime = this.timeProvider.GetUTCDateAndTime();
+
+            // collect data
+            string machineName = this.machineNameProvider.GetMachineName();
+            var processorStatus = this.processorStatusProvider.GetProcessorStatus();
+            var memoryStatus = this.systemMemoryStatusProvider.GetMemoryStatus();
+            var storageStatus = this.systemStorageStatusProvider.GetStorageStatus();
+
+            // return result
+            var timeFrame = new DataCollectionTimeFrame
+                {
+                    Start = startTime,
+                    End = this.timeProvider.GetUTCDateAndTime()
+                };
+
             return new SystemInformation
                 {
-                    Timestamp = this.timeProvider.GetUTCDateAndTime(),
-                    MachineName = this.machineNameProvider.GetMachineName(),
-                    ProcessorStatus = this.processorStatusProvider.GetProcessorUtilizationInPercent(),
-                    MemoryStatus = this.systemMemoryStatusProvider.GetMemoryStatus(),
-                    StorageStatus = this.systemStorageStatusProvider.GetStorageStatus()
+                    TimeFrame = timeFrame,
+                    MachineName = machineName,
+                    ProcessorStatus = processorStatus,
+                    MemoryStatus = memoryStatus,
+                    StorageStatus = storageStatus
                 };
         }
     }

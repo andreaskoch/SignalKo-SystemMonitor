@@ -4,6 +4,6 @@ namespace SignalKo.SystemMonitor.Agent.Core.Services
 {
     public interface IProcessorStatusProvider
     {
-        ProcessorUtilizationInformation GetProcessorUtilizationInPercent();
+        ProcessorUtilizationInformation GetProcessorStatus();
     }
 }

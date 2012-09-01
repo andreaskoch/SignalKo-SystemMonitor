@@ -11,21 +11,25 @@ namespace SignalKo.SystemMonitor.Agent.Core.Services
     {
         private readonly PerformanceCounter processorUtilizationInPercentPerformanceCounter;
 
+        private double previousValue;
+
         public ProcessorStatusProvider()
         {
+            this.previousValue = 0.0d;
             this.processorUtilizationInPercentPerformanceCounter = new PerformanceCounter(
                 "Processor", "% Processor Time", "_Total");
         }
 
-        public ProcessorUtilizationInformation GetProcessorUtilizationInPercent()
+        public ProcessorUtilizationInformation GetProcessorStatus()
         {
             int maxRetries = 5;
             int retry = 0;
             var values = new List<double>();
+
             do
             {
                 var value = this.processorUtilizationInPercentPerformanceCounter.NextValue();
-                if (value > 0d)
+                if (value > 0d && value < 100d)
                 {
                     values.Add(value);
                 }
@@ -34,7 +38,13 @@ namespace SignalKo.SystemMonitor.Agent.Core.Services
             }
             while (retry < maxRetries);
 
-            double processorTimeInPercent = values.Any() ? values.Average() : 0d;
+            double processorTimeInPercent = this.previousValue;
+            if (values.Any())
+            {
+                processorTimeInPercent = values.Average();
+                this.previousValue = processorTimeInPercent;
+            }
+
             return new ProcessorUtilizationInformation
                 {
                     ProcessorUtilizationInPercent = processorTimeInPercent
