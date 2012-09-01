@@ -8,7 +8,7 @@ namespace SignalKo.SystemMonitor.Common.Model
 
         public string MachineName { get; set; }
 
-        public double ProcessorUtilizationInPercent { get; set; }
+        public ProcessorUtilizationInformation ProcessorStatus { get; set; }
 
         public SystemMemoryInformation MemoryStatus { get; set; }
 

@@ -38,6 +38,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Model\ProcessorUtilizationInformation.cs" />
     <Compile Include="Model\SystemInformation.cs" />
     <Compile Include="Model\SystemMemoryInformation.cs" />
     <Compile Include="Model\SystemStorageDeviceInformation.cs" />
