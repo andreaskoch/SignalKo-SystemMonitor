@@ -46,7 +46,9 @@
     <Compile Include="Model\SystemStorageInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IMemoryUnitConverter.cs" />
+    <Compile Include="Services\ITimeProvider.cs" />
     <Compile Include="Services\MemoryUnitConverter.cs" />
+    <Compile Include="Services\UTCTimeProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

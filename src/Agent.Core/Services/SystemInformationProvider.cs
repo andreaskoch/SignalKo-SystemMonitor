@@ -1,6 +1,7 @@
 using System;
 
 using SignalKo.SystemMonitor.Common.Model;
+using SignalKo.SystemMonitor.Common.Services;
 
 namespace SignalKo.SystemMonitor.Agent.Core.Services
 {
@@ -27,7 +28,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Services
 
         public SystemInformation GetSystemInfo()
         {
-            DateTimeOffset startTime = this.timeProvider.GetUTCDateAndTime();
+            DateTimeOffset startTime = this.timeProvider.GetDateAndTime();
 
             // collect data
             string machineName = this.machineNameProvider.GetMachineName();
@@ -39,7 +40,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Services
             var timeFrame = new DataCollectionTimeFrame
                 {
                     Start = startTime,
-                    End = this.timeProvider.GetUTCDateAndTime()
+                    End = this.timeProvider.GetDateAndTime()
                 };
 
             return new SystemInformation

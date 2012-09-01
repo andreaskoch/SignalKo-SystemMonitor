@@ -52,7 +52,6 @@
     <Compile Include="Services\ISystemInformationProvider.cs" />
     <Compile Include="Services\ISystemMemoryStatusProvider.cs" />
     <Compile Include="Services\ISystemStorageStatusProvider.cs" />
-    <Compile Include="Services\ITimeProvider.cs" />
     <Compile Include="Services\LogicalDiscInstanceNameProvider.cs" />
     <Compile Include="Services\ProcessorStatusProvider.cs" />
     <Compile Include="Services\SystemInformationProvider.cs" />
