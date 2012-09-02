@@ -44,8 +44,7 @@ StyleCop.Cache
 _ReSharper*/
 *.[Rr]esharper
 *.[Rr]esharper.user
+*.dotSettings.User
 
 # DotCover
 *.dotCover
-*.dotSettings
-*.dotSettings.User
