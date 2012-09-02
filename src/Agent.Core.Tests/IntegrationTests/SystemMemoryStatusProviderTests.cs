@@ -22,5 +22,21 @@ namespace Agent.Core.Tests.IntegrationTests
             Assert.AreNotEqual(0d, result.AvailableMemoryInGB);
             Assert.AreNotEqual(0d, result.UsedMemoryInGB);
         }
+
+        [Test]
+        public void GetMemoryStatus_Dispose()
+        {
+            // Arrange
+            var memoryUnitConverter = new MemoryUnitConverter();
+            using (var systemMemoryStatusProvider = new SystemMemoryStatusProvider(memoryUnitConverter))
+            {
+                // Act
+                var result = systemMemoryStatusProvider.GetMemoryStatus();
+
+                // Assert
+                Assert.AreNotEqual(0d, result.AvailableMemoryInGB);
+                Assert.AreNotEqual(0d, result.UsedMemoryInGB);                
+            }
+        }
     }
 }

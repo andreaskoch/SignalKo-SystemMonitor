@@ -51,6 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\EnvironmentMachineNameProviderTests.cs" />
     <Compile Include="UnitTests\SystemInformationProviderTests.cs" />
+    <Compile Include="UnitTests\SystemMemoryStatusProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
