@@ -3,7 +3,7 @@ using System;
 using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Common.Services;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Services
+namespace SignalKo.SystemMonitor.Agent.Core.Collector
 {
     public class SystemInformationProvider : ISystemInformationProvider
     {

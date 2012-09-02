@@ -4,7 +4,7 @@ using System.Threading;
 
 using NUnit.Framework;
 
-using SignalKo.SystemMonitor.Agent.Core.Services;
+using SignalKo.SystemMonitor.Agent.Core.Collector;
 
 namespace Agent.Core.Tests.IntegrationTests
 {

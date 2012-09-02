@@ -2,7 +2,7 @@
 
 using NUnit.Framework;
 
-using SignalKo.SystemMonitor.Agent.Core.Services;
+using SignalKo.SystemMonitor.Agent.Core.Collector;
 using SignalKo.SystemMonitor.Common.Services;
 
 namespace Agent.Core.Tests.IntegrationTests

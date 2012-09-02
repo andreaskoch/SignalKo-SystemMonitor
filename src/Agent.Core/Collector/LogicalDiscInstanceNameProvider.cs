@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Services
+namespace SignalKo.SystemMonitor.Agent.Core.Collector
 {
     public class LogicalDiscInstanceNameProvider : ILogicalDiscInstanceNameProvider
     {

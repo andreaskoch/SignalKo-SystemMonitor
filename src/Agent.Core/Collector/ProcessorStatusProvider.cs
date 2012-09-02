@@ -5,7 +5,7 @@ using System.Linq;
 
 using SignalKo.SystemMonitor.Common.Model;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Services
+namespace SignalKo.SystemMonitor.Agent.Core.Collector
 {
     public class ProcessorStatusProvider : IProcessorStatusProvider, IDisposable
     {
