@@ -19,6 +19,31 @@ namespace SignalKo.SystemMonitor.Agent.Core.Services
 
         public SystemInformationProvider(ITimeProvider timeProvider, IMachineNameProvider machineNameProvider, IProcessorStatusProvider processorStatusProvider, ISystemMemoryStatusProvider systemMemoryStatusProvider, ISystemStorageStatusProvider systemStorageStatusProvider)
         {
+            if (timeProvider == null)
+            {
+                throw new ArgumentNullException("timeProvider");
+            }
+
+            if (machineNameProvider == null)
+            {
+                throw new ArgumentNullException("machineNameProvider");
+            }
+
+            if (processorStatusProvider == null)
+            {
+                throw new ArgumentNullException("processorStatusProvider");
+            }
+
+            if (systemMemoryStatusProvider == null)
+            {
+                throw new ArgumentNullException("systemMemoryStatusProvider");
+            }
+
+            if (systemStorageStatusProvider == null)
+            {
+                throw new ArgumentNullException("systemStorageStatusProvider");
+            }
+
             this.timeProvider = timeProvider;
             this.machineNameProvider = machineNameProvider;
             this.processorStatusProvider = processorStatusProvider;
@@ -28,28 +53,13 @@ namespace SignalKo.SystemMonitor.Agent.Core.Services
 
         public SystemInformation GetSystemInfo()
         {
-            DateTimeOffset startTime = this.timeProvider.GetDateAndTime();
-
-            // collect data
-            string machineName = this.machineNameProvider.GetMachineName();
-            var processorStatus = this.processorStatusProvider.GetProcessorStatus();
-            var memoryStatus = this.systemMemoryStatusProvider.GetMemoryStatus();
-            var storageStatus = this.systemStorageStatusProvider.GetStorageStatus();
-
-            // return result
-            var timeFrame = new DataCollectionTimeFrame
-                {
-                    Start = startTime,
-                    End = this.timeProvider.GetDateAndTime()
-                };
-
             return new SystemInformation
                 {
-                    TimeFrame = timeFrame,
-                    MachineName = machineName,
-                    ProcessorStatus = processorStatus,
-                    MemoryStatus = memoryStatus,
-                    StorageStatus = storageStatus
+                    Timestamp = this.timeProvider.GetDateAndTime(),
+                    MachineName = this.machineNameProvider.GetMachineName(),
+                    ProcessorStatus = this.processorStatusProvider.GetProcessorStatus(),
+                    MemoryStatus = this.systemMemoryStatusProvider.GetMemoryStatus(),
+                    StorageStatus = this.systemStorageStatusProvider.GetStorageStatus()
                 };
         }
     }
