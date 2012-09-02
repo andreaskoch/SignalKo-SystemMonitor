@@ -8,7 +8,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Sender.Configuration
 
         private const string AppSettingsKeyRESTSystemInformationSenderResourcePath = "RESTSystemInformationSenderResourcePath";
 
-        public RESTServiceConfiguration GetConfiguration()
+        public IRESTServiceConfiguration GetConfiguration()
         {
             string baseUrl = ConfigurationManager.AppSettings[AppSettingsKeyRESTSystemInformationSenderBaseUrl];
             string resourcePath = ConfigurationManager.AppSettings[AppSettingsKeyRESTSystemInformationSenderResourcePath];

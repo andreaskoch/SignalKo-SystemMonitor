@@ -1,3 +1,5 @@
+using System;
+
 namespace SignalKo.SystemMonitor.Common.Model
 {
     public class SystemStorageDeviceInformation
@@ -28,7 +30,7 @@ namespace SignalKo.SystemMonitor.Common.Model
             var otherObj = obj as SystemStorageDeviceInformation;
             if (otherObj != null)
             {
-                return this.ToString().Equals(otherObj.ToString());
+                return this.ToString().Equals(otherObj.ToString(), StringComparison.OrdinalIgnoreCase);
             }
 
             return false;

@@ -10,88 +10,85 @@ namespace SignalKo.SystemMonitor.Agent.Core.Sender
 {
     public class RESTBasedSystemInformationSender : ISystemInformationSender
     {
-        private readonly IRESTServiceConfigurationProvider serviceConfigurationProvider;
+        private readonly IRESTServiceConfiguration configuration;
 
-        private RESTServiceConfiguration configuration;
+        private readonly IRestClient client;
 
-        private RestClient client;
+        private readonly IRESTRequestFactory requestFactory;
 
-        public RESTBasedSystemInformationSender(IRESTServiceConfigurationProvider serviceConfigurationProvider)
+        public RESTBasedSystemInformationSender(IRESTServiceConfigurationProvider serviceConfigurationProvider, IRESTClientFactory restClientFactory, IRESTRequestFactory requestFactory)
         {
             if (serviceConfigurationProvider == null)
             {
                 throw new ArgumentNullException("serviceConfigurationProvider");
             }
 
-            this.serviceConfigurationProvider = serviceConfigurationProvider;
-        }
-
-        protected RESTServiceConfiguration Configuration
-        {
-            get
+            if (restClientFactory == null)
             {
-                if (this.configuration == null)
-                {
-                    if ((this.configuration = this.serviceConfigurationProvider.GetConfiguration()) == null)
-                    {
-                        throw new InvalidConfigurationException("The configuration for the REST-based service information sender cannot be null. Please check your configuration.");
-                    }
-                }
-
-                return this.configuration;
+                throw new ArgumentNullException("restClientFactory");
             }
-        }
 
-        protected IRestClient Client
-        {
-            get
+            if (requestFactory == null)
             {
-                if (this.client == null)
-                {
-                    try
-                    {
-                        this.client = new RestClient(this.Configuration.BaseUrl);
-                    }
-                    catch (Exception createRestClientException)
-                    {
-                        throw new UnableToCreateRESTClientException(
-                            string.Format("Unable to create a REST client for the supplied base URL \"{0}\"", this.Configuration.BaseUrl),
-                            createRestClientException);
-                    }
-
-                    if (this.client == null)
-                    {
-                        throw new UnableToCreateRESTClientException(
-                            string.Format("Unable to create a REST client for the supplied base URL \"{0}\"", this.Configuration.BaseUrl));
-                    }
-                }
-
-                return this.client;
+                throw new ArgumentNullException("requestFactory");
             }
+
+            // initialize service configuration
+            var serviceConfiguration = serviceConfigurationProvider.GetConfiguration();
+            if (serviceConfiguration == null)
+            {
+                throw new SystemInformationSenderSetupException("Service configuration is null.");
+            }
+
+            if (!serviceConfiguration.IsValid())
+            {
+                throw new SystemInformationSenderSetupException("Service configuration \"{0}\" is invalid.", serviceConfiguration);
+            }
+
+            this.configuration = serviceConfiguration;
+
+            // initialize REST client
+            var restClient = restClientFactory.GetRESTClient(this.configuration.BaseUrl);
+            if (restClient == null)
+            {
+                throw new SystemInformationSenderSetupException("Could not create a REST client using the supplied configuration ({0}).", this.configuration);
+            }
+
+            this.client = restClient;
+
+            // save request factory
+            this.requestFactory = requestFactory;
         }
 
         public void Send(SystemInformation systemInformation)
         {
-            try
+            if (systemInformation == null)
             {
-                string resourcePath = this.Configuration.ResourcePath;
-                var request = new RestRequest(resourcePath, Method.PUT) { RequestFormat = DataFormat.Json };
-                request.AddBody(systemInformation);
-                var response = this.client.Execute<SystemInformation>(request);
-                if (response.ErrorException != null)
-                {
-                    throw new SendSystemInformationFailedException(
-                        string.Format("Sending object \"{0}\" via a REST call to \"{1}\" failed. Please try again later.", systemInformation, resourcePath),
-                        response.ErrorException);
-                }
+                throw new ArgumentNullException("systemInformation");
             }
-            catch (InvalidConfigurationException invalidConfigurationException)
+
+            // Assemble requst
+            var request = this.requestFactory.CreatePutRequest(this.configuration.ResourcePath);
+            if (request == null)
             {
-                throw new FatalSystemInformationSenderException("Service configuration is invalid. Unable to send any data.", invalidConfigurationException);
+                throw new FatalSystemInformationSenderException(
+                    "Could not create a request object for the base Url \"{0}\" and the resource path \"{1}\".",
+                    this.configuration.BaseUrl,
+                    this.configuration.ResourcePath);
             }
-            catch (UnableToCreateRESTClientException unableToCreateRESTClientException)
+
+            request.AddBody(systemInformation);
+
+            // Send request
+            var response = this.client.Execute<SystemInformation>(request);
+
+            // Evaluate response
+            if (response.ErrorException != null)
             {
-                throw new FatalSystemInformationSenderException("Rest client is invalid. Unable to send any data.", unableToCreateRESTClientException);
+                throw new SendSystemInformationFailedException(
+                    string.Format(
+                        "Sending object \"{0}\" via a REST call to \"{1}\" failed. Please try again later.", systemInformation, this.configuration.ResourcePath),
+                    response.ErrorException);
             }
         }
     }

@@ -42,7 +42,7 @@ namespace SignalKo.SystemMonitor.Common.Model
             var otherObj = obj as SystemInformation;
             if (otherObj != null)
             {
-                return this.ToString().Equals(otherObj.ToString());
+                return this.ToString().Equals(otherObj.ToString(), StringComparison.OrdinalIgnoreCase);
             }
 
             return false;
