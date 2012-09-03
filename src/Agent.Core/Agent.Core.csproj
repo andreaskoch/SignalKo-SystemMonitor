@@ -57,6 +57,8 @@
     <Compile Include="Collector\SystemInformationProvider.cs" />
     <Compile Include="Collector\SystemMemoryStatusProvider.cs" />
     <Compile Include="Collector\SystemStorageStatusProvider.cs" />
+    <Compile Include="Dispatcher\ISystemInformationDispatcher.cs" />
+    <Compile Include="Dispatcher\IntervalSystemInformationDispatcher.cs" />
     <Compile Include="Exceptions\SystemInformationSenderSetupException.cs" />
     <Compile Include="Exceptions\FatalSystemInformationSenderException.cs" />
     <Compile Include="Exceptions\SendSystemInformationFailedException.cs" />
