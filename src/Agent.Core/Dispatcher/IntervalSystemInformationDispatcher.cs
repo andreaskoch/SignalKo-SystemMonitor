@@ -1,6 +1,5 @@
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 
 using SignalKo.SystemMonitor.Agent.Core.Collector;
 
@@ -14,13 +13,11 @@ namespace SignalKo.SystemMonitor.Agent.Core.Dispatcher
 
         private readonly IMessageQueue messageQueue;
 
-        private readonly IMessageQueueWorker messageQueueWorker;
-
         private readonly object lockObject = new object();
 
         private bool stop;
 
-        public IntervalSystemInformationDispatcher(ISystemInformationProvider systemInformationProvider, IMessageQueue messageQueue, IMessageQueueWorker messageQueueWorker)
+        public IntervalSystemInformationDispatcher(ISystemInformationProvider systemInformationProvider, IMessageQueue messageQueue)
         {
             if (systemInformationProvider == null)
             {
@@ -32,55 +29,37 @@ namespace SignalKo.SystemMonitor.Agent.Core.Dispatcher
                 throw new ArgumentNullException("messageQueue");
             }
 
-            if (messageQueueWorker == null)
-            {
-                throw new ArgumentNullException("messageQueueWorker");
-            }
-
             this.systemInformationProvider = systemInformationProvider;
             this.messageQueue = messageQueue;
-            this.messageQueueWorker = messageQueueWorker;
         }
 
         public void Start()
         {
-            var collector = new Task(
-                () =>
-                    {
-                        while (true)
-                        {
-                            Thread.Sleep(SendIntervalInMilliseconds);
+            while (true)
+            {
+                Thread.Sleep(SendIntervalInMilliseconds);
 
-                            // check if service has been stopped
-                            Monitor.Enter(this.lockObject);
-                            if (this.stop)
-                            {
-                                this.messageQueueWorker.Stop();
+                // check if service has been stopped
+                Monitor.Enter(this.lockObject);
+                if (this.stop)
+                {
+                    Monitor.Exit(this.lockObject);
+                    break;
+                }
 
-                                Monitor.Exit(this.lockObject);
-                                break;
-                            }
+                Monitor.Exit(this.lockObject);
 
-                            Monitor.Exit(this.lockObject);
+                // retrieve data
+                var systemInfo = this.systemInformationProvider.GetSystemInfo();
+                if (systemInfo == null)
+                {
+                    // skip this run
+                    continue;
+                }
 
-                            // retrieve data
-                            var systemInfo = this.systemInformationProvider.GetSystemInfo();
-                            if (systemInfo == null)
-                            {
-                                // skip this run
-                                continue;
-                            }
-
-                            // add message to queue
-                            this.messageQueue.Enqueue(systemInfo);
-                        }
-                    });
-
-            var queueAgent = new Task(() => this.messageQueueWorker.Start());
-
-            collector.Start();
-            queueAgent.Start();
-            Task.WaitAll(collector, queueAgent);
+                // add message to queue
+                this.messageQueue.Enqueue(systemInfo);
+            }
         }
 
         public void Stop()
