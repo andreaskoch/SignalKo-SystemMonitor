@@ -1,9 +1,8 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 using SignalKo.SystemMonitor.Agent.Core.Collector;
-using SignalKo.SystemMonitor.Agent.Core.Exceptions;
-using SignalKo.SystemMonitor.Agent.Core.Sender;
 
 namespace SignalKo.SystemMonitor.Agent.Core.Dispatcher
 {
@@ -13,67 +12,75 @@ namespace SignalKo.SystemMonitor.Agent.Core.Dispatcher
 
         private readonly ISystemInformationProvider systemInformationProvider;
 
-        private readonly ISystemInformationSender systemInformationSender;
+        private readonly IMessageQueue messageQueue;
+
+        private readonly IMessageQueueWorker messageQueueWorker;
 
         private readonly object lockObject = new object();
 
         private bool stop;
 
-        public IntervalSystemInformationDispatcher(ISystemInformationProvider systemInformationProvider, ISystemInformationSender systemInformationSender)
+        public IntervalSystemInformationDispatcher(ISystemInformationProvider systemInformationProvider, IMessageQueue messageQueue, IMessageQueueWorker messageQueueWorker)
         {
             if (systemInformationProvider == null)
             {
                 throw new ArgumentNullException("systemInformationProvider");
             }
 
-            if (systemInformationSender == null)
+            if (messageQueue == null)
             {
-                throw new ArgumentNullException("systemInformationSender");
+                throw new ArgumentNullException("messageQueue");
+            }
+
+            if (messageQueueWorker == null)
+            {
+                throw new ArgumentNullException("messageQueueWorker");
             }
 
             this.systemInformationProvider = systemInformationProvider;
-            this.systemInformationSender = systemInformationSender;
+            this.messageQueue = messageQueue;
+            this.messageQueueWorker = messageQueueWorker;
         }
 
         public void Start()
         {
-            while (true)
-            {
-                Thread.Sleep(SendIntervalInMilliseconds);
+            var collector = new Task(
+                () =>
+                    {
+                        while (true)
+                        {
+                            Thread.Sleep(SendIntervalInMilliseconds);
 
-                // check if service has been stopped
-                Monitor.Enter(this.lockObject);
-                if (this.stop)
-                {
-                    Monitor.Exit(this.lockObject);
-                    break;
-                }
+                            // check if service has been stopped
+                            Monitor.Enter(this.lockObject);
+                            if (this.stop)
+                            {
+                                this.messageQueueWorker.Stop();
 
-                Monitor.Exit(this.lockObject);
+                                Monitor.Exit(this.lockObject);
+                                break;
+                            }
 
-                // retrieve data
-                var systemInfo = this.systemInformationProvider.GetSystemInfo();
-                if (systemInfo == null)
-                {
-                    // skip this run
-                    continue;
-                }
+                            Monitor.Exit(this.lockObject);
 
-                // send messages
-                try
-                {
-                    this.systemInformationSender.Send(systemInfo);
-                }
-                catch (SendSystemInformationFailedException sendFailedException)
-                {
-                    // retry later
-                }
-                catch (FatalSystemInformationSenderException fatalException)
-                {
-                    // abort
-                    break;
-                }
-            }          
+                            // retrieve data
+                            var systemInfo = this.systemInformationProvider.GetSystemInfo();
+                            if (systemInfo == null)
+                            {
+                                // skip this run
+                                continue;
+                            }
+
+                            // add message to queue
+                            this.messageQueue.Enqueue(systemInfo);
+                        }
+                    });
+
+            var queueAgent = new Task(() => this.messageQueueWorker.Start());
+
+            collector.Start();
+            queueAgent.Start();
+            Task.WaitAll(collector, queueAgent);
         }
 
         public void Stop()

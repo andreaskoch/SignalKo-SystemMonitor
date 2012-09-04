@@ -9,8 +9,6 @@ using NUnit.Framework;
 
 using SignalKo.SystemMonitor.Agent.Core.Collector;
 using SignalKo.SystemMonitor.Agent.Core.Dispatcher;
-using SignalKo.SystemMonitor.Agent.Core.Exceptions;
-using SignalKo.SystemMonitor.Agent.Core.Sender;
 using SignalKo.SystemMonitor.Common.Model;
 
 namespace Agent.Core.Tests.UnitTests.Dispatcher
@@ -25,10 +23,12 @@ namespace Agent.Core.Tests.UnitTests.Dispatcher
         {
             // Arrange
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
-            var systemInformationSender = new Mock<ISystemInformationSender>();
+            var messageQueue = new Mock<IMessageQueue>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
 
             // Act
-            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(systemInformationProvider.Object, systemInformationSender.Object);
+            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(
+                systemInformationProvider.Object, messageQueue.Object, messageQueueWorker.Object);
 
             // Assert
             Assert.IsNotNull(systemInformationDispatcher);
@@ -39,90 +39,53 @@ namespace Agent.Core.Tests.UnitTests.Dispatcher
         public void Constructor_SystemInformationProviderParameterIsNull_ArgumentNullExceptionIsThrown()
         {
             // Arrange
-            var systemInformationSender = new Mock<ISystemInformationSender>();
+            var messageQueue = new Mock<IMessageQueue>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
 
             // Act
-            new IntervalSystemInformationDispatcher(null, systemInformationSender.Object);
+            new IntervalSystemInformationDispatcher(null, messageQueue.Object, messageQueueWorker.Object);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_SystemInformationSenderParameterIsNull_ArgumentNullExceptionIsThrown()
+        public void Constructor_MessageQueueParameterIsNull_ArgumentNullExceptionIsThrown()
         {
             // Arrange
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
 
             // Act
-            new IntervalSystemInformationDispatcher(systemInformationProvider.Object, null);
+            new IntervalSystemInformationDispatcher(systemInformationProvider.Object, null, messageQueueWorker.Object);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_MessageQueueWorkerParameterIsNull_ArgumentNullExceptionIsThrown()
+        {
+            // Arrange
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var messageQueue = new Mock<IMessageQueue>();
+
+            // Act
+            new IntervalSystemInformationDispatcher(systemInformationProvider.Object, messageQueue.Object, null);
         }
 
         #endregion
 
-        #region Send
+        #region Start
 
         [Test]
-        public void Send_SystemInformationProviderReturnsNull_InfoIsNotSend()
-        {
-            // Arrange
-            int durationInMilliseconds = IntervalSystemInformationDispatcher.SendIntervalInMilliseconds * 2;
-
-            var systemInformationProvider = new Mock<ISystemInformationProvider>();
-            SystemInformation systemInformation = null;
-            systemInformationProvider.Setup(s => s.GetSystemInfo()).Returns(systemInformation);
-
-            var systemInformationSender = new Mock<ISystemInformationSender>();
-            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(systemInformationProvider.Object, systemInformationSender.Object);
-
-            // Act
-            var dispatcherTask = new Task(systemInformationDispatcher.Start);
-            dispatcherTask.Start();
-            Task.WaitAll(new[] { dispatcherTask }, durationInMilliseconds);
-            systemInformationDispatcher.Stop();
-
-            // Assert
-            systemInformationSender.Verify(s => s.Send(It.Is<SystemInformation>(info => info == null)), Times.Never());
-        }
-
-        [Test]
-        public void Send_SystemInformationSenderThrows_FatalSystemInformationSenderException_DispatcherIsStoppedAheadOfTime_AfterTheFirstRun()
-        {
-            // Arrange
-            int durationInMilliseconds = IntervalSystemInformationDispatcher.SendIntervalInMilliseconds * 10;
-
-            var systemInformationProvider = new Mock<ISystemInformationProvider>();
-            systemInformationProvider.Setup(s => s.GetSystemInfo()).Returns(
-                () => new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow });
-
-            var systemInformationSender = new Mock<ISystemInformationSender>();
-            systemInformationSender.Setup(s => s.Send(It.IsAny<SystemInformation>())).Throws(new FatalSystemInformationSenderException("Some fatal error."));
-
-            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(systemInformationProvider.Object, systemInformationSender.Object);
-
-            // Act
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-            var dispatcherTask = new Task(systemInformationDispatcher.Start);
-            dispatcherTask.Start();
-            Task.WaitAll(new[] { dispatcherTask }, durationInMilliseconds);
-            systemInformationDispatcher.Stop();
-
-            stopwatch.Stop();
-
-            // Assert
-            Assert.Greater(stopwatch.ElapsedMilliseconds, IntervalSystemInformationDispatcher.SendIntervalInMilliseconds);
-            Assert.Less(stopwatch.ElapsedMilliseconds, durationInMilliseconds);
-        }
-
-        [Test]
-        public void Send_RunsFor3Seconds_GetSystemInfoIsCalledAtLeast2Times()
+        public void Start_RunsFor3Intervals_SystemInfoIsPulledAtLeastTwoTimes()
         {
             // Arrange
             int durationInMilliseconds = IntervalSystemInformationDispatcher.SendIntervalInMilliseconds * 3;
 
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
-            var systemInformationSender = new Mock<ISystemInformationSender>();
-            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(systemInformationProvider.Object, systemInformationSender.Object);
+            var messageQueue = new Mock<IMessageQueue>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
+
+            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(
+                systemInformationProvider.Object, messageQueue.Object, messageQueueWorker.Object);
 
             // Act
             var dispatcherTask = new Task(systemInformationDispatcher.Start);
@@ -135,18 +98,17 @@ namespace Agent.Core.Tests.UnitTests.Dispatcher
         }
 
         [Test]
-        public void Send_RunsFor3Seconds_SendIsCalledAtLeast2Times()
+        public void Start_MessageQueueWorkerIsStarted()
         {
             // Arrange
             int durationInMilliseconds = IntervalSystemInformationDispatcher.SendIntervalInMilliseconds * 3;
 
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
-            systemInformationProvider.Setup(s => s.GetSystemInfo()).Returns(
-                () => new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow });
+            var messageQueue = new Mock<IMessageQueue>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
 
-            var systemInformationSender = new Mock<ISystemInformationSender>();
-
-            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(systemInformationProvider.Object, systemInformationSender.Object);
+            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(
+                systemInformationProvider.Object, messageQueue.Object, messageQueueWorker.Object);
 
             // Act
             var dispatcherTask = new Task(systemInformationDispatcher.Start);
@@ -155,96 +117,116 @@ namespace Agent.Core.Tests.UnitTests.Dispatcher
             systemInformationDispatcher.Stop();
 
             // Assert
-            systemInformationSender.Verify(s => s.Send(It.IsAny<SystemInformation>()), Times.AtLeast(2));
+            messageQueueWorker.Verify(s => s.Start(), Times.Once());
         }
 
-        #endregion
-
-        #region Stop
-
         [Test]
-        public void Stop_IsExecutedBeforeStart_DispatcherRunsOnlyForOneInterval()
+        public void Start_WaitsForMessageQueueWorkerToFinish()
         {
             // Arrange
-            int slack = 100;
+            int dispatcherRuntime = IntervalSystemInformationDispatcher.SendIntervalInMilliseconds * 1;
+            int timeMessageWorkerTakesToFinish = dispatcherRuntime * 3;
 
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
-            var systemInformationSender = new Mock<ISystemInformationSender>();
-            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(systemInformationProvider.Object, systemInformationSender.Object);
+            var messageQueue = new Mock<IMessageQueue>();
+            var messageQueueWorker = new WaitingMessageQueueWorker(timeMessageWorkerTakesToFinish);
+
+            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(
+                systemInformationProvider.Object, messageQueue.Object, messageQueueWorker);
 
             // Act
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            systemInformationDispatcher.Stop();
-            systemInformationDispatcher.Start();
-
-            stopwatch.Stop();
-
-            // Assert
-            Assert.IsTrue(IntervalSystemInformationDispatcher.SendIntervalInMilliseconds - stopwatch.ElapsedMilliseconds > slack * -1);
-            Assert.Less(stopwatch.ElapsedMilliseconds, IntervalSystemInformationDispatcher.SendIntervalInMilliseconds * 2);
-        }
-
-        [Test]
-        public void Stop_IsExecutedBeforeStart_SystemInformationProviderIsNeverCalled()
-        {
-            // Arrange
-            var systemInformationProvider = new Mock<ISystemInformationProvider>();
-            var systemInformationSender = new Mock<ISystemInformationSender>();
-            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(systemInformationProvider.Object, systemInformationSender.Object);
-
-            // Act
-            systemInformationDispatcher.Stop();
-            systemInformationDispatcher.Start();
-
-            // Assert
-            systemInformationProvider.Verify(s => s.GetSystemInfo(), Times.Never());
-        }
-
-        [Test]
-        public void Stop_IsExecutedBeforeStart_SystemInformationSenderIsNeverCalled()
-        {
-            // Arrange
-            var systemInformationProvider = new Mock<ISystemInformationProvider>();
-            var systemInformationSender = new Mock<ISystemInformationSender>();
-            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(systemInformationProvider.Object, systemInformationSender.Object);
-
-            // Act
-            systemInformationDispatcher.Stop();
-            systemInformationDispatcher.Start();
-
-            // Assert
-            systemInformationSender.Verify(s => s.Send(It.IsAny<SystemInformation>()), Times.Never());
-        }
-
-        [Test]
-        public void Stop_IsExecutedAfterThreeIntervals_TotalDurationIsLessThanFourIntervals()
-        {
-            // Arrange
-            int slack = 100;
-            int waitDuration = IntervalSystemInformationDispatcher.SendIntervalInMilliseconds * 3;
-
-            var systemInformationProvider = new Mock<ISystemInformationProvider>();
-            var systemInformationSender = new Mock<ISystemInformationSender>();
-            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(systemInformationProvider.Object, systemInformationSender.Object);
-
-            // Act
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            var startTask = new Task(systemInformationDispatcher.Start);
-            startTask.Start();
-
-            Thread.Sleep(waitDuration);
+            var dispatcherTask = new Task(systemInformationDispatcher.Start);
+            dispatcherTask.Start();
+            Task.WaitAll(new[] { dispatcherTask }, dispatcherRuntime);
             systemInformationDispatcher.Stop();
 
             stopwatch.Stop();
 
             // Assert
-            Assert.IsTrue(stopwatch.ElapsedMilliseconds - waitDuration > slack * -1);
+            Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds, timeMessageWorkerTakesToFinish);
+        }
+
+
+        [Test]
+        public void Start_SystemInformationProviderReturnsNull_InfoIsNotQueued()
+        {
+            // Arrange
+            int durationInMilliseconds = IntervalSystemInformationDispatcher.SendIntervalInMilliseconds * 2;
+
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            SystemInformation systemInformation = null;
+            systemInformationProvider.Setup(s => s.GetSystemInfo()).Returns(systemInformation);
+
+            var messageQueue = new Mock<IMessageQueue>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
+
+            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(
+                systemInformationProvider.Object, messageQueue.Object, messageQueueWorker.Object);
+
+            // Act
+            var dispatcherTask = new Task(systemInformationDispatcher.Start);
+            dispatcherTask.Start();
+            Task.WaitAll(new[] { dispatcherTask }, durationInMilliseconds);
+            systemInformationDispatcher.Stop();
+
+            // Assert
+            messageQueue.Verify(s => s.Enqueue(It.IsAny<SystemInformation>()), Times.Never());
+        }
+
+        [Test]
+        public void Start_SystemInformationProviderReturnsSystemInformation_SystemInformationIsAddedToQueue()
+        {
+            // Arrange
+            int durationInMilliseconds = IntervalSystemInformationDispatcher.SendIntervalInMilliseconds * 2;
+
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            systemInformationProvider.Setup(s => s.GetSystemInfo()).Returns(() => new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow });
+
+            var messageQueue = new Mock<IMessageQueue>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
+
+            var systemInformationDispatcher = new IntervalSystemInformationDispatcher(
+                systemInformationProvider.Object, messageQueue.Object, messageQueueWorker.Object);
+
+            // Act
+            var dispatcherTask = new Task(systemInformationDispatcher.Start);
+            dispatcherTask.Start();
+            Task.WaitAll(new[] { dispatcherTask }, durationInMilliseconds);
+            systemInformationDispatcher.Stop();
+
+            // Assert
+            messageQueue.Verify(s => s.Enqueue(It.IsAny<SystemInformation>()), Times.AtLeastOnce());
         }
 
         #endregion
+    }
+
+    internal class WaitingMessageQueueWorker : IMessageQueueWorker
+    {
+        private readonly int waitTimeInMilliseconds;
+
+        public WaitingMessageQueueWorker(int waitTimeInMilliseconds)
+        {
+            this.waitTimeInMilliseconds = waitTimeInMilliseconds;
+        }
+
+        public void Start()
+        {
+            Console.WriteLine("Starting to wait.");
+            Thread.Sleep(this.waitTimeInMilliseconds * 10);
+            for (var i = 0; i < 10; i++)
+            {
+                Console.WriteLine("Sleeping " + i);
+                Thread.Sleep(this.waitTimeInMilliseconds);
+            }
+            Console.WriteLine("Done waiting.");
+        }
+
+        public void Stop()
+        {
+        }
     }
 }
