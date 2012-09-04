@@ -3,9 +3,9 @@ using System.Threading;
 
 using SignalKo.SystemMonitor.Agent.Core.Collector;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Dispatcher
+namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 {
-    public class IntervalSystemInformationDispatcher : ISystemInformationDispatcher
+    public class MessageQueueFeeder : IMessageQueueFeeder
     {
         public const int SendIntervalInMilliseconds = 1000;
 
@@ -17,7 +17,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Dispatcher
 
         private bool stop;
 
-        public IntervalSystemInformationDispatcher(ISystemInformationProvider systemInformationProvider, IMessageQueue messageQueue)
+        public MessageQueueFeeder(ISystemInformationProvider systemInformationProvider, IMessageQueue messageQueue)
         {
             if (systemInformationProvider == null)
             {

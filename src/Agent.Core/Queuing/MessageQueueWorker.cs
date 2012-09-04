@@ -5,7 +5,7 @@ using SignalKo.SystemMonitor.Agent.Core.Exceptions;
 using SignalKo.SystemMonitor.Agent.Core.Sender;
 using SignalKo.SystemMonitor.Common.Model;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Dispatcher
+namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 {
     public class MessageQueueWorker : IMessageQueueWorker
     {
@@ -43,7 +43,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Dispatcher
 
                 // check if service has been stopped
                 Monitor.Enter(this.lockObject);
-                if (this.stop)
+                if (this.stop && this.messageQueue.)
                 {
                     Monitor.Exit(this.lockObject);
                     break;

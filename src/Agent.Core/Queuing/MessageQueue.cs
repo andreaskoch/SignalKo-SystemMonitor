@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 
 using SignalKo.SystemMonitor.Common.Model;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Dispatcher
+namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 {
     public class MessageQueue : IMessageQueue
     {
@@ -28,6 +28,11 @@ namespace SignalKo.SystemMonitor.Agent.Core.Dispatcher
         {
             SystemInformation systemInformation;
             return this.queue.TryDequeue(out systemInformation) ? systemInformation : null;
+        }
+
+        public bool IsEmpty()
+        {
+            return this.queue.IsEmpty;
         }
     }
 }

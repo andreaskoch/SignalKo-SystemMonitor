@@ -1,4 +1,4 @@
-namespace SignalKo.SystemMonitor.Agent.Core.Dispatcher
+namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 {
     public interface IMessageQueueWorker
     {
