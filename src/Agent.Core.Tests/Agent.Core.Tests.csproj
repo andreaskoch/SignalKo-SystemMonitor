@@ -56,7 +56,8 @@
     <Compile Include="IntegrationTests\SystemStorageStatusProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\EnvironmentMachineNameProviderTests.cs" />
-    <Compile Include="UnitTests\Queuing\MessageQueueFeederTests.cs" />
+    <Compile Include="UnitTests\Queuing\SystemInformationMessageQueueFeederTests.cs" />
+    <Compile Include="UnitTests\Queuing\SystemInformationMessageQueueWorkerTests.cs" />
     <Compile Include="UnitTests\Sender\RESTBasedSystemInformationSenderTests.cs" />
     <Compile Include="UnitTests\Sender\RESTClientFactoryTests.cs" />
     <Compile Include="UnitTests\Sender\RESTServiceConfigurationTests.cs" />

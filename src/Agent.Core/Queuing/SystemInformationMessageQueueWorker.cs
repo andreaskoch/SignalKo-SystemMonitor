@@ -7,19 +7,21 @@ using SignalKo.SystemMonitor.Common.Model;
 
 namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 {
-    public class MessageQueueWorker : IMessageQueueWorker
+    public class SystemInformationMessageQueueWorker : IMessageQueueWorker
     {
-        public const int SendIntervalInMilliseconds = 1000;
+        public const int WorkIntervalInMilliseconds = 1000;
+
+        public const int MaxRetryCount = 5;
 
         private readonly object lockObject = new object();
 
-        private readonly IMessageQueue messageQueue;
+        private readonly IMessageQueue<SystemInformation> messageQueue;
 
         private readonly ISystemInformationSender systemInformationSender;
 
         private bool stop;
 
-        public MessageQueueWorker(IMessageQueue messageQueue, ISystemInformationSender systemInformationSender)
+        public SystemInformationMessageQueueWorker(IMessageQueue<SystemInformation> messageQueue, ISystemInformationSender systemInformationSender)
         {
             if (messageQueue == null)
             {
@@ -39,11 +41,11 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
         {
             while (true)
             {
-                Thread.Sleep(SendIntervalInMilliseconds);
+                Thread.Sleep(WorkIntervalInMilliseconds);
 
                 // check if service has been stopped
                 Monitor.Enter(this.lockObject);
-                if (this.stop && this.messageQueue.)
+                if (this.stop && this.messageQueue.IsEmpty())
                 {
                     Monitor.Exit(this.lockObject);
                     break;
@@ -52,8 +54,8 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
                 Monitor.Exit(this.lockObject);
 
                 // dequeue message
-                SystemInformation systemInformation = this.messageQueue.Dequeue();
-                if (systemInformation == null)
+                var queueEntry = this.messageQueue.Dequeue();
+                if (queueEntry == null)
                 {
                     continue;
                 }
@@ -61,16 +63,20 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
                 // send messages
                 try
                 {
-                    this.systemInformationSender.Send(systemInformation);
+                    this.systemInformationSender.Send(queueEntry.Item);
                 }
                 catch (SendSystemInformationFailedException sendFailedException)
                 {
                     // retry later
-                    this.messageQueue.Enqueue(systemInformation);
+                    if (queueEntry.EnqueuCount < MaxRetryCount)
+                    {
+                        this.messageQueue.Enqueue(queueEntry);
+                    }
                 }
                 catch (FatalSystemInformationSenderException fatalException)
                 {
-                    // abort
+                    // persist queue and exit
+                    break;
                 }
             }
         }

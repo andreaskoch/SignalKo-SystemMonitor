@@ -12,7 +12,7 @@ using SignalKo.SystemMonitor.Common.Model;
 namespace Agent.Core.Tests.UnitTests.Queuing
 {
     [TestFixture]
-    public class MessageQueueFeederTests
+    public class SystemInformationMessageQueueFeederTests
     {
         #region constructor
 
@@ -21,10 +21,10 @@ namespace Agent.Core.Tests.UnitTests.Queuing
         {
             // Arrange
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
-            var messageQueue = new Mock<IMessageQueue>();
+            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
 
             // Act
-            var systemInformationDispatcher = new MessageQueueFeeder(systemInformationProvider.Object, messageQueue.Object);
+            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, messageQueue.Object);
 
             // Assert
             Assert.IsNotNull(systemInformationDispatcher);
@@ -35,10 +35,10 @@ namespace Agent.Core.Tests.UnitTests.Queuing
         public void Constructor_SystemInformationProviderParameterIsNull_ArgumentNullExceptionIsThrown()
         {
             // Arrange
-            var messageQueue = new Mock<IMessageQueue>();
+            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
 
             // Act
-            new MessageQueueFeeder(null, messageQueue.Object);
+            new SystemInformationMessageQueueFeeder(null, messageQueue.Object);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
 
             // Act
-            new MessageQueueFeeder(systemInformationProvider.Object, null);
+            new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, null);
         }
 
         #endregion
@@ -60,12 +60,12 @@ namespace Agent.Core.Tests.UnitTests.Queuing
         public void Start_RunsFor3Intervals_SystemInfoIsPulledAtLeastTwoTimes()
         {
             // Arrange
-            int durationInMilliseconds = MessageQueueFeeder.SendIntervalInMilliseconds * 3;
+            int durationInMilliseconds = SystemInformationMessageQueueFeeder.SendIntervalInMilliseconds * 3;
 
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
-            var messageQueue = new Mock<IMessageQueue>();
+            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
 
-            var systemInformationDispatcher = new MessageQueueFeeder(systemInformationProvider.Object, messageQueue.Object);
+            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, messageQueue.Object);
 
             // Act
             var dispatcherTask = new Task(systemInformationDispatcher.Start);
@@ -81,15 +81,15 @@ namespace Agent.Core.Tests.UnitTests.Queuing
         public void Start_SystemInformationProviderReturnsNull_InfoIsNotQueued()
         {
             // Arrange
-            int durationInMilliseconds = MessageQueueFeeder.SendIntervalInMilliseconds * 2;
+            int durationInMilliseconds = SystemInformationMessageQueueFeeder.SendIntervalInMilliseconds * 2;
 
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
             SystemInformation systemInformation = null;
             systemInformationProvider.Setup(s => s.GetSystemInfo()).Returns(systemInformation);
 
-            var messageQueue = new Mock<IMessageQueue>();
+            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
 
-            var systemInformationDispatcher = new MessageQueueFeeder(
+            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(
                 systemInformationProvider.Object, messageQueue.Object);
 
             // Act
@@ -99,21 +99,21 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             systemInformationDispatcher.Stop();
 
             // Assert
-            messageQueue.Verify(s => s.Enqueue(It.IsAny<SystemInformation>()), Times.Never());
+            messageQueue.Verify(s => s.Enqueue(It.IsAny<SystemInformationQueueItem>()), Times.Never());
         }
 
         [Test]
         public void Start_SystemInformationProviderReturnsSystemInformation_SystemInformationIsAddedToQueue()
         {
             // Arrange
-            int durationInMilliseconds = MessageQueueFeeder.SendIntervalInMilliseconds * 2;
+            int durationInMilliseconds = SystemInformationMessageQueueFeeder.SendIntervalInMilliseconds * 2;
 
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
             systemInformationProvider.Setup(s => s.GetSystemInfo()).Returns(() => new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow });
 
-            var messageQueue = new Mock<IMessageQueue>();
+            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
 
-            var systemInformationDispatcher = new MessageQueueFeeder(
+            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(
                 systemInformationProvider.Object, messageQueue.Object);
 
             // Act
@@ -123,7 +123,7 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             systemInformationDispatcher.Stop();
 
             // Assert
-            messageQueue.Verify(s => s.Enqueue(It.IsAny<SystemInformation>()), Times.AtLeastOnce());
+            messageQueue.Verify(s => s.Enqueue(It.IsAny<SystemInformationQueueItem>()), Times.AtLeastOnce());
         }
 
         #endregion

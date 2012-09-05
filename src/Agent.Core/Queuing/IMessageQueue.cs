@@ -1,12 +1,10 @@
-using SignalKo.SystemMonitor.Common.Model;
-
 namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 {
-    public interface IMessageQueue
+    public interface IMessageQueue<T>
     {
-        void Enqueue(SystemInformation systemInformation);
+        void Enqueue(IQueueItem<T> item);
 
-        SystemInformation Dequeue();
+        IQueueItem<T> Dequeue();
 
         bool IsEmpty();
     }
