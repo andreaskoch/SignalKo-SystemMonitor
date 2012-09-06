@@ -6,6 +6,10 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 
         IQueueItem<T> Dequeue();
 
+        IQueueItem<T>[] PurgeAllItems();
+
+        int GetSize();
+        
         bool IsEmpty();
     }
 }

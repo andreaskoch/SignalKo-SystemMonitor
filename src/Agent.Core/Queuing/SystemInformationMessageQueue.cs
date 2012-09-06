@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Threading;
 
 using SignalKo.SystemMonitor.Common.Model;
 
@@ -7,7 +8,9 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 {
     public class SystemInformationMessageQueue : IMessageQueue<SystemInformation>
     {
-        private readonly ConcurrentQueue<IQueueItem<SystemInformation>> queue;
+        private readonly object lockObject = new object();
+
+        private ConcurrentQueue<IQueueItem<SystemInformation>> queue;
 
         public SystemInformationMessageQueue()
         {
@@ -22,13 +25,36 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
             }
 
             systemInformationQueueItem.EnqueuCount++;
+
+            Monitor.Enter(this.lockObject);
             this.queue.Enqueue(systemInformationQueueItem);
+            Monitor.Exit(this.lockObject);
         }
 
         public IQueueItem<SystemInformation> Dequeue()
         {
             IQueueItem<SystemInformation> systemInformationQueueItem;
-            return this.queue.TryDequeue(out systemInformationQueueItem) ? systemInformationQueueItem : null;
+
+            Monitor.Enter(this.lockObject);
+            var success = this.queue.TryDequeue(out systemInformationQueueItem);
+            Monitor.Exit(this.lockObject);
+
+            return success ? systemInformationQueueItem : null;
+        }
+
+        public IQueueItem<SystemInformation>[] PurgeAllItems()
+        {
+            Monitor.Enter(this.lockObject);
+            var items = this.queue.ToArray();
+            this.queue = new ConcurrentQueue<IQueueItem<SystemInformation>>();
+            Monitor.Exit(this.lockObject);
+
+            return items;
+        }
+
+        public int GetSize()
+        {
+            return this.queue.Count;
         }
 
         public bool IsEmpty()

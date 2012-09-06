@@ -1,3 +1,5 @@
+using System;
+
 using SignalKo.SystemMonitor.Common.Model;
 
 namespace SignalKo.SystemMonitor.Agent.Core.Queuing
@@ -6,6 +8,11 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
     {
         public SystemInformationQueueItem(SystemInformation item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException("item");
+            }
+
             this.EnqueuCount = 0;
             this.Item = item;
         }
