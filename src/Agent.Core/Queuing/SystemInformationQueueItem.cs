@@ -17,8 +17,36 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
             this.Item = item;
         }
 
+        public SystemInformation Item { get; private set; }
+
         public int EnqueuCount { get; set; }
 
-        public SystemInformation Item { get; set; }
+        public override string ToString()
+        {
+            return string.Format("SystemInformationQueueItem (Item: {0})", this.Item);
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 37;
+            hash = (hash * 23) + this.ToString().GetHashCode();
+            return hash;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            var otherObj = obj as SystemInformationQueueItem;
+            if (otherObj != null)
+            {
+                return this.Item.Equals(otherObj.Item);
+            }
+
+            return false;
+        }
     }
 }

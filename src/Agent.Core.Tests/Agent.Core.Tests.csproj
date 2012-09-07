@@ -61,6 +61,7 @@
     <Compile Include="UnitTests\Queuing\SystemInformationMessageQueueFeederTests.cs" />
     <Compile Include="UnitTests\Queuing\SystemInformationMessageQueueTests.cs" />
     <Compile Include="UnitTests\Queuing\SystemInformationMessageQueueWorkerTests.cs" />
+    <Compile Include="UnitTests\Queuing\SystemInformationQueueItemTests.cs" />
     <Compile Include="UnitTests\Sender\RESTBasedSystemInformationSenderTests.cs" />
     <Compile Include="UnitTests\Sender\RESTClientFactoryTests.cs" />
     <Compile Include="UnitTests\Sender\RESTServiceConfigurationTests.cs" />
