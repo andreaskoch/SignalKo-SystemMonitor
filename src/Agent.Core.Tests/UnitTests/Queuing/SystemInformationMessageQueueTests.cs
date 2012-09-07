@@ -205,7 +205,7 @@ namespace Agent.Core.Tests.UnitTests.Queuing
         {
             // Arrange
             var queue = new SystemInformationMessageQueue();
-            int expectedCount = new Random(DateTimeOffset.UtcNow.GetHashCode()).Next(1, 10000000);
+            int expectedCount = TestUtilities.GetRandNumber(1, 10000000);
             var items = TestUtilities.GetSystemInformationObjects(expectedCount);
             foreach (var item in items)
             {

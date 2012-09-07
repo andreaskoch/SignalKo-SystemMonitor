@@ -139,6 +139,61 @@ namespace Agent.Core.Tests.IntegrationTests.Queueing
             Assert.AreEqual(itemPoolSize, dequeuedItemCount);
         }
 
+        [Test]
+        public void PurgeQueueWhileEnqueuing_AllItemsThatAreEnqueuedAreAlsoDequeued()
+        {
+            // Arrange
+            var itemPoolSize = 10000000;
+            var itemPool = TestUtilities.GetSystemInformationObjects(itemPoolSize);
+            var queue = new SystemInformationMessageQueue();
+
+            // Act
+            var purgeCount = 0;
+            var dequeuedItemCount = 0;
+            var enqueuedItemCount = 0;
+
+            var thread1 = new Task(
+                () =>
+                {
+                    foreach (var item in itemPool)
+                    {
+                        queue.Enqueue(new SystemInformationQueueItem(item));
+                        enqueuedItemCount++;
+                    }
+                });
+
+            var thread2 = new Task(
+                () =>
+                {
+                    while (!queue.IsEmpty())
+                    {
+                        purgeCount++;
+                        dequeuedItemCount += queue.PurgeAllItems().Count();
+                        int millisecondsToWaitBeforeNextItemIsQueued = TestUtilities.GetRandNumber(50, 100);
+                        Thread.Sleep(millisecondsToWaitBeforeNextItemIsQueued);
+                    }
+                });
+
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            thread1.Start();
+            thread2.Start();
+            Task.WaitAll(thread1, thread2);
+
+            stopWatch.Stop();
+
+            // Assert
+            Console.WriteLine(
+                "Enqueuing {0} items while another thread purged the queue took {1} milliseconds. The queue has been purged {2} time(s) during this time.",
+                enqueuedItemCount,
+                stopWatch.ElapsedMilliseconds,
+                purgeCount);
+
+            Assert.AreEqual(enqueuedItemCount, dequeuedItemCount);
+            Assert.IsTrue(queue.IsEmpty());
+        }
+
         #endregion
     }
 }

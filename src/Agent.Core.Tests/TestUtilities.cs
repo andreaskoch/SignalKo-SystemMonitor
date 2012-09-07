@@ -20,6 +20,11 @@ namespace Agent.Core.Tests
             }
 
             return items;
-        }        
+        }
+
+        public static int GetRandNumber(int min, int max)
+        {
+            return new Random(DateTimeOffset.UtcNow.GetHashCode()).Next(min, max);
+        }
     }
 }
