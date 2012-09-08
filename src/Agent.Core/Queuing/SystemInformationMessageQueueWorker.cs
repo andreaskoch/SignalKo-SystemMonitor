@@ -17,15 +17,22 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 
         private readonly IMessageQueue<SystemInformation> messageQueue;
 
+        private readonly IMessageQueue<SystemInformation> failedRequestQueue;
+
         private readonly ISystemInformationSender systemInformationSender;
 
         private bool stop;
 
-        public SystemInformationMessageQueueWorker(IMessageQueue<SystemInformation> messageQueue, ISystemInformationSender systemInformationSender)
+        public SystemInformationMessageQueueWorker(IMessageQueue<SystemInformation> messageQueue, IMessageQueue<SystemInformation> failedRequestQueue, ISystemInformationSender systemInformationSender)
         {
             if (messageQueue == null)
             {
                 throw new ArgumentNullException("messageQueue");
+            }
+
+            if (failedRequestQueue == null)
+            {
+                throw new ArgumentNullException("failedRequestQueue");
             }
 
             if (systemInformationSender == null)
@@ -34,6 +41,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
             }
 
             this.messageQueue = messageQueue;
+            this.failedRequestQueue = failedRequestQueue;
             this.systemInformationSender = systemInformationSender;
         }
 
@@ -72,10 +80,19 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
                     {
                         this.messageQueue.Enqueue(queueEntry);
                     }
+                    else
+                    {
+                        this.failedRequestQueue.Enqueue(queueEntry);
+                    }
                 }
                 catch (FatalSystemInformationSenderException fatalException)
                 {
                     // persist queue and exit
+                    Monitor.Enter(this.lockObject);
+                    var unfinishedQueueItems = this.messageQueue.PurgeAllItems();
+                    this.failedRequestQueue.Enqueue(unfinishedQueueItems);
+                    Monitor.Exit(this.lockObject);
+
                     break;
                 }
             }

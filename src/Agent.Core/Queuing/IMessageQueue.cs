@@ -1,8 +1,12 @@
+using System.Collections.Generic;
+
 namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 {
     public interface IMessageQueue<T>
     {
         void Enqueue(IQueueItem<T> item);
+
+        void Enqueue(IEnumerable<IQueueItem<T>> items);
 
         IQueueItem<T> Dequeue();
 

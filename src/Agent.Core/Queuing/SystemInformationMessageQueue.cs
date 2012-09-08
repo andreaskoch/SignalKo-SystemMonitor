@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 
 using SignalKo.SystemMonitor.Common.Model;
@@ -29,6 +30,19 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
             Monitor.Enter(this.lockObject);
             this.queue.Enqueue(systemInformationQueueItem);
             Monitor.Exit(this.lockObject);
+        }
+
+        public void Enqueue(IEnumerable<IQueueItem<SystemInformation>> items)
+        {
+            if (items == null)
+            {
+                throw new ArgumentNullException("items");
+            }
+
+            foreach (var item in items)
+            {
+                this.Enqueue(item);
+            }
         }
 
         public IQueueItem<SystemInformation> Dequeue()

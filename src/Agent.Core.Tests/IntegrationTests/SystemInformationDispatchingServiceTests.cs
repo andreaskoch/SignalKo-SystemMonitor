@@ -40,8 +40,9 @@ namespace Agent.Core.Tests.IntegrationTests
             sender.Setup(s => s.Send(It.IsAny<SystemInformation>())).Callback(() => { attemptsToSend++; }).Throws(new SendSystemInformationFailedException("Send failed.", null));
 
             IMessageQueue<SystemInformation> queue = new SystemInformationMessageQueue();
+            IMessageQueue<SystemInformation> failedRequestQueue = new SystemInformationMessageQueue();
             IMessageQueueFeeder messageQueueFeeder = new SystemInformationMessageQueueFeeder(provider.Object, queue);
-            IMessageQueueWorker messageQueueWorker = new SystemInformationMessageQueueWorker(queue, sender.Object);
+            IMessageQueueWorker messageQueueWorker = new SystemInformationMessageQueueWorker(queue, failedRequestQueue, sender.Object);
 
             var systemInformationDispatchingService = new SystemInformationDispatchingService(messageQueueFeeder, messageQueueWorker);
 

@@ -24,10 +24,11 @@ namespace Agent.Core.Tests.UnitTests.Queuing
         {
             // Arrange
             var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
             // Act
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
 
             // Assert
             Assert.IsNotNull(messageQueueWorker);
@@ -38,11 +39,25 @@ namespace Agent.Core.Tests.UnitTests.Queuing
         public void Constructor_MessageQueueParameterIsNull_ArgumentNullExceptionIsThrown()
         {
             // Arrange
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
             // Act
-            new SystemInformationMessageQueueWorker(null, systemInformationSender.Object);
+            new SystemInformationMessageQueueWorker(null, failedRequestQueue.Object, systemInformationSender.Object);
         }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_FailedRequestQueueParameterIsNull_ArgumentNullExceptionIsThrown()
+        {
+            // Arrange
+            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var systemInformationSender = new Mock<ISystemInformationSender>();
+
+            // Act
+            new SystemInformationMessageQueueWorker(messageQueue.Object, null, systemInformationSender.Object);
+        }
+
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -50,9 +65,10 @@ namespace Agent.Core.Tests.UnitTests.Queuing
         {
             // Arrange
             var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
 
             // Act
-            new SystemInformationMessageQueueWorker(messageQueue.Object, null);
+            new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, null);
         }
 
         #endregion
@@ -66,9 +82,10 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
             messageQueue.Setup(q => q.IsEmpty()).Returns(true);
 
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
 
             // Act
             messageQueueWorker.Stop();
@@ -85,9 +102,10 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
             messageQueue.Setup(q => q.IsEmpty()).Returns(true);
 
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
 
             // Act
             var stopwatch = new Stopwatch();
@@ -118,9 +136,10 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             SystemInformationQueueItem queueItem = null;
             messageQueue.Setup(q => q.Dequeue()).Returns(queueItem);
 
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
 
             // Act
             var stopwatch = new Stopwatch();
@@ -156,9 +175,10 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             SystemInformationQueueItem queueItem = null;
             messageQueue.Setup(q => q.Dequeue()).Returns(queueItem);
 
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
 
             // Act
             var worker = new Task(messageQueueWorker.Start);
@@ -182,9 +202,10 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             SystemInformationQueueItem queueItem = null;
             messageQueue.Setup(q => q.Dequeue()).Returns(queueItem);
 
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
 
             // Act
             var worker = new Task(messageQueueWorker.Start);
@@ -222,9 +243,10 @@ namespace Agent.Core.Tests.UnitTests.Queuing
                     return null;
                 });
 
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
 
             // Act
             var worker = new Task(messageQueueWorker.Start);
@@ -259,11 +281,12 @@ namespace Agent.Core.Tests.UnitTests.Queuing
                     return null;
                 });
 
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
             systemInformationSender.Setup(s => s.Send(systemInfo)).Throws(
                 new SendSystemInformationFailedException("Some minor exception which justifies a retry", null));
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
 
             // Act
             var worker = new Task(messageQueueWorker.Start);
@@ -276,7 +299,7 @@ namespace Agent.Core.Tests.UnitTests.Queuing
         }
 
         [Test]
-        public void QueueIsFilled_SendCausesExceptionWhichJustifiesARetry_RetryCountHasBeenExceeded_ItemIsDropped()
+        public void QueueIsFilled_SendCausesExceptionWhichJustifiesARetry_RetryCountHasBeenExceeded_ItemIsAddedToFailedRequestQueue()
         {
             // Arrange
             int maxRuntime = SystemInformationMessageQueueWorker.WorkIntervalInMilliseconds * 2;
@@ -298,11 +321,12 @@ namespace Agent.Core.Tests.UnitTests.Queuing
                 return null;
             });
 
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
             systemInformationSender.Setup(s => s.Send(systemInfo)).Throws(
                 new SendSystemInformationFailedException("Some minor exception which justifies a retry", null));
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
 
             // Act
             var worker = new Task(messageQueueWorker.Start);
@@ -312,6 +336,38 @@ namespace Agent.Core.Tests.UnitTests.Queuing
 
             // Assert
             messageQueue.Verify(q => q.Enqueue(queueItem), Times.Never());
+            failedRequestQueue.Verify(q => q.Enqueue(queueItem), Times.Once());
+        }
+
+        [Test]
+        public void QueueIsFilled_SendCausesFatalException_AllItemsInQueueAreMovedToTheFailedRequestQueue()
+        {
+            // Arrange
+            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
+            messageQueue.Setup(q => q.IsEmpty()).Returns(false);
+            messageQueue.Setup(q => q.Dequeue()).Returns(
+                () => new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow }));
+
+            var items = new[]
+                {
+                    new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName + "1", Timestamp = DateTimeOffset.UtcNow }),
+                    new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName + "2", Timestamp = DateTimeOffset.UtcNow }),
+                    new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName + "3", Timestamp = DateTimeOffset.UtcNow })
+                };
+
+            messageQueue.Setup(q => q.PurgeAllItems()).Returns(items);
+
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var systemInformationSender = new Mock<ISystemInformationSender>();
+            systemInformationSender.Setup(s => s.Send(It.IsAny<SystemInformation>())).Throws(new FatalSystemInformationSenderException("Some fatal exception."));
+
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
+
+            // Act
+            messageQueueWorker.Start();
+
+            // Assert
+            failedRequestQueue.Verify(q => q.Enqueue(items), Times.Once());
         }
 
         [Test]
@@ -325,10 +381,11 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             messageQueue.Setup(q => q.Dequeue()).Returns(
                 () => new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow }));
 
+            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
             systemInformationSender.Setup(s => s.Send(It.IsAny<SystemInformation>())).Throws(new FatalSystemInformationSenderException("Some fatal exception."));
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
 
             // Act
             var stopwatch = new Stopwatch();

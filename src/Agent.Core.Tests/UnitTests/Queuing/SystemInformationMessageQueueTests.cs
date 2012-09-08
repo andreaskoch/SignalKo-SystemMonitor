@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using NUnit.Framework;
 
@@ -74,6 +75,50 @@ namespace Agent.Core.Tests.UnitTests.Queuing
 
             // Assert
             Assert.AreEqual(timesItemIsQueued, item.EnqueuCount);
+        }
+
+        #endregion
+
+        #region Enqueue Collection
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Enqueue_ItemsParameterIsNull_ArgumentNullExceptionIsThrown()
+        {
+            // Arrange
+            var queue = new SystemInformationMessageQueue();
+            IQueueItem<SystemInformation>[] items = null;
+
+            // Act
+            queue.Enqueue(items);
+        }
+
+        [Test]
+        public void Enqueue_EmptyCollection_NoItemIsEnqueued()
+        {
+            // Arrange
+            var queue = new SystemInformationMessageQueue();
+            var items = new IQueueItem<SystemInformation>[] { };
+
+            // Act
+            queue.Enqueue(items);
+
+            // Assert
+            Assert.AreEqual(0, queue.GetSize());
+        }
+
+        [Test]
+        public void Enqueue_Collection_EachItemInTheSuppliedCollectionIsEnqueued()
+        {
+            // Arrange
+            var queue = new SystemInformationMessageQueue();
+            var items = TestUtilities.GetSystemInformationObjects(10).Select(i => new SystemInformationQueueItem(i)).ToArray();
+
+            // Act
+            queue.Enqueue(items);
+
+            // Assert
+            Assert.AreEqual(items.Length, queue.GetSize());
         }
 
         #endregion
