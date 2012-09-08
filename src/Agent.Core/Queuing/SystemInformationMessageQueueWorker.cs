@@ -11,7 +11,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
     {
         public const int WorkIntervalInMilliseconds = 1000;
 
-        public const int MaxRetryCount = 5;
+        public const int MaxRetryCount = 3;
 
         private readonly object lockObject = new object();
 
