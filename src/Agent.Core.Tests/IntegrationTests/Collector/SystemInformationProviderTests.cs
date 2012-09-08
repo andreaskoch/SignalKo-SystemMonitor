@@ -5,7 +5,7 @@ using NUnit.Framework;
 using SignalKo.SystemMonitor.Agent.Core.Collector;
 using SignalKo.SystemMonitor.Common.Services;
 
-namespace Agent.Core.Tests.IntegrationTests
+namespace Agent.Core.Tests.IntegrationTests.Collector
 {
     [TestFixture]
     public class SystemInformationProviderTests

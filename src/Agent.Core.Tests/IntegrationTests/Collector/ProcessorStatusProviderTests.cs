@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 using SignalKo.SystemMonitor.Agent.Core.Collector;
 
-namespace Agent.Core.Tests.IntegrationTests
+namespace Agent.Core.Tests.IntegrationTests.Collector
 {
     [TestFixture]
     public class ProcessorStatusProviderTests
