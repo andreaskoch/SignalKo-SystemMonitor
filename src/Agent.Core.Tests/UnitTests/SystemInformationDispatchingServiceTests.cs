@@ -144,7 +144,8 @@ namespace Agent.Core.Tests.UnitTests
             stopwatch.Stop();
 
             // Assert
-            Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds, Math.Max(durationTheFeederIsRunning, durationTheWorkerIsRunning));
+            int tolerance = 100;
+            Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds, Math.Max(durationTheFeederIsRunning, durationTheWorkerIsRunning) - tolerance);
         }
 
 

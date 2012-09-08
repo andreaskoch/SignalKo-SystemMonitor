@@ -55,6 +55,7 @@
     <Compile Include="IntegrationTests\Collector\SystemInformationProviderTests.cs" />
     <Compile Include="IntegrationTests\Collector\SystemMemoryStatusProviderTests.cs" />
     <Compile Include="IntegrationTests\Collector\SystemStorageStatusProviderTests.cs" />
+    <Compile Include="IntegrationTests\SystemInformationDispatchingServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\Collector\EnvironmentMachineNameProviderTests.cs" />
     <Compile Include="TestUtilities.cs" />
