@@ -67,6 +67,7 @@
     <Compile Include="UnitTests\Sender\RESTServiceConfigurationTests.cs" />
     <Compile Include="UnitTests\Collector\SystemInformationProviderTests.cs" />
     <Compile Include="UnitTests\Collector\SystemMemoryStatusProviderTests.cs" />
+    <Compile Include="UnitTests\SystemInformationDispatchingServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
