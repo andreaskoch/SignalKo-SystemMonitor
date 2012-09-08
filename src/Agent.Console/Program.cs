@@ -1,36 +1,70 @@
-﻿namespace SignalKo.SystemMonitor.Agent.Console
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+using SignalKo.SystemMonitor.Agent.Console.DependencyResolution;
+using SignalKo.SystemMonitor.Agent.Core;
+
+using StructureMap;
+
+namespace SignalKo.SystemMonitor.Agent.Console
 {
     public class Program
     {
-        //private static PerformanceCounter processorCounter;
+        private readonly ISystemInformationDispatchingService systemInformationDispatchingService;
 
-        //private static PerformanceCounter memoryCounter;
-
-        static void Main(string[] args)
+        public Program(ISystemInformationDispatchingService systemInformationDispatchingService)
         {
-            //processorCounter = new PerformanceCounter
-            //    {
-            //        CategoryName = "Processor",
-            //        CounterName = "% Processor Time",
-            //        InstanceName = "_Total"
-            //    };
+            if (systemInformationDispatchingService == null)
+            {
+                throw new ArgumentNullException("systemInformationDispatchingService");
+            }
 
-            //memoryCounter = new PerformanceCounter("Memory", "Available KBytes");
+            this.systemInformationDispatchingService = systemInformationDispatchingService;
+        }
 
-            //string baseUrl = ConfigurationManager.AppSettings["ServiceBaseUrl"];
-            //var restClient = new RestClient(baseUrl);
+        public static int Main(string[] args)
+        {
+            StructureMapSetup.Setup();
+            
+            var program = new Program(ObjectFactory.GetInstance<ISystemInformationDispatchingService>());
+            return program.Run(args);
+        }
 
-            //do
-            //{
-            //    object hardwareInfo = null;
-            //    var request = new RestRequest("api/HardwareInfo/", Method.PUT);
-            //    request.RequestFormat = DataFormat.Json;
-            //    request.AddBody(hardwareInfo);
-            //    restClient.ExecuteAsync<SystemInformation>(request, response => { });
+        public int Run(string[] commandLineArguments)
+        {
+            try
+            {
+                var dispatcher = new Task(this.systemInformationDispatchingService.Start);
+                var escapeWatch = new Task(
+                    () =>
+                        {
+                            System.Console.WriteLine("Hit <ESC> to stop.");
 
-            //    Thread.Sleep(100);
-            //}
-            //while (true);
+                            while (true)
+                            {
+                                var input = System.Console.ReadKey();
+                                if (input.Key == ConsoleKey.Escape)
+                                {
+                                    this.systemInformationDispatchingService.Stop();
+                                    break;
+                                }
+
+                                Thread.Sleep(1000);
+                            }
+                        });
+
+                escapeWatch.Start();
+                dispatcher.Start();
+
+                Task.WaitAll(new[] { dispatcher });
+
+                return 0;
+            }
+            catch (Exception exception)
+            {
+                return 1;
+            }            
         }
     }
 }

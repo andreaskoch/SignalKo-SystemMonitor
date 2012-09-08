@@ -19,20 +19,17 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 
         private readonly IMessageQueue<SystemInformation> failedRequestQueue;
 
+        private readonly IMessageQueueProvider<SystemInformation> messageQueueProvider;
+
         private readonly ISystemInformationSender systemInformationSender;
 
         private bool stop;
 
-        public SystemInformationMessageQueueWorker(IMessageQueue<SystemInformation> messageQueue, IMessageQueue<SystemInformation> failedRequestQueue, ISystemInformationSender systemInformationSender)
+        public SystemInformationMessageQueueWorker(IMessageQueueProvider<SystemInformation> messageQueueProvider, ISystemInformationSender systemInformationSender)
         {
-            if (messageQueue == null)
+            if (messageQueueProvider == null)
             {
-                throw new ArgumentNullException("messageQueue");
-            }
-
-            if (failedRequestQueue == null)
-            {
-                throw new ArgumentNullException("failedRequestQueue");
+                throw new ArgumentNullException("messageQueueProvider");
             }
 
             if (systemInformationSender == null)
@@ -40,8 +37,9 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
                 throw new ArgumentNullException("systemInformationSender");
             }
 
-            this.messageQueue = messageQueue;
-            this.failedRequestQueue = failedRequestQueue;
+            this.messageQueue = messageQueueProvider.GetWorkQueue();
+            this.failedRequestQueue = messageQueueProvider.GetErrorQueue();
+            this.messageQueueProvider = messageQueueProvider;
             this.systemInformationSender = systemInformationSender;
         }
 
@@ -96,6 +94,9 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
                     break;
                 }
             }
+
+            // Persist queues
+            this.messageQueueProvider.Persist();
         }
 
         public void Stop()

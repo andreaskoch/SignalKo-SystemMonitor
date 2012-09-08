@@ -58,11 +58,13 @@
     <Compile Include="Collector\SystemMemoryStatusProvider.cs" />
     <Compile Include="Collector\SystemStorageStatusProvider.cs" />
     <Compile Include="Queuing\IMessageQueue.cs" />
+    <Compile Include="Queuing\IMessageQueueProvider.cs" />
     <Compile Include="Queuing\IMessageQueueWorker.cs" />
     <Compile Include="Queuing\IMessageQueueFeeder.cs" />
     <Compile Include="Queuing\IQueueItem.cs" />
     <Compile Include="Queuing\SystemInformationMessageQueueFeeder.cs" />
     <Compile Include="Queuing\SystemInformationMessageQueue.cs" />
+    <Compile Include="Queuing\SystemInformationMessageQueueProvider.cs" />
     <Compile Include="Queuing\SystemInformationMessageQueueWorker.cs" />
     <Compile Include="Exceptions\SystemInformationSenderSetupException.cs" />
     <Compile Include="Exceptions\FatalSystemInformationSenderException.cs" />

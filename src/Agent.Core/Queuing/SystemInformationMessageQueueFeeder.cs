@@ -18,20 +18,20 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 
         private bool stop;
 
-        public SystemInformationMessageQueueFeeder(ISystemInformationProvider systemInformationProvider, IMessageQueue<SystemInformation> messageQueue)
+        public SystemInformationMessageQueueFeeder(ISystemInformationProvider systemInformationProvider, IMessageQueueProvider<SystemInformation> messageQueueProvider)
         {
             if (systemInformationProvider == null)
             {
                 throw new ArgumentNullException("systemInformationProvider");
             }
 
-            if (messageQueue == null)
+            if (messageQueueProvider == null)
             {
-                throw new ArgumentNullException("messageQueue");
+                throw new ArgumentNullException("messageQueueProvider");
             }
 
             this.systemInformationProvider = systemInformationProvider;
-            this.messageQueue = messageQueue;
+            this.messageQueue = messageQueueProvider.GetWorkQueue();
         }
 
         public void Start()
