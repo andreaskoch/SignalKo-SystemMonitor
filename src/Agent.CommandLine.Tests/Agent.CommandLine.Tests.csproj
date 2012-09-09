@@ -48,7 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Agent.Console\Agent.Console.csproj">
+    <ProjectReference Include="..\Agent.CommandLine\Agent.CommandLine.csproj">
       <Project>{8A4C0279-DF94-4DC5-B387-7E3F1171F812}</Project>
       <Name>Agent.Console</Name>
     </ProjectReference>

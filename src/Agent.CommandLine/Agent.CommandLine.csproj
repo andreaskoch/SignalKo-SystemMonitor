@@ -8,8 +8,8 @@
     <ProjectGuid>{8A4C0279-DF94-4DC5-B387-7E3F1171F812}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SignalKo.SystemMonitor.Agent.Console</RootNamespace>
-    <AssemblyName>SignalKo.SystemMonitor.Agent.Console</AssemblyName>
+    <RootNamespace>SignalKo.SystemMonitor.Agent.CommandLine</RootNamespace>
+    <AssemblyName>SystemMonitorAgent</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
