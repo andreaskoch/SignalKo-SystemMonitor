@@ -37,24 +37,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.ServiceProcess" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Service1.cs">
+    <Compile Include="AgentService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Service1.Designer.cs">
-      <DependentUpon>Service1.cs</DependentUpon>
+    <Compile Include="AgentServiceInstaller.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="DependencyResolution\StructureMapSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,15 +77,45 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="uninstall.cmd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="install.cmd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="ilmerge.internalize.ignore.txt" />
+  </ItemGroup>
+  <Target Name="MergeExecutable">
+    <PropertyGroup>
+      <ILMergeExe>$(SolutionDir)\tools\ILMerge\ILMerge.exe</ILMergeExe>
+      <ILMergeInternalizeIgnoreFile>$(ProjectDir)ilmerge.internalize.ignore.txt</ILMergeInternalizeIgnoreFile>
+      <ILMergeOutputFile>SystemMonitorService.exe</ILMergeOutputFile>
+      <ILMergeOutputFolder>$(SolutionDir)..\binaries\$(AssemblyName)</ILMergeOutputFolder>
+      <ILMergeOutputFilePath>$(ILMergeOutputFolder)\$(ILMergeOutputFile)</ILMergeOutputFilePath>
+      <ILMergeLogFilePath>$(ILMergeOutputFolder)\ilmerge.msbuild.log</ILMergeLogFilePath>
+      <FrameworkPath>$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0</FrameworkPath>
+    </PropertyGroup>
+    <ItemGroup>
+      <ILMergeItems Include="$(OutputPath)\*.dll,$(OutputPath)\*.exe" />
+      <ConfigFiles Include="$(OutputPath)\*.config" />
+      <InstallScripts Include="$(OutputPath)\*.cmd" />
+    </ItemGroup>
+    <MakeDir Directories="$(ILMergeOutputFolder)" />
+    <Delete Files="$(ILMergeOutputFilePath)" Condition="Exists($(ILMergeOutputFilePath))" />
+    <!-- ILMerge does not yet support .NET 4.0  http://nitoprograms.blogspot.com/2010/09/using-ilmerge-with-net-40-andor-rx.html /targetplatform:v4,"%ProgramFiles%\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" -->
+    <Error Condition="!Exists('$(FrameworkPath)')" Text="Could not find 4.0 reference assemblies in $(FrameworkPath)" />
+    <Exec Command="&quot;$(ILMergeExe)&quot; /targetplatform:&quot;v4, $(FrameworkPath)&quot; /internalize:&quot;$(ILMergeInternalizeIgnoreFile)&quot; /target:exe /out:&quot;$(ILMergeOutputFilePath)&quot; /log:&quot;$(ILMergeLogFilePath)&quot; /allowDup SignalKo.SystemMonitor.Agent.Service.exe SignalKo.SystemMonitor.Agent.Core.dll  SignalKo.SystemMonitor.Common.dll Newtonsoft.Json.dll StructureMap.dll RestSharp.dll" WorkingDirectory="$(OutputPath)" />
+    <Copy SourceFiles="@(ConfigFiles)" DestinationFiles="@(ConfigFiles->'$(ILMergeOutputFolder)\%(RecursiveDir)$(ILMergeOutputFile)%(Extension)')" />
+    <Copy SourceFiles="@(InstallScripts)" DestinationFiles="@(InstallScripts->'$(ILMergeOutputFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
+    <CallTarget Targets="MergeExecutable" />
   </Target>
-  -->
 </Project>
