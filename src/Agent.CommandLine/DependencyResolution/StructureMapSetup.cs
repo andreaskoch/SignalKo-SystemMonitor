@@ -8,7 +8,7 @@ using SignalKo.SystemMonitor.Common.Services;
 
 using StructureMap;
 
-namespace SignalKo.SystemMonitor.Agent.Console.DependencyResolution
+namespace SignalKo.SystemMonitor.Agent.CommandLine.DependencyResolution
 {
     public static class StructureMapSetup
     {

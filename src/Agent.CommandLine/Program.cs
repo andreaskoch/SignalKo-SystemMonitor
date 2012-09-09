@@ -2,12 +2,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-using SignalKo.SystemMonitor.Agent.Console.DependencyResolution;
+using SignalKo.SystemMonitor.Agent.CommandLine.DependencyResolution;
 using SignalKo.SystemMonitor.Agent.Core;
 
 using StructureMap;
 
-namespace SignalKo.SystemMonitor.Agent.Console
+namespace SignalKo.SystemMonitor.Agent.CommandLine
 {
     public class Program
     {

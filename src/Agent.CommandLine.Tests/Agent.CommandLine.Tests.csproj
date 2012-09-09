@@ -8,8 +8,8 @@
     <ProjectGuid>{89733172-7C63-4637-A7BA-A29E6C4340A4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Agent.Console.Tests</RootNamespace>
-    <AssemblyName>Agent.Console.Tests</AssemblyName>
+    <RootNamespace>Agent.CommandLine.Tests</RootNamespace>
+    <AssemblyName>Agent.CommandLine.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
