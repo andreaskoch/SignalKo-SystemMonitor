@@ -5,6 +5,13 @@ syntax: glob
 src/packages/*
 !src/packages/repositories.config
 
+# Binaries
+binaries/*
+binaries/*/*
+!binaries/*/*.config
+!binaries/*/*.exe
+!binaries/*/*.pdb
+
 # Ignore .orig files
 *.orig
 
