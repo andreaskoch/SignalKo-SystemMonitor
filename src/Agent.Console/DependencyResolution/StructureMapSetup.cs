@@ -32,14 +32,16 @@ namespace SignalKo.SystemMonitor.Agent.Console.DependencyResolution
                         config.For<ISystemInformationProvider>().Use<SystemInformationProvider>();
 
                         /* queuing */
-                        config.For<IMessageQueue<SystemInformation>>().Use<SystemInformationMessageQueue>();
+                        var workQueue = new SystemInformationMessageQueue();
+                        var errorQueue = new SystemInformationMessageQueue();
+                        var messageQueueProvider = new SystemInformationMessageQueueProvider(workQueue, errorQueue);
+                        config.For<IMessageQueueProvider<SystemInformation>>().Singleton().Use(() => messageQueueProvider);
+
                         config.For<IMessageQueuePersistence<SystemInformation>>().Use<JSONSystemInformationMessageQueuePersistence>();
                         config.For<IJSONMessageQueuePersistenceConfigurationProvider>().Use<AppConfigJSONMessageQueuePersistenceConfigurationProvider>();
 
                         config.For<IMessageQueueFeeder<SystemInformation>>().Use<SystemInformationMessageQueueFeeder>();
                         config.For<IMessageQueueWorker<SystemInformation>>().Use<SystemInformationMessageQueueWorker>();
-
-                        config.For<IMessageQueueProvider<SystemInformation>>().Singleton().Use<SystemInformationMessageQueueProvider>();
 
                         /* sender configuration */
                         config.For<IRESTServiceConfigurationProvider>().Use<AppSettingsRESTServiceConfigurationProvider>();
