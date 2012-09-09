@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,15 +11,36 @@ using NUnit.Framework;
 using SignalKo.SystemMonitor.Agent.Core;
 using SignalKo.SystemMonitor.Agent.Core.Collector;
 using SignalKo.SystemMonitor.Agent.Core.Exceptions;
-using SignalKo.SystemMonitor.Agent.Core.Queuing;
+using SignalKo.SystemMonitor.Agent.Core.Queueing;
 using SignalKo.SystemMonitor.Agent.Core.Sender;
 using SignalKo.SystemMonitor.Common.Model;
+using SignalKo.SystemMonitor.Common.Services;
 
 namespace Agent.Core.Tests.IntegrationTests
 {
     [TestFixture]
     public class SystemInformationDispatchingServiceTests
     {
+        private IJSONMessageQueuePersistenceConfigurationProvider jsonMessageQueuePersistenceConfigurationProvider;
+
+        private IEncodingProvider encodingProvider;
+
+        private JSONMessageQueuePersistenceConfiguration persistenceConfiguration;
+
+        [TestFixtureSetUp]
+        public void Setup()
+        {
+            this.jsonMessageQueuePersistenceConfigurationProvider = new AppConfigJSONMessageQueuePersistenceConfigurationProvider();
+            this.persistenceConfiguration = this.jsonMessageQueuePersistenceConfigurationProvider.GetConfiguration();
+            this.encodingProvider = new DefaultEncodingProvider();
+        }
+
+        [SetUp]
+        public void BeforeEachTest()
+        {
+            File.Delete(this.persistenceConfiguration.FilePath);
+        }
+
         [Test]
         public void RunFor10Seconds_SendFailsForAllItems_DispatcherStopsOnlyIfTheQueueIsEmptyAndAllRetryAttempsHaveFailed()
         {
@@ -39,12 +61,18 @@ namespace Agent.Core.Tests.IntegrationTests
             var sender = new Mock<ISystemInformationSender>();
             sender.Setup(s => s.Send(It.IsAny<SystemInformation>())).Callback(() => { attemptsToSend++; }).Throws(new SendSystemInformationFailedException("Send failed.", null));
 
-            IMessageQueue<SystemInformation> queue = new SystemInformationMessageQueue();
-            IMessageQueue<SystemInformation> failedRequestQueue = new SystemInformationMessageQueue();
-            IMessageQueueFeeder messageQueueFeeder = new SystemInformationMessageQueueFeeder(provider.Object, queue);
-            IMessageQueueWorker messageQueueWorker = new SystemInformationMessageQueueWorker(queue, failedRequestQueue, sender.Object);
+            IMessageQueue<SystemInformation> workQueue = new SystemInformationMessageQueue();
+            IMessageQueue<SystemInformation> errorQueue = new SystemInformationMessageQueue();
+            IMessageQueueProvider<SystemInformation> messageQueueProvider = new SystemInformationMessageQueueProvider(workQueue, errorQueue);
 
-            var systemInformationDispatchingService = new SystemInformationDispatchingService(messageQueueFeeder, messageQueueWorker);
+            IMessageQueueFeeder<SystemInformation> messageQueueFeeder = new SystemInformationMessageQueueFeeder(provider.Object);
+            IMessageQueueWorker<SystemInformation> messageQueueWorker = new SystemInformationMessageQueueWorker(sender.Object);
+
+            IMessageQueuePersistence<SystemInformation> messageQueuePersistence =
+                new JSONSystemInformationMessageQueuePersistence(this.jsonMessageQueuePersistenceConfigurationProvider, this.encodingProvider);
+
+            var systemInformationDispatchingService = new SystemInformationDispatchingService(
+                messageQueueFeeder, messageQueueWorker, messageQueueProvider, messageQueuePersistence);
 
             // Act
             var stopwatch = new Stopwatch();
@@ -61,7 +89,7 @@ namespace Agent.Core.Tests.IntegrationTests
             stopwatch.Stop();
 
             // Assert
-            int queueSize = queue.GetSize();
+            int queueSize = workQueue.GetSize();
             Console.WriteLine(
                 "After a runtime of {0} milliseconds the dispatcher has been stopped with {1} items in queue. It took {2} milliseconds until the queue worker stopped sending out all queue items (Attempts To Send: {3}).",
                 runtimeInMilliseconds,

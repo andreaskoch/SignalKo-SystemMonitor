@@ -5,7 +5,7 @@ using System.Threading;
 
 using SignalKo.SystemMonitor.Common.Model;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Queuing
+namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 {
     public class SystemInformationMessageQueue : IMessageQueue<SystemInformation>
     {

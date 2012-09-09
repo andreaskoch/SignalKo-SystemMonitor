@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using NUnit.Framework;
 
-using SignalKo.SystemMonitor.Agent.Core.Queuing;
+using SignalKo.SystemMonitor.Agent.Core.Queueing;
 
 namespace Agent.Core.Tests.IntegrationTests.Queueing
 {

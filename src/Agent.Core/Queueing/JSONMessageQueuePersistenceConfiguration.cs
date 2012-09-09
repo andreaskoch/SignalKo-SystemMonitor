@@ -1,4 +1,4 @@
-namespace SignalKo.SystemMonitor.Agent.Core.Queuing
+namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 {
     public class JSONMessageQueuePersistenceConfiguration
     {

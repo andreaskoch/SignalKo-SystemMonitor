@@ -1,20 +1,23 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
-using SignalKo.SystemMonitor.Agent.Core.Queuing;
+using SignalKo.SystemMonitor.Agent.Core.Queueing;
 using SignalKo.SystemMonitor.Common.Model;
 
 namespace SignalKo.SystemMonitor.Agent.Core
 {
     public class SystemInformationDispatchingService : ISystemInformationDispatchingService
     {
-        private readonly IMessageQueueFeeder messageQueueFeeder;
+        private readonly IMessageQueueFeeder<SystemInformation> messageQueueFeeder;
 
-        private readonly IMessageQueueWorker messageQueueWorker;
+        private readonly IMessageQueueWorker<SystemInformation> messageQueueWorker;
 
         private readonly IMessageQueueProvider<SystemInformation> messageQueueProvider;
 
-        public SystemInformationDispatchingService(IMessageQueueFeeder messageQueueFeeder, IMessageQueueWorker messageQueueWorker, IMessageQueueProvider<SystemInformation> messageQueueProvider)
+        private readonly IMessageQueuePersistence<SystemInformation> messageQueuePersistence;
+
+        public SystemInformationDispatchingService(IMessageQueueFeeder<SystemInformation> messageQueueFeeder, IMessageQueueWorker<SystemInformation> messageQueueWorker, IMessageQueueProvider<SystemInformation> messageQueueProvider, IMessageQueuePersistence<SystemInformation> messageQueuePersistence)
         {
             if (messageQueueFeeder == null)
             {
@@ -31,26 +34,54 @@ namespace SignalKo.SystemMonitor.Agent.Core
                 throw new ArgumentNullException("messageQueueProvider");
             }
 
+            if (messageQueuePersistence == null)
+            {
+                throw new ArgumentNullException("messageQueuePersistence");
+            }
+
             this.messageQueueFeeder = messageQueueFeeder;
             this.messageQueueWorker = messageQueueWorker;
             this.messageQueueProvider = messageQueueProvider;
+            this.messageQueuePersistence = messageQueuePersistence;
         }
 
         public void Start()
         {
-            this.messageQueueProvider.Restore();
+            this.RestorePreviousQueue();
 
-            Action messageFeederAction = () => this.messageQueueFeeder.Start();
-            Action messageWorkerAction = () => this.messageQueueWorker.Start();
+            Action messageFeederAction = () => this.messageQueueFeeder.Start(this.messageQueueProvider.WorkQueue);
+            Action messageWorkerAction = () => this.messageQueueWorker.Start(this.messageQueueProvider.WorkQueue, this.messageQueueProvider.ErrorQueue);
             Parallel.Invoke(messageFeederAction, messageWorkerAction);
 
-            this.messageQueueProvider.Persist();
+            this.PersistErrorQueue();
         }
 
         public void Stop()
         {
             this.messageQueueFeeder.Stop();
             this.messageQueueWorker.Stop();
+        }
+
+        private void RestorePreviousQueue()
+        {
+            var itemsFromPreviousSession = this.messageQueuePersistence.Load();
+            if (itemsFromPreviousSession == null)
+            {
+                return;
+            }
+
+            this.messageQueueProvider.WorkQueue.Enqueue(itemsFromPreviousSession.Select(queueItem => new SystemInformationQueueItem(queueItem.Item)));
+        }
+
+        private void PersistErrorQueue()
+        {
+            var failedRequests = this.messageQueueProvider.ErrorQueue.PurgeAllItems();
+            if (failedRequests == null || failedRequests.Length == 0)
+            {
+                return;
+            }
+
+            this.messageQueuePersistence.Save(failedRequests);
         }
     }
 }

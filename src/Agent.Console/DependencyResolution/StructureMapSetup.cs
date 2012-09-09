@@ -1,6 +1,6 @@
 using SignalKo.SystemMonitor.Agent.Core;
 using SignalKo.SystemMonitor.Agent.Core.Collector;
-using SignalKo.SystemMonitor.Agent.Core.Queuing;
+using SignalKo.SystemMonitor.Agent.Core.Queueing;
 using SignalKo.SystemMonitor.Agent.Core.Sender;
 using SignalKo.SystemMonitor.Agent.Core.Sender.Configuration;
 using SignalKo.SystemMonitor.Common.Model;
@@ -32,11 +32,12 @@ namespace SignalKo.SystemMonitor.Agent.Console.DependencyResolution
                         config.For<ISystemInformationProvider>().Use<SystemInformationProvider>();
 
                         /* queuing */
+                        config.For<IMessageQueue<SystemInformation>>().Use<SystemInformationMessageQueue>();
                         config.For<IMessageQueuePersistence<SystemInformation>>().Use<JSONSystemInformationMessageQueuePersistence>();
                         config.For<IJSONMessageQueuePersistenceConfigurationProvider>().Use<AppConfigJSONMessageQueuePersistenceConfigurationProvider>();
 
-                        config.For<IMessageQueueFeeder>().Use<SystemInformationMessageQueueFeeder>();
-                        config.For<IMessageQueueWorker>().Use<SystemInformationMessageQueueWorker>();
+                        config.For<IMessageQueueFeeder<SystemInformation>>().Use<SystemInformationMessageQueueFeeder>();
+                        config.For<IMessageQueueWorker<SystemInformation>>().Use<SystemInformationMessageQueueWorker>();
 
                         config.For<IMessageQueueProvider<SystemInformation>>().Singleton().Use<SystemInformationMessageQueueProvider>();
 

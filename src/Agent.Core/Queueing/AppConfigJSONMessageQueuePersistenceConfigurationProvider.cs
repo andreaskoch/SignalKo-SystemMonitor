@@ -1,6 +1,6 @@
 using System.Configuration;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Queuing
+namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 {
     public class AppConfigJSONMessageQueuePersistenceConfigurationProvider : IJSONMessageQueuePersistenceConfigurationProvider
     {

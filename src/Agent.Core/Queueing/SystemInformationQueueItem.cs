@@ -2,7 +2,7 @@ using System;
 
 using SignalKo.SystemMonitor.Common.Model;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Queuing
+namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 {
     public class SystemInformationQueueItem : IQueueItem<SystemInformation>
     {

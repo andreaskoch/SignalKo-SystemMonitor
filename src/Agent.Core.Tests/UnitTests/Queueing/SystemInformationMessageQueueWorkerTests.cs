@@ -8,11 +8,11 @@ using Moq;
 using NUnit.Framework;
 
 using SignalKo.SystemMonitor.Agent.Core.Exceptions;
-using SignalKo.SystemMonitor.Agent.Core.Queuing;
+using SignalKo.SystemMonitor.Agent.Core.Queueing;
 using SignalKo.SystemMonitor.Agent.Core.Sender;
 using SignalKo.SystemMonitor.Common.Model;
 
-namespace Agent.Core.Tests.UnitTests.Queuing
+namespace Agent.Core.Tests.UnitTests.Queueing
 {
     [TestFixture]
     public class SystemInformationMessageQueueWorkerTests
@@ -23,12 +23,10 @@ namespace Agent.Core.Tests.UnitTests.Queuing
         public void Constructor_AllParametersAreSet_ObjectIsInstantiated()
         {
             // Arrange
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
             // Act
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
 
             // Assert
             Assert.IsNotNull(messageQueueWorker);
@@ -36,39 +34,10 @@ namespace Agent.Core.Tests.UnitTests.Queuing
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_MessageQueueParameterIsNull_ArgumentNullExceptionIsThrown()
-        {
-            // Arrange
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
-            var systemInformationSender = new Mock<ISystemInformationSender>();
-
-            // Act
-            new SystemInformationMessageQueueWorker(null, failedRequestQueue.Object, systemInformationSender.Object);
-        }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_FailedRequestQueueParameterIsNull_ArgumentNullExceptionIsThrown()
-        {
-            // Arrange
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            var systemInformationSender = new Mock<ISystemInformationSender>();
-
-            // Act
-            new SystemInformationMessageQueueWorker(messageQueue.Object, null, systemInformationSender.Object);
-        }
-
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructorSystemInformationSenderParameterIsNull_ArgumentNullExceptionIsThrown()
         {
-            // Arrange
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
-
             // Act
-            new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, null);
+            new SystemInformationMessageQueueWorker(null);
         }
 
         #endregion
@@ -79,40 +48,40 @@ namespace Agent.Core.Tests.UnitTests.Queuing
         public void WorkerIsStoppedBeforeItHasBeenStarted_QueueIsEmpty_DequeueIsNotCalled()
         {
             // Arrange
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            messageQueue.Setup(q => q.IsEmpty()).Returns(true);
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            workQueue.Setup(q => q.IsEmpty()).Returns(true);
 
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
 
             // Act
             messageQueueWorker.Stop();
-            messageQueueWorker.Start();
+            messageQueueWorker.Start(workQueue.Object, errorQueue.Object);
 
             // Assert
-            messageQueue.Verify(q => q.Dequeue(), Times.Never());
+            workQueue.Verify(q => q.Dequeue(), Times.Never());
         }
 
         [Test]
         public void WorkerIsStoppedBeforeItHasBeenStarted_QueueIsEmpty_ExecutesTakesOnlyOneWorkInterval()
         {
             // Arrange
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            messageQueue.Setup(q => q.IsEmpty()).Returns(true);
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            workQueue.Setup(q => q.IsEmpty()).Returns(true);
 
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
 
             // Act
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             messageQueueWorker.Stop();
-            messageQueueWorker.Start();
+            messageQueueWorker.Start(workQueue.Object, errorQueue.Object);
 
             stopwatch.Stop();
 
@@ -130,22 +99,22 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             // Arrange
             int timeToWaitBeforeStop = SystemInformationMessageQueueWorker.WorkIntervalInMilliseconds * 5;
 
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            messageQueue.Setup(q => q.IsEmpty()).Returns(true);
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            workQueue.Setup(q => q.IsEmpty()).Returns(true);
 
             SystemInformationQueueItem queueItem = null;
-            messageQueue.Setup(q => q.Dequeue()).Returns(queueItem);
+            workQueue.Setup(q => q.Dequeue()).Returns(queueItem);
 
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
 
             // Act
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var worker = new Task(messageQueueWorker.Start);
+            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
             worker.Start();
 
             Thread.Sleep(timeToWaitBeforeStop);
@@ -169,25 +138,25 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             // Arrange
             int maxRuntime = SystemInformationMessageQueueWorker.WorkIntervalInMilliseconds * 5;
 
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            messageQueue.Setup(q => q.IsEmpty()).Returns(true);
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            workQueue.Setup(q => q.IsEmpty()).Returns(true);
 
             SystemInformationQueueItem queueItem = null;
-            messageQueue.Setup(q => q.Dequeue()).Returns(queueItem);
+            workQueue.Setup(q => q.Dequeue()).Returns(queueItem);
 
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
 
             // Act
-            var worker = new Task(messageQueueWorker.Start);
+            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
             worker.Start();
             Task.WaitAll(new[] { worker }, maxRuntime);
             messageQueueWorker.Stop();
 
             // Assert
-            messageQueue.Verify(q => q.Dequeue(), Times.Between(4, 5, Range.Inclusive));
+            workQueue.Verify(q => q.Dequeue(), Times.Between(4, 5, Range.Inclusive));
         }
 
         [Test]
@@ -196,19 +165,19 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             // Arrange
             int maxRuntime = SystemInformationMessageQueueWorker.WorkIntervalInMilliseconds * 2;
 
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            messageQueue.Setup(q => q.IsEmpty()).Returns(true);
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            workQueue.Setup(q => q.IsEmpty()).Returns(true);
 
             SystemInformationQueueItem queueItem = null;
-            messageQueue.Setup(q => q.Dequeue()).Returns(queueItem);
+            workQueue.Setup(q => q.Dequeue()).Returns(queueItem);
 
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
 
             // Act
-            var worker = new Task(messageQueueWorker.Start);
+            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
             worker.Start();
             Task.WaitAll(new[] { worker }, maxRuntime);
             messageQueueWorker.Stop();
@@ -227,12 +196,12 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             // Arrange
             int maxRuntime = SystemInformationMessageQueueWorker.WorkIntervalInMilliseconds * 5;
 
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            messageQueue.Setup(q => q.IsEmpty()).Returns(false);
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            workQueue.Setup(q => q.IsEmpty()).Returns(false);
 
             int maxCount = 3;
             int itemIndex = 1;
-            messageQueue.Setup(q => q.Dequeue()).Returns(() =>
+            workQueue.Setup(q => q.Dequeue()).Returns(() =>
                 {
                     if (itemIndex <= maxCount)
                     {
@@ -243,13 +212,13 @@ namespace Agent.Core.Tests.UnitTests.Queuing
                     return null;
                 });
 
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
 
             // Act
-            var worker = new Task(messageQueueWorker.Start);
+            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
             worker.Start();
             Task.WaitAll(new[] { worker }, maxRuntime);
             messageQueueWorker.Stop();
@@ -264,13 +233,13 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             // Arrange
             int maxRuntime = SystemInformationMessageQueueWorker.WorkIntervalInMilliseconds * 2;
 
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            messageQueue.Setup(q => q.IsEmpty()).Returns(false);
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            workQueue.Setup(q => q.IsEmpty()).Returns(false);
 
             bool itemHasBeenAccessed = false;
             var systemInfo = new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow };
             var queueItem = new SystemInformationQueueItem(systemInfo);
-            messageQueue.Setup(q => q.Dequeue()).Returns(() =>
+            workQueue.Setup(q => q.Dequeue()).Returns(() =>
                 {
                     if (!itemHasBeenAccessed)
                     {
@@ -281,21 +250,21 @@ namespace Agent.Core.Tests.UnitTests.Queuing
                     return null;
                 });
 
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
             systemInformationSender.Setup(s => s.Send(systemInfo)).Throws(
                 new SendSystemInformationFailedException("Some minor exception which justifies a retry", null));
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
 
             // Act
-            var worker = new Task(messageQueueWorker.Start);
+            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
             worker.Start();
             Task.WaitAll(new[] { worker }, maxRuntime);
             messageQueueWorker.Stop();
 
             // Assert
-            messageQueue.Verify(q => q.Enqueue(queueItem), Times.Once());
+            workQueue.Verify(q => q.Enqueue(queueItem), Times.Once());
         }
 
         [Test]
@@ -304,13 +273,13 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             // Arrange
             int maxRuntime = SystemInformationMessageQueueWorker.WorkIntervalInMilliseconds * 2;
 
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            messageQueue.Setup(q => q.IsEmpty()).Returns(false);
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            workQueue.Setup(q => q.IsEmpty()).Returns(false);
 
             bool itemHasBeenAccessed = false;
             var systemInfo = new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow };
             var queueItem = new SystemInformationQueueItem(systemInfo) { EnqueuCount = SystemInformationMessageQueueWorker.MaxRetryCount };
-            messageQueue.Setup(q => q.Dequeue()).Returns(() =>
+            workQueue.Setup(q => q.Dequeue()).Returns(() =>
             {
                 if (!itemHasBeenAccessed)
                 {
@@ -321,31 +290,31 @@ namespace Agent.Core.Tests.UnitTests.Queuing
                 return null;
             });
 
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
             systemInformationSender.Setup(s => s.Send(systemInfo)).Throws(
                 new SendSystemInformationFailedException("Some minor exception which justifies a retry", null));
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
 
             // Act
-            var worker = new Task(messageQueueWorker.Start);
+            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
             worker.Start();
             Task.WaitAll(new[] { worker }, maxRuntime);
             messageQueueWorker.Stop();
 
             // Assert
-            messageQueue.Verify(q => q.Enqueue(queueItem), Times.Never());
-            failedRequestQueue.Verify(q => q.Enqueue(queueItem), Times.Once());
+            workQueue.Verify(q => q.Enqueue(queueItem), Times.Never());
+            errorQueue.Verify(q => q.Enqueue(queueItem), Times.Once());
         }
 
         [Test]
         public void QueueIsFilled_SendCausesFatalException_AllItemsInQueueAreMovedToTheFailedRequestQueue()
         {
             // Arrange
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            messageQueue.Setup(q => q.IsEmpty()).Returns(false);
-            messageQueue.Setup(q => q.Dequeue()).Returns(
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            workQueue.Setup(q => q.IsEmpty()).Returns(false);
+            workQueue.Setup(q => q.Dequeue()).Returns(
                 () => new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow }));
 
             var items = new[]
@@ -355,19 +324,19 @@ namespace Agent.Core.Tests.UnitTests.Queuing
                     new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName + "3", Timestamp = DateTimeOffset.UtcNow })
                 };
 
-            messageQueue.Setup(q => q.PurgeAllItems()).Returns(items);
+            workQueue.Setup(q => q.PurgeAllItems()).Returns(items);
 
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
             systemInformationSender.Setup(s => s.Send(It.IsAny<SystemInformation>())).Throws(new FatalSystemInformationSenderException("Some fatal exception."));
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
 
             // Act
-            messageQueueWorker.Start();
+            messageQueueWorker.Start(workQueue.Object, errorQueue.Object);
 
             // Assert
-            failedRequestQueue.Verify(q => q.Enqueue(items), Times.Once());
+            errorQueue.Verify(q => q.Enqueue(items), Times.Once());
         }
 
         [Test]
@@ -376,22 +345,22 @@ namespace Agent.Core.Tests.UnitTests.Queuing
             // Arrange
             int maxRuntime = SystemInformationMessageQueueWorker.WorkIntervalInMilliseconds * 2;
 
-            var messageQueue = new Mock<IMessageQueue<SystemInformation>>();
-            messageQueue.Setup(q => q.IsEmpty()).Returns(false);
-            messageQueue.Setup(q => q.Dequeue()).Returns(
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            workQueue.Setup(q => q.IsEmpty()).Returns(false);
+            workQueue.Setup(q => q.Dequeue()).Returns(
                 () => new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow }));
 
-            var failedRequestQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
             systemInformationSender.Setup(s => s.Send(It.IsAny<SystemInformation>())).Throws(new FatalSystemInformationSenderException("Some fatal exception."));
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(messageQueue.Object, failedRequestQueue.Object, systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
 
             // Act
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var worker = new Task(messageQueueWorker.Start);
+            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
             worker.Start();
             Task.WaitAll(new[] { worker }, maxRuntime);
 

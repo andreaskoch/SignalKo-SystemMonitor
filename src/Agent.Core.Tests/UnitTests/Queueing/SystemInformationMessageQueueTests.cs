@@ -3,10 +3,10 @@ using System.Linq;
 
 using NUnit.Framework;
 
-using SignalKo.SystemMonitor.Agent.Core.Queuing;
+using SignalKo.SystemMonitor.Agent.Core.Queueing;
 using SignalKo.SystemMonitor.Common.Model;
 
-namespace Agent.Core.Tests.UnitTests.Queuing
+namespace Agent.Core.Tests.UnitTests.Queueing
 {
     [TestFixture]
     public class SystemInformationMessageQueueTests

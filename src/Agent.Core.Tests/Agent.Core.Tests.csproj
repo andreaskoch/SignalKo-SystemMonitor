@@ -36,6 +36,9 @@
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.1\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -48,6 +51,8 @@
   <ItemGroup>
     <Compile Include="IntegrationTests\Collector\LogicalDiscInstanceNameProviderTests.cs" />
     <Compile Include="IntegrationTests\Collector\ProcessorStatusProviderTests.cs" />
+    <Compile Include="IntegrationTests\Queueing\AppConfigJSONMessageQueuePersistenceConfigurationProviderTests.cs" />
+    <Compile Include="IntegrationTests\Queueing\JSONSystemInformationMessageQueuePersistenceTests.cs" />
     <Compile Include="IntegrationTests\Queueing\SystemInformationMessageQueueTests.cs" />
     <Compile Include="IntegrationTests\Sender\AppSettingsRESTServiceConfigurationProviderTests.cs" />
     <Compile Include="IntegrationTests\Sender\JSONRequestFactoryTests.cs" />
@@ -59,10 +64,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests\Collector\EnvironmentMachineNameProviderTests.cs" />
     <Compile Include="TestUtilities.cs" />
-    <Compile Include="UnitTests\Queuing\SystemInformationMessageQueueFeederTests.cs" />
-    <Compile Include="UnitTests\Queuing\SystemInformationMessageQueueTests.cs" />
-    <Compile Include="UnitTests\Queuing\SystemInformationMessageQueueWorkerTests.cs" />
-    <Compile Include="UnitTests\Queuing\SystemInformationQueueItemTests.cs" />
+    <Compile Include="UnitTests\Queueing\JSONSystemInformationMessageQueuePersistenceTests.cs" />
+    <Compile Include="UnitTests\Queueing\SystemInformationMessageQueueFeederTests.cs" />
+    <Compile Include="UnitTests\Queueing\SystemInformationMessageQueueProviderTests.cs" />
+    <Compile Include="UnitTests\Queueing\SystemInformationMessageQueueTests.cs" />
+    <Compile Include="UnitTests\Queueing\SystemInformationMessageQueueWorkerTests.cs" />
+    <Compile Include="UnitTests\Queueing\SystemInformationQueueItemTests.cs" />
     <Compile Include="UnitTests\Sender\RESTBasedSystemInformationSenderTests.cs" />
     <Compile Include="UnitTests\Sender\RESTClientFactoryTests.cs" />
     <Compile Include="UnitTests\Sender\RESTServiceConfigurationTests.cs" />

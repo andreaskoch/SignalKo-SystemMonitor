@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Queuing
+namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 {
     public interface IMessageQueue<T>
     {

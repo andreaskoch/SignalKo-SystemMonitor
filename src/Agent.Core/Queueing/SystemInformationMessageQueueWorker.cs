@@ -5,9 +5,9 @@ using SignalKo.SystemMonitor.Agent.Core.Exceptions;
 using SignalKo.SystemMonitor.Agent.Core.Sender;
 using SignalKo.SystemMonitor.Common.Model;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Queuing
+namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 {
-    public class SystemInformationMessageQueueWorker : IMessageQueueWorker
+    public class SystemInformationMessageQueueWorker : IMessageQueueWorker<SystemInformation>
     {
         public const int WorkIntervalInMilliseconds = 200;
 
@@ -15,32 +15,21 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 
         private readonly object lockObject = new object();
 
-        private readonly IMessageQueue<SystemInformation> messageQueue;
-
-        private readonly IMessageQueue<SystemInformation> failedRequestQueue;
-
         private readonly ISystemInformationSender systemInformationSender;
 
         private bool stop;
 
-        public SystemInformationMessageQueueWorker(IMessageQueueProvider<SystemInformation> messageQueueProvider, ISystemInformationSender systemInformationSender)
+        public SystemInformationMessageQueueWorker(ISystemInformationSender systemInformationSender)
         {
-            if (messageQueueProvider == null)
-            {
-                throw new ArgumentNullException("messageQueueProvider");
-            }
-
             if (systemInformationSender == null)
             {
                 throw new ArgumentNullException("systemInformationSender");
             }
 
-            this.messageQueue = messageQueueProvider.GetWorkQueue();
-            this.failedRequestQueue = messageQueueProvider.GetErrorQueue();
             this.systemInformationSender = systemInformationSender;
         }
 
-        public void Start()
+        public void Start(IMessageQueue<SystemInformation> workQueue, IMessageQueue<SystemInformation> errorQueue)
         {
             while (true)
             {
@@ -48,7 +37,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 
                 // check if service has been stopped
                 Monitor.Enter(this.lockObject);
-                if (this.stop && this.messageQueue.IsEmpty())
+                if (this.stop && workQueue.IsEmpty())
                 {
                     Monitor.Exit(this.lockObject);
                     break;
@@ -57,7 +46,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
                 Monitor.Exit(this.lockObject);
 
                 // dequeue message
-                var queueEntry = this.messageQueue.Dequeue();
+                var queueEntry = workQueue.Dequeue();
                 if (queueEntry == null)
                 {
                     continue;
@@ -73,19 +62,19 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
                     // retry later
                     if (queueEntry.EnqueuCount < MaxRetryCount)
                     {
-                        this.messageQueue.Enqueue(queueEntry);
+                        workQueue.Enqueue(queueEntry);
                     }
                     else
                     {
-                        this.failedRequestQueue.Enqueue(queueEntry);
+                        errorQueue.Enqueue(queueEntry);
                     }
                 }
                 catch (FatalSystemInformationSenderException fatalException)
                 {
                     // persist queue and exit
                     Monitor.Enter(this.lockObject);
-                    var unfinishedQueueItems = this.messageQueue.PurgeAllItems();
-                    this.failedRequestQueue.Enqueue(unfinishedQueueItems);
+                    var unfinishedQueueItems = workQueue.PurgeAllItems();
+                    errorQueue.Enqueue(unfinishedQueueItems);
                     Monitor.Exit(this.lockObject);
 
                     break;

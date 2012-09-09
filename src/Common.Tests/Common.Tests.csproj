@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="IntegrationTests\UTCTimeProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTests\DefaultEncodingProviderTests.cs" />
     <Compile Include="UnitTests\MemoryUnitConverterTests.cs" />
     <Compile Include="UnitTests\Model\SystemInformationTests.cs" />
     <Compile Include="UnitTests\Model\SystemStorageDeviceInformationTests.cs" />

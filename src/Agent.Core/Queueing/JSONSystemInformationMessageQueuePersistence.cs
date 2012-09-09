@@ -3,10 +3,11 @@ using System.IO;
 
 using Newtonsoft.Json;
 
+using SignalKo.SystemMonitor.Agent.Core.Exceptions;
 using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Common.Services;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Queuing
+namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 {
     public class JSONSystemInformationMessageQueuePersistence : IMessageQueuePersistence<SystemInformation>
     {
@@ -35,7 +36,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
             string filePath = this.jsonMessageQueuePersistenceConfiguration.FilePath;
             if (!File.Exists(filePath))
             {
-                return new IQueueItem<SystemInformation>[] { };
+                return null;
             }
 
             try
@@ -45,15 +46,27 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
             }
             catch (Exception exception)
             {
-                return new IQueueItem<SystemInformation>[] { };
+                return null;
             }
         }
 
         public void Save(IQueueItem<SystemInformation>[] items)
         {
+            if (items == null)
+            {
+                throw new ArgumentNullException("items");
+            }
+
             string filePath = this.jsonMessageQueuePersistenceConfiguration.FilePath;
-            var json = JsonConvert.SerializeObject(items);
-            File.WriteAllText(filePath, json, this.encodingProvider.GetEncoding());
+            try
+            {
+                var json = JsonConvert.SerializeObject(items);
+                File.WriteAllText(filePath, json, this.encodingProvider.GetEncoding());
+            }
+            catch (Exception serializationException)
+            {
+                throw new MessageQueuePersistenceException("Could not persist the supplied item to file \"{0}\".", serializationException);
+            }
         }
     }
 }
