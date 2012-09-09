@@ -9,7 +9,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 {
     public class SystemInformationMessageQueueWorker : IMessageQueueWorker
     {
-        public const int WorkIntervalInMilliseconds = 1000;
+        public const int WorkIntervalInMilliseconds = 200;
 
         public const int MaxRetryCount = 3;
 
@@ -18,8 +18,6 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
         private readonly IMessageQueue<SystemInformation> messageQueue;
 
         private readonly IMessageQueue<SystemInformation> failedRequestQueue;
-
-        private readonly IMessageQueueProvider<SystemInformation> messageQueueProvider;
 
         private readonly ISystemInformationSender systemInformationSender;
 
@@ -39,7 +37,6 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 
             this.messageQueue = messageQueueProvider.GetWorkQueue();
             this.failedRequestQueue = messageQueueProvider.GetErrorQueue();
-            this.messageQueueProvider = messageQueueProvider;
             this.systemInformationSender = systemInformationSender;
         }
 
@@ -94,9 +91,6 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
                     break;
                 }
             }
-
-            // Persist queues
-            this.messageQueueProvider.Persist();
         }
 
         public void Stop()

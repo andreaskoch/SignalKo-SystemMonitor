@@ -18,6 +18,7 @@ namespace SignalKo.SystemMonitor.Agent.Console.DependencyResolution
                 config =>
                     {
                         /* common */
+                        config.For<IEncodingProvider>().Use<DefaultEncodingProvider>();
                         config.For<IMemoryUnitConverter>().Use<MemoryUnitConverter>();
                         config.For<ITimeProvider>().Use<UTCTimeProvider>();
 
@@ -32,8 +33,8 @@ namespace SignalKo.SystemMonitor.Agent.Console.DependencyResolution
 
                         /* queuing */
                         config.For<IMessageQueuePersistence<SystemInformation>>().Use<JSONSystemInformationMessageQueuePersistence>();
-                        config.For<IMessageQueuePersistence<SystemInformation>>().Use<JSONSystemInformationMessageQueuePersistence>();
-                        config.For<IMessageQueue<SystemInformation>>().Use<SystemInformationMessageQueue>();
+                        config.For<IJSONMessageQueuePersistenceConfigurationProvider>().Use<AppConfigJSONMessageQueuePersistenceConfigurationProvider>();
+
                         config.For<IMessageQueueFeeder>().Use<SystemInformationMessageQueueFeeder>();
                         config.For<IMessageQueueWorker>().Use<SystemInformationMessageQueueWorker>();
 

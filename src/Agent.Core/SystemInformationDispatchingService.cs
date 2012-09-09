@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 
 using SignalKo.SystemMonitor.Agent.Core.Queuing;
+using SignalKo.SystemMonitor.Common.Model;
 
 namespace SignalKo.SystemMonitor.Agent.Core
 {
@@ -11,7 +12,9 @@ namespace SignalKo.SystemMonitor.Agent.Core
 
         private readonly IMessageQueueWorker messageQueueWorker;
 
-        public SystemInformationDispatchingService(IMessageQueueFeeder messageQueueFeeder, IMessageQueueWorker messageQueueWorker)
+        private readonly IMessageQueueProvider<SystemInformation> messageQueueProvider;
+
+        public SystemInformationDispatchingService(IMessageQueueFeeder messageQueueFeeder, IMessageQueueWorker messageQueueWorker, IMessageQueueProvider<SystemInformation> messageQueueProvider)
         {
             if (messageQueueFeeder == null)
             {
@@ -23,15 +26,25 @@ namespace SignalKo.SystemMonitor.Agent.Core
                 throw new ArgumentNullException("messageQueueWorker");
             }
 
+            if (messageQueueProvider == null)
+            {
+                throw new ArgumentNullException("messageQueueProvider");
+            }
+
             this.messageQueueFeeder = messageQueueFeeder;
             this.messageQueueWorker = messageQueueWorker;
+            this.messageQueueProvider = messageQueueProvider;
         }
 
         public void Start()
         {
+            this.messageQueueProvider.Restore();
+
             Action messageFeederAction = () => this.messageQueueFeeder.Start();
             Action messageWorkerAction = () => this.messageQueueWorker.Start();
             Parallel.Invoke(messageFeederAction, messageWorkerAction);
+
+            this.messageQueueProvider.Persist();
         }
 
         public void Stop()

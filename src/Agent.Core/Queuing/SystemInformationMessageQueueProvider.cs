@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 using SignalKo.SystemMonitor.Common.Model;
 
@@ -22,8 +23,6 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
             this.messageQueuePersistence = messageQueuePersistence;
             this.errorQueue = new SystemInformationMessageQueue();
             this.workQueue = new SystemInformationMessageQueue();
-
-            this.RestoreLastSession();
         }
 
         public IMessageQueue<SystemInformation> GetWorkQueue()
@@ -36,15 +35,21 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queuing
             return this.errorQueue;
         }
 
-        public void Persist()
+        public void Restore()
         {
-            
+            var itemsFromPreviousSession = this.messageQueuePersistence.Load();
+            if (itemsFromPreviousSession == null)
+            {
+                return;
+            }
+
+            this.workQueue.Enqueue(itemsFromPreviousSession.Select(queueItem => new SystemInformationQueueItem(queueItem.Item)));
         }
 
-        private void RestoreLastSession()
+        public void Persist()
         {
-            var items = this.messageQueuePersistence.Load();
-            this.workQueue.Enqueue(items);
+            var failedRequests = this.errorQueue.PurgeAllItems();
+            this.messageQueuePersistence.Save(failedRequests);
         }
     }
 }

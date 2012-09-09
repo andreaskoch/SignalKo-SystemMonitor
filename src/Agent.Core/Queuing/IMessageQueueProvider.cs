@@ -1,12 +1,12 @@
-using SignalKo.SystemMonitor.Common.Model;
-
 namespace SignalKo.SystemMonitor.Agent.Core.Queuing
 {
     public interface IMessageQueueProvider<T>
     {
-        IMessageQueue<SystemInformation> GetWorkQueue();
+        IMessageQueue<T> GetWorkQueue();
 
-        IMessageQueue<SystemInformation> GetErrorQueue();
+        IMessageQueue<T> GetErrorQueue();
+
+        void Restore();
 
         void Persist();
     }

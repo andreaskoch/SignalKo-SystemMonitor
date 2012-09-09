@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.104.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
@@ -57,11 +60,16 @@
     <Compile Include="Collector\SystemInformationProvider.cs" />
     <Compile Include="Collector\SystemMemoryStatusProvider.cs" />
     <Compile Include="Collector\SystemStorageStatusProvider.cs" />
+    <Compile Include="Queuing\AppConfigJSONMessageQueuePersistenceConfigurationProvider.cs" />
+    <Compile Include="Queuing\IJSONMessageQueuePersistenceConfigurationProvider.cs" />
     <Compile Include="Queuing\IMessageQueue.cs" />
+    <Compile Include="Queuing\IMessageQueuePersistence.cs" />
     <Compile Include="Queuing\IMessageQueueProvider.cs" />
     <Compile Include="Queuing\IMessageQueueWorker.cs" />
     <Compile Include="Queuing\IMessageQueueFeeder.cs" />
     <Compile Include="Queuing\IQueueItem.cs" />
+    <Compile Include="Queuing\JSONMessageQueuePersistenceConfiguration.cs" />
+    <Compile Include="Queuing\JSONSystemInformationMessageQueuePersistence.cs" />
     <Compile Include="Queuing\SystemInformationMessageQueueFeeder.cs" />
     <Compile Include="Queuing\SystemInformationMessageQueue.cs" />
     <Compile Include="Queuing\SystemInformationMessageQueueProvider.cs" />
