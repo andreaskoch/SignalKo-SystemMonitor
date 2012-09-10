@@ -1,107 +1,56 @@
 ﻿@model dynamic
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Overview";
 }
 
-<h2>title</h2>
-
-<style type="text/css">
-    table {
-        width: 700px;
-    }
-
-    body {
-        font-family: "Segoe UI", Arial, sans-serif;
-        font-size: 12px;
-    }
-
-    .highCpu {
-        background: red;
-        color: white;
-    }
-</style>
-
-<div id="computerInfo">
-
-    <h2>My Computer Info</h2>
-
-    <table border="0">
+<table>
+    <thead>
         <tr>
-            <th>Machine</th>
-            <th>CPU %</th>
-            <th>Memory Available (Mb)</th>
-            <th>Total Memory (Mb)</th>
-            <th>Mem Available %</th>
+            <th>TimeStamp</th>
+            <th>MachineName</th>
+            <th>Infos</th>
         </tr>
-
-        <!-- ko foreach: machines -->
+    </thead>
+    <tbody data-bind="foreach: systemInformationItems">
         <tr>
-            <td data-bind="text: machineName"></td>
-            <td data-bind="text: cpu"></td>
-            <td data-bind="text: memUsage"></td>
-            <td data-bind="text: memTotal"></td>
-            <td data-bind="text: memPercent"></td>
+            <td data-bind="text: TimeStamp"></td>
+            <td data-bind="text: MachineName"></td>
+            <td>
+                <ul>
+                    <li>
+                        ProcessorStatus
+                        <ul data-bind="with: ProcessorStatus">
+                            <li>ProcessorUtilizationInPercent <span data-bind="text: ProcessorUtilizationInPercent"></span></li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        MemoryStatus
+                        <ul data-bind="with: MemoryStatus">
+                            <li>AvailableMemoryInGB <span data-bind="text: AvailableMemoryInGB"></span></li>
+                            <li>UsedMemoryInGB <span data-bind="text: UsedMemoryInGB"></span></li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        StorageStatus
+                        <ul data-bind="with: StorageStatus">
+                            <li data-bind="foreach: StorageDeviceInfos">
+                                <span data-bind="text: DeviceName"></span>
+                                <ul>
+                                    <li>FreeDiscSpaceInPercent <span data-bind="text: FreeDiscSpaceInPercent"></span></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </td>
         </tr>
-        <!-- /ko -->
-
-    </table>
-    
-    <section id="livechart"></section>
-
-</div>
+    </tbody>
+</table>
 
 @section CustomScripts {
- <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
-<script type="text/javascript">
-
-    var createRingBuffer = function (length) {
-
-        var pointer = 0, buffer = [];
-
-        return {
-            get: function (key) { return buffer[key]; },
-            push: function (item) {
-                buffer[pointer] = item;
-                pointer = (length + pointer + 1) % length;
-            }
-        };
-    };
-    
-    function HardwareInfoViewModel() {
-        var self = this;
-        self.maxValues = 15;
-        self.machines = ko.observableArray([]);
-        
-        // Get a reference to our hub
-        self.hub = $.connection.hardwareStatus;
-
-        $.extend(self.hub, {
-            displayHardwareInfo: function (hardwareInfo) {
-
-                var machine = {
-                    machineName: hardwareInfo.MachineName,
-                    cpu: hardwareInfo.Processor.toFixed(0),
-                    memUsage: (hardwareInfo.MemUsage / 1024).toFixed(2),
-                    memTotal: (hardwareInfo.TotalMemory / 1024).toFixed(2),
-                    memPercent: ((hardwareInfo.MemUsage / hardwareInfo.TotalMemory) * 100).toFixed(1) + "%"
-                };
-
-                if (self.machines().length <= self.maxValues) {
-                    self.machines.push(machine);
-                } else {
-                    self.machines.shift(machine);
-                }
-            }
-        });
-
-        // Start the connectio
-        $.connection.hub.start();
-    }
-
-    ko.applyBindings(new HardwareInfoViewModel());
-
-</script>
-    
+    <script type="text/javascript" src="@Url.Content("~/Scripts/systemmonitor.base.js")"></script>
 }
 

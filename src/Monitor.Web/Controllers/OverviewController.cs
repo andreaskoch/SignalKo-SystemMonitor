@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace HardwareStatus.Server.Controllers
+namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 {
     public class OverviewController : Controller
     {

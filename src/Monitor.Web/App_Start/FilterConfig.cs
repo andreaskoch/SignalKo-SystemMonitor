@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace HardwareStatus.Server.App_Start
+namespace SignalKo.SystemMonitor.Monitor.Web.App_Start
 {
     public class FilterConfig
     {

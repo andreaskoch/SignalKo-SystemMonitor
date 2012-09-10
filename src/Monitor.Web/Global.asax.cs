@@ -2,12 +2,10 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 
-using HardwareStatus.Server.App_Start;
+using SignalKo.SystemMonitor.Monitor.Web.App_Start;
 
-namespace HardwareStatus.Server
+namespace SignalKo.SystemMonitor.Monitor.Web
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()

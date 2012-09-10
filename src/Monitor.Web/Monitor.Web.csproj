@@ -38,8 +38,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="SignalR">
       <HintPath>..\packages\SignalR.Server.0.5.3\lib\net40\SignalR.dll</HintPath>
+    </Reference>
+    <Reference Include="SignalR.Hosting.AspNet">
+      <HintPath>..\packages\SignalR.Hosting.AspNet.0.5.3\lib\net40\SignalR.Hosting.AspNet.dll</HintPath>
     </Reference>
     <Reference Include="SignalR.Hosting.Common">
       <HintPath>..\packages\SignalR.Hosting.Common.0.5.3\lib\net40\SignalR.Hosting.Common.dll</HintPath>
@@ -72,12 +78,12 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Controllers\HardwareInfoController.cs" />
+    <Compile Include="Controllers\SystemInformationController.cs" />
     <Compile Include="Controllers\OverviewController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\HardwareStatusHub.cs" />
+    <Compile Include="Hubs\SystemInformationHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,15 +91,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.6.4.js" />
-    <Content Include="Scripts\jquery-1.6.4.min.js" />
-    <Content Include="Scripts\jquery.signalR-0.5.3.js" />
-    <Content Include="Scripts\jquery.signalR-0.5.3.min.js" />
-    <Content Include="Scripts\knockout-2.1.0.debug.js" />
-    <Content Include="Scripts\knockout-2.1.0.js" />
-    <Content Include="Scripts\knockout.mapping-latest.debug.js" />
-    <Content Include="Scripts\knockout.mapping-latest.js" />
+    <Content Include="Scripts\libraries\jquery-1.6.4-vsdoc.js" />
+    <Content Include="Scripts\libraries\jquery-1.6.4.js" />
+    <Content Include="Scripts\libraries\jquery-1.6.4.min.js" />
+    <Content Include="Scripts\libraries\jquery.signalR-0.5.3.js" />
+    <Content Include="Scripts\libraries\jquery.signalR-0.5.3.min.js" />
+    <Content Include="Scripts\libraries\knockout-2.1.0.debug.js" />
+    <Content Include="Scripts\libraries\knockout-2.1.0.js" />
+    <Content Include="Scripts\libraries\knockout.mapping-latest.debug.js" />
+    <Content Include="Scripts\libraries\knockout.mapping-latest.js" />
+    <Content Include="Scripts\systemmonitor.base.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

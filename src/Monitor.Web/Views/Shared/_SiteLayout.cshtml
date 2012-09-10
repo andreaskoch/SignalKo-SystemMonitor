@@ -1,21 +1,25 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>_Layout</title>
+    <title>@ViewBag.Title - System Monitor</title>
 </head>
-<body>
-    <div>
-        @RenderBody()
-    </div>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.6.4.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.signalR-0.5.3.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
+    <body>
+        <header>
+            <h1>@ViewBag.Title</h1>
+        </header>
+
+        <section>
+            @RenderBody()
+        </section>
+
+        <script type="text/javascript" src="@Url.Content("~/Scripts/libraries/jquery-1.6.4.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/libraries/jquery.signalR-0.5.3.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
     
-    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout-2.1.0.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/knockout.mapping-latest.js")"></script>
-    
-    @RenderSection("CustomScripts")
-</body>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/libraries/knockout-2.1.0.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/libraries/knockout.mapping-latest.js")"></script>
+
+        @RenderSection("CustomScripts")
+    </body>
 </html>

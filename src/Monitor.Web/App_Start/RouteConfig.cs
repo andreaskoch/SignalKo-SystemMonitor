@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace HardwareStatus.Server.App_Start
+namespace SignalKo.SystemMonitor.Monitor.Web.App_Start
 {
     public class RouteConfig
     {
@@ -9,11 +9,8 @@ namespace HardwareStatus.Server.App_Start
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Overview", action = "Index", id = UrlParameter.Optional }
-            );
+            routes.MapRoute("Default", string.Empty, new { controller = "Overview", action = "Index" });
+            routes.MapRoute("SystemMonitorOverview", "SystemMonitor/Overview",  new { controller = "Overview", action = "Index" });
         }
     }
 }
