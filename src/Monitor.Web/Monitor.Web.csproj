@@ -85,6 +85,8 @@
     </Compile>
     <Compile Include="Hubs\SystemInformationHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\SystemStatusPointViewModel.cs" />
+    <Compile Include="ViewModels\SystemStatusViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

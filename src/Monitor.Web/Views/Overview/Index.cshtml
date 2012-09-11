@@ -4,53 +4,22 @@
     ViewBag.Title = "Overview";
 }
 
-<table>
-    <thead>
-        <tr>
-            <th>TimeStamp</th>
-            <th>MachineName</th>
-            <th>Infos</th>
-        </tr>
-    </thead>
-    <tbody data-bind="foreach: systemInformationItems">
-        <tr>
-            <td data-bind="text: TimeStamp"></td>
-            <td data-bind="text: MachineName"></td>
-            <td>
-                <ul>
-                    <li>
-                        ProcessorStatus
-                        <ul data-bind="with: ProcessorStatus">
-                            <li>ProcessorUtilizationInPercent <span data-bind="text: ProcessorUtilizationInPercent"></span></li>
-                        </ul>
-                    </li>
-                    
-                    <li>
-                        MemoryStatus
-                        <ul data-bind="with: MemoryStatus">
-                            <li>AvailableMemoryInGB <span data-bind="text: AvailableMemoryInGB"></span></li>
-                            <li>UsedMemoryInGB <span data-bind="text: UsedMemoryInGB"></span></li>
-                        </ul>
-                    </li>
-                    
-                    <li>
-                        StorageStatus
-                        <ul data-bind="with: StorageStatus">
-                            <li data-bind="foreach: StorageDeviceInfos">
-                                <span data-bind="text: DeviceName"></span>
-                                <ul>
-                                    <li>FreeDiscSpaceInPercent <span data-bind="text: FreeDiscSpaceInPercent"></span></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="machines">
+    <ul data-bind="foreach: machineStateViewModels">
+    	<li>
+    		<span data-bind="text: MachineName"></span>
+    		<ul data-bind="foreach: DataSeries">
+    			<li>
+    				<span data-bind="text: Name"></span>
+    				<span data-bind="text: LastPoint"></span>
+    			</li>
+    		</ul>
+    	</li>
+    </ul>
+</div>
 
 @section CustomScripts {
+    <script src="http://code.highcharts.com/highcharts.js"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/systemmonitor.base.js")"></script>
 }
 

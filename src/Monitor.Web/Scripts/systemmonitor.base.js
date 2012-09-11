@@ -1,40 +1,93 @@
-﻿
-function StorageStatusViewModel(storageStatus) {
-    this.StorageDeviceInfos = storageStatus.StorageDeviceInfos;
+﻿function DataSeriesViewModel(Name)
+{
+    var self = this;
+    self.Name = Name;
+    self.Points = ko.observableArray();
+    self.LastPoint = ko.computed(function() {
+        var points = self.Points();
+        if (points.length > 0) {
+            var numberOfPoints = points.length;
+            var indexOfLastPoint = numberOfPoints - 1;
+            return points[indexOfLastPoint].Value;
+        } else {
+            return "";    
+        }
+    });
+
+    self.AddPoint = function(Timestamp, Value) {
+        self.Points.push({ "Timestamp": Timestamp, "Value": Value });
+    };
 }
 
-function MemoryStatusViewModel(memoryStatus) {
-    this.AvailableMemoryInGB = memoryStatus.AvailableMemoryInGB;
-    this.UsedMemoryInGB = memoryStatus.UsedMemoryInGB;
+function MachineStateViewModel(MachineName) {
+    var self = this;
+    self.MachineName = MachineName;
+    self.DataSeries = ko.observableArray();
+
+    self.GetDataSeriesViewModel = function(Name) {
+        var dataSeries = self.DataSeries();
+        
+        for (var i = 0; i < dataSeries.length; i++) {
+            var ds = dataSeries[i];
+            if (ds.Name === Name) {
+                return ds;
+            }
+        }
+        
+        return null;
+    };    
+
+    self.AddDataSeries = function(Name, Timestamp, Value) {
+        var ds = self.GetDataSeriesViewModel(Name);
+        if (ds === null) {
+            ds = new DataSeriesViewModel(Name);
+            self.DataSeries.push(ds);
+        }
+
+        ds.AddPoint(Timestamp, Value);
+    };
 }
 
-function ProcessorStatusViewModel(processorStatus) {
-    this.ProcessorUtilizationInPercent = processorStatus.ProcessorUtilizationInPercent;
+function MachineStatesViewModel() {
+    var self = this;
+    self.machineStateViewModels = ko.observableArray();
+
+    self.GetMachineStateViewModel = function (MachineName) {
+        var vms = self.machineStateViewModels();
+        
+        for (var i = 0; i < vms.length; i++) {
+            var vm = vms[i];
+            if (vm.MachineName === MachineName) {
+                return vm;
+            }
+        }
+        
+        return null;
+    };
+    
+    var hub = $.connection.systemInformationHub;
+
+    $.extend(hub, {
+        displaySystemStatus: function(systemStatus)
+        {
+            var machineStateModel = self.GetMachineStateViewModel(systemStatus.MachineName);
+
+            if (machineStateModel === null)
+            {
+                machineStateModel = new MachineStateViewModel(systemStatus.MachineName);
+                self.machineStateViewModels.push(machineStateModel);
+            }
+
+            for (var i = 0; i < systemStatus.DataPoints.length; i++)
+            {
+                var dataPoint = systemStatus.DataPoints[i];
+                machineStateModel.AddDataSeries(dataPoint.Name, systemStatus.Timestamp, dataPoint.Value);
+            }            
+        }
+    });
+
+    $.connection.hub.start(); 
+   
 }
 
-function SystemInformationItemViewModel(systemInformation) {
-    this.TimeStamp = systemInformation.Timestamp;
-    this.MachineName = systemInformation.MachineName;
-    this.ProcessorStatus = new ProcessorStatusViewModel(systemInformation.ProcessorStatus);
-    this.MemoryStatus = new MemoryStatusViewModel(systemInformation.MemoryStatus);
-    this.StorageStatus = new StorageStatusViewModel(systemInformation.StorageStatus);
-}
-
-var systemInformationBuffer = ko.observableArray();
-
-function SystemInformationViewModel() {
-    this.systemInformationItems = systemInformationBuffer;
-}
-
-var hub = $.connection.systemInformationHub;
-
-$.extend(hub, {
-    displaySystemInformation: function (systemInformation) {
-        var vm = new SystemInformationItemViewModel(systemInformation);
-        systemInformationBuffer.push(vm);
-    }
-});
-
-$.connection.hub.start();
-
-ko.applyBindings(new SystemInformationViewModel());
+ko.applyBindings(new MachineStatesViewModel());

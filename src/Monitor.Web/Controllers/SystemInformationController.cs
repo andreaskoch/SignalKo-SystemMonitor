@@ -2,6 +2,7 @@
 
 using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Monitor.Web.Hubs;
+using SignalKo.SystemMonitor.Monitor.Web.ViewModels;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 {
@@ -9,8 +10,17 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
     {
         public void Put(SystemInformation systemInformation)
         {
+            var systemStatusViewModel = new SystemStatusViewModel
+                {
+                    MachineName = systemInformation.MachineName,
+                    Timestamp = systemInformation.Timestamp.ToString(),
+                    DataPoints =
+                        new[]
+                            { new SystemStatusPointViewModel { Name = "CPU Utilization in %", Value = systemInformation.ProcessorStatus.ProcessorUtilizationInPercent } }
+                };
+
             var context = SignalR.GlobalHost.ConnectionManager.GetHubContext<SystemInformationHub>();
-            context.Clients.displaySystemInformation(systemInformation);
+            context.Clients.displaySystemStatus(systemStatusViewModel);
         }
     }
 }
