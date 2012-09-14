@@ -68,6 +68,25 @@ function MachineStateViewModel(MachineName) {
                 y: 100,
                 borderWidth: 0
             },
+            plotOptions: {
+                line: {
+                    lineWidth: 1,
+                    marker: {
+                        enabled: false,
+                        states: {
+                            hover: {
+                                enabled: false
+                            }
+                        }
+                    },
+                    shadow: false,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    }
+                }
+            },
             series: [{
                 name: "CPU Utilization in %",
                 data: [self.getSecondsSinceMidnight(new Date())]
