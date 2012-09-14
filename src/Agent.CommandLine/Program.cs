@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,6 +26,12 @@ namespace SignalKo.SystemMonitor.Agent.CommandLine
 
         public static int Main(string[] args)
         {
+#if DEBUG
+            int processId = Process.GetCurrentProcess().Id;
+            Console.WriteLine(string.Format("For debug attach to process {0} and hit <Enter>.", processId));
+            Console.ReadLine();
+#endif
+
             StructureMapSetup.Setup();
             
             var program = new Program(ObjectFactory.GetInstance<ISystemInformationDispatchingService>());

@@ -1,23 +1,3 @@
-﻿function DataSeriesViewModel(Name)
-{
-    var self = this;
-    self.Name = Name;
-    self.Points = ko.observableArray();
-    self.LastPoint = ko.computed(function() {
-        var points = self.Points();
-        if (points.length > 0) {
-            var numberOfPoints = points.length;
-            var indexOfLastPoint = numberOfPoints - 1;
-            return points[indexOfLastPoint].Value;
-        } else {
-            return "";    
-        }
-    });
-
-    self.AddPoint = function(Timestamp, Value) {
-        self.Points.push({ "Timestamp": Timestamp, "Value": Value });
-    };
-}
 
 function MachineStateViewModel(MachineName) {
     var self = this;
@@ -25,43 +5,31 @@ function MachineStateViewModel(MachineName) {
     self.ChartTitle = MachineName;
     self.ChartContainerId = "chart-" + MachineName;
     self.ChartContainer = ko.observable("<div id='" + self.ChartContainerId + "'></div>");
-    self.DataSeries = ko.observableArray();
+    self.CaptureStartTime = new Date();
 
-    self.Series = ko.computed(function() {
-        var series = {};
+    self.getSecondsSinceMidnight = function(datetime)
+    {
+        // get todays midnight
+        var midnight = new Date()
+        midnight.setHours(0);
+        midnight.setMinutes(0);
+        midnight.setSeconds(0);
+        midnight.setMilliseconds(0);
 
-        var dataSeries = self.DataSeries();
-        for (var i = 0; i < dataSeries.length; i++) {
-            var ds = dataSeries[i];
+        // cut off milliseconds
+        datetime.setMilliseconds(0);
 
-            var dataSeriesPoints = ds.Points();
-            var values = [];
-            for (var x = 0; dataSeriesPoints.length; i++)
-            {
-                values.push({ "x": dataSeriesPoints[x].Timestamp, "y": dataSeriesPoints[x].Value });
-            }
+        // calculate difference
+        var millisecondsTillMidnight = midnight.getTime();
+        var millisecondsOfSuppliedDateTime = datetime.getTime();
+        var millisecondsSinceMidnight = millisecondsOfSuppliedDateTime - millisecondsTillMidnight;
 
-            series[ds.Name] = values;
-        }
-
-        return series;
-    });
-
-    self.GetDataSeriesViewModel = function(Name) {
-        var dataSeries = self.DataSeries();
-        
-        for (var i = 0; i < dataSeries.length; i++) {
-            var ds = dataSeries[i];
-            if (ds.Name === Name) {
-                return ds;
-            }
-        }
-        
-        return null;
+        // return seconds since midnight
+        return millisecondsSinceMidnight / 1000;
     };
 
     self.chart = null;
-    self.InitializeChart = function() {
+    var initializeChart = function() {
         self.chart = new Highcharts.Chart({
             chart: {
                 renderTo: self.ChartContainerId,
@@ -69,28 +37,26 @@ function MachineStateViewModel(MachineName) {
                 marginRight: 130,
                 marginBottom: 25
             },
-
             title: {
                 text: self.ChartTitle,
                 x: -20 //center
             },
             xAxis: {
-                categories: []
+                type: 'linear'
             },
 
             yAxis: {
                 title: {
                     text: '%'
                 },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
+                min: 0,
+                max: 100
             },
             tooltip: {
-                formatter: function () {
-                    return '<b>' + this.series.name + '</b><br/>' + this.x + ': ' + this.y + '%';
+                formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
+                    Highcharts.numberFormat(this.y, 2);
                 }
             },
             legend: {
@@ -101,18 +67,48 @@ function MachineStateViewModel(MachineName) {
                 y: 100,
                 borderWidth: 0
             },
-            series: []
+            series: [{
+                name: "CPU Utilization in %",
+                data: [self.getSecondsSinceMidnight(new Date())]
+            }]
         });
     };
 
-    self.AddDataSeries = function(Name, Timestamp, Value) {
-        var ds = self.GetDataSeriesViewModel(Name);
-        if (ds === null) {
-            ds = new DataSeriesViewModel(Name);
-            self.DataSeries.push(ds);
+    self.GetOrAddSeries = function(seriesName) {
+        var series = self.chart.series;
+
+        for (var i = 0; i < series.length; i++)
+        {
+            var entry = series[i];
+            if (entry.name === seriesName)
+            {
+                return entry;
+            }
         }
 
-        ds.AddPoint(Timestamp, Value);
+        self.chart.addSeries({ "name": seriesName, "data": []});
+    };
+
+    self.AddData = function(Name, Timestamp, Value) {
+        if (self.chart === null) {
+            initializeChart();
+        }
+
+        var series = self.GetOrAddSeries(Name);
+
+        var secondsSinceMidnight = self.getSecondsSinceMidnight(new Date(Timestamp));
+        var secondsBetweenMidnightAndCaptureStart = self.getSecondsSinceMidnight(self.CaptureStartTime);
+
+        var x = secondsSinceMidnight - secondsBetweenMidnightAndCaptureStart;
+        var y = parseFloat(Value);
+
+        if (x >= 0 && x <= 86400) {
+            series.addPoint([x, y], false, false);
+        }        
+    };
+
+    self.UpdateChart = function() {
+        self.chart.redraw();
     };
 }
 
@@ -149,10 +145,10 @@ function MachineStatesViewModel() {
             for (var i = 0; i < systemStatus.DataPoints.length; i++)
             {
                 var dataPoint = systemStatus.DataPoints[i];
-                machineStateModel.AddDataSeries(dataPoint.Name, systemStatus.Timestamp, dataPoint.Value);
+                machineStateModel.AddData(dataPoint.Name, systemStatus.Timestamp, dataPoint.Value);
             }
 
-            machineStateModel.InitializeChart();
+            machineStateModel.UpdateChart();
         }
     });
 

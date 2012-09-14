@@ -8,13 +8,7 @@
     <ul data-bind="foreach: machineStateViewModels">
     	<li>
     		<span data-bind="text: MachineName"></span>
-    		<ul data-bind="foreach: DataSeries">
-    			<li>
-    				<span data-bind="text: Name"></span>
-    				<span data-bind="text: LastPoint"></span>
-    			</li>
-    		</ul>
-
+            
     		<div data-bind="html: ChartContainer">
     		</div>
     	</li>

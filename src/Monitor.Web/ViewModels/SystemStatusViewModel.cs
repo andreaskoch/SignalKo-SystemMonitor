@@ -1,4 +1,6 @@
-﻿namespace SignalKo.SystemMonitor.Monitor.Web.ViewModels
+﻿using System;
+
+namespace SignalKo.SystemMonitor.Monitor.Web.ViewModels
 {
     public class SystemStatusViewModel
     {
