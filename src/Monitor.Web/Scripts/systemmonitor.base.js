@@ -34,6 +34,7 @@ function MachineStateViewModel(MachineName) {
             chart: {
                 renderTo: self.ChartContainerId,
                 type: 'line',
+                zoomType: 'x',
                 marginRight: 130,
                 marginBottom: 25
             },
