@@ -54,7 +54,7 @@ namespace Agent.Core.Tests.IntegrationTests
             provider.Setup(p => p.GetSystemInfo()).Returns(() =>
                 {
                     itemsReturnedFromSystemInformationProvider++;
-                    return new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow };
+                    return new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow };
                 });
 
             // prepare sender

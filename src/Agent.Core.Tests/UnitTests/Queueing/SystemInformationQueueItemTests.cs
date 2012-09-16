@@ -95,7 +95,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         public void ToString_Contains_Item()
         {
             // Arrange
-            var systemInformationItem = new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow };
+            var systemInformationItem = new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow };
             var object1 = new SystemInformationQueueItem(systemInformationItem);
 
             // Act
@@ -109,7 +109,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         public void ToString_DoesNotContain_UsedMemoryInGB()
         {
             // Arrange
-            var systemInformationItem = new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow };
+            var systemInformationItem = new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow };
             var object1 = new SystemInformationQueueItem(systemInformationItem) { EnqueuCount = 15 };
 
             // Act
@@ -127,7 +127,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         public void Equals_TwoIdenticalInitializedObjects_ResultIsTrue()
         {
             // Arrange
-            var timeStamp = DateTimeOffset.UtcNow;
+            var timeStamp = DateTime.UtcNow;
             var object1 = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = timeStamp });
             var object2 = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = timeStamp });
 
@@ -142,7 +142,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         public void Equals_TwoIdenticalObjects_WithDifferentEnqueueCountValues_ResultIsTrue()
         {
             // Arrange
-            var timeStamp = DateTimeOffset.UtcNow;
+            var timeStamp = DateTime.UtcNow;
             var object1 = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = timeStamp })
                 {
                     EnqueuCount = 1
@@ -163,7 +163,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         public void Equals_SuppliedObjectIsNull_ResultIsFalse()
         {
             // Arrange
-            var object1 = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow });
+            var object1 = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow });
             SystemInformationQueueItem object2 = null;
 
             // Act
@@ -177,7 +177,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         public void Equals_SuppliedObjectIsOfOtherType_ResultIsFalse()
         {
             // Arrange
-            var object1 = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow });
+            var object1 = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow });
             var object2 = new object();
 
             // Act
@@ -195,7 +195,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         public void GetHashCode_TwoIdenticalObjects_HashCodesAreEqual()
         {
             // Arrange
-            var timeStamp = DateTimeOffset.UtcNow;
+            var timeStamp = DateTime.UtcNow;
             var object1 = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = timeStamp });
             var object2 = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = timeStamp });
 
@@ -211,7 +211,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         public void GetHashCode_TwoIdenticalObjects_WithDifferentEnqueueCountValues_HashCodesAreEqual()
         {
             // Arrange
-            var timeStamp = DateTimeOffset.UtcNow;
+            var timeStamp = DateTime.UtcNow;
             var object1 = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = timeStamp })
                 {
                     EnqueuCount = 1
@@ -234,7 +234,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         public void GetHashCode_TwoDistinctObjects_HashCodesAreDifferent()
         {
             // Arrange
-            var timeStamp = DateTimeOffset.UtcNow;
+            var timeStamp = DateTime.UtcNow;
             var object1 = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName + "A", Timestamp = timeStamp });
             var object2 = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName + "B", Timestamp = timeStamp });
 

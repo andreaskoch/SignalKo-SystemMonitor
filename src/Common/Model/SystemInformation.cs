@@ -4,9 +4,7 @@ namespace SignalKo.SystemMonitor.Common.Model
 {
     public class SystemInformation
     {
-        public string TimeStampString { get; set; }
-
-        public DateTimeOffset Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
         public string MachineName { get; set; }
 

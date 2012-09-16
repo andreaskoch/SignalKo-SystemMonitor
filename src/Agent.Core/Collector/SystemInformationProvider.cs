@@ -53,11 +53,9 @@ namespace SignalKo.SystemMonitor.Agent.Core.Collector
 
         public SystemInformation GetSystemInfo()
         {
-            var timestamp = this.timeProvider.GetDateAndTime();
             return new SystemInformation
                 {
-                    Timestamp = timestamp,
-                    TimeStampString = timestamp.ToString(),
+                    Timestamp = this.timeProvider.GetDateAndTime(),
                     MachineName = this.machineNameProvider.GetMachineName(),
                     ProcessorStatus = this.processorStatusProvider.GetProcessorStatus(),
                     MemoryStatus = this.systemMemoryStatusProvider.GetMemoryStatus(),

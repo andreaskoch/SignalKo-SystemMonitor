@@ -4,9 +4,9 @@ namespace SignalKo.SystemMonitor.Common.Services
 {
     public class UTCTimeProvider : ITimeProvider
     {
-        public DateTimeOffset GetDateAndTime()
+        public DateTime GetDateAndTime()
         {
-            return DateTimeOffset.UtcNow;
+            return DateTime.UtcNow;
         }
     }
 }

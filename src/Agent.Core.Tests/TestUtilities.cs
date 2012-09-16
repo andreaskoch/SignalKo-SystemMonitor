@@ -10,7 +10,7 @@ namespace Agent.Core.Tests
         {
             var items = new SystemInformation[count];
             var machineName = Environment.MachineName;
-            DateTimeOffset timestamp = DateTimeOffset.UtcNow;
+            DateTime timestamp = DateTime.UtcNow;
             var incremet = new TimeSpan(0, 0, 0, 1, 0);
 
             for (int i = 0; i < count; i++)
@@ -24,7 +24,7 @@ namespace Agent.Core.Tests
 
         public static int GetRandNumber(int min, int max)
         {
-            return new Random(DateTimeOffset.UtcNow.GetHashCode()).Next(min, max);
+            return new Random(DateTime.UtcNow.GetHashCode()).Next(min, max);
         }
     }
 }

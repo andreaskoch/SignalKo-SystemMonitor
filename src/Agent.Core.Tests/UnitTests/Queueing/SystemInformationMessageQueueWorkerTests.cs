@@ -206,7 +206,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
                     if (itemIndex <= maxCount)
                     {
                         itemIndex++;
-                        return new SystemInformationQueueItem(new SystemInformation { MachineName = itemIndex.ToString(), Timestamp = DateTimeOffset.UtcNow });
+                        return new SystemInformationQueueItem(new SystemInformation { MachineName = itemIndex.ToString(), Timestamp = DateTime.UtcNow });
                     }
 
                     return null;
@@ -237,7 +237,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             workQueue.Setup(q => q.IsEmpty()).Returns(false);
 
             bool itemHasBeenAccessed = false;
-            var systemInfo = new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow };
+            var systemInfo = new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow };
             var queueItem = new SystemInformationQueueItem(systemInfo);
             workQueue.Setup(q => q.Dequeue()).Returns(() =>
                 {
@@ -277,7 +277,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             workQueue.Setup(q => q.IsEmpty()).Returns(false);
 
             bool itemHasBeenAccessed = false;
-            var systemInfo = new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow };
+            var systemInfo = new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow };
             var queueItem = new SystemInformationQueueItem(systemInfo) { EnqueuCount = SystemInformationMessageQueueWorker.MaxRetryCount };
             workQueue.Setup(q => q.Dequeue()).Returns(() =>
             {
@@ -315,13 +315,13 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var workQueue = new Mock<IMessageQueue<SystemInformation>>();
             workQueue.Setup(q => q.IsEmpty()).Returns(false);
             workQueue.Setup(q => q.Dequeue()).Returns(
-                () => new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow }));
+                () => new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow }));
 
             var items = new[]
                 {
-                    new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName + "1", Timestamp = DateTimeOffset.UtcNow }),
-                    new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName + "2", Timestamp = DateTimeOffset.UtcNow }),
-                    new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName + "3", Timestamp = DateTimeOffset.UtcNow })
+                    new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName + "1", Timestamp = DateTime.UtcNow }),
+                    new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName + "2", Timestamp = DateTime.UtcNow }),
+                    new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName + "3", Timestamp = DateTime.UtcNow })
                 };
 
             workQueue.Setup(q => q.PurgeAllItems()).Returns(items);
@@ -348,7 +348,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var workQueue = new Mock<IMessageQueue<SystemInformation>>();
             workQueue.Setup(q => q.IsEmpty()).Returns(false);
             workQueue.Setup(q => q.Dequeue()).Returns(
-                () => new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow }));
+                () => new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow }));
 
             var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();

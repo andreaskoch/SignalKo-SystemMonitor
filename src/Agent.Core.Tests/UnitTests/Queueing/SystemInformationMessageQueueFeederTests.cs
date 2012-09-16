@@ -93,7 +93,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             int durationInMilliseconds = SystemInformationMessageQueueFeeder.SendIntervalInMilliseconds * 2;
 
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
-            systemInformationProvider.Setup(s => s.GetSystemInfo()).Returns(() => new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow });
+            systemInformationProvider.Setup(s => s.GetSystemInfo()).Returns(() => new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow });
 
             var workQueue = new Mock<IMessageQueue<SystemInformation>>();
 

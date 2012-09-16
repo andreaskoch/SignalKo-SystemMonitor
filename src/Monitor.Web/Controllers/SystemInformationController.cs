@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Monitor.Web.Hubs;
@@ -13,9 +12,8 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
         {
             var systemStatusViewModel = new SystemStatusViewModel
                 {
-                    
                     MachineName = systemInformation.MachineName,
-                    Timestamp =  systemInformation.TimeStampString,
+                    Timestamp = systemInformation.Timestamp,
                     DataPoints =
                         new[]
                             { new SystemStatusPointViewModel { Name = "CPU Utilization in %", Value = systemInformation.ProcessorStatus.ProcessorUtilizationInPercent } }

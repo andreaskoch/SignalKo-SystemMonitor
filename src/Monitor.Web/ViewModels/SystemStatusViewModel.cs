@@ -6,7 +6,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.ViewModels
     {
         public string MachineName { get; set; }
 
-        public string Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
         public SystemStatusPointViewModel[] DataPoints { get; set; }
     }

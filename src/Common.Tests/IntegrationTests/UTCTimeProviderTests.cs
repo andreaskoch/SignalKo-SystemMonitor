@@ -32,7 +32,7 @@ namespace Common.Tests.IntegrationTests
         public void GetDateAndTime_ResultIsCurrentMachinesUTCDate()
         {
             // Arrange
-            var expected = DateTimeOffset.UtcNow;
+            var expected = DateTime.UtcNow;
             var tolerance = new TimeSpan(0, 0, 0, 0, 100);
 
             // Act

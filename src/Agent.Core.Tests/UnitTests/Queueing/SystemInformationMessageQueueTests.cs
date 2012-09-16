@@ -29,7 +29,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         public void Enqueue_Item_DequeueReturnsSameItem()
         {
             // Arrange
-            var item = new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow };
+            var item = new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow };
             var queue = new SystemInformationMessageQueue();
 
             // Act
@@ -44,7 +44,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         public void Enqueue_QueueItemCounterIsIncreasedByOne()
         {
             // Arrange
-            var item = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow });
+            var item = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow });
             int previousCount = item.EnqueuCount;
 
             var queue = new SystemInformationMessageQueue();
@@ -62,7 +62,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         {
             // Arrange
             int timesItemIsQueued = 10;
-            var item = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTimeOffset.UtcNow });
+            var item = new SystemInformationQueueItem(new SystemInformation { MachineName = Environment.MachineName, Timestamp = DateTime.UtcNow });
 
             var queue = new SystemInformationMessageQueue();
 
@@ -144,10 +144,10 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             // Arrange
             var queue = new SystemInformationMessageQueue();
 
-            var firstItem = new SystemInformation { MachineName = "1", Timestamp = DateTimeOffset.UtcNow };
+            var firstItem = new SystemInformation { MachineName = "1", Timestamp = DateTime.UtcNow };
             queue.Enqueue(new SystemInformationQueueItem(firstItem));
-            queue.Enqueue(new SystemInformationQueueItem(new SystemInformation { MachineName = "2", Timestamp = DateTimeOffset.UtcNow }));
-            queue.Enqueue(new SystemInformationQueueItem(new SystemInformation { MachineName = "3", Timestamp = DateTimeOffset.UtcNow }));
+            queue.Enqueue(new SystemInformationQueueItem(new SystemInformation { MachineName = "2", Timestamp = DateTime.UtcNow }));
+            queue.Enqueue(new SystemInformationQueueItem(new SystemInformation { MachineName = "3", Timestamp = DateTime.UtcNow }));
 
             // Act
             var dequeuedItem = queue.Dequeue();
@@ -164,9 +164,9 @@ namespace Agent.Core.Tests.UnitTests.Queueing
 
             var items = new[]
                 {
-                    new SystemInformation { MachineName = "1", Timestamp = DateTimeOffset.UtcNow },
-                    new SystemInformation { MachineName = "2", Timestamp = DateTimeOffset.UtcNow },
-                    new SystemInformation { MachineName = "3", Timestamp = DateTimeOffset.UtcNow }
+                    new SystemInformation { MachineName = "1", Timestamp = DateTime.UtcNow },
+                    new SystemInformation { MachineName = "2", Timestamp = DateTime.UtcNow },
+                    new SystemInformation { MachineName = "3", Timestamp = DateTime.UtcNow }
                 };
 
             // Act
@@ -304,9 +304,9 @@ namespace Agent.Core.Tests.UnitTests.Queueing
 
             var items = new[]
                 {
-                    new SystemInformation { MachineName = "1", Timestamp = DateTimeOffset.UtcNow },
-                    new SystemInformation { MachineName = "2", Timestamp = DateTimeOffset.UtcNow },
-                    new SystemInformation { MachineName = "3", Timestamp = DateTimeOffset.UtcNow }
+                    new SystemInformation { MachineName = "1", Timestamp = DateTime.UtcNow },
+                    new SystemInformation { MachineName = "2", Timestamp = DateTime.UtcNow },
+                    new SystemInformation { MachineName = "3", Timestamp = DateTime.UtcNow }
                 };
 
             foreach (var item in items)
@@ -329,9 +329,9 @@ namespace Agent.Core.Tests.UnitTests.Queueing
 
             var items = new[]
                 {
-                    new SystemInformation { MachineName = "1", Timestamp = DateTimeOffset.UtcNow },
-                    new SystemInformation { MachineName = "2", Timestamp = DateTimeOffset.UtcNow },
-                    new SystemInformation { MachineName = "3", Timestamp = DateTimeOffset.UtcNow }
+                    new SystemInformation { MachineName = "1", Timestamp = DateTime.UtcNow },
+                    new SystemInformation { MachineName = "2", Timestamp = DateTime.UtcNow },
+                    new SystemInformation { MachineName = "3", Timestamp = DateTime.UtcNow }
                 };
 
             foreach (var item in items)

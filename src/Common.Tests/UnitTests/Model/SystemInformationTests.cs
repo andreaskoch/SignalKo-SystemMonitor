@@ -13,13 +13,13 @@ namespace Common.Tests.UnitTests.Model
         #region Default Values
 
         [Test]
-        public void Default_Timestamp_ISDateTimeOffsetMinValue()
+        public void Default_Timestamp_ISDateTimeMinValue()
         {
             // Arrange
             var object1 = new SystemInformation();
 
             // Assert
-            Assert.AreEqual(DateTimeOffset.MinValue, object1.Timestamp);
+            Assert.AreEqual(DateTime.MinValue, object1.Timestamp);
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace Common.Tests.UnitTests.Model
             var object1 = new SystemInformation
                 {
                     MachineName = Environment.MachineName,
-                    Timestamp = DateTimeOffset.UtcNow,
+                    Timestamp = DateTime.UtcNow,
                     MemoryStatus = new SystemMemoryInformation(),
                     ProcessorStatus = new ProcessorUtilizationInformation(),
                     StorageStatus = new SystemStorageInformation()
@@ -93,7 +93,7 @@ namespace Common.Tests.UnitTests.Model
             var object1 = new SystemInformation
             {
                 MachineName = Environment.MachineName,
-                Timestamp = DateTimeOffset.UtcNow,
+                Timestamp = DateTime.UtcNow,
                 MemoryStatus = new SystemMemoryInformation(),
                 ProcessorStatus = new ProcessorUtilizationInformation(),
                 StorageStatus = new SystemStorageInformation()
@@ -114,7 +114,7 @@ namespace Common.Tests.UnitTests.Model
             var object1 = new SystemInformation
             {
                 MachineName = Environment.MachineName,
-                Timestamp = DateTimeOffset.UtcNow,
+                Timestamp = DateTime.UtcNow,
                 MemoryStatus = memorySatus,
                 ProcessorStatus = new ProcessorUtilizationInformation(),
                 StorageStatus = new SystemStorageInformation()
@@ -135,7 +135,7 @@ namespace Common.Tests.UnitTests.Model
             var object1 = new SystemInformation
             {
                 MachineName = Environment.MachineName,
-                Timestamp = DateTimeOffset.UtcNow,
+                Timestamp = DateTime.UtcNow,
                 MemoryStatus = new SystemMemoryInformation(),
                 ProcessorStatus = processorSatus,
                 StorageStatus = new SystemStorageInformation()
@@ -156,7 +156,7 @@ namespace Common.Tests.UnitTests.Model
             var object1 = new SystemInformation
             {
                 MachineName = Environment.MachineName,
-                Timestamp = DateTimeOffset.UtcNow,
+                Timestamp = DateTime.UtcNow,
                 MemoryStatus = new SystemMemoryInformation(),
                 ProcessorStatus = new ProcessorUtilizationInformation(),
                 StorageStatus = storageSatus
@@ -177,7 +177,7 @@ namespace Common.Tests.UnitTests.Model
         public void Equals_TwoIdenticalInitializedObjects_ResultIsTrue()
         {
             // Arrange
-            var timestamp = DateTimeOffset.UtcNow;
+            var timestamp = DateTime.UtcNow;
             var object1 = new SystemInformation
                 {
                     MachineName = Environment.MachineName,
@@ -220,7 +220,7 @@ namespace Common.Tests.UnitTests.Model
         public void Equals_TwoIdenticalObjectsWithDifferentCasing_ResultIsTrue()
         {
             // Arrange
-            var timestamp = DateTimeOffset.UtcNow;
+            var timestamp = DateTime.UtcNow;
             var object1 = new SystemInformation
                 {
                     MachineName = Environment.MachineName.ToLower(),
@@ -252,7 +252,7 @@ namespace Common.Tests.UnitTests.Model
             var object1 = new SystemInformation
                 {
                     MachineName = Environment.MachineName,
-                    Timestamp = DateTimeOffset.UtcNow,
+                    Timestamp = DateTime.UtcNow,
                     MemoryStatus = new SystemMemoryInformation(),
                     ProcessorStatus = new ProcessorUtilizationInformation(),
                     StorageStatus = new SystemStorageInformation()
@@ -273,7 +273,7 @@ namespace Common.Tests.UnitTests.Model
             var object1 = new SystemInformation
                 {
                     MachineName = Environment.MachineName,
-                    Timestamp = DateTimeOffset.UtcNow,
+                    Timestamp = DateTime.UtcNow,
                     MemoryStatus = new SystemMemoryInformation(),
                     ProcessorStatus = new ProcessorUtilizationInformation(),
                     StorageStatus = new SystemStorageInformation()
@@ -294,7 +294,7 @@ namespace Common.Tests.UnitTests.Model
             var object1 = new SystemInformation
                 {
                     MachineName = Environment.MachineName,
-                    Timestamp = DateTimeOffset.UtcNow,
+                    Timestamp = DateTime.UtcNow,
                     MemoryStatus = new SystemMemoryInformation(),
                     ProcessorStatus = new ProcessorUtilizationInformation(),
                     StorageStatus = new SystemStorageInformation()
@@ -316,7 +316,7 @@ namespace Common.Tests.UnitTests.Model
         public void GetHashCode_TwoIdenticalObjects_BothInitialized_HashCodesAreEqual()
         {
             // Arrange
-            var timestamp = DateTimeOffset.UtcNow;
+            var timestamp = DateTime.UtcNow;
             var object1 = new SystemInformation
                 {
                     MachineName = Environment.MachineName,
@@ -349,7 +349,7 @@ namespace Common.Tests.UnitTests.Model
             var object1 = new SystemInformation
                 {
                     MachineName = Environment.MachineName,
-                    Timestamp = DateTimeOffset.UtcNow,
+                    Timestamp = DateTime.UtcNow,
                     MemoryStatus = new SystemMemoryInformation(),
                     ProcessorStatus = new ProcessorUtilizationInformation(),
                     StorageStatus = new SystemStorageInformation()
@@ -357,7 +357,7 @@ namespace Common.Tests.UnitTests.Model
             var object2 = new SystemInformation
             {
                 MachineName = "Different Machine",
-                Timestamp = DateTimeOffset.UtcNow,
+                Timestamp = DateTime.UtcNow,
                 MemoryStatus = new SystemMemoryInformation(),
                 ProcessorStatus = new ProcessorUtilizationInformation(),
                 StorageStatus = new SystemStorageInformation()
@@ -391,7 +391,7 @@ namespace Common.Tests.UnitTests.Model
         {
             // Arrange
             var machineName = Environment.MachineName;
-            var timeStamp = DateTimeOffset.UtcNow;
+            var timeStamp = DateTime.UtcNow;
             var object1 = new SystemInformation
                 {
                     MachineName = machineName,
@@ -418,7 +418,7 @@ namespace Common.Tests.UnitTests.Model
         [Test]
         public void GetHashCode_ForAllUniqueObject_AUniqueHashCodeIsReturned()
         {
-            var timeStamp = DateTimeOffset.UtcNow;
+            var timeStamp = DateTime.UtcNow;
             var hashCodes = new Dictionary<int, SystemInformation>();
 
             for (var i = 0; i < 1000; i++)
