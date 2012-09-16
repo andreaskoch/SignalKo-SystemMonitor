@@ -112,7 +112,11 @@ $.extend(SystemMonitor, {
                         series: [{
                             name: "CPU Utilization in %",
                             data: [SystemMonitor.Utilities.getSecondsSinceMidnight(new Date())]
-                        }]
+                        },
+                        {
+                            name: "Memory Utilization in %",
+                            data: [SystemMonitor.Utilities.getSecondsSinceMidnight(new Date())]
+                        }                        ]
                     });
                 };
 

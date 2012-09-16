@@ -7,6 +7,8 @@ namespace SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators
     {
         private const string CPUUtilizationDataSeriesName = "CPU Utilization in %";
 
+        private const string MemorytilizationDataSeriesName = "Memory Utilization in %";
+
         public SystemStatusViewModel GetSystemStatusViewModel(SystemInformation systemInformation)
         {
             return new SystemStatusViewModel
@@ -20,6 +22,11 @@ namespace SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators
                                     {
                                         Name = CPUUtilizationDataSeriesName, 
                                         Value = systemInformation.ProcessorStatus.ProcessorUtilizationInPercent
+                                    },
+                                new SystemStatusPointViewModel
+                                    {
+                                        Name = MemorytilizationDataSeriesName, 
+                                        Value = systemInformation.MemoryStatus.UsedMemoryInGB * 100 / (systemInformation.MemoryStatus.UsedMemoryInGB + systemInformation.MemoryStatus.AvailableMemoryInGB)
                                     }
                             }
                 };
