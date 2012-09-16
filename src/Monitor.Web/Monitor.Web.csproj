@@ -102,7 +102,7 @@
     <Content Include="Scripts\libraries\knockout-2.1.0.js" />
     <Content Include="Scripts\libraries\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\libraries\knockout.mapping-latest.js" />
-    <Content Include="Scripts\systemmonitor.base.js" />
+    <Content Include="Scripts\systemmonitor.overview.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
