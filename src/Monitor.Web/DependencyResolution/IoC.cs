@@ -1,5 +1,3 @@
-using SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators;
-
 using StructureMap;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
@@ -16,8 +14,6 @@ namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
                             scan.TheCallingAssembly();
                             scan.WithDefaultConventions();
                         });
-
-                    x.For<ISystemStatusOrchestrator>().Use<SystemStatusOrchestrator>();
                 });
             return ObjectFactory.Container;
         }

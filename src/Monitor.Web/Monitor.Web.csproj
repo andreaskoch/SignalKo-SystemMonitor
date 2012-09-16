@@ -100,7 +100,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\SystemInformationHub.cs" />
+    <Compile Include="ViewModelOrchestrators\IMemoryStatusOrchestrator.cs" />
+    <Compile Include="ViewModelOrchestrators\IProcessorStatusOrchestrator.cs" />
+    <Compile Include="ViewModelOrchestrators\IStorageStatusOrchestrator.cs" />
     <Compile Include="ViewModelOrchestrators\ISystemStatusOrchestrator.cs" />
+    <Compile Include="ViewModelOrchestrators\MemoryStatusOrchestrator.cs" />
+    <Compile Include="ViewModelOrchestrators\ProcessorStatusOrchestrator.cs" />
+    <Compile Include="ViewModelOrchestrators\StorageStatusOrchestrator.cs" />
     <Compile Include="ViewModelOrchestrators\SystemStatusOrchestrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\SystemStatusPointViewModel.cs" />
