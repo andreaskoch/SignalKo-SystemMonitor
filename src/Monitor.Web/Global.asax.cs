@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 
 using SignalKo.SystemMonitor.Monitor.Web.App_Start;
+using SignalKo.SystemMonitor.Monitor.Web.DependencyResolution;
 
 namespace SignalKo.SystemMonitor.Monitor.Web
 {
@@ -10,6 +11,8 @@ namespace SignalKo.SystemMonitor.Monitor.Web
     {
         protected void Application_Start()
         {
+            IoC.Initialize();
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
