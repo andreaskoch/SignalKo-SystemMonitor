@@ -2,9 +2,13 @@
 function MachineStateViewModel(MachineName) {
     var self = this;
     self.MachineName = MachineName;
+
     self.ChartTitle = MachineName;
     self.ChartContainerId = "chart-" + MachineName;
     self.ChartContainer = ko.observable("<div id='" + self.ChartContainerId + "'></div>");
+
+    self.ChartSizeCurrent = 0;
+    self.ChartSizeMax = 60;
     self.CaptureStartTime = new Date();
 
     self.getSecondsSinceMidnight = function(datetime)
@@ -28,6 +32,31 @@ function MachineStateViewModel(MachineName) {
         return millisecondsSinceMidnight / 1000;
     };
 
+    self.getFormattedTime = function(dateTime) {
+        var hours = dateTime.getHours();
+        var minutes = dateTime.getMinutes();
+        var seconds = dateTime.getSeconds();
+
+        var formatTimeComponent = function(number) {
+            if (number < 10) {
+                return "0" + number;
+            }
+
+            return number;
+        };
+
+        return formatTimeComponent(hours) + ":" + formatTimeComponent(minutes, 2) + ":" + formatTimeComponent(seconds);
+    };
+
+    self.getAbsoluteTimestampFromRelativeChartPosition = function(chartPosition) {
+        var secondsSinceCaptureStart = chartPosition;
+        var millisecondsSinceCaputureStart = secondsSinceCaptureStart * 1000;
+        var millisecondsAtCaptureStart = self.CaptureStartTime.getTime();
+
+        var timestamp = new Date(millisecondsAtCaptureStart + millisecondsSinceCaputureStart);
+        return timestamp;
+    };
+
     self.chart = null;
     var initializeChart = function() {
         self.chart = new Highcharts.Chart({
@@ -43,7 +72,13 @@ function MachineStateViewModel(MachineName) {
                 x: -20 //center
             },
             xAxis: {
-                type: 'linear'
+                type: 'linear',
+                labels: {
+                    formatter: function() {
+                        var timestamp = self.getAbsoluteTimestampFromRelativeChartPosition(this.value);
+                        return self.getFormattedTime(timestamp);
+                    }
+                }
             },
 
             yAxis: {
@@ -55,9 +90,12 @@ function MachineStateViewModel(MachineName) {
             },
             tooltip: {
                 formatter: function() {
+                    var timestamp = self.getAbsoluteTimestampFromRelativeChartPosition(this.x);
+                    var value = Highcharts.numberFormat(this.y, 2);
+
                     return '<b>'+ this.series.name +'</b><br/>'+
-                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-                    Highcharts.numberFormat(this.y, 2);
+                    self.getFormattedTime(timestamp) +'<br/>'+
+                    value;
                 }
             },
             legend: {
@@ -122,8 +160,11 @@ function MachineStateViewModel(MachineName) {
         var x = secondsSinceMidnight - secondsBetweenMidnightAndCaptureStart;
         var y = parseFloat(Value);
 
+        var shift = !(self.ChartSizeCurrent < self.ChartSizeMax);
+
         if (x >= 0 && x <= 86400) {
-            series.addPoint([x, y], false, false);
+            series.addPoint([x, y], false, shift);
+            self.ChartSizeCurrent++;
         }        
     };
 
