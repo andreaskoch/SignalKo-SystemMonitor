@@ -93,6 +93,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\systemmonitor.base.js" />
+    <Content Include="Scripts\systemmonitor.utilities.js" />
+    <Content Include="Scripts\global.js" />
     <Content Include="Scripts\libraries\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\libraries\jquery-1.6.4.js" />
     <Content Include="Scripts\libraries\jquery-1.6.4.min.js" />
