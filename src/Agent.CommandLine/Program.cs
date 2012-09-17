@@ -26,13 +26,26 @@ namespace SignalKo.SystemMonitor.Agent.CommandLine
 
         public static int Main(string[] args)
         {
+            string customMachineName;
+
 #if DEBUG
+            // wait for debug
             int processId = Process.GetCurrentProcess().Id;
-            Console.WriteLine(string.Format("For debug attach to process {0} and hit <Enter>.", processId));
-            Console.ReadLine();
+            Console.Write(string.Format("For debug attach to process {0} and hit <{1}> ...", processId, ConsoleKey.Enter));
+            while (Console.ReadKey().Key != ConsoleKey.Enter)
+            {
+                Thread.Sleep(100);
+            }
+
+            Console.WriteLine();
+
+            // get custom machine name
+            Console.Write(string.Format("Enter a machine name (default: {0}):", Environment.MachineName));
+            customMachineName = Console.ReadLine();
+            Console.WriteLine();
 #endif
 
-            StructureMapSetup.Setup();
+            StructureMapSetup.Setup(customMachineName);
             
             var program = new Program(ObjectFactory.GetInstance<ISystemInformationDispatchingService>());
             return program.Run(args);

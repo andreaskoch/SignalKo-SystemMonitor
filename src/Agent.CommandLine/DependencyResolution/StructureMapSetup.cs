@@ -12,7 +12,7 @@ namespace SignalKo.SystemMonitor.Agent.CommandLine.DependencyResolution
 {
     public static class StructureMapSetup
     {
-        public static void Setup()
+        public static void Setup(string machineName = null)
         {
             ObjectFactory.Configure(
                 config =>
@@ -24,7 +24,17 @@ namespace SignalKo.SystemMonitor.Agent.CommandLine.DependencyResolution
 
                         /* collector */
                         config.For<ILogicalDiscInstanceNameProvider>().Use<LogicalDiscInstanceNameProvider>();
-                        config.For<IMachineNameProvider>().Use<EnvironmentMachineNameProvider>();
+
+                        if (string.IsNullOrWhiteSpace(machineName))
+                        {
+                            config.For<IMachineNameProvider>().Use<EnvironmentMachineNameProvider>();
+                        }
+                        else
+                        {
+                            var customMachineNameProvider = new CustomMachineNameProvider(machineName);
+                            config.For<IMachineNameProvider>().Use(customMachineNameProvider);
+                        }
+
                         config.For<IProcessorStatusProvider>().Use<ProcessorStatusProvider>();
 
                         config.For<ISystemStorageStatusProvider>().Use<SystemStorageStatusProvider>();

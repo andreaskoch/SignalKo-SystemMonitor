@@ -48,6 +48,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Collector\CustomMachineNameProvider.cs" />
     <Compile Include="Collector\EnvironmentMachineNameProvider.cs" />
     <Compile Include="Collector\ILogicalDiscInstanceNameProvider.cs" />
     <Compile Include="Collector\IMachineNameProvider.cs" />
