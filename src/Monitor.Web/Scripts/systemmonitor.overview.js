@@ -28,7 +28,6 @@ $.extend(SystemMonitor, {
                 self.ChartContainerId = "chart-" + machineName;
                 self.ChartContainer = ko.observable("<div id='" + self.ChartContainerId + "'></div>");
 
-                self.ChartSizeCurrent = 0;
                 self.ChartSizeMax = 60;
                 self.CaptureStartTime = new Date();
 
@@ -48,7 +47,7 @@ $.extend(SystemMonitor, {
                             renderTo: self.ChartContainerId,
                             type: 'line',
                             zoomType: 'x',
-                            marginRight: 130,
+                            marginRight: 250,
                             marginBottom: 25
                         },
                         title: {
@@ -92,7 +91,7 @@ $.extend(SystemMonitor, {
                         },
                         plotOptions: {
                             line: {
-                                lineWidth: 1,
+                                lineWidth: 2,
                                 marker: {
                                     enabled: false,
                                     states: {
@@ -104,7 +103,7 @@ $.extend(SystemMonitor, {
                                 shadow: false,
                                 states: {
                                     hover: {
-                                        lineWidth: 1
+                                        lineWidth: 4
                                     }
                                 }
                             }
@@ -130,7 +129,10 @@ $.extend(SystemMonitor, {
                         }
                     }
 
-                    self.chart.addSeries({ "name": seriesName, "data": [] });
+                    self.chart.addSeries({
+                        "name": seriesName,
+                        "data": []
+                    });
                 };
 
                 self.AddData = function (Name, Timestamp, Value) {
@@ -146,11 +148,11 @@ $.extend(SystemMonitor, {
                     var x = secondsSinceMidnight - secondsBetweenMidnightAndCaptureStart;
                     var y = parseFloat(Value);
 
-                    var shift = !(self.ChartSizeCurrent < self.ChartSizeMax);
+                    var shiftChart = !(series.data.length < self.ChartSizeMax);
+                    var redrawChart = false;
 
                     if (x >= 0 && x <= 86400) {
-                        series.addPoint([x, y], false, shift);
-                        self.ChartSizeCurrent++;
+                        series.addPoint([x, y], redrawChart, shiftChart);
                     }
                 };
 
