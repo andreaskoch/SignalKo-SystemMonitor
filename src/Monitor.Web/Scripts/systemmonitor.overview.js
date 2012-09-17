@@ -41,7 +41,18 @@ $.extend(SystemMonitor, {
                 };
 
                 self.chart = null;
-                var initializeChart = function () {
+                var initializeChart = function (initialDataPoints) {
+
+                    var initialSeries = [];
+                    for(var i = 0; i < initialDataPoints.length; i++)
+                    {
+                        var seriesName = initialDataPoints[i].Name;
+                        var value = initialDataPoints[i].Value
+                        var seriesData = [value];
+
+                        initialSeries.push({ "name": seriesName, "data": seriesData });
+                    }
+
                     self.chart = new Highcharts.Chart({
                         chart: {
                             renderTo: self.ChartContainerId,
@@ -108,14 +119,7 @@ $.extend(SystemMonitor, {
                                 }
                             }
                         },
-                        series: [{
-                            name: "CPU Utilization in %",
-                            data: [SystemMonitor.Utilities.getSecondsSinceMidnight(new Date())]
-                        },
-                        {
-                            name: "Memory Utilization in %",
-                            data: [SystemMonitor.Utilities.getSecondsSinceMidnight(new Date())]
-                        }                        ]
+                        series: initialSeries
                     });
                 };
 
@@ -135,28 +139,32 @@ $.extend(SystemMonitor, {
                     });
                 };
 
-                self.AddData = function (Name, Timestamp, Value) {
+                self.AddData = function(timestamp, dataPoints) {
                     if (self.chart === null) {
-                        initializeChart();
+                        initializeChart(dataPoints);
                     }
 
-                    var series = self.GetOrAddSeries(Name);
+                    for (var i = 0; i < dataPoints.length; i++) {
+                        var name = dataPoints[i].Name;
+                        var value = dataPoints[i].Value;
 
-                    var secondsSinceMidnight = SystemMonitor.Utilities.getSecondsSinceMidnight(new Date(Timestamp));
-                    var secondsBetweenMidnightAndCaptureStart = SystemMonitor.Utilities.getSecondsSinceMidnight(self.CaptureStartTime);
+                        var series = self.GetOrAddSeries(name);
 
-                    var x = secondsSinceMidnight - secondsBetweenMidnightAndCaptureStart;
-                    var y = parseFloat(Value);
+                        var secondsSinceMidnight = SystemMonitor.Utilities.getSecondsSinceMidnight(new Date(timestamp));
+                        var secondsBetweenMidnightAndCaptureStart = SystemMonitor.Utilities.getSecondsSinceMidnight(self.CaptureStartTime);
 
-                    var shiftChart = !(series.data.length < self.ChartSizeMax);
-                    var redrawChart = false;
+                        var x = secondsSinceMidnight - secondsBetweenMidnightAndCaptureStart;
+                        var y = parseFloat(value);
 
-                    if (x >= 0 && x <= 86400) {
-                        series.addPoint([x, y], redrawChart, shiftChart);
+                        var shiftChart = !(series.data.length < self.ChartSizeMax);
+                        var redrawChart = false;
+
+                        if (x >= 0 && x <= 86400)
+                        {
+                            series.addPoint([x, y], redrawChart, shiftChart);
+                        }
                     }
-                };
 
-                self.UpdateChart = function () {
                     self.chart.redraw();
                 };
             }
@@ -189,12 +197,7 @@ $.extend(SystemMonitor, {
                             self.machineStateViewModels.push(machineStateModel);
                         }
 
-                        for (var i = 0; i < systemStatus.DataPoints.length; i++) {
-                            var dataPoint = systemStatus.DataPoints[i];
-                            machineStateModel.AddData(dataPoint.Name, systemStatus.Timestamp, dataPoint.Value);
-                        }
-
-                        machineStateModel.UpdateChart();
+                        machineStateModel.AddData(systemStatus.Timestamp, systemStatus.DataPoints);
                     }
                 });
 
