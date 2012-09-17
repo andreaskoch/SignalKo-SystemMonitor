@@ -34,6 +34,9 @@ obj/
 *.[Pp]ublish.xml
 StyleCop.Cache
 
+# Don't ignore exe files the tools folder
+!tools/*/*.exe
+
 # Resharper
 _ReSharper*/
 *.[Rr]esharper
