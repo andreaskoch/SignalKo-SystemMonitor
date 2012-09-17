@@ -14,7 +14,6 @@ if (typeof (SystemMonitor) === 'undefined') {
     throw new Error("SystemMonitor is required to run this component");
 }
 
-
 $.extend(SystemMonitor, {
 
     "Overview": {
@@ -24,6 +23,7 @@ $.extend(SystemMonitor, {
                 var self = this;
                 self.MachineName = machineName;
 
+                self.chart = null;
                 self.ChartTitle = machineName;
                 self.ChartContainerId = "chart-" + machineName;
                 self.ChartContainer = ko.observable("<div id='" + self.ChartContainerId + "'></div>");
@@ -31,27 +31,31 @@ $.extend(SystemMonitor, {
                 self.ChartSizeMax = 60;
                 self.CaptureStartTime = new Date();
 
-                self.getAbsoluteTimestampFromRelativeChartPosition = function (chartPosition) {
-                    var secondsSinceCaptureStart = chartPosition;
-                    var millisecondsSinceCaputureStart = secondsSinceCaptureStart * 1000;
-                    var millisecondsAtCaptureStart = self.CaptureStartTime.getTime();
+                var initializeChart = function(initialDataPoints)
+                {
+                    var getInitialSeries = function(dataSeries) {
+                        var initialSeries = [];
 
-                    var timestamp = new Date(millisecondsAtCaptureStart + millisecondsSinceCaputureStart);
-                    return timestamp;
-                };
+                        for(var i = 0; i < dataSeries.length; i++)
+                        {
+                            var seriesName = dataSeries[i].Name;
+                            var value = dataSeries[i].Value
+                            var seriesData = [value];
 
-                self.chart = null;
-                var initializeChart = function (initialDataPoints) {
+                            initialSeries.push({ "name": seriesName, "data": seriesData });
+                        }
 
-                    var initialSeries = [];
-                    for(var i = 0; i < initialDataPoints.length; i++)
-                    {
-                        var seriesName = initialDataPoints[i].Name;
-                        var value = initialDataPoints[i].Value
-                        var seriesData = [value];
+                        return initialSeries;
+                    };
 
-                        initialSeries.push({ "name": seriesName, "data": seriesData });
-                    }
+                    var getAbsoluteTimestampFromRelativeChartPosition = function (chartPosition) {
+                        var secondsSinceCaptureStart = chartPosition;
+                        var millisecondsSinceCaputureStart = secondsSinceCaptureStart * 1000;
+                        var millisecondsAtCaptureStart = self.CaptureStartTime.getTime();
+
+                        var timestamp = new Date(millisecondsAtCaptureStart + millisecondsSinceCaputureStart);
+                        return timestamp;
+                    };
 
                     self.chart = new Highcharts.Chart({
                         chart: {
@@ -69,12 +73,11 @@ $.extend(SystemMonitor, {
                             type: 'linear',
                             labels: {
                                 formatter: function () {
-                                    var timestamp = self.getAbsoluteTimestampFromRelativeChartPosition(this.value);
+                                    var timestamp = getAbsoluteTimestampFromRelativeChartPosition(this.value);
                                     return SystemMonitor.Utilities.getFormattedTime(timestamp);
                                 }
                             }
                         },
-
                         yAxis: {
                             title: {
                                 text: '%'
@@ -84,7 +87,7 @@ $.extend(SystemMonitor, {
                         },
                         tooltip: {
                             formatter: function () {
-                                var timestamp = self.getAbsoluteTimestampFromRelativeChartPosition(this.x);
+                                var timestamp = getAbsoluteTimestampFromRelativeChartPosition(this.x);
                                 var value = Highcharts.numberFormat(this.y, 2);
 
                                 return '<b>' + this.series.name + '</b><br/>' +
@@ -119,11 +122,11 @@ $.extend(SystemMonitor, {
                                 }
                             }
                         },
-                        series: initialSeries
+                        series: getInitialSeries(initialDataPoints)
                     });
                 };
 
-                self.GetOrAddSeries = function (seriesName) {
+                var getOrAddSeries = function (seriesName) {
                     var series = self.chart.series;
 
                     for (var i = 0; i < series.length; i++) {
@@ -139,16 +142,19 @@ $.extend(SystemMonitor, {
                     });
                 };
 
-                self.AddData = function(timestamp, dataPoints) {
-                    if (self.chart === null) {
+                self.AddData = function(timestamp, dataPoints)
+                {
+                    if (self.chart === null)
+                    {
                         initializeChart(dataPoints);
                     }
 
-                    for (var i = 0; i < dataPoints.length; i++) {
+                    for (var i = 0; i < dataPoints.length; i++)
+                    {
                         var name = dataPoints[i].Name;
                         var value = dataPoints[i].Value;
 
-                        var series = self.GetOrAddSeries(name);
+                        var series = getOrAddSeries(name);
 
                         var secondsSinceMidnight = SystemMonitor.Utilities.getSecondsSinceMidnight(new Date(timestamp));
                         var secondsBetweenMidnightAndCaptureStart = SystemMonitor.Utilities.getSecondsSinceMidnight(self.CaptureStartTime);
@@ -169,40 +175,41 @@ $.extend(SystemMonitor, {
                 };
             }
 
-            function machineStatesViewModel() {
+            function machineStatesViewModel()
+            {
                 var self = this;
                 self.machineStateViewModels = ko.observableArray();
 
-                self.GetMachineStateViewModel = function (MachineName) {
-                    var vms = self.machineStateViewModels();
+                var getMachineStateViewModel = function (MachineName) {
+                    var machineStateViewModels = self.machineStateViewModels();
 
-                    for (var i = 0; i < vms.length; i++) {
-                        var vm = vms[i];
-                        if (vm.MachineName === MachineName) {
-                            return vm;
+                    for (var i = 0; i < machineStateViewModels.length; i++)
+                    {
+                        var machineStateViewModel = machineStateViewModels[i];
+                        if (machineStateViewModel.MachineName === MachineName)
+                        {
+                            return machineStateViewModel;
                         }
                     }
 
                     return null;
                 };
 
-                var hub = $.connection.systemInformationHub;
+                var systemInformationHub = $.connection.systemInformationHub;
+                systemInformationHub.displaySystemStatus = function(systemStatus)
+                {
+                    var machineStateModel = getMachineStateViewModel(systemStatus.MachineName);
 
-                $.extend(hub, {
-                    displaySystemStatus: function (systemStatus) {
-                        var machineStateModel = self.GetMachineStateViewModel(systemStatus.MachineName);
-
-                        if (machineStateModel === null) {
-                            machineStateModel = new machineStateViewModel(systemStatus.MachineName);
-                            self.machineStateViewModels.push(machineStateModel);
-                        }
-
-                        machineStateModel.AddData(systemStatus.Timestamp, systemStatus.DataPoints);
+                    if (machineStateModel === null)
+                    {
+                        machineStateModel = new machineStateViewModel(systemStatus.MachineName);
+                        self.machineStateViewModels.push(machineStateModel);
                     }
-                });
+
+                    machineStateModel.AddData(systemStatus.Timestamp, systemStatus.DataPoints);
+                };
 
                 $.connection.hub.start();
-
             }
 
             ko.applyBindings(new machineStatesViewModel());
