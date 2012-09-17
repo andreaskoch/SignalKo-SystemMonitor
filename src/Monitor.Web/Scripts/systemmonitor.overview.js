@@ -30,6 +30,38 @@ $.extend(SystemMonitor, {
             self.ChartSizeMax = 60;
             self.CaptureStartTime = new Date();
 
+            self.AddData = function(timestamp, dataPoints)
+            {
+                if (self.chart === null)
+                {
+                    initializeChart(dataPoints);
+                }
+
+                for (var i = 0; i < dataPoints.length; i++)
+                {
+                    var name = dataPoints[i].Name;
+                    var value = dataPoints[i].Value;
+
+                    var series = getOrAddSeries(name);
+
+                    var secondsSinceMidnight = SystemMonitor.Utilities.getSecondsSinceMidnight(new Date(timestamp));
+                    var secondsBetweenMidnightAndCaptureStart = SystemMonitor.Utilities.getSecondsSinceMidnight(self.CaptureStartTime);
+
+                    var x = secondsSinceMidnight - secondsBetweenMidnightAndCaptureStart;
+                    var y = parseFloat(value);
+
+                    var shiftChart = !(series.data.length < self.ChartSizeMax);
+                    var redrawChart = false;
+
+                    if (x >= 0 && x <= 86400)
+                    {
+                        series.addPoint([x, y], redrawChart, shiftChart);
+                    }
+                }
+
+                self.chart.redraw();
+            };
+
             var initializeChart = function(initialDataPoints)
             {
                 var getInitialSeries = function(dataSeries) {
@@ -139,39 +171,7 @@ $.extend(SystemMonitor, {
                     "name": seriesName,
                     "data": []
                 });
-            };
-
-            self.AddData = function(timestamp, dataPoints)
-            {
-                if (self.chart === null)
-                {
-                    initializeChart(dataPoints);
-                }
-
-                for (var i = 0; i < dataPoints.length; i++)
-                {
-                    var name = dataPoints[i].Name;
-                    var value = dataPoints[i].Value;
-
-                    var series = getOrAddSeries(name);
-
-                    var secondsSinceMidnight = SystemMonitor.Utilities.getSecondsSinceMidnight(new Date(timestamp));
-                    var secondsBetweenMidnightAndCaptureStart = SystemMonitor.Utilities.getSecondsSinceMidnight(self.CaptureStartTime);
-
-                    var x = secondsSinceMidnight - secondsBetweenMidnightAndCaptureStart;
-                    var y = parseFloat(value);
-
-                    var shiftChart = !(series.data.length < self.ChartSizeMax);
-                    var redrawChart = false;
-
-                    if (x >= 0 && x <= 86400)
-                    {
-                        series.addPoint([x, y], redrawChart, shiftChart);
-                    }
-                }
-
-                self.chart.redraw();
-            };
+            };            
         }
 
         function machineStatesViewModel()
