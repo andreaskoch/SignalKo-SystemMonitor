@@ -91,7 +91,7 @@
   </ItemGroup>
   <Target Name="MergeExecutable">
     <PropertyGroup>
-      <ILMergeExe>$(SolutionDir)\tools\ILMerge\ILMerge.exe</ILMergeExe>
+      <ILMergeExe>$(SolutionDir)tools\ILMerge\ILMerge.exe</ILMergeExe>
       <ILMergeInternalizeIgnoreFile>$(ProjectDir)ilmerge.internalize.ignore.txt</ILMergeInternalizeIgnoreFile>
       <ILMergeOutputFile>SystemMonitorService.exe</ILMergeOutputFile>
       <ILMergeOutputFolder>$(SolutionDir)..\binaries\$(AssemblyName)</ILMergeOutputFolder>
