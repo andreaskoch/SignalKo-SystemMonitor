@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,10 +13,20 @@ namespace SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators
 
         public IEnumerable<SystemStatusPointViewModel> GetStorageUtilizationInPercent(SystemStorageInformation systemStorageInformation)
         {
+            if (systemStorageInformation == null)
+            {
+                throw new ArgumentNullException("systemStorageInformation");
+            }
+
+            if (systemStorageInformation.StorageDeviceInfos == null || systemStorageInformation.StorageDeviceInfos.Length == 0)
+            {
+                return new SystemStatusPointViewModel[] { };
+            }
+
             return systemStorageInformation.StorageDeviceInfos.Select(deviceInfo => new SystemStatusPointViewModel
                 {
-                    Name = string.Format(StorageUtilizationDataSeriesNamePattern, (object)deviceInfo.DeviceName),
-                    Value = (100d - deviceInfo.FreeDiscSpaceInPercent)
+                    Name = string.Format(StorageUtilizationDataSeriesNamePattern, deviceInfo.DeviceName),
+                    Value = 100d - deviceInfo.FreeDiscSpaceInPercent
                 });
         }
     }

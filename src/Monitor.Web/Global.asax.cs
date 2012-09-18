@@ -11,7 +11,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web
     {
         protected void Application_Start()
         {
-            IoC.Initialize();
+            StructureMapSetup.Initialize();
 
             AreaRegistration.RegisterAllAreas();
 

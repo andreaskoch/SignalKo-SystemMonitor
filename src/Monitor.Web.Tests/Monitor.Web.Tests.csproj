@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9CEC7B4B-563C-4516-A2F6-C14C699F2743}</ProjectGuid>
+    <ProjectGuid>{C4BA33FF-AC8C-49A7-BFCC-B878B350F9BC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Agent.Service.Tests</RootNamespace>
-    <AssemblyName>Agent.Service.Tests</AssemblyName>
+    <RootNamespace>Monitor.Web.Tests</RootNamespace>
+    <AssemblyName>Monitor.Web.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -33,23 +33,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.1\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=2.6.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IntegrationTests\DependencyResolution\StructureMapSetupTests.cs" />
+    <Compile Include="IntegrationTests\ViewModelOrchestrators\SystemStatusOrchestratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTests\ViewModelOrchestrators\MemoryStatusOrchestratorTests.cs" />
+    <Compile Include="UnitTests\ViewModelOrchestrators\StorageStatusOrchestratorTests.cs" />
+    <Compile Include="UnitTests\ViewModelOrchestrators\SystemStatusOrchestratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Agent.Service\Agent.Service.csproj">
-      <Project>{E3953B37-DF1E-4BE2-AE69-8B560E5D82F7}</Project>
-      <Name>Agent.Service</Name>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{934F2D76-0D1D-4E96-8DD2-67690DCCBC8C}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Monitor.Web\Monitor.Web.csproj">
+      <Project>{A8DEA277-AAFA-4E1E-A043-17C03472B3E4}</Project>
+      <Name>Monitor.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
