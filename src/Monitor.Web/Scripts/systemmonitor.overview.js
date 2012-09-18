@@ -34,7 +34,7 @@ $.extend(SystemMonitor, {
             {
                 if (self.chart === null)
                 {
-                    initializeChart(dataPoints);
+                    initializeChart(new Date(timestamp), dataPoints);
                 }
 
                 for (var i = 0; i < dataPoints.length; i++)
@@ -44,25 +44,19 @@ $.extend(SystemMonitor, {
 
                     var series = getOrAddSeries(name);
 
-                    var secondsSinceMidnight = SystemMonitor.Utilities.getSecondsSinceMidnight(new Date(timestamp));
-                    var secondsBetweenMidnightAndCaptureStart = SystemMonitor.Utilities.getSecondsSinceMidnight(self.CaptureStartTime);
-
-                    var x = secondsSinceMidnight - secondsBetweenMidnightAndCaptureStart;
+                    var x = (new Date(timestamp)).getTime();
                     var y = parseFloat(value);
 
                     var shiftChart = !(series.data.length < self.ChartSizeMax);
                     var redrawChart = false;
 
-                    if (x >= 0 && x <= 86400)
-                    {
-                        series.addPoint([x, y], redrawChart, shiftChart);
-                    }
+                    series.addPoint([x, y], redrawChart, shiftChart);
                 }
 
                 self.chart.redraw();
             };
 
-            var initializeChart = function(initialDataPoints)
+            var initializeChart = function(startDateAndTime, initialDataPoints)
             {
                 var getInitialSeries = function(dataSeries) {
                     var initialSeries = [];
@@ -71,21 +65,12 @@ $.extend(SystemMonitor, {
                     {
                         var seriesName = dataSeries[i].Name;
                         var value = dataSeries[i].Value
-                        var seriesData = [value];
+                        var seriesData = [[startDateAndTime.getTime(), value]];
 
                         initialSeries.push({ "name": seriesName, "data": seriesData });
                     }
 
                     return initialSeries;
-                };
-
-                var getAbsoluteTimestampFromRelativeChartPosition = function (chartPosition) {
-                    var secondsSinceCaptureStart = chartPosition;
-                    var millisecondsSinceCaputureStart = secondsSinceCaptureStart * 1000;
-                    var millisecondsAtCaptureStart = self.CaptureStartTime.getTime();
-
-                    var timestamp = new Date(millisecondsAtCaptureStart + millisecondsSinceCaputureStart);
-                    return timestamp;
                 };
 
                 self.chart = new Highcharts.Chart({
@@ -101,13 +86,7 @@ $.extend(SystemMonitor, {
                         x: -20 //center
                     },
                     xAxis: {
-                        type: 'linear',
-                        labels: {
-                            formatter: function () {
-                                var timestamp = getAbsoluteTimestampFromRelativeChartPosition(this.value);
-                                return SystemMonitor.Utilities.getFormattedTime(timestamp);
-                            }
-                        }
+                        type: 'datetime'
                     },
                     yAxis: {
                         title: {
@@ -115,16 +94,6 @@ $.extend(SystemMonitor, {
                         },
                         min: 0,
                         max: 100
-                    },
-                    tooltip: {
-                        formatter: function () {
-                            var timestamp = getAbsoluteTimestampFromRelativeChartPosition(this.x);
-                            var value = Highcharts.numberFormat(this.y, 2);
-
-                            return '<b>' + this.series.name + '</b><br/>' +
-                            SystemMonitor.Utilities.getFormattedTime(timestamp) + '<br/>' +
-                            value;
-                        }
                     },
                     legend: {
                         layout: 'vertical',

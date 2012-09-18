@@ -118,6 +118,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\systemmonitor.base.js" />
+    <Content Include="Scripts\systemmonitor.overview.highcharts.theme.gray.js" />
     <Content Include="Scripts\systemmonitor.utilities.js" />
     <Content Include="Scripts\global.js" />
     <Content Include="Scripts\libraries\jquery-1.6.4-vsdoc.js" />
