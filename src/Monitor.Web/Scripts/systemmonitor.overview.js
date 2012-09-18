@@ -28,13 +28,19 @@ $.extend(SystemMonitor, {
             self.ChartContainer = ko.observable("<div id='" + self.ChartContainerId + "'></div>");
 
             self.ChartSizeMax = 60;
-            self.CaptureStartTime = new Date();
+            self.StartDateAndTime = null;
 
             self.AddData = function(timestamp, dataPoints)
             {
                 if (self.chart === null)
                 {
                     initializeChart(new Date(timestamp), dataPoints);
+                }
+
+                if (new Date(timestamp) < self.StartDateAndTime)
+                {
+                    // skip data
+                    return;
                 }
 
                 for (var i = 0; i < dataPoints.length; i++)
@@ -58,6 +64,9 @@ $.extend(SystemMonitor, {
 
             var initializeChart = function(startDateAndTime, initialDataPoints)
             {
+                // save the start time
+                self.StartDateAndTime = startDateAndTime;
+
                 var getInitialSeries = function(dataSeries) {
                     var initialSeries = [];
 
