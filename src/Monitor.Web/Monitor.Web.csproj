@@ -93,7 +93,7 @@
     </Compile>
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Controllers\Api\SystemInformationController.cs" />
-    <Compile Include="Controllers\OverviewController.cs" />
+    <Compile Include="Controllers\SystemMonitorController.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapSetup.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
@@ -149,9 +149,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Overview\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\_SiteLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +159,9 @@
       <Project>{934F2D76-0D1D-4E96-8DD2-67690DCCBC8C}</Project>
       <Name>Common</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\SystemMonitor\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -2,7 +2,7 @@
 
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 {
-    public class OverviewController : Controller
+    public class SystemMonitorController : Controller
     {
         public ActionResult Index()
         {
