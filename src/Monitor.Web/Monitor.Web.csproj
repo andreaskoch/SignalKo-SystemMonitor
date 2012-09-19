@@ -92,7 +92,7 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="App_Start\StructuremapMvc.cs" />
-    <Compile Include="Controllers\SystemInformationController.cs" />
+    <Compile Include="Controllers\Api\SystemInformationController.cs" />
     <Compile Include="Controllers\OverviewController.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapSetup.cs" />

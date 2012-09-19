@@ -4,7 +4,7 @@ using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Monitor.Web.Hubs;
 using SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators;
 
-namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
+namespace SignalKo.SystemMonitor.Monitor.Web.Controllers.Api
 {
     public class SystemInformationController : ApiController
     {
