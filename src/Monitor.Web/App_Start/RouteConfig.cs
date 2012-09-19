@@ -17,6 +17,8 @@ namespace SignalKo.SystemMonitor.Monitor.Web.App_Start
 
             routes.MapRoute("GroupConfigurationAll", "Configuration/Groups", new { controller = "GroupConfiguration", action = "EditGroups" });
             routes.MapRoute("GroupConfigurationSpecific", "Configuration/Group/{groupName}", new { controller = "GroupConfiguration", action = "EditGroup" });
+
+            routes.MapRoute("AgentConfiguration", "Configuration/Agent", new { controller = "AgentConfiguration", action = "Index" });
         }
     }
 }

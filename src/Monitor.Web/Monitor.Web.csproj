@@ -92,6 +92,7 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="App_Start\StructuremapMvc.cs" />
+    <Compile Include="Controllers\AgentConfigurationController.cs" />
     <Compile Include="Controllers\Api\SystemInformationController.cs" />
     <Compile Include="Controllers\GroupConfigurationController.cs" />
     <Compile Include="Controllers\SystemMonitorController.cs" />
@@ -170,6 +171,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\GroupConfiguration\EditGroup.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AgentConfiguration\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
