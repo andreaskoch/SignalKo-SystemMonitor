@@ -2,9 +2,9 @@
 
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 {
-    public class AgentConfigurationController : Controller
+    public partial class AgentConfigurationController : Controller
     {
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             return View();
         }

@@ -2,14 +2,14 @@
 
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 {
-    public class GroupConfigurationController : Controller
+    public partial class GroupConfigurationController : Controller
     {
-        public ActionResult EditGroups()
+        public virtual ActionResult EditGroups()
         {
             return this.View();
         }
 
-        public ActionResult EditGroup(string groupName)
+        public virtual ActionResult EditGroup(string groupName)
         {
             return this.View();
         }

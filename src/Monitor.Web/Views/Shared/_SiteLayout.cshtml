@@ -13,16 +13,16 @@
             @RenderBody()
         </section>
 
-        <script type="text/javascript" src="@Url.Content("~/Scripts/libraries/jquery-1.8.1.js")"></script>
-        <script type="text/javascript" src="@Url.Content("~/Scripts/libraries/jquery.signalR-0.5.3.js")"></script>
+        <script type="text/javascript" src="@Links.Scripts.libraries.jquery_1_8_1_min_js"></script>
+        <script type="text/javascript" src="@Links.Scripts.libraries.jquery_signalR_0_5_3_min_js"></script>
         <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
     
-        <script type="text/javascript" src="@Url.Content("~/Scripts/libraries/knockout-2.1.0.js")"></script>
-        <script type="text/javascript" src="@Url.Content("~/Scripts/libraries/knockout.mapping-latest.js")"></script>
+        <script type="text/javascript" src="@Links.Scripts.libraries.knockout_2_1_0_js"></script>
+        <script type="text/javascript" src="@Links.Scripts.libraries.knockout_mapping_latest_js"></script>
         
-        <script type="text/javascript" src="@Url.Content("~/Scripts/global.js")"></script>
-        <script type="text/javascript" src="@Url.Content("~/Scripts/systemmonitor.base.js")"></script>
-        <script type="text/javascript" src="@Url.Content("~/Scripts/systemmonitor.utilities.js")"></script>
+        <script type="text/javascript" src="@Url.Content(@Links.Scripts.global_js)"></script>
+        <script type="text/javascript" src="@Url.Content(@Links.Scripts.systemmonitor_base_js)"></script>
+        <script type="text/javascript" src="@Url.Content(@Links.Scripts.systemmonitor_utilities_js)"></script>
 
         @RenderSection("CustomScripts")
     </body>

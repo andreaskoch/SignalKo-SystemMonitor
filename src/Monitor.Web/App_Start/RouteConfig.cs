@@ -9,16 +9,16 @@ namespace SignalKo.SystemMonitor.Monitor.Web.App_Start
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute("Default", string.Empty, new { controller = "SystemMonitor", action = "GroupOverview" });
+            routes.MapRoute("Default", string.Empty, MVC.SystemMonitor.GroupOverview());
 
-            routes.MapRoute("SystemMonitorDefault", "SystemMonitor", new { controller = "SystemMonitor", action = "GroupOverview" });
-            routes.MapRoute("SystemMonitorGroupOverview", "SystemMonitor/GroupOverview", new { controller = "SystemMonitor", action = "GroupOverview" });
-            routes.MapRoute("SystemMonitorGroup", "SystemMonitor/Group/{groupName}", new { controller = "SystemMonitor", action = "Group" });
+            routes.MapRoute("SystemMonitorDefault", "SystemMonitor", MVC.SystemMonitor.GroupOverview());
+            routes.MapRoute("SystemMonitorGroupOverview", "SystemMonitor/GroupOverview", MVC.SystemMonitor.GroupOverview());
+            routes.MapRoute("SystemMonitorGroup", "SystemMonitor/Group/{groupName}", MVC.SystemMonitor.Group());
 
-            routes.MapRoute("GroupConfigurationAll", "Configuration/Groups", new { controller = "GroupConfiguration", action = "EditGroups" });
-            routes.MapRoute("GroupConfigurationSpecific", "Configuration/Group/{groupName}", new { controller = "GroupConfiguration", action = "EditGroup" });
+            routes.MapRoute("GroupConfigurationAll", "Configuration/Groups", MVC.GroupConfiguration.EditGroups());
+            routes.MapRoute("GroupConfigurationSpecific", "Configuration/Group/{groupName}", MVC.GroupConfiguration.EditGroup());
 
-            routes.MapRoute("AgentConfiguration", "Configuration/Agent", new { controller = "AgentConfiguration", action = "Index" });
+            routes.MapRoute("AgentConfiguration", "Configuration/Agent", MVC.AgentConfiguration.Index());
         }
     }
 }
