@@ -93,6 +93,7 @@
     </Compile>
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Controllers\Api\SystemInformationController.cs" />
+    <Compile Include="Controllers\GroupConfigurationController.cs" />
     <Compile Include="Controllers\SystemMonitorController.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapSetup.cs" />
@@ -163,6 +164,12 @@
   <ItemGroup>
     <Content Include="Views\SystemMonitor\Group.cshtml" />
     <Content Include="Views\SystemMonitor\GroupOverview.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\GroupConfiguration\EditGroups.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\GroupConfiguration\EditGroup.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
