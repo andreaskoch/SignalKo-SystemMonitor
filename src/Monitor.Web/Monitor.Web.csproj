@@ -161,7 +161,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\SystemMonitor\Index.cshtml" />
+    <Content Include="Views\SystemMonitor\Group.cshtml" />
+    <Content Include="Views\SystemMonitor\GroupOverview.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

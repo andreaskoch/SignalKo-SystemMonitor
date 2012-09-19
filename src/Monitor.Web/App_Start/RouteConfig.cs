@@ -9,8 +9,10 @@ namespace SignalKo.SystemMonitor.Monitor.Web.App_Start
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute("Default", string.Empty, new { controller = "Overview", action = "Index" });
-            routes.MapRoute("SystemMonitorOverview", "SystemMonitor/Overview", new { controller = "SystemMonitor", action = "Index" });
+            routes.MapRoute("Default", string.Empty, new { controller = "SystemMonitor", action = "GroupOverview" });
+
+            routes.MapRoute("SystemMonitorGroupOverview", "SystemMonitor/GroupOverview", new { controller = "SystemMonitor", action = "GroupOverview" });
+            routes.MapRoute("SystemMonitorGroup", "SystemMonitor/Group/{groupName}", new { controller = "SystemMonitor", action = "Group" });
         }
     }
 }
