@@ -6,6 +6,25 @@
 </head>
     <body>
         <header>
+            <nav>
+                <ul>
+                    <li>
+                        System Monitor
+                        <ul>
+                            <li>@Html.ActionLink("Overview", MVC.SystemMonitor.GroupOverview())</li>
+                        </ul>
+                    </li>
+                
+                    <li>
+                        Configuration
+                        <ul>
+                            <li>@Html.ActionLink("Group Editor", MVC.GroupConfiguration.EditGroups())</li>
+                            <li>@Html.ActionLink("Agent Configuration", MVC.AgentConfiguration.Index())</li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
             <h1>@ViewBag.Title</h1>
         </header>
 
