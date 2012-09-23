@@ -155,6 +155,20 @@
     <Content Include="Scripts\libraries\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\libraries\knockout.mapping-latest.js" />
     <Content Include="Scripts\systemmonitor.overview.js" />
+    <None Include="Styles\Combined\global.css" />
+    <None Include="Styles\Source\constants.less" />
+    <None Include="Styles\Source\01-global.css">
+      <DependentUpon>01-global.chirp.less</DependentUpon>
+    </None>
+    <None Include="Styles\Source\01-global.min.css">
+      <DependentUpon>01-global.chirp.less</DependentUpon>
+    </None>
+    <None Include="Styles\Source\02-layout.css">
+      <DependentUpon>02-layout.chirp.less</DependentUpon>
+    </None>
+    <None Include="Styles\Source\02-layout.min.css">
+      <DependentUpon>02-layout.chirp.less</DependentUpon>
+    </None>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -196,6 +210,9 @@
     <Content Include="Views\AgentConfiguration\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Styles\combine.chirp.config" />
+    <None Include="Styles\Source\01-global.chirp.less" />
+    <None Include="Styles\Source\02-layout.chirp.less" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>

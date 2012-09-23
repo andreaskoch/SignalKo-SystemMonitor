@@ -82,7 +82,7 @@ static bool AddTimestampToStaticLink(ProjectItem projectItem) {
 // Folders containing static files for which links are generated (e.g. Links.Scripts.Map_js)
 readonly string[] StaticFilesFolders = new string[] {
     "Scripts",
-    "Content",
+    "Styles",
 };
 
 // Static files to exclude from the generated links   

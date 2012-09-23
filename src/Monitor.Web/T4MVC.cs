@@ -341,6 +341,39 @@ namespace Links {
                       
     }
 
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public static class Styles {
+        private const string URLPATH = "~/Styles";
+        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        public static readonly string combine_chirp_config = Url("combine.chirp.config");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class Combined {
+            private const string URLPATH = "~/Styles/Combined";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string global_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/global.min.css") ? Url("global.min.css") : Url("global.css");
+                 
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class Source {
+            private const string URLPATH = "~/Styles/Source";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string global_chirp_less = Url("global.chirp.less");
+            public static readonly string global_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/global.min.css") ? Url("global.min.css") : Url("global.css");
+                 
+            public static readonly string global_min_css = Url("global.min.css");
+            public static readonly string globals_less = Url("globals.less");
+            public static readonly string layout_chirp_less = Url("layout.chirp.less");
+            public static readonly string layout_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/layout.min.css") ? Url("layout.min.css") : Url("layout.css");
+                 
+            public static readonly string layout_min_css = Url("layout.min.css");
+        }
+    
+    }
+
 }
 
 public static class T4MVCHelpers {

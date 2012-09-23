@@ -1,0 +1,11 @@
+﻿html{background-color:#fff;font-family:Arial,Verdana,Helvetica,sans-serif;color:black}
+h1{margin:0;padding:0;font-family:'Segoe UI Light','SegoeUI',sans-serif}
+h2{margin:0;padding:0;font-family:'Segoe UI Light','SegoeUI',sans-serif}
+h3{margin:0;padding:0;font-family:'Segoe UI Light','SegoeUI',sans-serif}
+h4,h5,h6{margin:0;padding:0;font-family:'Segoe UI Light','SegoeUI',sans-serif}
+a{color:#706f6f;text-decoration:none}
+a:hover{color:#bcbcbc}
+.cleaner{clear:both}
+.cleaner-left{clear:left}
+.cleaner-right{clear:left}
+body{background-color:#fff}
