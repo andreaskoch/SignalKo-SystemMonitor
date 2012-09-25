@@ -8,4 +8,11 @@ a:hover{color:#bcbcbc}
 .cleaner{clear:both}
 .cleaner-left{clear:left}
 .cleaner-right{clear:left}
-body{background-color:#fff}
+html{margin:0;padding:0}
+body{margin:0;padding:0}
+body>header{margin:0 0 20px 0}
+body>header nav{float:left;clear:left;width:100%;border-bottom:1px solid black}
+body>header nav ul{float:left;margin:0;padding:0}
+body>header nav ul li{margin:0 10px 0 00px;padding:0;float:left;list-style-type:none}
+body>section{margin:0 10px 0 10px}
+.groupoverview .controls{text-align:right;margin:0 0 20px 0}

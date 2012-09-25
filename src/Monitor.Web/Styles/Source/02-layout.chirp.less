@@ -1,6 +1,40 @@
 ﻿@import "constants.less";
 
-/* empty */
+html {
+	margin: 0px;
+	padding: 0px;
+}
+
 body {
-    background-color: @color-background;
+	margin: 0px;
+	padding: 0px;
+}
+
+body > header {
+	margin: 0px 0px 20px 0px;
+
+	nav {
+		float: left;
+		clear: left;
+		width: 100%;
+
+		border-bottom: 1px solid black;
+
+		ul {
+			float: left;
+			margin: 0px;
+			padding: 0px;
+
+			li {
+				margin: 0px 10px 0px 00px;
+				padding: 0px;
+				float: left;
+				list-style-type: none;
+			}
+		}
+	}
+}
+
+body > section {
+	margin: 0px 10px 0px 10px;
 }

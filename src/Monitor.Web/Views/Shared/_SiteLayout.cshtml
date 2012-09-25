@@ -2,9 +2,15 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+
     <title>@ViewBag.Title - System Monitor</title>
 
+    <link href="@Links.Styles.Combined.jquery_ui.overcast.jquery_ui_1_8_23_custom_css" rel="stylesheet" type="text/css" />
     <link href="@Links.Styles.Combined.global_css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="@Links.Scripts.libraries.jquery_1_8_1_min_js"></script>
+    <script type="text/javascript" src="@Links.Scripts.libraries.modernizr_2_6_2_js"></script>
+    <script type="text/javascript" src="@Links.Scripts.libraries.jquery_ui_1_8_23_min_js"></script>
 </head>
     <body>
         <header>
@@ -34,7 +40,6 @@
             @RenderBody()
         </section>
 
-        <script type="text/javascript" src="@Links.Scripts.libraries.jquery_1_8_1_min_js"></script>
         <script type="text/javascript" src="@Links.Scripts.libraries.jquery_signalR_0_5_3_min_js"></script>
         <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
     
