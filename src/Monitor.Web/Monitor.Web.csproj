@@ -60,6 +60,7 @@
       <HintPath>..\packages\CommonServiceLocator.StructureMapAdapter.1.1.0.3\lib\StructureMapAdapter.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -96,10 +97,18 @@
     </Compile>
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Controllers\AgentConfigurationController.cs" />
+    <Compile Include="Controllers\Api\AgentConfigurationController.cs" />
     <Compile Include="Controllers\Api\GroupConfigurationController.cs" />
     <Compile Include="Controllers\Api\SystemInformationController.cs" />
     <Compile Include="Controllers\GroupConfigurationController.cs" />
     <Compile Include="Controllers\SystemMonitorController.cs" />
+    <Compile Include="Core\Configuration\AppConfigFileSystemDataStoreConfigurationProvider.cs" />
+    <Compile Include="Core\Configuration\FileSystemDataStoreConfiguration.cs" />
+    <Compile Include="Core\Configuration\IFileSystemDataStoreConfigurationProvider.cs" />
+    <Compile Include="Core\DataAccess\IAgentConfigurationDataAccessor.cs" />
+    <Compile Include="Core\DataAccess\JsonAgentConfigurationDataAccessor.cs" />
+    <Compile Include="Core\Services\AgentConfigurationService.cs" />
+    <Compile Include="Core\Services\IAgentConfigurationService.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapSetup.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />
@@ -171,6 +180,7 @@
     <Content Include="Scripts\libraries\jquery-1.8.1.js" />
     <Content Include="Scripts\libraries\jquery-1.8.1.min.js" />
     <Content Include="Scripts\monitoring-config.js" />
+    <Content Include="Scripts\systemmonitor.agent.configuration.js" />
     <Content Include="Scripts\systemmonitor.base.js" />
     <Content Include="Scripts\systemmonitor.overview.highcharts.theme.gray.js" />
     <Content Include="Scripts\systemmonitor.utilities.js" />

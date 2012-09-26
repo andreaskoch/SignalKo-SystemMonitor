@@ -1,3 +1,5 @@
+using SignalKo.SystemMonitor.Monitor.Web.Core.Configuration;
+
 using StructureMap;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
