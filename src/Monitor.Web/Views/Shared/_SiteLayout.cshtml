@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using SignalKo.SystemMonitor.Monitor.Web.Extensions
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -24,7 +25,7 @@
                      <div class="clear">
                      </div>
                  </div>
-                 @*<nav>
+                 @* <nav>
                      <ul>
                          <li>
                              System Monitor
@@ -42,6 +43,14 @@
                          </li>
                      </ul>
                  </nav>*@
+                  <nav class="righttopnavigation">
+                      <ul>
+                          @Html.MenuLink("Overview", "GroupOverview", "SystemMonitor", "activmenue")
+                          @Html.MenuLink("Server Configuration", "ServerConfiguration", "SystemMonitor", "activmenue")
+                          @Html.MenuLink("Group Editor", "EditGroups", "GroupConfiguration", "activmenue")
+                          @Html.MenuLink("Agent Configuration", "Index", "AgentConfiguration", "activmenue")
+                      </ul>
+                 </nav>
              </header>
               <section>
                 @RenderBody()

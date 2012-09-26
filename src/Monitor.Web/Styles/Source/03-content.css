@@ -164,13 +164,12 @@ span, dt, dd {
   border-radius: 5px;
   margin-top: 14px;
   height: 39px;
+}
+.item.webserver {
   background: url("../../Assets/webserver48.png") no-repeat left;
 }
-.item webserver {
-  background: url("../../Assets/webserver48.png") no-repeat left;
-}
-.item sqlserver {
-  background: url("../../Assets/webserver48.png") no-repeat left;
+.item.sqlserver {
+  background: url("../../Assets/dbserver48.png") no-repeat left;
 }
 .configSection {
   background-color: #dadef6;
@@ -182,7 +181,7 @@ span, dt, dd {
 .addButton {
   margin-bottom: -3px;
   cursor: pointer;
-  background: url("themes/base/images/plus_alt_16x16.png") no-repeat fixed center;
+  background: url("../../Assets/plus_alt_16x16.png") no-repeat fixed center;
   border: none;
 }
 .machineGroup {
@@ -197,7 +196,7 @@ span, dt, dd {
   min-width: 225px;
 }
 .deletesmall {
-  background: url(themes/base/images/x_alt_12x12.png) no-repeat;
+  background: url(../../Assets/x_alt_12x12.png) no-repeat;
   height: 12px;
   background-position: right;
   float: right;
@@ -210,7 +209,7 @@ span, dt, dd {
   background-color: #3d9dd5;
 }
 .configsmall {
-  background: url(themes/base/images/wrench_12x12.png) no-repeat;
+  background: url(../../Assets/wrench_12x12.png) no-repeat;
   height: 14px;
   background-position: right;
   float: right;
@@ -240,7 +239,7 @@ span, dt, dd {
   min-height: 50px;
 }
 .closeConfig {
-  background: url(themes/base/images/x_alt_24x24.png) no-repeat;
+  background: url(../../Assets/x_alt_24x24.png) no-repeat;
   height: 24px;
   background-position: right;
   float: right;
@@ -274,6 +273,6 @@ span, dt, dd {
 .autobutton {
   z-index: 2;
   position: absolute;
-  right: 13px;
+  right: 25px;
   top: 118px;
 }
