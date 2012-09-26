@@ -1,4 +1,4 @@
-﻿html{background-color:#fff;font-family:Arial,Verdana,Helvetica,sans-serif;color:black}
+﻿html{background-color:white;font-family:Arial,Verdana,Helvetica,sans-serif;color:black}
 h1{margin:0;padding:0;font-family:'Segoe UI Light','SegoeUI',sans-serif}
 h2{margin:0;padding:0;font-family:'Segoe UI Light','SegoeUI',sans-serif}
 h3{margin:0;padding:0;font-family:'Segoe UI Light','SegoeUI',sans-serif}
@@ -8,6 +8,12 @@ a:hover{color:#bcbcbc}
 .cleaner{clear:both}
 .cleaner-left{clear:left}
 .cleaner-right{clear:left}
+.righttopnavigation{display:block;position:absolute;right:25px;top:0}
+.righttopnavigation ul{list-style:none;background:#B0CBF1;display:table}
+.righttopnavigation li{list-style:none;float:left;position:relative;top:1px;margin:0 .2em 1px 0;border-top:0!important;padding:0;white-space:nowrap;min-width:125px;text-align:center;border:1px solid #003C66;border-bottom-left-radius:5px;border-bottom-right-radius:5px;height:33px}
+.righttopnavigation li a{position:relative;margin:21px;text-decoration:none;color:#555;top:7px;font-size:18px}
+.righttopnavigation li.activmenue{background:#99B2DD}
+.righttopnavigation li.activmenue a{color:#003C66}
 html{margin:0;padding:0}
 body{margin:0;padding:0}
 body>header{margin:0 0 20px 0}
@@ -15,4 +21,37 @@ body>header nav{float:left;clear:left;width:100%;border-bottom:1px solid black}
 body>header nav ul{float:left;margin:0;padding:0}
 body>header nav ul li{margin:0 10px 0 00px;padding:0;float:left;list-style-type:none}
 body>section{margin:0 10px 0 10px}
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}
 .groupoverview .controls{text-align:right;margin:0 0 20px 0}
+body{width:100%;height:100%;line-height:1;font-size:.85em;font-family:"Trebuchet MS",Verdana,Helvetica,Sans-Serif}
+header{display:block;height:100%;background:#b0cbf1}
+section{margin-top:3px}
+.clear{clear:both}
+.body{width:100%;min-height:100%;min-width:1000px;position:absolute;display:block;background:#99b2dd}
+.content-body{margin:20px;min-width:940px}
+.page-head .logo{background:url("../../Assets/remote_monitoring.png") no-repeat;width:126px;height:83px;float:left;margin:5px}
+.page-head .title{color:#003C66;font-size:36px;font-family:Segoe,Arial,Verdana;padding-top:20px;float:left}
+.leftMashineName{margin-top:40px}
+.leftMashineName span{font-size:12px;color:black;font-weight:bold}
+.middleContent{float:left;width:99%;height:auto;background:#b0cbf1;padding:5px;margin-left:5px}
+span,dt,dd{color:#003C66}
+.item{text-align:center;cursor:move;margin:4px;border:1px solid #7b8ce8;padding:2px;border-radius:5px;margin-top:14px;height:39px}
+.item.webserver{background:url("../../Assets/webserver48.png") no-repeat left}
+.item.sqlserver{background:url("../../Assets/dbserver48.png") no-repeat left}
+.configSection{background-color:#dadef6;border:1px solid #7b8ce8;padding:2px;border-radius:5px;margin:0 27px 0 27px}
+.addButton{margin-bottom:-3px;cursor:pointer;background:url("../../Assets/plus_alt_16x16.png") no-repeat fixed center;border:0}
+.machineGroup{border:2px solid #7b8ce8;border-radius:5px;background:#DADEF6;width:225px;margin:20px;padding:10px;float:left;min-height:200px;min-width:225px}
+.deletesmall{background:url(../../Assets/x_alt_12x12.png) no-repeat;height:12px;background-position:right;float:right;padding-right:14px;margin-left:2px;cursor:pointer;border-radius:4px}
+.deletesmall:hover,.configsmall:hover{background-color:#3d9dd5}
+.configsmall{background:url(../../Assets/wrench_12x12.png) no-repeat;height:14px;background-position:right;float:right;padding-right:12px;cursor:pointer;border-radius:4px}
+.configDiv{height:12px}
+.configDivBox{height:12px}
+.configDivBox span{font-weight:bold;font-size:20px}
+.configDiv span{font-weight:bold}
+.machineGroup .groupName{font-weight:bold;margin-bottom:20px;font-size:20px}
+.container{min-height:50px}
+.closeConfig{background:url(../../Assets/x_alt_24x24.png) no-repeat;height:24px;background-position:right;float:right;padding-right:24px;margin-left:2px;cursor:pointer;border:4px solid rgba(0,0,0,0);position:absolute;right:-12px;top:-12px}
+.box-overlay,.box-overlay-group{width:400px;height:400px;border:2px solid #7B8CE8;border-radius:5px;background:#DADEF6}
+.smallbutton{border-radius:5px;background:#2e52a4;padding:2px 28px 2px 28px;color:white;margin-left:28px;cursor:pointer;font-weight:bold}
+.smallbutton:hover{background:#003C66}
+.autobutton{z-index:2;position:absolute;right:25px;top:118px}

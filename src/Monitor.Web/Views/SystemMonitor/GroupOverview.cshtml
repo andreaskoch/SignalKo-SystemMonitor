@@ -1,16 +1,14 @@
 ﻿@model dynamic
 
 @{
-    ViewBag.Title = "Overview";
+    ViewBag.Title = "Monitoring";
 }
 
-<section class="groupoverview" id="monitorBody">
+<section class="middleContent" id="monitorBody">
     
-    <div class="controls">
-        <input type="checkbox" id="toggleButtonIterateTabs" /><label for="toggleButtonIterateTabs">Iterate</label>
-    </div>
-
+    <span class="smallbutton autobutton" data-bind="click: iterateAutomatic, style: { background: autoInterval() ? '#2E52A4' : '#B0CBF1' }">Iterate</span>
     <div id="tabs">
+        
         <ul data-bind="foreach: machineGroups">
             <li>
                 <a data-bind="attr: { href: '#tabs-' +  groupName() , title: groupName }, text:  groupName "></a>
@@ -18,18 +16,20 @@
         </ul>
 
         <div data-bind="foreach: machineGroups">
-            <div data-bind="foreach: monitorMachines, attr: { 'id': 'tabs-' +  groupName() }">
-                
-                <div class="machine" data-bind="attr: { 'id': machineName }">
-                    <span data-bind="text: machineName"></span>
+            
+            <div data-bind="foreach: monitorMachines ,attr: { 'id': 'tabs-' +  groupName() }">
+                <div class="item" style="height: 45px; width: 350px; border: 1px solid #003C66" data-bind="attr: { 'id': machineName }, css: { webserver: IsWebserver() , sqlserver: !(IsWebserver()) } ">
+                    <div class="configDiv" style="margin: 14px;">
+                        <span data-bind="text: machineName">
+                        </span>
+                    </div>
                 </div>
-
             </div>
+
         </div>
     </div>
 
 </section>
-
 
 @section CustomScripts {
 
@@ -38,16 +38,14 @@
         $.ajaxSetup({ cache: false });
 
         var ConfigurationUrls = {
-            LoadConfig: 'api/groupconfiguration/get'
+            LoadConfig: '/api/groupconfiguration/get'
         };
 
         $(function () {
             configViewModel = new MachineGroupingModel();
+            
             configViewModel.loadConfigViewModelComplete = function () {
                 $("#tabs").tabs();
-                $("#toggleButtonIterateTabs").button().click(function () {
-                    configViewModel.iterateAutomatic();
-                });
             };
             configViewModel.loadConfigViewModel();
 

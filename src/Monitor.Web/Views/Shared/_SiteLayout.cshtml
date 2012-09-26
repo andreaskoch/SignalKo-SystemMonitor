@@ -1,11 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using SignalKo.SystemMonitor.Monitor.Web.Extensions
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
 
     <title>@ViewBag.Title - System Monitor</title>
 
-    <link href="@Links.Styles.Combined.jquery_ui.overcast.jquery_ui_1_8_23_custom_css" rel="stylesheet" type="text/css" />
+    <link href="@Links.Styles.Combined.jquery_ui.blue_flat_theme.jquery_ui_1_8_23_custom_css" rel="stylesheet" type="text/css" />
     <link href="@Links.Styles.Combined.global_css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript" src="@Links.Scripts.libraries.jquery_1_8_1_min_js"></script>
@@ -13,32 +14,50 @@
     <script type="text/javascript" src="@Links.Scripts.libraries.jquery_ui_1_8_23_min_js"></script>
 </head>
     <body>
-        <header>
-            <nav>
-                <ul>
-                    <li>
-                        System Monitor
-                        <ul>
-                            <li>@Html.ActionLink("Overview", MVC.SystemMonitor.GroupOverview())</li>
-                        </ul>
-                    </li>
+         <div class="body">
+             <header>
+                 <div id="title" class="page-head">
+                     <div class="logo">
+                     </div>
+                     <div class="title">
+                         @ViewBag.Title
+                     </div>
+                     <div class="clear">
+                     </div>
+                 </div>
+                 @* <nav>
+                     <ul>
+                         <li>
+                             System Monitor
+                             <ul>
+                                 <li>@Html.ActionLink("Overview", MVC.SystemMonitor.GroupOverview())</li>
+                             </ul>
+                         </li>
                 
-                    <li>
-                        Configuration
-                        <ul>
-                            <li>@Html.ActionLink("Group Editor", MVC.GroupConfiguration.EditGroups())</li>
-                            <li>@Html.ActionLink("Agent Configuration", MVC.AgentConfiguration.Index())</li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
+                         <li>
+                             Configuration
+                             <ul>
+                                 <li>@Html.ActionLink("Group Editor", MVC.GroupConfiguration.EditGroups())</li>
+                                 <li>@Html.ActionLink("Agent Configuration", MVC.AgentConfiguration.Index())</li>
+                             </ul>
+                         </li>
+                     </ul>
+                 </nav>*@
+                  <nav class="righttopnavigation">
+                      <ul>
+                          @Html.MenuLink("Overview", "GroupOverview", "SystemMonitor", "activmenue")
+                          @Html.MenuLink("Server Configuration", "ServerConfiguration", "SystemMonitor", "activmenue")
+                          @Html.MenuLink("Group Editor", "EditGroups", "GroupConfiguration", "activmenue")
+                          @Html.MenuLink("Agent Configuration", "Index", "AgentConfiguration", "activmenue")
+                      </ul>
+                 </nav>
+             </header>
+              <section>
+                @RenderBody()
+              </section>
+        </div>
 
-            <h1>@ViewBag.Title</h1>
-        </header>
-
-        <section>
-            @RenderBody()
-        </section>
+       
 
         <script type="text/javascript" src="@Links.Scripts.libraries.jquery_signalR_0_5_3_min_js"></script>
         <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>

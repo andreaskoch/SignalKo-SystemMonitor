@@ -62,12 +62,14 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
         public class ActionNamesClass {
             public readonly string GroupOverview = "GroupOverview";
             public readonly string Group = "Group";
+            public readonly string ServerConfiguration = "ServerConfiguration";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants {
             public const string GroupOverview = "GroupOverview";
             public const string Group = "Group";
+            public const string ServerConfiguration = "ServerConfiguration";
         }
 
 
@@ -85,6 +87,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
         public class ViewNames {
             public readonly string Group = "~/Views/SystemMonitor/Group.cshtml";
             public readonly string GroupOverview = "~/Views/SystemMonitor/GroupOverview.cshtml";
+            public readonly string ServerConfiguration = "~/Views/SystemMonitor/ServerConfiguration.cshtml";
         }
     }
 
@@ -100,6 +103,11 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
         public override System.Web.Mvc.ActionResult Group(string groupName) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Group);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "groupName", groupName);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ServerConfiguration() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ServerConfiguration);
             return callInfo;
         }
 

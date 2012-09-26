@@ -12,6 +12,12 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers.Api
 
             return data;
         }
+
+        public void Put(string configuration)
+        {
+            var repository = new ConfigurationRepository();
+            repository.SaveConfiguration(configuration);
+        }
     }
 
     public class ConfigurationRepository
