@@ -338,6 +338,8 @@ namespace Links {
     
         public static readonly string monitoring_config_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/monitoring-config.min.js") ? Url("monitoring-config.min.js") : Url("monitoring-config.js");
                       
+        public static readonly string systemmonitor_agent_configuration_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/systemmonitor.agent.configuration.min.js") ? Url("systemmonitor.agent.configuration.min.js") : Url("systemmonitor.agent.configuration.js");
+                      
         public static readonly string systemmonitor_base_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/systemmonitor.base.min.js") ? Url("systemmonitor.base.min.js") : Url("systemmonitor.base.js");
                       
         public static readonly string systemmonitor_overview_highcharts_theme_gray_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/systemmonitor.overview.highcharts.theme.gray.min.js") ? Url("systemmonitor.overview.highcharts.theme.gray.min.js") : Url("systemmonitor.overview.highcharts.theme.gray.js");
