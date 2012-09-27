@@ -1,6 +1,6 @@
 namespace SignalKo.SystemMonitor.Agent.Core.Sender.Configuration
 {
-    public interface IRESTServiceConfigurationProvider
+    public interface IRESTBasedSystemInformationSenderConfigurationProvider
     {
         IRESTServiceConfiguration GetConfiguration();
     }

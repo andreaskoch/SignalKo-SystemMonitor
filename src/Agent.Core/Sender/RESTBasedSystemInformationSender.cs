@@ -10,17 +10,19 @@ namespace SignalKo.SystemMonitor.Agent.Core.Sender
 {
     public class RESTBasedSystemInformationSender : ISystemInformationSender
     {
-        private readonly IRESTServiceConfiguration configuration;
+        private readonly IRESTBasedSystemInformationSenderConfigurationProvider systemInformationSenderConfigurationProvider;
 
         private readonly IRestClient client;
 
         private readonly IRESTRequestFactory requestFactory;
 
-        public RESTBasedSystemInformationSender(IRESTServiceConfigurationProvider serviceConfigurationProvider, IRESTClientFactory restClientFactory, IRESTRequestFactory requestFactory)
+        private readonly IRESTServiceConfiguration configuration;
+
+        public RESTBasedSystemInformationSender(IRESTBasedSystemInformationSenderConfigurationProvider systemInformationSenderConfigurationProvider, IRESTClientFactory restClientFactory, IRESTRequestFactory requestFactory)
         {
-            if (serviceConfigurationProvider == null)
+            if (systemInformationSenderConfigurationProvider == null)
             {
-                throw new ArgumentNullException("serviceConfigurationProvider");
+                throw new ArgumentNullException("systemInformationSenderConfigurationProvider");
             }
 
             if (restClientFactory == null)
@@ -34,7 +36,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Sender
             }
 
             // initialize service configuration
-            var serviceConfiguration = serviceConfigurationProvider.GetConfiguration();
+            IRESTServiceConfiguration serviceConfiguration = systemInformationSenderConfigurationProvider.GetConfiguration();
             if (serviceConfiguration == null)
             {
                 throw new SystemInformationSenderSetupException("Service configuration is null.");
@@ -46,6 +48,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Sender
             }
 
             this.configuration = serviceConfiguration;
+            
 
             // initialize REST client
             var restClient = restClientFactory.GetRESTClient(this.configuration.BaseUrl);
@@ -57,6 +60,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Sender
             this.client = restClient;
 
             // save request factory
+            this.systemInformationSenderConfigurationProvider = systemInformationSenderConfigurationProvider;
             this.requestFactory = requestFactory;
         }
 

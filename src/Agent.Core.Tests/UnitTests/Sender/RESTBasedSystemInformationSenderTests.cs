@@ -22,13 +22,13 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void Constructor_AllParametersAreSet_ObjectIsInstantiated()
         {
             // Arrange
-            var configuration = new Mock<IRESTServiceConfiguration>();
-            configuration.Setup(c => c.BaseUrl).Returns("http://localhost");
-            configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
-            configuration.Setup(c => c.IsValid()).Returns(true);
+            var serviceConfiguration = new Mock<IRESTServiceConfiguration>();
+            serviceConfiguration.Setup(s => s.IsValid()).Returns(true);
 
-            var serviceConfigurationProvider = new Mock<IRESTServiceConfigurationProvider>();
-            serviceConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(serviceConfiguration.Object);
 
             var client = new Mock<IRestClient>();
             var restClientFactory = new Mock<IRESTClientFactory>();
@@ -38,7 +38,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
 
             // Act
             var systemInformationSender = new RESTBasedSystemInformationSender(
-                serviceConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
+                systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
 
             // Assert
             Assert.IsNotNull(systemInformationSender);
@@ -46,7 +46,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_RESTServiceConfigurationProviderParameterIsNull_ArgumentNullExceptionIsThrown()
+        public void Constructor_SystemInformationSenderConfigurationProviderParameterIsNull_ArgumentNullExceptionIsThrown()
         {
             // Arrange
             var restClientFactory = new Mock<IRESTClientFactory>();
@@ -61,11 +61,18 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void Constructor_RESTClientFactoryParameterIsNull_ArgumentNullExceptionIsThrown()
         {
             // Arrange
-            var serviceConfigurationProvider = new Mock<IRESTServiceConfigurationProvider>();
+            var serviceConfiguration = new Mock<IRESTServiceConfiguration>();
+            serviceConfiguration.Setup(s => s.IsValid()).Returns(true);
+
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(serviceConfiguration.Object);
+
             var requestFactory = new Mock<IRESTRequestFactory>();
 
             // Act
-            new RESTBasedSystemInformationSender(serviceConfigurationProvider.Object, null, requestFactory.Object);
+            new RESTBasedSystemInformationSender(systemInformationSenderConfigurationProvider.Object, null, requestFactory.Object);
         }
 
         [Test]
@@ -73,11 +80,18 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void Constructor_RESTRequestFactoryParameterIsNull_ArgumentNullExceptionIsThrown()
         {
             // Arrange
-            var serviceConfigurationProvider = new Mock<IRESTServiceConfigurationProvider>();
+            var serviceConfiguration = new Mock<IRESTServiceConfiguration>();
+            serviceConfiguration.Setup(s => s.IsValid()).Returns(true);
+
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(serviceConfiguration.Object);
+
             var restClientFactory = new Mock<IRESTClientFactory>();
 
             // Act
-            new RESTBasedSystemInformationSender(serviceConfigurationProvider.Object, restClientFactory.Object, null);
+            new RESTBasedSystemInformationSender(systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, null);
         }
 
         [Test]
@@ -85,16 +99,18 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void Constructor_ServiceConfigurationProviderReturnsNull_SystemInformationSenderSetupExceptionIsThrown()
         {
             // Arrange
-            IRESTServiceConfiguration configuration = null;
+            IRESTServiceConfiguration serviceConfiguration = null;
 
-            var serviceConfigurationProvider = new Mock<IRESTServiceConfigurationProvider>();
-            serviceConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration);
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(serviceConfiguration);
 
             var restClientFactory = new Mock<IRESTClientFactory>();
             var requestFactory = new Mock<IRESTRequestFactory>();
 
             // Act
-            new RESTBasedSystemInformationSender(serviceConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
+            new RESTBasedSystemInformationSender(systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
         }
 
         [Test]
@@ -102,17 +118,19 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void Constructor_ServiceConfigurationIsInvalid_SystemInformationSenderSetupExceptionIsThrown()
         {
             // Arrange
-            var configuration = new Mock<IRESTServiceConfiguration>();
-            configuration.Setup(c => c.IsValid()).Returns(false);
+            var serviceConfiguration = new Mock<IRESTServiceConfiguration>();
+            serviceConfiguration.Setup(s => s.IsValid()).Returns(false);
 
-            var serviceConfigurationProvider = new Mock<IRESTServiceConfigurationProvider>();
-            serviceConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(serviceConfiguration.Object);
 
             var restClientFactory = new Mock<IRESTClientFactory>();
             var requestFactory = new Mock<IRESTRequestFactory>();
 
             // Act
-            new RESTBasedSystemInformationSender(serviceConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
+            new RESTBasedSystemInformationSender(systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
         }
 
         [Test]
@@ -125,8 +143,10 @@ namespace Agent.Core.Tests.UnitTests.Sender
             configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
             configuration.Setup(c => c.IsValid()).Returns(true);
 
-            var serviceConfigurationProvider = new Mock<IRESTServiceConfigurationProvider>();
-            serviceConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
 
             IRestClient client = null;
             var restClientFactory = new Mock<IRESTClientFactory>();
@@ -135,7 +155,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
             var requestFactory = new Mock<IRESTRequestFactory>();
 
             // Act
-            new RESTBasedSystemInformationSender(serviceConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
+            new RESTBasedSystemInformationSender(systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
         }
 
         #endregion
@@ -154,8 +174,10 @@ namespace Agent.Core.Tests.UnitTests.Sender
             configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
             configuration.Setup(c => c.IsValid()).Returns(true);
 
-            var serviceConfigurationProvider = new Mock<IRESTServiceConfigurationProvider>();
-            serviceConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
 
             var client = new Mock<IRestClient>();
             var restClientFactory = new Mock<IRESTClientFactory>();
@@ -164,7 +186,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
             var requestFactory = new Mock<IRESTRequestFactory>();
 
             var systemInformationSender = new RESTBasedSystemInformationSender(
-                serviceConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
+                systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
 
             // Act
             systemInformationSender.Send(systemInformation);
@@ -182,8 +204,10 @@ namespace Agent.Core.Tests.UnitTests.Sender
             configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
             configuration.Setup(c => c.IsValid()).Returns(true);
 
-            var serviceConfigurationProvider = new Mock<IRESTServiceConfigurationProvider>();
-            serviceConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
 
             var client = new Mock<IRestClient>();
             var restClientFactory = new Mock<IRESTClientFactory>();
@@ -194,7 +218,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
             requestFactory.Setup(r => r.CreatePutRequest(It.IsAny<string>())).Returns(request);
 
             var systemInformationSender = new RESTBasedSystemInformationSender(
-                serviceConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
+                systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
 
             // Act
             systemInformationSender.Send(systemInformation);
@@ -212,8 +236,10 @@ namespace Agent.Core.Tests.UnitTests.Sender
             configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
             configuration.Setup(c => c.IsValid()).Returns(true);
 
-            var serviceConfigurationProvider = new Mock<IRESTServiceConfigurationProvider>();
-            serviceConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
 
             var response = new Mock<IRestResponse<SystemInformation>>();
             response.Setup(r => r.ErrorException).Returns(new Exception("Some exception"));
@@ -228,7 +254,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
             requestFactory.Setup(r => r.CreatePutRequest(It.IsAny<string>())).Returns(request.Object);
 
             var systemInformationSender = new RESTBasedSystemInformationSender(
-                serviceConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
+                systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
 
             // Act
             systemInformationSender.Send(systemInformation);
@@ -245,8 +271,10 @@ namespace Agent.Core.Tests.UnitTests.Sender
             configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
             configuration.Setup(c => c.IsValid()).Returns(true);
 
-            var serviceConfigurationProvider = new Mock<IRESTServiceConfigurationProvider>();
-            serviceConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
 
             var response = new Mock<IRestResponse<SystemInformation>>();
 
@@ -260,7 +288,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
             requestFactory.Setup(r => r.CreatePutRequest(It.IsAny<string>())).Returns(request.Object);
 
             var systemInformationSender = new RESTBasedSystemInformationSender(
-                serviceConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
+                systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
 
             // Act
             systemInformationSender.Send(systemInformation);

@@ -83,9 +83,13 @@
     <Compile Include="ISystemInformationDispatchingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queueing\SystemInformationQueueItem.cs" />
-    <Compile Include="Sender\Configuration\AppSettingsRESTServiceConfigurationProvider.cs" />
+    <Compile Include="Sender\Configuration\AgentConfigurationProvider.cs" />
+    <Compile Include="Sender\Configuration\AppConfigAgentConfigurationServiceUrlProvider.cs" />
+    <Compile Include="Sender\Configuration\IAgentConfigurationProvider.cs" />
+    <Compile Include="Sender\Configuration\IRESTBasedSystemInformationSenderConfigurationProvider.cs" />
     <Compile Include="Sender\Configuration\IRESTServiceConfiguration.cs" />
-    <Compile Include="Sender\Configuration\IRESTServiceConfigurationProvider.cs" />
+    <Compile Include="Sender\Configuration\IAgentConfigurationServiceUrlProvider.cs" />
+    <Compile Include="Sender\Configuration\RESTBasedSystemInformationSenderConfigurationProvider.cs" />
     <Compile Include="Sender\Configuration\RESTServiceConfiguration.cs" />
     <Compile Include="Sender\IRESTClientFactory.cs" />
     <Compile Include="Sender\IRESTRequestFactory.cs" />

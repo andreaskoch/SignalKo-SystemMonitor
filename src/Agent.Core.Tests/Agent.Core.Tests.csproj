@@ -55,7 +55,7 @@
     <Compile Include="IntegrationTests\Queueing\AppConfigJSONMessageQueuePersistenceConfigurationProviderTests.cs" />
     <Compile Include="IntegrationTests\Queueing\JSONSystemInformationMessageQueuePersistenceTests.cs" />
     <Compile Include="IntegrationTests\Queueing\SystemInformationMessageQueueTests.cs" />
-    <Compile Include="IntegrationTests\Sender\AppSettingsRESTServiceConfigurationProviderTests.cs" />
+    <Compile Include="IntegrationTests\Sender\AppConfigAgentConfigurationServiceUrlProviderTests.cs" />
     <Compile Include="IntegrationTests\Sender\JSONRequestFactoryTests.cs" />
     <Compile Include="IntegrationTests\Sender\RESTClientFactoryTests.cs" />
     <Compile Include="IntegrationTests\Collector\SystemInformationProviderTests.cs" />
