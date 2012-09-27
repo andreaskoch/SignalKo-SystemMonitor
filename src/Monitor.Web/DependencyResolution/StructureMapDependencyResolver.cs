@@ -1,3 +1,4 @@
+using System;
 using System.Web.Http.Dependencies;
 using StructureMap;
 
@@ -38,5 +39,15 @@ namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
         }
 
         #endregion
+
+        public new object GetService(Type serviceType)
+        {
+            if (serviceType.IsAbstract || serviceType.IsInterface)
+            {
+                return ObjectFactory.TryGetInstance(serviceType);
+            }
+
+            return ObjectFactory.GetInstance(serviceType);
+        }
     }
 }

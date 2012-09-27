@@ -47,7 +47,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess
                 throw new ArgumentException("The configuration folder cannot be null or empty.", "fileSystemDataStoreConfiguration");
             }
 
-            if (Directory.Exists(fileSystemDataStoreConfiguration.ConfigurationFolder))
+            if (Directory.Exists(fileSystemDataStoreConfiguration.ConfigurationFolder) == false)
             {
                 throw new DirectoryNotFoundException(string.Format("The configuration folder \"{0}\" does not exist.", fileSystemDataStoreConfiguration.ConfigurationFolder));
             }
