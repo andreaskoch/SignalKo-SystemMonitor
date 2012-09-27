@@ -40,9 +40,12 @@ var MachineGroupingModel = function () {
     self.saveConfiguration = function () {
         $.post(window.ConfigurationUrls.SaveConfig,
             { "configuration": ko.toJSON(configViewModel) },
-            function (returnedData) {
-
-            });
+            function () {
+                toastr.success("Configuration successfuly saved");  
+            }).error(function (xmlHttpRequest, textStatus, errorThrown) {
+                toastr.error(errorThrown, "Error");
+            })
+        ;
     };
     self.loadConfigViewModel = function () {
         $.getJSON(window.ConfigurationUrls.LoadConfig,

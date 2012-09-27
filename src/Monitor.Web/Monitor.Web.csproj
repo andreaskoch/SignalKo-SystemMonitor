@@ -173,6 +173,8 @@
     <Content Include="Assets\wrench_8x8.png" />
     <Content Include="Assets\x_alt_12x12.png" />
     <Content Include="Assets\x_alt_24x24.png" />
+    <Content Include="content\toastr-responsive.css" />
+    <Content Include="content\toastr.css" />
     <Content Include="Scripts\libraries\modernizr-2.6.2.js" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\libraries\jquery-ui-1.8.23.js" />
@@ -214,6 +216,7 @@
     <None Include="Styles\Source\03-content.min.css">
       <DependentUpon>03-content.chirp.less</DependentUpon>
     </None>
+    <Content Include="Scripts\libraries\toastr.js" />
     <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_100_99b2dd_40x100.png" />
     <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_45_b0cbf1_40x100.png" />
     <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_50_99b2dd_40x100.png" />
