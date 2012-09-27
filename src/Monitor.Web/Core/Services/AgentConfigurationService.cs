@@ -1,4 +1,5 @@
 using SignalKo.SystemMonitor.Common.Model;
+using SignalKo.SystemMonitor.Monitor.Web.Core.Configuration;
 using SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.Core.Services
@@ -7,14 +8,18 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.Services
     {
         private readonly IAgentConfigurationDataAccessor agentConfigurationDataAccessor;
 
-        public AgentConfigurationService(IAgentConfigurationDataAccessor agentConfigurationDataAccessor)
+        private readonly IDefaultAgentConfigurationProvider defaultAgentConfigurationProvider;
+
+        public AgentConfigurationService(IAgentConfigurationDataAccessor agentConfigurationDataAccessor, IDefaultAgentConfigurationProvider defaultAgentConfigurationProvider)
         {
             this.agentConfigurationDataAccessor = agentConfigurationDataAccessor;
+            this.defaultAgentConfigurationProvider = defaultAgentConfigurationProvider;
         }
 
         public AgentConfiguration GetAgentConfiguration()
         {
-            return this.agentConfigurationDataAccessor.Load();
+            var agentConfiguration = this.agentConfigurationDataAccessor.Load();
+            return agentConfiguration ?? this.defaultAgentConfigurationProvider.GetDefaultAgentConfiguration();
         }
 
         public void SaveAgentConfiguration(AgentConfiguration agentConfiguration)

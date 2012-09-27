@@ -63,6 +63,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
             public readonly string GroupOverview = "GroupOverview";
             public readonly string Group = "Group";
             public readonly string ServerConfiguration = "ServerConfiguration";
+            public readonly string LoadConfig = "LoadConfig";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -70,6 +71,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
             public const string GroupOverview = "GroupOverview";
             public const string Group = "Group";
             public const string ServerConfiguration = "ServerConfiguration";
+            public const string LoadConfig = "LoadConfig";
         }
 
 
@@ -108,6 +110,11 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult ServerConfiguration() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ServerConfiguration);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.JsonResult LoadConfig() {
+            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.LoadConfig);
             return callInfo;
         }
 

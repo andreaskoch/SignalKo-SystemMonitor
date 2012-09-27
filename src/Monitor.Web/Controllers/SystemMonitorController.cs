@@ -30,7 +30,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
         }
 
         [HttpGet]
-        public JsonResult LoadConfig()
+        public virtual JsonResult LoadConfig()
         {
             ConfigurationRepository repository = new ConfigurationRepository();
             string data = repository.LoadConfiguration();

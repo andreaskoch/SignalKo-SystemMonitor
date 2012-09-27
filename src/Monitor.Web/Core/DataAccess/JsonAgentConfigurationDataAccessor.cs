@@ -25,6 +25,11 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess
 
         public AgentConfiguration Load()
         {
+            if (!File.Exists(this.configurationFilePath))
+            {
+                return null;
+            }
+
             string json = File.ReadAllText(this.configurationFilePath, this.encodingProvider.GetEncoding());
             return JsonConvert.DeserializeObject<AgentConfiguration>(json);
         }

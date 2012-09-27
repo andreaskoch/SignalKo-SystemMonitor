@@ -103,7 +103,9 @@
     <Compile Include="Controllers\GroupConfigurationController.cs" />
     <Compile Include="Controllers\SystemMonitorController.cs" />
     <Compile Include="Core\Configuration\AppConfigFileSystemDataStoreConfigurationProvider.cs" />
+    <Compile Include="Core\Configuration\AppConfigDefaultAgentConfigurationProvider.cs" />
     <Compile Include="Core\Configuration\FileSystemDataStoreConfiguration.cs" />
+    <Compile Include="Core\Configuration\IDefaultAgentConfigurationProvider.cs" />
     <Compile Include="Core\Configuration\IFileSystemDataStoreConfigurationProvider.cs" />
     <Compile Include="Core\DataAccess\IAgentConfigurationDataAccessor.cs" />
     <Compile Include="Core\DataAccess\JsonAgentConfigurationDataAccessor.cs" />
