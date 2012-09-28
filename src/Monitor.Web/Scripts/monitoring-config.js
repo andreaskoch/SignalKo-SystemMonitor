@@ -77,22 +77,46 @@ var MachineGroupingModel = function () {
                 self.loadConfigViewModelComplete();
                 //$("#tabs").tabs();
             });
-    };
-    self.loadConfigViewModelComplete = function () { };
-    self.iterateAutomatic = function () {
-        if (!self.autoInterval()) {
-            self.refreshIntervalId = setInterval(cycle, 3000);
-            self.autoInterval(true);
-        } else {
-            clearInterval(self.refreshIntervalId);
-            self.autoInterval(false);
-            self.refreshIntervalId = 0;
-        }
-    };
-    self.selectedGroupIndex = 0;
-    self.refreshIntervalId = 0;
-    self.autoInterval = ko.observable(false);
-
+        };
+        self.handleFileDropIn = function (evt) {
+            if (!evt.dataTransfer.files) {
+                return;
+            }
+            evt.stopPropagation();
+            evt.preventDefault();
+            var files = evt.dataTransfer.files; // FileList object
+            // Loop through the FileList and render image files as thumbnails.
+            for (var i = 0, f; f = files[i]; i++) {
+                var reader = new FileReader();
+                // Closure to capture the file information.
+                reader.onload = (function (theFile) {
+                    return function (e) {
+                        var model = ko.mapping.fromJSON(e.target.result);
+                        var ma = new Machine();
+                        ma.machineName(model.machineName());
+                        ma.monitoringUrl(model.monitoringUrl());
+                        ma.IsWebserver(model.IsWebserver());
+                        self.availableMashines.push(ma);
+                    };
+                })(f);
+                // Read in the image file as a data URL.
+                reader.readAsText(f, "UTF-8");
+            }
+        };
+        self.loadConfigViewModelComplete = function () { };
+        self.iterateAutomatic = function () {
+            if (!self.autoInterval()) {
+                self.refreshIntervalId = setInterval(cycle, 3000);
+                self.autoInterval(true);
+            } else {
+                clearInterval(self.refreshIntervalId);
+                self.autoInterval(false);
+                self.refreshIntervalId = 0;
+            }
+        };
+        self.selectedGroupIndex = 0;
+        self.refreshIntervalId = 0;
+        self.autoInterval = ko.observable(false);
 };
 
 var MachineGroup = function (groupName) {
