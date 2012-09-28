@@ -1,4 +1,3 @@
-
 namespace SignalKo.SystemMonitor.Agent.Core.Sender.Configuration
 {
     public class RESTBasedSystemInformationSenderConfigurationProvider : IRESTBasedSystemInformationSenderConfigurationProvider
