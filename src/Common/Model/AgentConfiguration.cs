@@ -2,7 +2,9 @@
 {
     public class AgentConfiguration
     {
-        public string SystemInformationSenderUrl { get; set; }
+        public string BaseUrl { get; set; }
+
+        public string SystemInformationSenderPath { get; set; }
 
         public bool AgentsAreEnabled { get; set; }
 

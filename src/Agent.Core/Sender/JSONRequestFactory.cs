@@ -10,5 +10,10 @@ namespace SignalKo.SystemMonitor.Agent.Core.Sender
         {
             return new RestRequest(resourcePath, Method.PUT) { RequestFormat = RequestFormat };
         }
+
+        public IRestRequest CreateGetRequest(string resourcePath)
+        {
+            return new RestRequest(resourcePath, Method.GET) { RequestFormat = RequestFormat };
+        }
     }
 }

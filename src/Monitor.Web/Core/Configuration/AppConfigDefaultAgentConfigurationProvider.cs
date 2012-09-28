@@ -6,7 +6,9 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.Configuration
 {
     public class AppConfigDefaultAgentConfigurationProvider : IDefaultAgentConfigurationProvider
     {
-        private const string AppSettingsKeyDefaultAgentConfigurationUrl = "DefaultAgentConfigurationUrl";
+        private const string AppSettingsKeyDefaultAgentConfigurationBaseUrl = "DefaultAgentConfigurationBaseUrl";
+
+        private const string AppSettingsKeyDefaultAgentConfigurationSystemInformationSenderPath = "DefaultAgentConfigurationSystemInformationSenderPath";
 
         private const string AppSettingsKeyDefaultAgentConfigurationCheckIntervalInSeconds = "DefaultAgentConfigurationCheckIntervalInSeconds";
 
@@ -16,13 +18,15 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.Configuration
         {
             var agentsAreEnabled = bool.Parse(ConfigurationManager.AppSettings[AppSettingsKeyDefaultAgentConfigurationAgentsAreEnabled]);
             var checkIntervalInSeconds = int.Parse(ConfigurationManager.AppSettings[AppSettingsKeyDefaultAgentConfigurationCheckIntervalInSeconds]);
-            var url = ConfigurationManager.AppSettings[AppSettingsKeyDefaultAgentConfigurationUrl];
+            var baseUrl = ConfigurationManager.AppSettings[AppSettingsKeyDefaultAgentConfigurationBaseUrl];
+            var systemInformationSenderPath = ConfigurationManager.AppSettings[AppSettingsKeyDefaultAgentConfigurationSystemInformationSenderPath];
 
             return new AgentConfiguration
                 {
                     AgentsAreEnabled = agentsAreEnabled,
                     CheckIntervalInSeconds = checkIntervalInSeconds, 
-                    SystemInformationSenderUrl = url
+                    BaseUrl = baseUrl,
+                    SystemInformationSenderPath = systemInformationSenderPath
                 };
         }
     }
