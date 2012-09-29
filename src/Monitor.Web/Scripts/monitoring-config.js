@@ -1,10 +1,9 @@
-﻿
-var configViewModel;
+﻿var configViewModel;
 
 var MachineGroupingModel = function () {
     var self = this;
     self.machineGroups = ko.observableArray([]);
-    //            self.monitorMachines = ko.observableArray([]);
+    self.allMonitorMachines = ko.observableArray([]);
     self.selectedMachine = ko.observable();
     self.selectMachine = function (machine) {
         this.selectedMachine(machine);
@@ -51,13 +50,14 @@ var MachineGroupingModel = function () {
         $.getJSON(window.ConfigurationUrls.LoadConfig,
             function (data) {
                 if (data === '') {
-                    ko.applyBindings(configViewModel, document.getElementById('configBody'));
+                    ko.applyBindings(self, document.getElementById('configBody'));
                 } else {
                     var model = ko.mapping.fromJSON(data);
                     for (var i = 0; i < model.availableMashines().length; i++) {
                         var m = new Machine();
                         m.machineName(model.availableMashines()[i].machineName());
-                        configViewModel.availableMashines.push(m);
+                        self.availableMashines.push(m);
+                        self.allMonitorMachines.push(m);
                     }
                     for (var j = 0; j < model.machineGroups().length; j++) {
                         var jsGroup = model.machineGroups()[j];
@@ -69,30 +69,63 @@ var MachineGroupingModel = function () {
                             ma.monitoringUrl(machine.monitoringUrl());
                             ma.IsWebserver(machine.IsWebserver());
                             mGroup.monitorMachines.push(ma);
+                            self.allMonitorMachines.push(ma);
                         }
                         mGroup.groupName(jsGroup.groupName());
-                        configViewModel.machineGroups.push(mGroup);
+                        self.machineGroups.push(mGroup);
                     }
                 }
                 self.loadConfigViewModelComplete();
-                //$("#tabs").tabs();
             });
-    };
-    self.loadConfigViewModelComplete = function () { };
-    self.iterateAutomatic = function () {
-        if (!self.autoInterval()) {
-            self.refreshIntervalId = setInterval(cycle, 3000);
-            self.autoInterval(true);
-        } else {
-            clearInterval(self.refreshIntervalId);
-            self.autoInterval(false);
-            self.refreshIntervalId = 0;
-        }
-    };
-    self.selectedGroupIndex = 0;
-    self.refreshIntervalId = 0;
-    self.autoInterval = ko.observable(false);
-
+        };
+        self.handleFileDropIn = function (evt) {
+            if (!evt.dataTransfer.files) {
+                return;
+            }
+            evt.stopPropagation();
+            evt.preventDefault();
+            var files = evt.dataTransfer.files; // FileList object
+            // Loop through the FileList and render image files as thumbnails.
+            for (var i = 0, f; f = files[i]; i++) {
+                var reader = new FileReader();
+                // Closure to capture the file information.
+                reader.onload = (function (theFile) {
+                    return function (e) {
+                        var model = ko.mapping.fromJSON(e.target.result);
+                        self.availableMashines.push(model);
+                        self.allMonitorMachines.push(ma);
+                    };
+                })(f);
+                // Read in the image file as a data URL.
+                reader.readAsText(f, "UTF-8");
+            }
+        };
+        self.loadConfigViewModelComplete = function () { };
+        self.iterateAutomatic = function () {
+            if (!self.autoInterval()) {
+                self.refreshIntervalId = setInterval(cycle, 3000);
+                self.autoInterval(true);
+            } else {
+                clearInterval(self.refreshIntervalId);
+                self.autoInterval(false);
+                self.refreshIntervalId = 0;
+            }
+        };
+        self.openMachineConfigOverlay = function () {
+            var position = $("#" + this.machineName()).offset();
+            $(".box-overlay").css({ position: "absolute", left: position.left, top: position.top });
+            $(".box-overlay").show();
+            ko.applyBindings(this, $('.box-overlay')[0]);
+        };
+        self.openGroupConfigOverlay = function () {
+            var position = $("#" + this.groupName()).offset();
+            $(".box-overlay-group").css({ position: "absolute", left: position.left, top: position.top });
+            $(".box-overlay-group").show();
+            ko.applyBindings(this, $('.box-overlay-group')[0]);
+        };
+        self.selectedGroupIndex = 0;
+        self.refreshIntervalId = 0;
+        self.autoInterval = ko.observable(false);
 };
 
 var MachineGroup = function (groupName) {
@@ -100,11 +133,6 @@ var MachineGroup = function (groupName) {
     self.groupName = ko.observable(groupName);
     self.monitorMachines = ko.observableArray([]);
     self.canDelete = false;
-    self.openConfigOverlay = function () {
-        var position = $("#" + self.groupName()).offset();
-        $(".box-overlay-group").css({ position: "absolute", left: position.left, top: position.top });
-        $(".box-overlay-group").show();
-    };
 };
 
 var Machine = function (name) {
@@ -112,13 +140,6 @@ var Machine = function (name) {
     self.machineName = ko.observable(name);
     self.monitoringUrl = ko.observable('');
     self.IsWebserver = ko.observable(true);
-
-    self.openConfigOverlay = function () {
-        var position = $("#" + self.machineName()).offset();
-        $(".box-overlay").css({ position: "absolute", left: position.left, top: position.top });
-        $(".box-overlay").show();
-        ko.applyBindings(self, $('.box-overlay')[0]);
-    };
 };
 
 $(".closeConfig").click(function () {

@@ -2,24 +2,25 @@
 @{
     ViewBag.Title = "Agent Configuration";
 }
-<div class="agent-configuration">
+<section class="middleContent" id="configBody">
+    <div class="agent-configuration">
     
-    <div class="global">
+        <div class="global">
         
-        <label for="SystemInformationSenderUrl">SystemInformation API URL</label>
-        <input type="text" id="SystemInformationSenderUrl" data-bind="value: SystemInformationSenderUrl" />
+            <label for="SystemInformationSenderUrl">SystemInformation API URL</label>
+            <input type="text" id="SystemInformationSenderUrl" data-bind="value: SystemInformationSenderUrl" />
         
-        <div id="agentStatusSwitch">
-            <input type="radio" name="agentStatus" id="enabled" value="true" data-bind="checked: AgentsAreEnabled" />
-            <label for="enabled">enabled</label>
+            <div id="agentStatusSwitch">
+                <input type="radio" name="agentStatus" id="enabled" value="true" data-bind="checked: AgentsAreEnabled" />
+                <label for="enabled">enabled</label>
 
-            <input type="radio" name="agentStatus" id="disabled" value="false" data-bind="checked: AgentsAreEnabled" />
-            <label for="disabled">disabled</label>
+                <input type="radio" name="agentStatus" id="disabled" value="false" data-bind="checked: AgentsAreEnabled" />
+                <label for="disabled">disabled</label>
+            </div>
         </div>
 
     </div>
-
-</div>
+</section>
 
 @section CustomScripts {
     <script type="text/javascript" src="@Links.Scripts.systemmonitor_agent_configuration_js"></script>

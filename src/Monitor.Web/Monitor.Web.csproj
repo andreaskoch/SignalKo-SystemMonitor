@@ -165,6 +165,7 @@
     <Content Include="Assets\plus_alt_32x32.png" />
     <Content Include="Assets\plus_alt_8x8.png" />
     <Content Include="Assets\remote_monitoring.png" />
+    <Content Include="Assets\remote_monitoring_left.png" />
     <Content Include="Assets\sort-asc.png" />
     <Content Include="Assets\sort-desc.png" />
     <Content Include="Assets\switch.png" />

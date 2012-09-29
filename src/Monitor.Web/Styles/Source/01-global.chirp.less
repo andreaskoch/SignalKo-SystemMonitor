@@ -1,75 +1,74 @@
 ﻿@import "constants.less";
 
 html {
-    background-color: @color-background;
-    font-family: @font-family-default;
-    color: black;
+	background-color: @color-background;
+	font-family: @font-family-default;
+	color: black;
 }
 
 /* page title */
 h1 {
-    margin: 0;
-    padding: 0;
-    font-family: @font-family-pagetitle;
+	margin: 0;
+	padding: 0;
+	font-family: @font-family-pagetitle;
 }
 
 /* headline */
 h2 {
-    margin: 0;
-    padding: 0;
-    font-family: @font-family-headline;
+	margin: 0;
+	padding: 0;
+	font-family: @font-family-headline;
 }
 
 /* sub-headline */
 h3 {
-    margin: 0;
-    padding: 0;
-    font-family: @font-family-subheadline;
+	margin: 0;
+	padding: 0;
+	font-family: @font-family-subheadline;
 }
 
 /* block titles */
 h4, h5, h6 {
-    margin: 0;
-    padding: 0;
-    font-family: @font-family-blocktitle;
+	margin: 0;
+	padding: 0;
+	font-family: @font-family-blocktitle;
 }
 
 /* text links */
 a {
-    color: @color-link;
-    text-decoration: none;
+	color: @color-link;
+	text-decoration: none;
 }
 
 a:hover {
-    color: @color-link-hover;
+	color: @color-link-hover;
 }
 
 /* cleaner */
 .cleaner {
-    clear: both;
+	clear: both;
 }
 
 .cleaner-left {
-    clear: left;
+	clear: left;
 }
 
 .cleaner-right {
-    clear: left;
+	clear: left;
 }
 
 .righttopnavigation {
-    display: block;
-	position: absolute;
-    right: 25px;
-	top: 0px;
+	top: 0;
+	float: right;
+	margin-right: 45px;
 }
 
 .righttopnavigation ul {
-    list-style: none;
-    background: #B0CBF1;
+	list-style: none;
+	background: #B0CBF1;
 }
 .righttopnavigation li {
-    list-style: none;
+	list-style: none;
 	float: left;
 	position: relative;
 	top: 1px;
@@ -80,14 +79,14 @@ a:hover {
 	min-width: 125px;
 	text-align: center;
 	border: 1px solid #003C66;
-    border-bottom-left-radius: 5px;
+	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 	height: 33px;
 }
 
 .righttopnavigation li a {
 	position: relative;
-    margin: 21px;
+	margin: 21px;
 	text-decoration: none;
 	color: #555;
 	top: 7px;
@@ -95,8 +94,74 @@ a:hover {
 }
 
 .righttopnavigation li.activmenue {
-    background: #99B2DD;
+	background: #B0CBF1;
 }
 .righttopnavigation li.activmenue a {
-    color: #003C66;
+	color: #003C66;
+	font-weight: bold;
+}
+
+body {
+	width: 100%; 
+	height: 100%; 
+	line-height: 1;
+	font-size: .85em;
+	font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
+}
+
+header  {
+	display: block;  
+	height: 100%; 
+	background: #b0cbf1; 
+}
+
+.headerEnd {
+    background:#B0CBF1;
+    height: 5px;
+}
+section {
+	margin-top: 3px;
+}
+.clear {
+	clear: both;
+}
+
+.body { 
+		width: 100%;
+		min-height: 100%;
+		min-width: 1000px;
+		position: absolute;
+		display: block;
+		background: #99b2dd;
+}
+
+.content-body {
+		margin: 20px;
+		min-width: 940px; 
+}
+
+.page-head .logoleft {
+	background: url("../../Assets/remote_monitoring_left.png" ) no-repeat;
+	width: 126px;
+	height: 83px;
+	float: left;
+	margin: 5px;
+}
+
+.page-head .logoright {
+	background: url("../../Assets/remote_monitoring.png" ) no-repeat;
+	width: 90px;
+	height: 83px;
+	float: right;
+	margin: 5px;
+}
+
+.page-head .title {
+	color: #003C66;
+	font-size: 36px;
+	font-family: Segoe, Arial, Verdana;
+	padding-top: 14px;
+	float: left;
+	text-shadow: rgba(0, 0, 0, 0.5) 0 6px 6px;
+	-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, 0.1)));
 }

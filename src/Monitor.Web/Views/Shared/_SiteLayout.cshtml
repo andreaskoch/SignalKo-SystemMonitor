@@ -17,44 +17,29 @@
          <div class="body">
              <header>
                  <div id="title" class="page-head">
-                     <div class="logo">
+                     <div class="logoleft">
                      </div>
                      <div class="title">
                          @ViewBag.Title
                      </div>
-                     <div class="clear">
-                     </div>
+                     <div class="logoright"></div>
+                     <nav class="righttopnavigation">
+                         <ul>
+                             @Html.MenuLink("Overview", "GroupOverview", "SystemMonitor", "activmenue")
+                             @Html.MenuLink("Server Configuration", "ServerConfiguration", "SystemMonitor", "activmenue")
+                             @Html.MenuLink("Group Editor", "EditGroups", "GroupConfiguration", "activmenue")
+                             @Html.MenuLink("Agent Configuration", "Index", "AgentConfiguration", "activmenue")
+                         </ul>
+                     </nav>
+                     
                  </div>
-                 @* <nav>
-                     <ul>
-                         <li>
-                             System Monitor
-                             <ul>
-                                 <li>@Html.ActionLink("Overview", MVC.SystemMonitor.GroupOverview())</li>
-                             </ul>
-                         </li>
-                
-                         <li>
-                             Configuration
-                             <ul>
-                                 <li>@Html.ActionLink("Group Editor", MVC.GroupConfiguration.EditGroups())</li>
-                                 <li>@Html.ActionLink("Agent Configuration", MVC.AgentConfiguration.Index())</li>
-                             </ul>
-                         </li>
-                     </ul>
-                 </nav>*@
-                  <nav class="righttopnavigation">
-                      <ul>
-                          @Html.MenuLink("Overview", "GroupOverview", "SystemMonitor", "activmenue")
-                          @Html.MenuLink("Server Configuration", "ServerConfiguration", "SystemMonitor", "activmenue")
-                          @Html.MenuLink("Group Editor", "EditGroups", "GroupConfiguration", "activmenue")
-                          @Html.MenuLink("Agent Configuration", "Index", "AgentConfiguration", "activmenue")
-                      </ul>
-                 </nav>
+                  
              </header>
-              <section>
+             <div class="clear"></div>
+             <div class="headerEnd"></div>
+             
                 @RenderBody()
-              </section>
+              
         </div>
 
        

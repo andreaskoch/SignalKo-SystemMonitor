@@ -1,16 +1,8 @@
 ﻿html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}
-.groupoverview .controls{text-align:right;margin:0 0 20px 0}
-body{width:100%;height:100%;line-height:1;font-size:.85em;font-family:"Trebuchet MS",Verdana,Helvetica,Sans-Serif}
-header{display:block;height:100%;background:#b0cbf1}
-section{margin-top:3px}
-.clear{clear:both}
-.body{width:100%;min-height:100%;min-width:1000px;position:absolute;display:block;background:#99b2dd}
-.content-body{margin:20px;min-width:940px}
-.page-head .logo{background:url("../../Assets/remote_monitoring.png") no-repeat;width:126px;height:83px;float:left;margin:5px}
-.page-head .title{color:#003C66;font-size:36px;font-family:Segoe,Arial,Verdana;padding-top:20px;float:left}
+.groupoverview.controls{text-align:right;margin:0 0 20px 0}
 .leftMashineName{margin-top:40px}
 .leftMashineName span{font-size:12px;color:black;font-weight:bold}
-.middleContent{float:left;width:99%;height:auto;background:#b0cbf1;padding:5px;margin-left:5px}
+.middleContent{float:left;width:100%;height:auto;background:#B0CBF1}
 span,dt,dd{color:#003C66}
 .item{text-align:center;cursor:move;margin:4px;border:1px solid #7b8ce8;padding:2px;border-radius:5px;margin-top:14px;height:39px}
 .item.webserver{background:url("../../Assets/webserver48.png") no-repeat left}
