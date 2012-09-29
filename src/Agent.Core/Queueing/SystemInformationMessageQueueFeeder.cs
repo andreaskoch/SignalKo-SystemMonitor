@@ -32,12 +32,17 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
             {
                 Thread.Sleep(SendIntervalInMilliseconds);
 
-                // check if service has been stopped
                 Monitor.Enter(this.lockObject);
                 if (this.serviceStatus == ServiceStatus.Stopped)
                 {
                     Monitor.Exit(this.lockObject);
                     break;
+                }
+
+                if (this.serviceStatus == ServiceStatus.Paused)
+                {
+                    Monitor.Exit(this.lockObject);
+                    continue;
                 }
 
                 Monitor.Exit(this.lockObject);
