@@ -4,6 +4,12 @@
     {
         void Start(IMessageQueue<T> workQueue);
 
+        void Pause();
+
+        void Resume();
+
         void Stop();
+
+        ServiceStatus GetStatus();
     }
 }

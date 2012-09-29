@@ -17,7 +17,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 
         private readonly ISystemInformationSender systemInformationSender;
 
-        private bool stop;
+        private ServiceStatus serviceStatus = ServiceStatus.Running;
 
         public SystemInformationMessageQueueWorker(ISystemInformationSender systemInformationSender)
         {
@@ -37,7 +37,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 
                 // check if service has been stopped
                 Monitor.Enter(this.lockObject);
-                if (this.stop && workQueue.IsEmpty())
+                if (this.serviceStatus == ServiceStatus.Stopped && workQueue.IsEmpty())
                 {
                     Monitor.Exit(this.lockObject);
                     break;
@@ -82,11 +82,40 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
             }
         }
 
+        public void Pause()
+        {
+            Monitor.Enter(this.lockObject);
+
+            if (this.serviceStatus == ServiceStatus.Running)
+            {
+                this.serviceStatus = ServiceStatus.Paused;
+            }
+
+            Monitor.Exit(this.lockObject);
+        }
+
+        public void Resume()
+        {
+            Monitor.Enter(this.lockObject);
+
+            if (this.serviceStatus == ServiceStatus.Paused)
+            {
+                this.serviceStatus = ServiceStatus.Running;
+            }
+
+            Monitor.Exit(this.lockObject);
+        }
+
         public void Stop()
         {
             Monitor.Enter(this.lockObject);
-            this.stop = true;
+            this.serviceStatus = ServiceStatus.Stopped;
             Monitor.Exit(this.lockObject);
+        }
+
+        public ServiceStatus GetStatus()
+        {
+            return this.serviceStatus;
         }
     }
 }

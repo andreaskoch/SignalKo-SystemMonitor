@@ -73,6 +73,7 @@
     <Compile Include="Queueing\IQueueItem.cs" />
     <Compile Include="Queueing\JSONMessageQueuePersistenceConfiguration.cs" />
     <Compile Include="Queueing\JSONSystemInformationMessageQueuePersistence.cs" />
+    <Compile Include="Queueing\ServiceStatus.cs" />
     <Compile Include="Queueing\SystemInformationMessageQueueFeeder.cs" />
     <Compile Include="Queueing\SystemInformationMessageQueue.cs" />
     <Compile Include="Queueing\SystemInformationMessageQueueProvider.cs" />

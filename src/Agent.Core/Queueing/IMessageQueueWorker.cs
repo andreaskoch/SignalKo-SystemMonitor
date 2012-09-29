@@ -4,6 +4,12 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
     {
         void Start(IMessageQueue<T> workQueue, IMessageQueue<T> errorQueue);
 
+        void Pause();
+
+        void Resume();
+
         void Stop();
+
+        ServiceStatus GetStatus();
     }
 }

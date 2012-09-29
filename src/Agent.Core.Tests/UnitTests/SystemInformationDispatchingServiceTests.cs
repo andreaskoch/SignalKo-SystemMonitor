@@ -240,8 +240,21 @@ namespace Agent.Core.Tests.UnitTests
             Thread.Sleep(this.waitTime);
         }
 
+        public void Pause()
+        {
+        }
+
+        public void Resume()
+        {
+        }
+
         public void Stop()
         {
+        }
+
+        public ServiceStatus GetStatus()
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -259,8 +272,21 @@ namespace Agent.Core.Tests.UnitTests
             Thread.Sleep(this.waitTime);
         }
 
+        public void Pause()
+        {
+        }
+
+        public void Resume()
+        {
+        }
+
         public void Stop()
         {
+        }
+
+        public ServiceStatus GetStatus()
+        {
+            throw new NotImplementedException();
         }
     }
 }

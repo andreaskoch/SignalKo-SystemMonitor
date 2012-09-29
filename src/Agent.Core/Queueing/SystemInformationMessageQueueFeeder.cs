@@ -14,7 +14,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 
         private readonly object lockObject = new object();
 
-        private bool stop;
+        private ServiceStatus serviceStatus = ServiceStatus.Running;
 
         public SystemInformationMessageQueueFeeder(ISystemInformationProvider systemInformationProvider)
         {
@@ -34,7 +34,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 
                 // check if service has been stopped
                 Monitor.Enter(this.lockObject);
-                if (this.stop)
+                if (this.serviceStatus == ServiceStatus.Stopped)
                 {
                     Monitor.Exit(this.lockObject);
                     break;
@@ -55,11 +55,40 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
             }
         }
 
+        public void Pause()
+        {
+            Monitor.Enter(this.lockObject);
+
+            if (this.serviceStatus == ServiceStatus.Running)
+            {
+                this.serviceStatus = ServiceStatus.Paused;
+            }
+
+            Monitor.Exit(this.lockObject);
+        }
+
+        public void Resume()
+        {
+            Monitor.Enter(this.lockObject);
+
+            if (this.serviceStatus == ServiceStatus.Paused)
+            {
+                this.serviceStatus = ServiceStatus.Running;
+            }
+
+            Monitor.Exit(this.lockObject);
+        }
+
         public void Stop()
         {
             Monitor.Enter(this.lockObject);
-            this.stop = true;
-            Monitor.Exit(this.lockObject);          
+            this.serviceStatus = ServiceStatus.Stopped;
+            Monitor.Exit(this.lockObject);
+        }
+
+        public ServiceStatus GetStatus()
+        {
+            return this.serviceStatus;
         }
     }
 }
