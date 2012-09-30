@@ -45,10 +45,12 @@ namespace SignalKo.SystemMonitor.Agent.Core.Coordination
         {
             while (true)
             {
+                // check if the service has been stopped
                 Monitor.Enter(this.lockObject);
 
                 if (this.stop)
                 {
+                    Monitor.Exit(this.lockObject);
                     break;
                 }
 
@@ -57,7 +59,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Coordination
                 var agentConfiguration = this.agentConfigurationProvider.GetAgentConfiguration();
                 if (agentConfiguration == null)
                 {
-                    // stop as long as the configuration is invalid
+                    // pause as long as the configuration is invalid
                     this.pauseCallback();
                     continue;
                 }
