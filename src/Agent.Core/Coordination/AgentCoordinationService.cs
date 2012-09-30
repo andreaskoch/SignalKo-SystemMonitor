@@ -7,7 +7,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Coordination
 {
     public class AgentCoordinationService : IAgentCoordinationService
     {
-        private const int AgentConfigurationCheckIntervalInSeconds = 10;
+        private const int AgentConfigurationCheckIntervalInMilliseconds = 10000;
 
         private readonly IAgentConfigurationProvider agentConfigurationProvider;
 
@@ -43,10 +43,8 @@ namespace SignalKo.SystemMonitor.Agent.Core.Coordination
 
         public void Start()
         {
-            do
+            while (true)
             {
-                Thread.Sleep(AgentConfigurationCheckIntervalInSeconds * 1000);
-
                 Monitor.Enter(this.lockObject);
 
                 if (this.stop)
@@ -73,8 +71,10 @@ namespace SignalKo.SystemMonitor.Agent.Core.Coordination
                 {
                     this.resumeCallback();
                 }
+
+                // sleep
+                Thread.Sleep(AgentConfigurationCheckIntervalInMilliseconds);
             }
-            while (true);
         }
 
         public void Stop()
