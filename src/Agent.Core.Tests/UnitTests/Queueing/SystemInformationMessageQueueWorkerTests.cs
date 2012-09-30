@@ -24,9 +24,11 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         {
             // Arrange
             var systemInformationSender = new Mock<ISystemInformationSender>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
 
             // Act
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
 
             // Assert
             Assert.IsNotNull(messageQueueWorker);
@@ -34,10 +36,26 @@ namespace Agent.Core.Tests.UnitTests.Queueing
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void ConstructorSystemInformationSenderParameterIsNull_ArgumentNullExceptionIsThrown()
+        public void Constructor_WorkQueueParameterIsNull_ArgumentNullExceptionIsThrown()
         {
+            // Arrange
+            var systemInformationSender = new Mock<ISystemInformationSender>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
+
             // Act
-            new SystemInformationMessageQueueWorker(null);
+            new SystemInformationMessageQueueWorker(systemInformationSender.Object, null, errorQueue.Object);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_ErrorQueueParameterIsNull_ArgumentNullExceptionIsThrown()
+        {
+            // Arrange
+            var systemInformationSender = new Mock<ISystemInformationSender>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+
+            // Act
+            new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, null);
         }
 
         #endregion
@@ -54,11 +72,11 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
 
             // Act
             messageQueueWorker.Stop();
-            messageQueueWorker.Start(workQueue.Object, errorQueue.Object);
+            messageQueueWorker.Start();
 
             // Assert
             workQueue.Verify(q => q.Dequeue(), Times.Never());
@@ -74,14 +92,14 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
 
             // Act
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             messageQueueWorker.Stop();
-            messageQueueWorker.Start(workQueue.Object, errorQueue.Object);
+            messageQueueWorker.Start();
 
             stopwatch.Stop();
 
@@ -108,13 +126,13 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
 
             // Act
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
+            var worker = new Task(messageQueueWorker.Start);
             worker.Start();
 
             Thread.Sleep(timeToWaitBeforeStop);
@@ -147,10 +165,10 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
 
             // Act
-            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
+            var worker = new Task(messageQueueWorker.Start);
             worker.Start();
             Task.WaitAll(new[] { worker }, maxRuntime);
             messageQueueWorker.Stop();
@@ -174,10 +192,10 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
 
             // Act
-            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
+            var worker = new Task(messageQueueWorker.Start);
             worker.Start();
             Task.WaitAll(new[] { worker }, maxRuntime);
             messageQueueWorker.Stop();
@@ -215,10 +233,10 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
             var systemInformationSender = new Mock<ISystemInformationSender>();
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
 
             // Act
-            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
+            var worker = new Task(messageQueueWorker.Start);
             worker.Start();
             Task.WaitAll(new[] { worker }, maxRuntime);
             messageQueueWorker.Stop();
@@ -255,10 +273,10 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             systemInformationSender.Setup(s => s.Send(systemInfo)).Throws(
                 new SendSystemInformationFailedException("Some minor exception which justifies a retry", null));
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
 
             // Act
-            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
+            var worker = new Task(messageQueueWorker.Start);
             worker.Start();
             Task.WaitAll(new[] { worker }, maxRuntime);
             messageQueueWorker.Stop();
@@ -295,10 +313,10 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             systemInformationSender.Setup(s => s.Send(systemInfo)).Throws(
                 new SendSystemInformationFailedException("Some minor exception which justifies a retry", null));
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
 
             // Act
-            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
+            var worker = new Task(messageQueueWorker.Start);
             worker.Start();
             Task.WaitAll(new[] { worker }, maxRuntime);
             messageQueueWorker.Stop();
@@ -330,10 +348,10 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var systemInformationSender = new Mock<ISystemInformationSender>();
             systemInformationSender.Setup(s => s.Send(It.IsAny<SystemInformation>())).Throws(new FatalSystemInformationSenderException("Some fatal exception."));
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
 
             // Act
-            messageQueueWorker.Start(workQueue.Object, errorQueue.Object);
+            messageQueueWorker.Start();
 
             // Assert
             errorQueue.Verify(q => q.Enqueue(items), Times.Once());
@@ -354,13 +372,13 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var systemInformationSender = new Mock<ISystemInformationSender>();
             systemInformationSender.Setup(s => s.Send(It.IsAny<SystemInformation>())).Throws(new FatalSystemInformationSenderException("Some fatal exception."));
 
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object);
+            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
 
             // Act
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var worker = new Task(() => messageQueueWorker.Start(workQueue.Object, errorQueue.Object));
+            var worker = new Task(messageQueueWorker.Start);
             worker.Start();
             Task.WaitAll(new[] { worker }, maxRuntime);
 
