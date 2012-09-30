@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 using SignalKo.SystemMonitor.Agent.Core;
 using SignalKo.SystemMonitor.Agent.Core.Collector;
+using SignalKo.SystemMonitor.Agent.Core.Coordination;
 using SignalKo.SystemMonitor.Agent.Core.Exceptions;
 using SignalKo.SystemMonitor.Agent.Core.Queueing;
 using SignalKo.SystemMonitor.Agent.Core.Sender;
@@ -65,14 +66,29 @@ namespace Agent.Core.Tests.IntegrationTests
             IMessageQueue<SystemInformation> errorQueue = new SystemInformationMessageQueue();
             IMessageQueueProvider<SystemInformation> messageQueueProvider = new SystemInformationMessageQueueProvider(workQueue, errorQueue);
 
-            IMessageQueueFeeder<SystemInformation> messageQueueFeeder = new SystemInformationMessageQueueFeeder(provider.Object);
-            IMessageQueueWorker<SystemInformation> messageQueueWorker = new SystemInformationMessageQueueWorker(sender.Object);
+            IMessageQueueFeeder messageQueueFeeder = new SystemInformationMessageQueueFeeder(provider.Object, workQueue);
+            IMessageQueueWorker messageQueueWorker = new SystemInformationMessageQueueWorker(sender.Object, workQueue, errorQueue);
+
+            var agentCoordinationService = new Mock<IAgentCoordinationService>();
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            agentCoordinationServiceFactory.Setup(f => f.GetAgentCoordinationService(It.IsAny<Action>(), It.IsAny<Action>())).Returns(
+                agentCoordinationService.Object);
+
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            messageQueueFeederFactory.Setup(f => f.GetMessageQueueFeeder()).Returns(messageQueueFeeder);
+
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
+            messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker);
 
             IMessageQueuePersistence<SystemInformation> messageQueuePersistence =
                 new JSONSystemInformationMessageQueuePersistence(this.jsonMessageQueuePersistenceConfigurationProvider, this.encodingProvider);
 
             var systemInformationDispatchingService = new SystemInformationDispatchingService(
-                messageQueueFeeder, messageQueueWorker, messageQueueProvider, messageQueuePersistence);
+                agentCoordinationServiceFactory.Object,
+                messageQueueFeederFactory.Object,
+                messageQueueWorkerFactory.Object,
+                messageQueueProvider,
+                messageQueuePersistence);
 
             // Act
             var stopwatch = new Stopwatch();
