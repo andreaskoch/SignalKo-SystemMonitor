@@ -1,5 +1,6 @@
 using SignalKo.SystemMonitor.Agent.Core;
 using SignalKo.SystemMonitor.Agent.Core.Collector;
+using SignalKo.SystemMonitor.Agent.Core.Coordination;
 using SignalKo.SystemMonitor.Agent.Core.Queueing;
 using SignalKo.SystemMonitor.Agent.Core.Sender;
 using SignalKo.SystemMonitor.Agent.Core.Sender.Configuration;
@@ -30,6 +31,9 @@ namespace SignalKo.SystemMonitor.Agent.Service.DependencyResolution
                         config.For<ISystemStorageStatusProvider>().Use<SystemStorageStatusProvider>();
                         config.For<ISystemMemoryStatusProvider>().Use<SystemMemoryStatusProvider>();
                         config.For<ISystemInformationProvider>().Use<SystemInformationProvider>();
+
+                        /* coordination */
+                        config.For<IAgentCoordinationServiceFactory>().Use<AgentCoordinationServiceFactory>();
 
                         /* queuing */
                         var workQueue = new SystemInformationMessageQueue();

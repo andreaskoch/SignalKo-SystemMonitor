@@ -62,6 +62,10 @@
     <Compile Include="Collector\SystemInformationProvider.cs" />
     <Compile Include="Collector\SystemMemoryStatusProvider.cs" />
     <Compile Include="Collector\SystemStorageStatusProvider.cs" />
+    <Compile Include="Coordination\AgentCoordinationService.cs" />
+    <Compile Include="Coordination\AgentCoordinationServiceFactory.cs" />
+    <Compile Include="Coordination\IAgentCoordinationService.cs" />
+    <Compile Include="Coordination\IAgentCoordinationServiceFactory.cs" />
     <Compile Include="Exceptions\MessageQueuePersistenceException.cs" />
     <Compile Include="Queueing\AppConfigJSONMessageQueuePersistenceConfigurationProvider.cs" />
     <Compile Include="Queueing\IJSONMessageQueuePersistenceConfigurationProvider.cs" />
