@@ -27,7 +27,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
             this.messageQueueProvider = messageQueueProvider;
         }
 
-        public SystemInformationMessageQueueFeeder GetMessageQueueFeeder()
+        public IMessageQueueFeeder GetMessageQueueFeeder()
         {
             IMessageQueue<SystemInformation> workQueue = this.messageQueueProvider.WorkQueue;
             return new SystemInformationMessageQueueFeeder(this.systemInformationProvider, workQueue);

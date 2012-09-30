@@ -27,7 +27,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
             this.messageQueueProvider = messageQueueProvider;
         }
 
-        public SystemInformationMessageQueueWorker GetMessageQueueWorker()
+        public IMessageQueueWorker GetMessageQueueWorker()
         {
             IMessageQueue<SystemInformation> workQueue = this.messageQueueProvider.WorkQueue;
             IMessageQueue<SystemInformation> errorQueue = this.messageQueueProvider.ErrorQueue;

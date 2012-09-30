@@ -20,8 +20,13 @@ namespace SignalKo.SystemMonitor.Agent.Core
 
         private readonly IAgentCoordinationService agentCoordinationService;
 
-        public SystemInformationDispatchingService(IMessageQueueFeederFactory messageQueueFeederFactory, IMessageQueueWorkerFactory messageQueueWorkerFactory, IMessageQueueProvider<SystemInformation> messageQueueProvider, IMessageQueuePersistence<SystemInformation> messageQueuePersistence, IAgentCoordinationServiceFactory agentCoordinationServiceFactory)
+        public SystemInformationDispatchingService(IAgentCoordinationServiceFactory agentCoordinationServiceFactory, IMessageQueueFeederFactory messageQueueFeederFactory, IMessageQueueWorkerFactory messageQueueWorkerFactory, IMessageQueueProvider<SystemInformation> messageQueueProvider, IMessageQueuePersistence<SystemInformation> messageQueuePersistence)
         {
+            if (agentCoordinationServiceFactory == null)
+            {
+                throw new ArgumentNullException("agentCoordinationServiceFactory");
+            }
+
             if (messageQueueFeederFactory == null)
             {
                 throw new ArgumentNullException("messageQueueFeederFactory");
