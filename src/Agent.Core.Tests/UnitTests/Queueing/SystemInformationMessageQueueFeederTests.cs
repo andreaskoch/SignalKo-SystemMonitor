@@ -21,9 +21,10 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         {
             // Arrange
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
 
             // Act
-            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object);
+            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
 
             // Assert
             Assert.IsNotNull(systemInformationDispatcher);
@@ -33,8 +34,22 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         [ExpectedException(typeof(ArgumentNullException))]
         public void Constructor_SystemInformationProviderParameterIsNull_ArgumentNullExceptionIsThrown()
         {
+            // Arrange
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+
             // Act
-            new SystemInformationMessageQueueFeeder(null);
+            new SystemInformationMessageQueueFeeder(null, workQueue.Object);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_WorkQueueParameterIsNull_ArgumentNullExceptionIsThrown()
+        {
+            // Arrange
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+
+            // Act
+            new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, null);
         }
 
         #endregion
@@ -50,10 +65,10 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
             var workQueue = new Mock<IMessageQueue<SystemInformation>>();
 
-            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object);
+            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
 
             // Act
-            var dispatcherTask = new Task(() => systemInformationDispatcher.Start(workQueue.Object));
+            var dispatcherTask = new Task(systemInformationDispatcher.Start);
             dispatcherTask.Start();
             Task.WaitAll(new[] { dispatcherTask }, durationInMilliseconds);
             systemInformationDispatcher.Stop();
@@ -74,10 +89,10 @@ namespace Agent.Core.Tests.UnitTests.Queueing
 
             var workQueue = new Mock<IMessageQueue<SystemInformation>>();
 
-            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object);
+            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
 
             // Act
-            var dispatcherTask = new Task(() => systemInformationDispatcher.Start(workQueue.Object));
+            var dispatcherTask = new Task(systemInformationDispatcher.Start);
             dispatcherTask.Start();
             Task.WaitAll(new[] { dispatcherTask }, durationInMilliseconds);
             systemInformationDispatcher.Stop();
@@ -97,11 +112,10 @@ namespace Agent.Core.Tests.UnitTests.Queueing
 
             var workQueue = new Mock<IMessageQueue<SystemInformation>>();
 
-            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(
-                systemInformationProvider.Object);
+            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
 
             // Act
-            var dispatcherTask = new Task(() => systemInformationDispatcher.Start(workQueue.Object));
+            var dispatcherTask = new Task(systemInformationDispatcher.Start);
             dispatcherTask.Start();
             Task.WaitAll(new[] { dispatcherTask }, durationInMilliseconds);
             systemInformationDispatcher.Stop();
