@@ -7,6 +7,7 @@ using Moq;
 using NUnit.Framework;
 
 using SignalKo.SystemMonitor.Agent.Core;
+using SignalKo.SystemMonitor.Agent.Core.Coordination;
 using SignalKo.SystemMonitor.Agent.Core.Queueing;
 using SignalKo.SystemMonitor.Common.Model;
 
@@ -21,14 +22,19 @@ namespace Agent.Core.Tests.UnitTests
         public void Constructor_AllParametersAreSet_ObjectIsInstantiated()
         {
             // Arrange
-            var messageQueueFeeder = new Mock<IMessageQueueFeeder<SystemInformation>>();
-            var messageQueueWorker = new Mock<IMessageQueueWorker<SystemInformation>>();
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
             var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>(); 
 
             // Act
             var systemInformationDispatchingService = new SystemInformationDispatchingService(
-                messageQueueFeeder.Object, messageQueueWorker.Object, messageQueueProvider.Object, messageQueuePersistence.Object);
+                agentCoordinationServiceFactory.Object,
+                messageQueueFeederFactory.Object,
+                messageQueueWorkerFactory.Object,
+                messageQueueProvider.Object,
+                messageQueuePersistence.Object);
 
             // Assert
             Assert.IsNotNull(systemInformationDispatchingService);
@@ -36,28 +42,59 @@ namespace Agent.Core.Tests.UnitTests
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_MessageQueueFeederParameterIsNull_ArgumentNullExceptionIsThrown()
+        public void Constructor_AgentCoordinationServiceFactoryParameterIsNull_ArgumentNullExceptionIsThrown()
         {
             // Arrange
-            var messageQueueWorker = new Mock<IMessageQueueWorker<SystemInformation>>();
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
             var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
 
             // Act
-            new SystemInformationDispatchingService(null, messageQueueWorker.Object, messageQueueProvider.Object, messageQueuePersistence.Object);
+            new SystemInformationDispatchingService(
+                null,
+                messageQueueFeederFactory.Object,
+                messageQueueWorkerFactory.Object,
+                messageQueueProvider.Object,
+                messageQueuePersistence.Object);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_MessageQueueWorkerParameterIsNull_ArgumentNullExceptionIsThrown()
+        public void Constructor_MessageQueueFeederFactoryParameterIsNull_ArgumentNullExceptionIsThrown()
         {
             // Arrange
-            var messageQueueFeeder = new Mock<IMessageQueueFeeder<SystemInformation>>();
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
             var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
 
             // Act
-            new SystemInformationDispatchingService(messageQueueFeeder.Object, null, messageQueueProvider.Object, messageQueuePersistence.Object);
+            new SystemInformationDispatchingService(
+                agentCoordinationServiceFactory.Object,
+                null,
+                messageQueueWorkerFactory.Object,
+                messageQueueProvider.Object,
+                messageQueuePersistence.Object);
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Constructor_MessageQueueWorkerFactoryParameterIsNull_ArgumentNullExceptionIsThrown()
+        {
+            // Arrange
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
+            var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
+
+            // Act
+            new SystemInformationDispatchingService(
+                agentCoordinationServiceFactory.Object,
+                messageQueueFeederFactory.Object,
+                null,
+                messageQueueProvider.Object,
+                messageQueuePersistence.Object);
         }
 
         [Test]
@@ -65,12 +102,18 @@ namespace Agent.Core.Tests.UnitTests
         public void Constructor_MessageQueueProviderParameterIsNull_ArgumentNullExceptionIsThrown()
         {
             // Arrange
-            var messageQueueFeeder = new Mock<IMessageQueueFeeder<SystemInformation>>();
-            var messageQueueWorker = new Mock<IMessageQueueWorker<SystemInformation>>();
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
 
             // Act
-            new SystemInformationDispatchingService(messageQueueFeeder.Object, messageQueueWorker.Object, null, messageQueuePersistence.Object);
+            new SystemInformationDispatchingService(
+                agentCoordinationServiceFactory.Object,
+                messageQueueFeederFactory.Object,
+                messageQueueWorkerFactory.Object,
+                null,
+                messageQueuePersistence.Object);
         }
 
         [Test]
@@ -78,12 +121,18 @@ namespace Agent.Core.Tests.UnitTests
         public void Constructor_MessageQueuePersistenceParameterIsNull_ArgumentNullExceptionIsThrown()
         {
             // Arrange
-            var messageQueueFeeder = new Mock<IMessageQueueFeeder<SystemInformation>>();
-            var messageQueueWorker = new Mock<IMessageQueueWorker<SystemInformation>>();
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
             var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
 
             // Act
-            new SystemInformationDispatchingService(messageQueueFeeder.Object, messageQueueWorker.Object, messageQueueProvider.Object, null);
+            new SystemInformationDispatchingService(
+                agentCoordinationServiceFactory.Object,
+                messageQueueFeederFactory.Object,
+                messageQueueWorkerFactory.Object,
+                messageQueueProvider.Object,
+                null);
         }
 
         #endregion
@@ -91,55 +140,105 @@ namespace Agent.Core.Tests.UnitTests
         #region Start
 
         [Test]
-        public void Start_MessageFeederStartIsCalled()
+        public void Start_AgentCoordinationService_StartIsCalled()
         {
             // Arrange
-            var messageQueueFeeder = new Mock<IMessageQueueFeeder<SystemInformation>>();
-            var messageQueueWorker = new Mock<IMessageQueueWorker<SystemInformation>>();
+            var agentCoordinationService = new Mock<IAgentCoordinationService>();
+            var messageQueueFeeder = new Mock<IMessageQueueFeeder>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
 
-            var workQueue = new Mock<IMessageQueue<SystemInformation>>(); 
-            var errorQueue = new Mock<IMessageQueue<SystemInformation>>(); 
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            agentCoordinationServiceFactory.Setup(f => f.GetAgentCoordinationService(It.IsAny<Action>(), It.IsAny<Action>())).Returns(agentCoordinationService.Object);
+
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            messageQueueFeederFactory.Setup(f => f.GetMessageQueueFeeder()).Returns(messageQueueFeeder.Object);
+
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
+            messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker.Object);
+
             var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
-            messageQueueProvider.Setup(p => p.WorkQueue).Returns(workQueue.Object);
-            messageQueueProvider.Setup(p => p.ErrorQueue).Returns(errorQueue.Object);
-
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
-            messageQueuePersistence.Setup(p => p.Load()).Returns(new SystemInformationQueueItem[] { });
 
             var systemInformationDispatchingService = new SystemInformationDispatchingService(
-                messageQueueFeeder.Object, messageQueueWorker.Object, messageQueueProvider.Object, messageQueuePersistence.Object);
+                agentCoordinationServiceFactory.Object,
+                messageQueueFeederFactory.Object,
+                messageQueueWorkerFactory.Object,
+                messageQueueProvider.Object,
+                messageQueuePersistence.Object);
 
             // Act
             systemInformationDispatchingService.Start();
 
             // Assert
-            messageQueueFeeder.Verify(f => f.Start(It.IsAny<IMessageQueue<SystemInformation>>()), Times.Once());
+            agentCoordinationService.Verify(f => f.Start(), Times.Once());
         }
 
         [Test]
-        public void Start_MessageWorkerStartIsCalled()
+        public void Start_MessageQueueFeeder_StartIsCalled()
         {
             // Arrange
-            var messageQueueFeeder = new Mock<IMessageQueueFeeder<SystemInformation>>();
-            var messageQueueWorker = new Mock<IMessageQueueWorker<SystemInformation>>();
+            var agentCoordinationService = new Mock<IAgentCoordinationService>();
+            var messageQueueFeeder = new Mock<IMessageQueueFeeder>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
 
-            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
-            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            agentCoordinationServiceFactory.Setup(f => f.GetAgentCoordinationService(It.IsAny<Action>(), It.IsAny<Action>())).Returns(agentCoordinationService.Object);
+
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            messageQueueFeederFactory.Setup(f => f.GetMessageQueueFeeder()).Returns(messageQueueFeeder.Object);
+
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
+            messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker.Object);
+
             var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
-            messageQueueProvider.Setup(p => p.WorkQueue).Returns(workQueue.Object);
-            messageQueueProvider.Setup(p => p.ErrorQueue).Returns(errorQueue.Object);
-
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
-            messageQueuePersistence.Setup(p => p.Load()).Returns(new SystemInformationQueueItem[] { });
 
             var systemInformationDispatchingService = new SystemInformationDispatchingService(
-                messageQueueFeeder.Object, messageQueueWorker.Object, messageQueueProvider.Object, messageQueuePersistence.Object);
+                agentCoordinationServiceFactory.Object,
+                messageQueueFeederFactory.Object,
+                messageQueueWorkerFactory.Object,
+                messageQueueProvider.Object,
+                messageQueuePersistence.Object);
 
             // Act
             systemInformationDispatchingService.Start();
 
             // Assert
-            messageQueueWorker.Verify(w => w.Start(It.IsAny<IMessageQueue<SystemInformation>>(), It.IsAny<IMessageQueue<SystemInformation>>()), Times.Once());
+            messageQueueFeeder.Verify(f => f.Start(), Times.Once());
+        }
+
+        [Test]
+        public void Start_MessageQueueWorker_StartIsCalled()
+        {
+            // Arrange
+            var agentCoordinationService = new Mock<IAgentCoordinationService>();
+            var messageQueueFeeder = new Mock<IMessageQueueFeeder>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
+
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            agentCoordinationServiceFactory.Setup(f => f.GetAgentCoordinationService(It.IsAny<Action>(), It.IsAny<Action>())).Returns(agentCoordinationService.Object);
+
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            messageQueueFeederFactory.Setup(f => f.GetMessageQueueFeeder()).Returns(messageQueueFeeder.Object);
+
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
+            messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker.Object);
+
+            var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
+            var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
+
+            var systemInformationDispatchingService = new SystemInformationDispatchingService(
+                agentCoordinationServiceFactory.Object,
+                messageQueueFeederFactory.Object,
+                messageQueueWorkerFactory.Object,
+                messageQueueProvider.Object,
+                messageQueuePersistence.Object);
+
+            // Act
+            systemInformationDispatchingService.Start();
+
+            // Assert
+            messageQueueWorker.Verify(f => f.Start(), Times.Once());
         }
 
         #endregion
@@ -147,16 +246,67 @@ namespace Agent.Core.Tests.UnitTests
         #region Stop
 
         [Test]
-        public void Stop_MessageFeederStopIsCalled()
+        public void Stop_AgentCoordinationService_StopIsCalled()
         {
             // Arrange
-            var messageQueueFeeder = new Mock<IMessageQueueFeeder<SystemInformation>>();
-            var messageQueueWorker = new Mock<IMessageQueueWorker<SystemInformation>>();
+            // Arrange
+            var agentCoordinationService = new Mock<IAgentCoordinationService>();
+            var messageQueueFeeder = new Mock<IMessageQueueFeeder>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
+
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            agentCoordinationServiceFactory.Setup(f => f.GetAgentCoordinationService(It.IsAny<Action>(), It.IsAny<Action>())).Returns(agentCoordinationService.Object);
+
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            messageQueueFeederFactory.Setup(f => f.GetMessageQueueFeeder()).Returns(messageQueueFeeder.Object);
+
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
+            messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker.Object);
+
             var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
 
             var systemInformationDispatchingService = new SystemInformationDispatchingService(
-                messageQueueFeeder.Object, messageQueueWorker.Object, messageQueueProvider.Object, messageQueuePersistence.Object);
+                agentCoordinationServiceFactory.Object,
+                messageQueueFeederFactory.Object,
+                messageQueueWorkerFactory.Object,
+                messageQueueProvider.Object,
+                messageQueuePersistence.Object);
+
+            // Act
+            systemInformationDispatchingService.Stop();
+
+            // Assert
+            agentCoordinationService.Verify(f => f.Stop(), Times.Once());
+        }
+
+        [Test]
+        public void Stop_MessageQueueFeeder_StopIsCalled()
+        {
+            // Arrange
+            // Arrange
+            var agentCoordinationService = new Mock<IAgentCoordinationService>();
+            var messageQueueFeeder = new Mock<IMessageQueueFeeder>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
+
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            agentCoordinationServiceFactory.Setup(f => f.GetAgentCoordinationService(It.IsAny<Action>(), It.IsAny<Action>())).Returns(agentCoordinationService.Object);
+
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            messageQueueFeederFactory.Setup(f => f.GetMessageQueueFeeder()).Returns(messageQueueFeeder.Object);
+
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
+            messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker.Object);
+
+            var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
+            var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
+
+            var systemInformationDispatchingService = new SystemInformationDispatchingService(
+                agentCoordinationServiceFactory.Object,
+                messageQueueFeederFactory.Object,
+                messageQueueWorkerFactory.Object,
+                messageQueueProvider.Object,
+                messageQueuePersistence.Object);
 
             // Act
             systemInformationDispatchingService.Stop();
@@ -166,22 +316,38 @@ namespace Agent.Core.Tests.UnitTests
         }
 
         [Test]
-        public void Stop_MessageWorkerStopIsCalled()
+        public void Stop_MessageQueueWorker_StopIsCalled()
         {
             // Arrange
-            var messageQueueFeeder = new Mock<IMessageQueueFeeder<SystemInformation>>();
-            var messageQueueWorker = new Mock<IMessageQueueWorker<SystemInformation>>();
+            // Arrange
+            var agentCoordinationService = new Mock<IAgentCoordinationService>();
+            var messageQueueFeeder = new Mock<IMessageQueueFeeder>();
+            var messageQueueWorker = new Mock<IMessageQueueWorker>();
+
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            agentCoordinationServiceFactory.Setup(f => f.GetAgentCoordinationService(It.IsAny<Action>(), It.IsAny<Action>())).Returns(agentCoordinationService.Object);
+
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            messageQueueFeederFactory.Setup(f => f.GetMessageQueueFeeder()).Returns(messageQueueFeeder.Object);
+
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
+            messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker.Object);
+
             var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
 
             var systemInformationDispatchingService = new SystemInformationDispatchingService(
-                messageQueueFeeder.Object, messageQueueWorker.Object, messageQueueProvider.Object, messageQueuePersistence.Object);
+                agentCoordinationServiceFactory.Object,
+                messageQueueFeederFactory.Object,
+                messageQueueWorkerFactory.Object,
+                messageQueueProvider.Object,
+                messageQueuePersistence.Object);
 
             // Act
             systemInformationDispatchingService.Stop();
 
             // Assert
-            messageQueueWorker.Verify(w => w.Stop(), Times.Once());
+            messageQueueWorker.Verify(f => f.Stop(), Times.Once());
         }
 
         #endregion
@@ -195,20 +361,28 @@ namespace Agent.Core.Tests.UnitTests
             var durationTheWorkerIsRunning = 1000;
             var durationTheFeederIsRunning = 500;
 
+            var agentCoordinationService = new Mock<IAgentCoordinationService>();
             var messageQueueFeeder = new WaitingFeeder(durationTheFeederIsRunning);
             var messageQueueWorker = new WaitingWorker(durationTheWorkerIsRunning);
 
-            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
-            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
-            var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
-            messageQueueProvider.Setup(p => p.WorkQueue).Returns(workQueue.Object);
-            messageQueueProvider.Setup(p => p.ErrorQueue).Returns(errorQueue.Object);
+            var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
+            agentCoordinationServiceFactory.Setup(f => f.GetAgentCoordinationService(It.IsAny<Action>(), It.IsAny<Action>())).Returns(agentCoordinationService.Object);
 
+            var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
+            messageQueueFeederFactory.Setup(f => f.GetMessageQueueFeeder()).Returns(messageQueueFeeder);
+
+            var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
+            messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker);
+
+            var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
-            messageQueuePersistence.Setup(p => p.Load()).Returns(new SystemInformationQueueItem[] { });
 
             var systemInformationDispatchingService = new SystemInformationDispatchingService(
-                messageQueueFeeder, messageQueueWorker, messageQueueProvider.Object, messageQueuePersistence.Object);
+                agentCoordinationServiceFactory.Object,
+                messageQueueFeederFactory.Object,
+                messageQueueWorkerFactory.Object,
+                messageQueueProvider.Object,
+                messageQueuePersistence.Object);
 
             // Act
             var stopwatch = new Stopwatch();
@@ -226,7 +400,7 @@ namespace Agent.Core.Tests.UnitTests
         #endregion
     }
 
-    internal class WaitingFeeder : IMessageQueueFeeder<SystemInformation>
+    internal class WaitingFeeder : IMessageQueueFeeder
     {
         private readonly int waitTime;
 
@@ -235,7 +409,7 @@ namespace Agent.Core.Tests.UnitTests
             this.waitTime = waitTime;
         }
 
-        public void Start(IMessageQueue<SystemInformation> workQueue)
+        public void Start()
         {
             Thread.Sleep(this.waitTime);
         }
@@ -258,7 +432,7 @@ namespace Agent.Core.Tests.UnitTests
         }
     }
 
-    internal class WaitingWorker : IMessageQueueWorker<SystemInformation>
+    internal class WaitingWorker : IMessageQueueWorker
     {
         private readonly int waitTime;
 
@@ -267,7 +441,7 @@ namespace Agent.Core.Tests.UnitTests
             this.waitTime = waitTime;
         }
 
-        public void Start(IMessageQueue<SystemInformation> workQueue, IMessageQueue<SystemInformation> errorQueue)
+        public void Start()
         {
             Thread.Sleep(this.waitTime);
         }
