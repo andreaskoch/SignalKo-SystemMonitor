@@ -75,11 +75,14 @@
     <Compile Include="Queueing\IMessageQueueWorker.cs" />
     <Compile Include="Queueing\IMessageQueueFeeder.cs" />
     <Compile Include="Queueing\IQueueItem.cs" />
+    <Compile Include="Queueing\IMessageQueueFeederFactory.cs" />
+    <Compile Include="Queueing\IMessageQueueWorkerFactory.cs" />
     <Compile Include="Queueing\JSONMessageQueuePersistenceConfiguration.cs" />
     <Compile Include="Queueing\JSONSystemInformationMessageQueuePersistence.cs" />
     <Compile Include="Queueing\ServiceStatus.cs" />
     <Compile Include="Queueing\SystemInformationMessageQueueFeeder.cs" />
     <Compile Include="Queueing\SystemInformationMessageQueue.cs" />
+    <Compile Include="Queueing\SystemInformationMessageQueueFeederFactory.cs" />
     <Compile Include="Queueing\SystemInformationMessageQueueProvider.cs" />
     <Compile Include="Queueing\SystemInformationMessageQueueWorker.cs" />
     <Compile Include="Exceptions\SystemInformationSenderSetupException.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="Exceptions\SendSystemInformationFailedException.cs" />
     <Compile Include="ISystemInformationDispatchingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queueing\SystemInformationMessageQueueWorkerFactory.cs" />
     <Compile Include="Queueing\SystemInformationQueueItem.cs" />
     <Compile Include="Sender\Configuration\AgentConfigurationProvider.cs" />
     <Compile Include="Sender\Configuration\AppConfigAgentConfigurationServiceUrlProvider.cs" />

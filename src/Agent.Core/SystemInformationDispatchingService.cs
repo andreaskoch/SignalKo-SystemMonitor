@@ -10,9 +10,9 @@ namespace SignalKo.SystemMonitor.Agent.Core
 {
     public class SystemInformationDispatchingService : ISystemInformationDispatchingService
     {
-        private readonly IMessageQueueFeeder<SystemInformation> messageQueueFeeder;
+        private readonly IMessageQueueFeeder messageQueueFeeder;
 
-        private readonly IMessageQueueWorker<SystemInformation> messageQueueWorker;
+        private readonly IMessageQueueWorker messageQueueWorker;
 
         private readonly IMessageQueueProvider<SystemInformation> messageQueueProvider;
 
@@ -20,16 +20,16 @@ namespace SignalKo.SystemMonitor.Agent.Core
 
         private readonly IAgentCoordinationService agentCoordinationService;
 
-        public SystemInformationDispatchingService(IMessageQueueFeeder<SystemInformation> messageQueueFeeder, IMessageQueueWorker<SystemInformation> messageQueueWorker, IMessageQueueProvider<SystemInformation> messageQueueProvider, IMessageQueuePersistence<SystemInformation> messageQueuePersistence, IAgentCoordinationServiceFactory agentCoordinationServiceFactory)
+        public SystemInformationDispatchingService(IMessageQueueFeederFactory messageQueueFeederFactory, IMessageQueueWorkerFactory messageQueueWorkerFactory, IMessageQueueProvider<SystemInformation> messageQueueProvider, IMessageQueuePersistence<SystemInformation> messageQueuePersistence, IAgentCoordinationServiceFactory agentCoordinationServiceFactory)
         {
-            if (messageQueueFeeder == null)
+            if (messageQueueFeederFactory == null)
             {
-                throw new ArgumentNullException("messageQueueFeeder");
+                throw new ArgumentNullException("messageQueueFeederFactory");
             }
 
-            if (messageQueueWorker == null)
+            if (messageQueueWorkerFactory == null)
             {
-                throw new ArgumentNullException("messageQueueWorker");
+                throw new ArgumentNullException("messageQueueWorkerFactory");
             }
 
             if (messageQueueProvider == null)
@@ -42,11 +42,13 @@ namespace SignalKo.SystemMonitor.Agent.Core
                 throw new ArgumentNullException("messageQueuePersistence");
             }
 
-            this.messageQueueFeeder = messageQueueFeeder;
-            this.messageQueueWorker = messageQueueWorker;
+            this.messageQueueFeeder = messageQueueFeederFactory.GetMessageQueueFeeder();
+            this.messageQueueWorker = messageQueueWorkerFactory.GetMessageQueueWorker();
             this.messageQueueProvider = messageQueueProvider;
             this.messageQueuePersistence = messageQueuePersistence;
-            this.agentCoordinationService = agentCoordinationServiceFactory.GetAgentCoordinationService(this.Pause, this.Resume);
+
+            this.agentCoordinationService = agentCoordinationServiceFactory.GetAgentCoordinationService(
+                () => this.messageQueueWorker.Pause(), () => this.messageQueueWorker.Resume());
         }
 
         public void Start()
@@ -54,8 +56,8 @@ namespace SignalKo.SystemMonitor.Agent.Core
             this.RestorePreviousQueue();
 
             Action agentCoordination = () => this.agentCoordinationService.Start();
-            Action messageFeederAction = () => this.messageQueueFeeder.Start(this.messageQueueProvider.WorkQueue);
-            Action messageWorkerAction = () => this.messageQueueWorker.Start(this.messageQueueProvider.WorkQueue, this.messageQueueProvider.ErrorQueue);
+            Action messageFeederAction = () => this.messageQueueFeeder.Start();
+            Action messageWorkerAction = () => this.messageQueueWorker.Start();
             Parallel.Invoke(messageFeederAction, messageWorkerAction, agentCoordination);
 
             this.PersistErrorQueue();
@@ -66,18 +68,6 @@ namespace SignalKo.SystemMonitor.Agent.Core
             this.agentCoordinationService.Stop();
             this.messageQueueFeeder.Stop();
             this.messageQueueWorker.Stop();
-        }
-
-        private void Pause()
-        {
-            this.messageQueueFeeder.Pause();
-            this.messageQueueWorker.Pause();
-        }
-
-        private void Resume()
-        {
-            this.messageQueueFeeder.Resume();
-            this.messageQueueWorker.Resume();            
         }
 
         private void RestorePreviousQueue()

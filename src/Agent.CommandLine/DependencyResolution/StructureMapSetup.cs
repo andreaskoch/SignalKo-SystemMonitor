@@ -54,8 +54,8 @@ namespace SignalKo.SystemMonitor.Agent.CommandLine.DependencyResolution
                         config.For<IMessageQueuePersistence<SystemInformation>>().Use<JSONSystemInformationMessageQueuePersistence>();
                         config.For<IJSONMessageQueuePersistenceConfigurationProvider>().Use<AppConfigJSONMessageQueuePersistenceConfigurationProvider>();
 
-                        config.For<IMessageQueueFeeder<SystemInformation>>().Use<SystemInformationMessageQueueFeeder>();
-                        config.For<IMessageQueueWorker<SystemInformation>>().Use<SystemInformationMessageQueueWorker>();
+                        config.For<IMessageQueueFeederFactory>().Use<SystemInformationMessageQueueFeederFactory>();
+                        config.For<IMessageQueueWorkerFactory>().Use<SystemInformationMessageQueueWorkerFactory>();
 
                         /* sender configuration */
                         config.For<IAgentConfigurationProvider>().Use<AgentConfigurationProvider>();

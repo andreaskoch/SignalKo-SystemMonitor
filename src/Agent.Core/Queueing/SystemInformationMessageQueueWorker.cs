@@ -7,7 +7,7 @@ using SignalKo.SystemMonitor.Common.Model;
 
 namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 {
-    public class SystemInformationMessageQueueWorker : IMessageQueueWorker<SystemInformation>
+    public class SystemInformationMessageQueueWorker : IMessageQueueWorker
     {
         public const int WorkIntervalInMilliseconds = 200;
 
@@ -17,19 +17,35 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 
         private readonly ISystemInformationSender systemInformationSender;
 
+        private readonly IMessageQueue<SystemInformation> workQueue;
+
+        private readonly IMessageQueue<SystemInformation> errorQueue;
+
         private ServiceStatus serviceStatus = ServiceStatus.Running;
 
-        public SystemInformationMessageQueueWorker(ISystemInformationSender systemInformationSender)
+        public SystemInformationMessageQueueWorker(ISystemInformationSender systemInformationSender, IMessageQueue<SystemInformation> workQueue, IMessageQueue<SystemInformation> errorQueue)
         {
             if (systemInformationSender == null)
             {
                 throw new ArgumentNullException("systemInformationSender");
             }
 
+            if (workQueue == null)
+            {
+                throw new ArgumentNullException("workQueue");
+            }
+
+            if (errorQueue == null)
+            {
+                throw new ArgumentNullException("errorQueue");
+            }
+
             this.systemInformationSender = systemInformationSender;
+            this.workQueue = workQueue;
+            this.errorQueue = errorQueue;
         }
 
-        public void Start(IMessageQueue<SystemInformation> workQueue, IMessageQueue<SystemInformation> errorQueue)
+        public void Start()
         {
             while (true)
             {

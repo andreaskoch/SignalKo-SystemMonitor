@@ -6,27 +6,35 @@ using SignalKo.SystemMonitor.Common.Model;
 
 namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 {
-    public class SystemInformationMessageQueueFeeder : IMessageQueueFeeder<SystemInformation>
+    public class SystemInformationMessageQueueFeeder : IMessageQueueFeeder
     {
         public const int SendIntervalInMilliseconds = 1000;
 
         private readonly ISystemInformationProvider systemInformationProvider;
 
+        private readonly IMessageQueue<SystemInformation> workQueue;
+
         private readonly object lockObject = new object();
 
         private ServiceStatus serviceStatus = ServiceStatus.Running;
 
-        public SystemInformationMessageQueueFeeder(ISystemInformationProvider systemInformationProvider)
+        public SystemInformationMessageQueueFeeder(ISystemInformationProvider systemInformationProvider, IMessageQueue<SystemInformation> workQueue)
         {
             if (systemInformationProvider == null)
             {
                 throw new ArgumentNullException("systemInformationProvider");
             }
 
+            if (workQueue == null)
+            {
+                throw new ArgumentNullException("workQueue");
+            }
+
             this.systemInformationProvider = systemInformationProvider;
+            this.workQueue = workQueue;
         }
 
-        public void Start(IMessageQueue<SystemInformation> workQueue)
+        public void Start()
         {
             while (true)
             {
@@ -56,7 +64,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
                 }
 
                 // add message to queue
-                workQueue.Enqueue(new SystemInformationQueueItem(systemInfo));
+                this.workQueue.Enqueue(new SystemInformationQueueItem(systemInfo));
             }
         }
 

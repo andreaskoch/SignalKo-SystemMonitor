@@ -1,8 +1,8 @@
 namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 {
-    public interface IMessageQueueWorker<T>
+    public interface IMessageQueueWorker
     {
-        void Start(IMessageQueue<T> workQueue, IMessageQueue<T> errorQueue);
+        void Start();
 
         void Pause();
 
