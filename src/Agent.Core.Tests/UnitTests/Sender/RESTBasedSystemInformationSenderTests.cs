@@ -94,70 +94,6 @@ namespace Agent.Core.Tests.UnitTests.Sender
             new RESTBasedSystemInformationSender(systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, null);
         }
 
-        [Test]
-        [ExpectedException(typeof(SystemInformationSenderSetupException))]
-        public void Constructor_ServiceConfigurationProviderReturnsNull_SystemInformationSenderSetupExceptionIsThrown()
-        {
-            // Arrange
-            IRESTServiceConfiguration serviceConfiguration = null;
-
-            var systemInformationSenderConfigurationProvider =
-                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
-
-            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(serviceConfiguration);
-
-            var restClientFactory = new Mock<IRESTClientFactory>();
-            var requestFactory = new Mock<IRESTRequestFactory>();
-
-            // Act
-            new RESTBasedSystemInformationSender(systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
-        }
-
-        [Test]
-        [ExpectedException(typeof(SystemInformationSenderSetupException))]
-        public void Constructor_ServiceConfigurationIsInvalid_SystemInformationSenderSetupExceptionIsThrown()
-        {
-            // Arrange
-            var serviceConfiguration = new Mock<IRESTServiceConfiguration>();
-            serviceConfiguration.Setup(s => s.IsValid()).Returns(false);
-
-            var systemInformationSenderConfigurationProvider =
-                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
-
-            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(serviceConfiguration.Object);
-
-            var restClientFactory = new Mock<IRESTClientFactory>();
-            var requestFactory = new Mock<IRESTRequestFactory>();
-
-            // Act
-            new RESTBasedSystemInformationSender(systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
-        }
-
-        [Test]
-        [ExpectedException(typeof(SystemInformationSenderSetupException))]
-        public void Constructor_RESTClientCannotBeInstantiated_ObjectIsInstantiated()
-        {
-            // Arrange
-            var configuration = new Mock<IRESTServiceConfiguration>();
-            configuration.Setup(c => c.BaseUrl).Returns("http://localhost");
-            configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
-            configuration.Setup(c => c.IsValid()).Returns(true);
-
-            var systemInformationSenderConfigurationProvider =
-                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
-
-            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
-
-            IRestClient client = null;
-            var restClientFactory = new Mock<IRESTClientFactory>();
-            restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(client);
-
-            var requestFactory = new Mock<IRESTRequestFactory>();
-
-            // Act
-            new RESTBasedSystemInformationSender(systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
-        }
-
         #endregion
 
         #region Send
@@ -187,6 +123,79 @@ namespace Agent.Core.Tests.UnitTests.Sender
 
             var systemInformationSender = new RESTBasedSystemInformationSender(
                 systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
+
+            // Act
+            systemInformationSender.Send(systemInformation);
+        }
+
+        [Test]
+        [ExpectedException(typeof(SystemInformationSenderSetupException))]
+        public void Send_ServiceConfigurationProviderReturnsNull_SystemInformationSenderSetupExceptionIsThrown()
+        {
+            // Arrange
+            var systemInformation = new SystemInformation();
+            IRESTServiceConfiguration serviceConfiguration = null;
+
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(serviceConfiguration);
+
+            var restClientFactory = new Mock<IRESTClientFactory>();
+            var requestFactory = new Mock<IRESTRequestFactory>();
+
+            var systemInformationSender = new RESTBasedSystemInformationSender(systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
+
+            // Act
+            systemInformationSender.Send(systemInformation);
+        }
+
+        [Test]
+        [ExpectedException(typeof(SystemInformationSenderSetupException))]
+        public void Send_ServiceConfigurationIsInvalid_SystemInformationSenderSetupExceptionIsThrown()
+        {
+            // Arrange
+            var systemInformation = new SystemInformation();
+            var serviceConfiguration = new Mock<IRESTServiceConfiguration>();
+            serviceConfiguration.Setup(s => s.IsValid()).Returns(false);
+
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(serviceConfiguration.Object);
+
+            var restClientFactory = new Mock<IRESTClientFactory>();
+            var requestFactory = new Mock<IRESTRequestFactory>();
+
+            var systemInformationSender = new RESTBasedSystemInformationSender(systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
+
+            // Act
+            systemInformationSender.Send(systemInformation);
+        }
+
+        [Test]
+        [ExpectedException(typeof(SystemInformationSenderSetupException))]
+        public void Send_RESTClientCannotBeInstantiated_ObjectIsInstantiated()
+        {
+            // Arrange
+            var systemInformation = new SystemInformation();
+            var configuration = new Mock<IRESTServiceConfiguration>();
+            configuration.Setup(c => c.BaseUrl).Returns("http://localhost");
+            configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
+            configuration.Setup(c => c.IsValid()).Returns(true);
+
+            var systemInformationSenderConfigurationProvider =
+                new Mock<IRESTBasedSystemInformationSenderConfigurationProvider>();
+
+            systemInformationSenderConfigurationProvider.Setup(s => s.GetConfiguration()).Returns(configuration.Object);
+
+            IRestClient client = null;
+            var restClientFactory = new Mock<IRESTClientFactory>();
+            restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(client);
+
+            var requestFactory = new Mock<IRESTRequestFactory>();
+
+            var systemInformationSender = new RESTBasedSystemInformationSender(systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
 
             // Act
             systemInformationSender.Send(systemInformation);

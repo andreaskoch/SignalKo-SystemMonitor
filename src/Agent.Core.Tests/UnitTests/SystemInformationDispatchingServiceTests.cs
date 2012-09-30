@@ -156,7 +156,13 @@ namespace Agent.Core.Tests.UnitTests
             var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
             messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker.Object);
 
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
+
             var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
+            messageQueueProvider.Setup(m => m.WorkQueue).Returns(workQueue.Object);
+            messageQueueProvider.Setup(m => m.ErrorQueue).Returns(errorQueue.Object);
+
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
 
             var systemInformationDispatchingService = new SystemInformationDispatchingService(
@@ -190,7 +196,13 @@ namespace Agent.Core.Tests.UnitTests
             var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
             messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker.Object);
 
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
+
             var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
+            messageQueueProvider.Setup(m => m.WorkQueue).Returns(workQueue.Object);
+            messageQueueProvider.Setup(m => m.ErrorQueue).Returns(errorQueue.Object);
+
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
 
             var systemInformationDispatchingService = new SystemInformationDispatchingService(
@@ -224,7 +236,13 @@ namespace Agent.Core.Tests.UnitTests
             var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
             messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker.Object);
 
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
+
             var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
+            messageQueueProvider.Setup(m => m.WorkQueue).Returns(workQueue.Object);
+            messageQueueProvider.Setup(m => m.ErrorQueue).Returns(errorQueue.Object);
+
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
 
             var systemInformationDispatchingService = new SystemInformationDispatchingService(
@@ -374,7 +392,13 @@ namespace Agent.Core.Tests.UnitTests
             var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
             messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker);
 
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
+
             var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
+            messageQueueProvider.Setup(m => m.WorkQueue).Returns(workQueue.Object);
+            messageQueueProvider.Setup(m => m.ErrorQueue).Returns(errorQueue.Object);
+
             var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
 
             var systemInformationDispatchingService = new SystemInformationDispatchingService(
