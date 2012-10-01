@@ -9,5 +9,11 @@
         public bool AgentsAreEnabled { get; set; }
 
         public int CheckIntervalInSeconds { get; set; }
+
+        public bool IsValid()
+        {
+            return this.CheckIntervalInSeconds > 0 && string.IsNullOrWhiteSpace(this.SystemInformationSenderPath) == false
+                   && string.IsNullOrWhiteSpace(this.BaseUrl) == false;
+        }
     }
 }
