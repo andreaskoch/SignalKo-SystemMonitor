@@ -58,6 +58,7 @@ namespace SignalKo.SystemMonitor.Agent.CommandLine.DependencyResolution
                         config.For<IMessageQueueWorkerFactory>().Use<SystemInformationMessageQueueWorkerFactory>();
 
                         /* sender configuration */
+                        config.For<IAgentConfigurationAccessor>().Use<AgentConfigurationAccessor>();
                         config.For<IAgentConfigurationProvider>().Use<AgentConfigurationProvider>();
                         config.For<IAgentConfigurationServiceUrlProvider>().Use<AppConfigAgentConfigurationServiceUrlProvider>();
                         config.For<IRESTBasedSystemInformationSenderConfigurationProvider>().Use<RESTBasedSystemInformationSenderConfigurationProvider>();

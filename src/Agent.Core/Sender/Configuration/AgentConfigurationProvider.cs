@@ -9,21 +9,20 @@ namespace SignalKo.SystemMonitor.Agent.Core.Sender.Configuration
     {
         private const int DefaultCheckIntervalInSeconds = 60;
 
-        private readonly IAgentConfigurationServiceUrlProvider configurationServiceUrlProvider;
-
-        private readonly IRESTClientFactory restClientFactory;
-
-        private readonly IRESTRequestFactory requestFactory;
+        private readonly IAgentConfigurationAccessor agentConfigurationAccessor;
 
         private readonly Timer timer;
 
         private AgentConfiguration agentConfiguration;
 
-        public AgentConfigurationProvider(IAgentConfigurationServiceUrlProvider configurationServiceUrlProvider, IRESTClientFactory restClientFactory, IRESTRequestFactory requestFactory)
+        public AgentConfigurationProvider(IAgentConfigurationAccessor agentConfigurationAccessor)
         {
-            this.configurationServiceUrlProvider = configurationServiceUrlProvider;
-            this.restClientFactory = restClientFactory;
-            this.requestFactory = requestFactory;
+            if (agentConfigurationAccessor == null)
+            {
+                throw new ArgumentNullException("agentConfigurationAccessor");
+            }
+
+            this.agentConfigurationAccessor = agentConfigurationAccessor;
 
             var timerStartTime = new TimeSpan(0, 0, 0);
             var timerInterval = new TimeSpan(0, 0, 0, DefaultCheckIntervalInSeconds);
@@ -42,15 +41,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Sender.Configuration
 
         private void UpdateAgentConfiguration()
         {
-            var serviceUrl = new Uri(this.configurationServiceUrlProvider.GetServiceUrl());
-            string baseUrl = serviceUrl.Scheme + "://" + serviceUrl.Host + ":" + serviceUrl.Port;
-            string resourcePath = serviceUrl.PathAndQuery;
-
-            var restClient = this.restClientFactory.GetRESTClient(baseUrl);
-            var request = this.requestFactory.CreateGetRequest(resourcePath);
-
-            var response = restClient.Execute<AgentConfiguration>(request);
-            this.agentConfiguration = response.Data;
+            this.agentConfiguration = this.agentConfigurationAccessor.GetAgentConfiguration();
 
             // update the check interval
             if (this.agentConfiguration != null && this.agentConfiguration.CheckIntervalInSeconds > 0)

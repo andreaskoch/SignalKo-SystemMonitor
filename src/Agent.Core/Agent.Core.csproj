@@ -92,8 +92,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queueing\SystemInformationMessageQueueWorkerFactory.cs" />
     <Compile Include="Queueing\SystemInformationQueueItem.cs" />
+    <Compile Include="Sender\Configuration\AgentConfigurationAccessor.cs" />
     <Compile Include="Sender\Configuration\AgentConfigurationProvider.cs" />
     <Compile Include="Sender\Configuration\AppConfigAgentConfigurationServiceUrlProvider.cs" />
+    <Compile Include="Sender\Configuration\IAgentConfigurationAccessor.cs" />
     <Compile Include="Sender\Configuration\IAgentConfigurationProvider.cs" />
     <Compile Include="Sender\Configuration\IRESTBasedSystemInformationSenderConfigurationProvider.cs" />
     <Compile Include="Sender\Configuration\IRESTServiceConfiguration.cs" />
