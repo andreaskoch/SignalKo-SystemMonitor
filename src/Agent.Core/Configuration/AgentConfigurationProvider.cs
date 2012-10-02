@@ -7,7 +7,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Configuration
 {
     public class AgentConfigurationProvider : IAgentConfigurationProvider, IDisposable
     {
-        private const int DefaultCheckIntervalInSeconds = 60;
+        public const int DefaultCheckIntervalInSeconds = 60;
 
         private readonly IAgentConfigurationAccessor agentConfigurationAccessor;
 

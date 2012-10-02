@@ -66,6 +66,7 @@
     <Compile Include="IntegrationTests\Collector\EnvironmentMachineNameProviderTests.cs" />
     <Compile Include="TestUtilities.cs" />
     <Compile Include="UnitTests\Configuration\AgentConfigurationAccessorTests.cs" />
+    <Compile Include="UnitTests\Configuration\AgentConfigurationProviderTests.cs" />
     <Compile Include="UnitTests\Queueing\JSONSystemInformationMessageQueuePersistenceTests.cs" />
     <Compile Include="UnitTests\Queueing\SystemInformationMessageQueueFeederTests.cs" />
     <Compile Include="UnitTests\Queueing\SystemInformationMessageQueueProviderTests.cs" />
