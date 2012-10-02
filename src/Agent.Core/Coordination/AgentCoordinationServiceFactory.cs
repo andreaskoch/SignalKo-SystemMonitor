@@ -1,6 +1,6 @@
 using System;
 
-using SignalKo.SystemMonitor.Agent.Core.Sender.Configuration;
+using SignalKo.SystemMonitor.Agent.Core.Configuration;
 
 namespace SignalKo.SystemMonitor.Agent.Core.Coordination
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using NUnit.Framework;
 
-using SignalKo.SystemMonitor.Agent.Core.Sender.Configuration;
+using SignalKo.SystemMonitor.Agent.Core.Configuration;
 
 namespace Agent.Core.Tests.UnitTests.Sender
 {

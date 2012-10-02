@@ -1,9 +1,9 @@
 using SignalKo.SystemMonitor.Agent.Core;
 using SignalKo.SystemMonitor.Agent.Core.Collector;
+using SignalKo.SystemMonitor.Agent.Core.Configuration;
 using SignalKo.SystemMonitor.Agent.Core.Coordination;
 using SignalKo.SystemMonitor.Agent.Core.Queueing;
 using SignalKo.SystemMonitor.Agent.Core.Sender;
-using SignalKo.SystemMonitor.Agent.Core.Sender.Configuration;
 using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Common.Services;
 

@@ -6,9 +6,9 @@ using NUnit.Framework;
 
 using RestSharp;
 
+using SignalKo.SystemMonitor.Agent.Core.Configuration;
 using SignalKo.SystemMonitor.Agent.Core.Exceptions;
 using SignalKo.SystemMonitor.Agent.Core.Sender;
-using SignalKo.SystemMonitor.Agent.Core.Sender.Configuration;
 using SignalKo.SystemMonitor.Common.Model;
 
 namespace Agent.Core.Tests.UnitTests.Sender

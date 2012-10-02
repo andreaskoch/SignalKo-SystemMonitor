@@ -1,6 +1,6 @@
 using System;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Sender.Configuration
+namespace SignalKo.SystemMonitor.Agent.Core.Configuration
 {
     public class RESTServiceConfiguration : IRESTServiceConfiguration
     {

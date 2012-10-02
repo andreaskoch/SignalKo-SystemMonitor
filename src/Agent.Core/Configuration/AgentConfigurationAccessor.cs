@@ -1,8 +1,9 @@
 using System;
 
+using SignalKo.SystemMonitor.Agent.Core.Sender;
 using SignalKo.SystemMonitor.Common.Model;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Sender.Configuration
+namespace SignalKo.SystemMonitor.Agent.Core.Configuration
 {
     public class AgentConfigurationAccessor : IAgentConfigurationAccessor
     {
