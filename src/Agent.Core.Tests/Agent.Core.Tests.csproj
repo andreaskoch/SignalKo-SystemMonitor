@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="IntegrationTests\Collector\LogicalDiscInstanceNameProviderTests.cs" />
     <Compile Include="IntegrationTests\Collector\ProcessorStatusProviderTests.cs" />
+    <Compile Include="IntegrationTests\Configuration\AppConfigAgentConfigurationServiceUrlProviderTests.cs" />
     <Compile Include="IntegrationTests\Queueing\AppConfigJSONMessageQueuePersistenceConfigurationProviderTests.cs" />
     <Compile Include="IntegrationTests\Queueing\JSONSystemInformationMessageQueuePersistenceTests.cs" />
     <Compile Include="IntegrationTests\Queueing\SystemInformationMessageQueueTests.cs" />
