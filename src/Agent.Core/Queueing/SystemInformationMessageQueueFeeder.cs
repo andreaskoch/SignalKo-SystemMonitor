@@ -16,7 +16,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 
         private readonly object lockObject = new object();
 
-        private ServiceStatus serviceStatus = ServiceStatus.Running;
+        private ServiceStatus serviceStatus = ServiceStatus.Stopped;
 
         public SystemInformationMessageQueueFeeder(ISystemInformationProvider systemInformationProvider, IMessageQueue<SystemInformation> workQueue)
         {
@@ -36,6 +36,15 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 
         public void Start()
         {
+            Monitor.Enter(this.lockObject);
+
+            if (this.serviceStatus == ServiceStatus.Stopped)
+            {
+                this.serviceStatus = ServiceStatus.Running;
+            }
+
+            Monitor.Exit(this.lockObject);
+
             while (true)
             {
                 Thread.Sleep(SendIntervalInMilliseconds);

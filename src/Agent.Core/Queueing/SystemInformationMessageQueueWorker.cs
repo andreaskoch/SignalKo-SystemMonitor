@@ -21,7 +21,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 
         private readonly IMessageQueue<SystemInformation> errorQueue;
 
-        private ServiceStatus serviceStatus = ServiceStatus.Running;
+        private ServiceStatus serviceStatus = ServiceStatus.Stopped;
 
         public SystemInformationMessageQueueWorker(ISystemInformationSender systemInformationSender, IMessageQueue<SystemInformation> workQueue, IMessageQueue<SystemInformation> errorQueue)
         {
@@ -47,13 +47,22 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 
         public void Start()
         {
+            Monitor.Enter(this.lockObject);
+
+            if (this.serviceStatus == ServiceStatus.Stopped)
+            {
+                this.serviceStatus = ServiceStatus.Running;
+            }
+
+            Monitor.Exit(this.lockObject);
+
             while (true)
             {
                 Thread.Sleep(WorkIntervalInMilliseconds);
 
                 Monitor.Enter(this.lockObject);
 
-                if (this.serviceStatus == ServiceStatus.Stopped && workQueue.IsEmpty())
+                if (this.serviceStatus == ServiceStatus.Stopped && this.workQueue.IsEmpty())
                 {
                     Monitor.Exit(this.lockObject);
                     break;
@@ -68,7 +77,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
                 Monitor.Exit(this.lockObject);
 
                 // dequeue message
-                var queueEntry = workQueue.Dequeue();
+                var queueEntry = this.workQueue.Dequeue();
                 if (queueEntry == null)
                 {
                     continue;
@@ -79,24 +88,26 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
                 {
                     this.systemInformationSender.Send(queueEntry.Item);
                 }
-                catch (SendSystemInformationFailedException sendFailedException)
+                catch (SendSystemInformationFailedException)
                 {
                     // retry later
                     if (queueEntry.EnqueuCount < MaxRetryCount)
                     {
-                        workQueue.Enqueue(queueEntry);
+                        this.workQueue.Enqueue(queueEntry);
                     }
                     else
                     {
-                        errorQueue.Enqueue(queueEntry);
+                        this.errorQueue.Enqueue(queueEntry);
                     }
                 }
-                catch (FatalSystemInformationSenderException fatalException)
+                catch (FatalSystemInformationSenderException)
                 {
                     // persist queue and exit
                     Monitor.Enter(this.lockObject);
-                    var unfinishedQueueItems = workQueue.PurgeAllItems();
-                    errorQueue.Enqueue(unfinishedQueueItems);
+
+                    var unfinishedQueueItems = this.workQueue.PurgeAllItems();
+                    this.errorQueue.Enqueue(unfinishedQueueItems);
+
                     Monitor.Exit(this.lockObject);
 
                     break;

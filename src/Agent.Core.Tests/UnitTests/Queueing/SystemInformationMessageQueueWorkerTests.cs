@@ -59,56 +59,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         }
 
         #endregion
-
-        #region Stop Before Start
-
-        [Test]
-        public void WorkerIsStoppedBeforeItHasBeenStarted_QueueIsEmpty_DequeueIsNotCalled()
-        {
-            // Arrange
-            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
-            workQueue.Setup(q => q.IsEmpty()).Returns(true);
-
-            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
-            var systemInformationSender = new Mock<ISystemInformationSender>();
-
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
-
-            // Act
-            messageQueueWorker.Stop();
-            messageQueueWorker.Start();
-
-            // Assert
-            workQueue.Verify(q => q.Dequeue(), Times.Never());
-        }
-
-        [Test]
-        public void WorkerIsStoppedBeforeItHasBeenStarted_QueueIsEmpty_ExecutesTakesOnlyOneWorkInterval()
-        {
-            // Arrange
-            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
-            workQueue.Setup(q => q.IsEmpty()).Returns(true);
-
-            var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
-            var systemInformationSender = new Mock<ISystemInformationSender>();
-
-            var messageQueueWorker = new SystemInformationMessageQueueWorker(systemInformationSender.Object, workQueue.Object, errorQueue.Object);
-
-            // Act
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            messageQueueWorker.Stop();
-            messageQueueWorker.Start();
-
-            stopwatch.Stop();
-
-            // Assert
-            Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds - SystemInformationMessageQueueWorker.WorkIntervalInMilliseconds, -100);
-        }
-
-        #endregion
-
+        
         #region Stop
 
         [Test]

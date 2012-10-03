@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Moq;
@@ -24,10 +25,10 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var workQueue = new Mock<IMessageQueue<SystemInformation>>();
 
             // Act
-            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
 
             // Assert
-            Assert.IsNotNull(systemInformationDispatcher);
+            Assert.IsNotNull(messageQueueFeeder);
         }
 
         [Test]
@@ -57,7 +58,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         #region Start
 
         [Test]
-        public void Start_RunsFor3Intervals_SystemInfoIsPulledAtLeastTwoTimes()
+        public void Start_RunFor3Intervals_SystemInfoIsPulledAtMostThreeTimes()
         {
             // Arrange
             int durationInMilliseconds = SystemInformationMessageQueueFeeder.SendIntervalInMilliseconds * 3;
@@ -65,16 +66,16 @@ namespace Agent.Core.Tests.UnitTests.Queueing
             var systemInformationProvider = new Mock<ISystemInformationProvider>();
             var workQueue = new Mock<IMessageQueue<SystemInformation>>();
 
-            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
 
             // Act
-            var dispatcherTask = new Task(systemInformationDispatcher.Start);
-            dispatcherTask.Start();
-            Task.WaitAll(new[] { dispatcherTask }, durationInMilliseconds);
-            systemInformationDispatcher.Stop();
+            var feederTask = new Task(messageQueueFeeder.Start);
+            feederTask.Start();
+            Task.WaitAll(new[] { feederTask }, durationInMilliseconds);
+            messageQueueFeeder.Stop();
 
             // Assert
-            systemInformationProvider.Verify(s => s.GetSystemInfo(), Times.AtLeast(2));
+            systemInformationProvider.Verify(s => s.GetSystemInfo(), Times.AtMost(3));
         }
 
         [Test]
@@ -89,13 +90,13 @@ namespace Agent.Core.Tests.UnitTests.Queueing
 
             var workQueue = new Mock<IMessageQueue<SystemInformation>>();
 
-            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
 
             // Act
-            var dispatcherTask = new Task(systemInformationDispatcher.Start);
-            dispatcherTask.Start();
-            Task.WaitAll(new[] { dispatcherTask }, durationInMilliseconds);
-            systemInformationDispatcher.Stop();
+            var feederTaks = new Task(messageQueueFeeder.Start);
+            feederTaks.Start();
+            Task.WaitAll(new[] { feederTaks }, durationInMilliseconds);
+            messageQueueFeeder.Stop();
 
             // Assert
             workQueue.Verify(s => s.Enqueue(It.IsAny<SystemInformationQueueItem>()), Times.Never());
@@ -112,16 +113,242 @@ namespace Agent.Core.Tests.UnitTests.Queueing
 
             var workQueue = new Mock<IMessageQueue<SystemInformation>>();
 
-            var systemInformationDispatcher = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
 
             // Act
-            var dispatcherTask = new Task(systemInformationDispatcher.Start);
-            dispatcherTask.Start();
-            Task.WaitAll(new[] { dispatcherTask }, durationInMilliseconds);
-            systemInformationDispatcher.Stop();
+            var feederTask = new Task(messageQueueFeeder.Start);
+            feederTask.Start();
+            Task.WaitAll(new[] { feederTask }, durationInMilliseconds);
+            messageQueueFeeder.Stop();
 
             // Assert
             workQueue.Verify(s => s.Enqueue(It.IsAny<SystemInformationQueueItem>()), Times.AtLeastOnce());
+        }
+
+        #endregion
+
+        #region Pause
+
+        [Test]
+        public void Pause_ServiceIsRunning_StatusIsChangedToPaused()
+        {
+            // Arrange
+            int durationInMilliseconds = SystemInformationMessageQueueFeeder.SendIntervalInMilliseconds * 3;
+
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeederTask = new Task(messageQueueFeeder.Start);
+            messageQueueFeederTask.Start();
+            Thread.Sleep(durationInMilliseconds);
+
+            // Act
+            messageQueueFeeder.Pause();
+            var statusAfterPause = messageQueueFeeder.GetStatus();
+
+            // Assert
+            Assert.AreEqual(ServiceStatus.Paused, statusAfterPause);
+        }
+
+        [Test]
+        public void Pause_ServiceIsPaused_StatusIsNotChanged()
+        {
+            // Arrange
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeederTask = new Task(messageQueueFeeder.Start);
+            messageQueueFeederTask.Start();
+
+            Thread.Sleep(500);
+            messageQueueFeeder.Pause();
+
+            // Act
+            messageQueueFeeder.Pause();
+            Thread.Sleep(500);
+
+            // Assert
+            Assert.AreEqual(ServiceStatus.Paused, messageQueueFeeder.GetStatus());
+        }
+
+        [Test]
+        public void Pause_RunFor3Intervals_Pause_SystemInfoIsPulledAtMostTwoTimes()
+        {
+            // Arrange
+            int durationInMilliseconds = SystemInformationMessageQueueFeeder.SendIntervalInMilliseconds * 3;
+
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+
+            // Act
+            var messageQueueFeederTask = new Task(messageQueueFeeder.Start);
+
+            messageQueueFeederTask.Start();
+            Thread.Sleep(durationInMilliseconds);
+
+            messageQueueFeeder.Pause();
+            Thread.Sleep(durationInMilliseconds);
+
+            // Assert
+            systemInformationProvider.Verify(s => s.GetSystemInfo(), Times.AtMost(3));
+        }
+
+        #endregion
+
+        #region Resume
+
+        [Test]
+        public void Resume_ServiceIsRunning_StatusIsNotChanged()
+        {
+            // Arrange
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeederTask = new Task(messageQueueFeeder.Start);
+            messageQueueFeederTask.Start();
+
+            var statusBeforeResume = messageQueueFeeder.GetStatus();
+
+            // Act
+            messageQueueFeeder.Resume();
+            var statusAfterResume = messageQueueFeeder.GetStatus();
+
+            // Assert
+            Assert.AreEqual(statusBeforeResume, statusAfterResume);
+        }
+
+        [Test]
+        public void Resume_ServiceIsStopped_StatusIsStillStopped()
+        {
+            // Arrange
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeederTask = new Task(messageQueueFeeder.Start);
+            messageQueueFeederTask.Start();
+            messageQueueFeeder.Stop();
+
+            // Act
+            messageQueueFeeder.Resume();
+
+            // Assert
+            Assert.AreEqual(ServiceStatus.Stopped, messageQueueFeeder.GetStatus());
+        }
+
+        [Test]
+        public void Resume_ServiceIsPaused_StatusIsChangedToRunning()
+        {
+            // Arrange
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeederTask = new Task(messageQueueFeeder.Start);
+            messageQueueFeederTask.Start();
+
+            Thread.Sleep(500);
+            messageQueueFeeder.Pause();
+
+            // Act
+            Thread.Sleep(500);
+            messageQueueFeeder.Resume();
+
+            // Assert
+            Assert.AreEqual(ServiceStatus.Running, messageQueueFeeder.GetStatus());
+        }
+
+        #endregion
+
+        #region Stop
+
+        [Test]
+        public void Stop_ServiceIsStopped_StatusIsNotChanged()
+        {
+            // Arrange
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeederTask = new Task(messageQueueFeeder.Start);
+            messageQueueFeederTask.Start();
+            messageQueueFeeder.Stop();
+
+            var statusBeforeStop = messageQueueFeeder.GetStatus();
+
+            // Act
+            messageQueueFeeder.Stop();
+            var statusAfterStop = messageQueueFeeder.GetStatus();
+
+            // Assert
+            Assert.AreEqual(statusBeforeStop, statusAfterStop);
+        }
+
+        [Test]
+        public void Stop_EndsARunningService()
+        {
+            // Arrange
+            int durationInMilliseconds = SystemInformationMessageQueueFeeder.SendIntervalInMilliseconds * 3;
+
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeederTask = new Task(messageQueueFeeder.Start);
+            messageQueueFeederTask.Start();
+
+            // Act
+            Thread.Sleep(durationInMilliseconds);
+
+            messageQueueFeeder.Stop();
+
+            // Assert
+            Assert.AreEqual(ServiceStatus.Stopped, messageQueueFeeder.GetStatus());
+        }
+
+        #endregion
+
+        #region GetStatus
+
+        [Test]
+        public void GetStatus_ServiceIsNotStarted_ResultIs_Stopped()
+        {
+            // Arrange
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+
+            // Act
+            var result = messageQueueFeeder.GetStatus();
+
+            // Assert
+            Assert.AreEqual(ServiceStatus.Stopped, result);
+        }
+
+        [Test]
+        public void GetStatus_ServiceIsStarted_ResultIs_Running()
+        {
+            // Arrange
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeederTask = new Task(messageQueueFeeder.Start);
+            messageQueueFeederTask.Start();
+
+            Thread.Sleep(3000);
+
+            // Act
+            var result = messageQueueFeeder.GetStatus();
+
+            // Assert
+            Assert.AreEqual(ServiceStatus.Running, result);
         }
 
         #endregion
