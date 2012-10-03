@@ -54,6 +54,7 @@
     <Compile Include="IntegrationTests\Collector\ProcessorStatusProviderTests.cs" />
     <Compile Include="IntegrationTests\Configuration\AppConfigAgentConfigurationServiceUrlProviderTests.cs" />
     <Compile Include="IntegrationTests\Queueing\AppConfigJSONMessageQueuePersistenceConfigurationProviderTests.cs" />
+    <Compile Include="IntegrationTests\Queueing\SystemInformationMessageQueueWorkerFactoryTests.cs" />
     <Compile Include="IntegrationTests\Queueing\JSONSystemInformationMessageQueuePersistenceTests.cs" />
     <Compile Include="IntegrationTests\Queueing\SystemInformationMessageQueueFeederFactoryTests.cs" />
     <Compile Include="IntegrationTests\Queueing\SystemInformationMessageQueueTests.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="UnitTests\Configuration\AgentConfigurationAccessorTests.cs" />
     <Compile Include="UnitTests\Configuration\AgentConfigurationProviderTests.cs" />
     <Compile Include="UnitTests\Configuration\RESTBasedSystemInformationSenderConfigurationProviderTests.cs" />
+    <Compile Include="UnitTests\Queueing\SystemInformationMessageQueueWorkerFactoryTests.cs" />
     <Compile Include="UnitTests\Queueing\JSONSystemInformationMessageQueuePersistenceTests.cs" />
     <Compile Include="UnitTests\Queueing\SystemInformationMessageQueueFeederFactoryTests.cs" />
     <Compile Include="UnitTests\Queueing\SystemInformationMessageQueueFeederTests.cs" />
