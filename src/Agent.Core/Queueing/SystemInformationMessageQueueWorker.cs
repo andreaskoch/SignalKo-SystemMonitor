@@ -7,7 +7,7 @@ using SignalKo.SystemMonitor.Common.Model;
 
 namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 {
-    public class SystemInformationMessageQueueWorker : IMessageQueueWorker
+    public class SystemInformationMessageQueueWorker : IMessageQueueWorker, IDisposable
     {
         public const int WorkIntervalInMilliseconds = 200;
 
@@ -108,6 +108,8 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
                     var unfinishedQueueItems = this.workQueue.PurgeAllItems();
                     this.errorQueue.Enqueue(unfinishedQueueItems);
 
+                    this.serviceStatus = ServiceStatus.Stopped;
+
                     Monitor.Exit(this.lockObject);
 
                     break;
@@ -149,6 +151,11 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
         public ServiceStatus GetStatus()
         {
             return this.serviceStatus;
+        }
+
+        public void Dispose()
+        {
+            this.Stop();
         }
     }
 }

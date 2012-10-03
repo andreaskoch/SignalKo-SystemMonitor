@@ -352,5 +352,28 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         }
 
         #endregion
+
+        #region Dispose
+
+        [Test]
+        public void Dispose_ServiceIsStopped()
+        {
+            // Arrange
+            var systemInformationProvider = new Mock<ISystemInformationProvider>();
+            var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+            var messageQueueFeeder = new SystemInformationMessageQueueFeeder(systemInformationProvider.Object, workQueue.Object);
+            var messageQueueFeederTask = new Task(messageQueueFeeder.Start);
+            messageQueueFeederTask.Start();
+            Thread.Sleep(500);
+
+            // Act
+            messageQueueFeeder.Dispose();
+            Task.WaitAll(messageQueueFeederTask);
+            
+            // Assert
+            Assert.AreEqual(ServiceStatus.Stopped, messageQueueFeeder.GetStatus());
+        }
+
+        #endregion
     }
 }

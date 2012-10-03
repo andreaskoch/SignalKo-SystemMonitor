@@ -6,7 +6,7 @@ using SignalKo.SystemMonitor.Common.Model;
 
 namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 {
-    public class SystemInformationMessageQueueFeeder : IMessageQueueFeeder
+    public class SystemInformationMessageQueueFeeder : IMessageQueueFeeder, IDisposable
     {
         public const int SendIntervalInMilliseconds = 1000;
 
@@ -75,6 +75,12 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
                 // add message to queue
                 this.workQueue.Enqueue(new SystemInformationQueueItem(systemInfo));
             }
+
+            Monitor.Enter(this.lockObject);
+
+            this.serviceStatus = ServiceStatus.Stopped;
+
+            Monitor.Exit(this.lockObject);
         }
 
         public void Pause()
@@ -111,6 +117,11 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
         public ServiceStatus GetStatus()
         {
             return this.serviceStatus;
+        }
+
+        public void Dispose()
+        {
+            this.Stop();
         }
     }
 }
