@@ -1,3 +1,5 @@
+using System;
+
 namespace SignalKo.SystemMonitor.Agent.Core.Collector
 {
     public class CustomMachineNameProvider : IMachineNameProvider
@@ -6,7 +8,12 @@ namespace SignalKo.SystemMonitor.Agent.Core.Collector
 
         public CustomMachineNameProvider(string machineName)
         {
-            this.machineName = machineName;
+            if (string.IsNullOrWhiteSpace(machineName))
+            {
+                throw new ArgumentException("machineName");
+            }
+
+            this.machineName = machineName.Trim();
         }
 
         public string GetMachineName()
