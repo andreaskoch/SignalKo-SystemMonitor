@@ -74,6 +74,7 @@
     <Compile Include="UnitTests\Configuration\AgentConfigurationProviderTests.cs" />
     <Compile Include="UnitTests\Configuration\RESTBasedSystemInformationSenderConfigurationProviderTests.cs" />
     <Compile Include="UnitTests\Coordination\AgentCoordinationServiceFactoryTests.cs" />
+    <Compile Include="UnitTests\Coordination\AgentCoordinationServiceTests.cs" />
     <Compile Include="UnitTests\Queueing\SystemInformationMessageQueueWorkerFactoryTests.cs" />
     <Compile Include="UnitTests\Queueing\JSONSystemInformationMessageQueuePersistenceTests.cs" />
     <Compile Include="UnitTests\Queueing\SystemInformationMessageQueueFeederFactoryTests.cs" />

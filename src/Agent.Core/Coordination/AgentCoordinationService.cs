@@ -5,9 +5,9 @@ using SignalKo.SystemMonitor.Agent.Core.Configuration;
 
 namespace SignalKo.SystemMonitor.Agent.Core.Coordination
 {
-    public class AgentCoordinationService : IAgentCoordinationService
+    public class AgentCoordinationService : IAgentCoordinationService, IDisposable
     {
-        private const int AgentConfigurationCheckIntervalInMilliseconds = 10000;
+        public const int AgentConfigurationCheckIntervalInMilliseconds = 1000;
 
         private readonly IAgentConfigurationProvider agentConfigurationProvider;
 
@@ -84,6 +84,11 @@ namespace SignalKo.SystemMonitor.Agent.Core.Coordination
             Monitor.Enter(this.lockObject);
             this.stop = true;
             Monitor.Exit(this.lockObject);
+        }
+
+        public void Dispose()
+        {
+            this.Stop();
         }
     }
 }
