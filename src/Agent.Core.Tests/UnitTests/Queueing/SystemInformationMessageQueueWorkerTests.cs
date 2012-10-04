@@ -29,7 +29,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         [SetUp]
         public void BeforeEachTest()
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             this.sequentialTestExecutionMonitor.WaitOne();
         }
 
@@ -143,7 +143,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
                 Thread.Sleep(timeToWaitBeforeStop);
                 messageQueueWorker.Stop();
 
-                Task.WaitAll(worker);
+                Task.WaitAll(new[] { worker }, timeToWaitBeforeStop);
 
                 stopwatch.Stop();
 
@@ -736,6 +736,8 @@ namespace Agent.Core.Tests.UnitTests.Queueing
         public void Dispose_ServiceIsStopped()
         {
             // Arrange
+            var maxWaitTime = SystemInformationMessageQueueWorker.WorkIntervalInMilliseconds * 3;
+
             var systemInformationSender = new Mock<ISystemInformationSender>();
             var workQueue = new Mock<IMessageQueue<SystemInformation>>();
             workQueue.Setup(w => w.IsEmpty()).Returns(true);
@@ -749,7 +751,7 @@ namespace Agent.Core.Tests.UnitTests.Queueing
 
             // Act
             messageQueueWorker.Dispose();
-            Task.WaitAll(workerTaks);
+            Task.WaitAll(new[] { workerTaks }, maxWaitTime);
 
             // Assert
             Assert.AreEqual(ServiceStatus.Stopped, messageQueueWorker.GetStatus());

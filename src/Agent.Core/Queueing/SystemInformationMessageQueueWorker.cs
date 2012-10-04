@@ -23,6 +23,8 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 
         private ServiceStatus serviceStatus = ServiceStatus.Stopped;
 
+        private bool forceStop = false;
+
         public SystemInformationMessageQueueWorker(ISystemInformationSender systemInformationSender, IMessageQueue<SystemInformation> workQueue, IMessageQueue<SystemInformation> errorQueue)
         {
             if (systemInformationSender == null)
@@ -62,7 +64,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 
                 Monitor.Enter(this.lockObject);
 
-                if (this.serviceStatus == ServiceStatus.Stopped && this.workQueue.IsEmpty())
+                if (this.serviceStatus == ServiceStatus.Stopped && (this.workQueue.IsEmpty() || this.forceStop))
                 {
                     Monitor.Exit(this.lockObject);
                     break;
@@ -155,6 +157,10 @@ namespace SignalKo.SystemMonitor.Agent.Core.Queueing
 
         public void Dispose()
         {
+            Monitor.Enter(this.lockObject);
+            this.forceStop = true;
+            Monitor.Exit(this.lockObject);
+            
             this.Stop();
         }
     }
