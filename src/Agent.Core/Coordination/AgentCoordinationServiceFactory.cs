@@ -20,6 +20,16 @@ namespace SignalKo.SystemMonitor.Agent.Core.Coordination
 
         public IAgentCoordinationService GetAgentCoordinationService(Action pauseCallback, Action resumeCallback)
         {
+            if (pauseCallback == null)
+            {
+                throw new ArgumentNullException("pauseCallback");
+            }
+
+            if (resumeCallback == null)
+            {
+                throw new ArgumentNullException("resumeCallback");
+            }
+            
             return new AgentCoordinationService(this.agentConfigurationProvider, pauseCallback, resumeCallback);
         }
     }
