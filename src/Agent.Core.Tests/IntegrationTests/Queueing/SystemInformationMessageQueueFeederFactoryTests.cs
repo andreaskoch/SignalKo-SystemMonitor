@@ -4,7 +4,7 @@ using Moq;
 
 using NUnit.Framework;
 
-using SignalKo.SystemMonitor.Agent.Core.Collector;
+using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemInformation;
 using SignalKo.SystemMonitor.Agent.Core.Queueing;
 using SignalKo.SystemMonitor.Common.Model;
 

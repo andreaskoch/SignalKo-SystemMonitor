@@ -49,19 +49,19 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Collector\CustomMachineNameProvider.cs" />
-    <Compile Include="Collector\EnvironmentMachineNameProvider.cs" />
-    <Compile Include="Collector\ILogicalDiscInstanceNameProvider.cs" />
-    <Compile Include="Collector\IMachineNameProvider.cs" />
-    <Compile Include="Collector\IProcessorStatusProvider.cs" />
-    <Compile Include="Collector\ISystemInformationProvider.cs" />
-    <Compile Include="Collector\ISystemMemoryStatusProvider.cs" />
-    <Compile Include="Collector\ISystemStorageStatusProvider.cs" />
-    <Compile Include="Collector\LogicalDiscInstanceNameProvider.cs" />
-    <Compile Include="Collector\ProcessorStatusProvider.cs" />
-    <Compile Include="Collector\SystemInformationProvider.cs" />
-    <Compile Include="Collector\SystemMemoryStatusProvider.cs" />
-    <Compile Include="Collector\SystemStorageStatusProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\CustomMachineNameProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\EnvironmentMachineNameProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\ILogicalDiscInstanceNameProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\IMachineNameProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\IProcessorStatusProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\ISystemInformationProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\ISystemMemoryStatusProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\ISystemStorageStatusProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\LogicalDiscInstanceNameProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\ProcessorStatusProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\SystemInformationProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\SystemMemoryStatusProvider.cs" />
+    <Compile Include="Collectors\SystemInformation\SystemStorageStatusProvider.cs" />
     <Compile Include="Configuration\AgentConfigurationAccessor.cs" />
     <Compile Include="Configuration\AgentConfigurationProvider.cs" />
     <Compile Include="Configuration\AppConfigAgentConfigurationServiceUrlProvider.cs" />

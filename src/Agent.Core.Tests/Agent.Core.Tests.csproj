@@ -50,8 +50,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IntegrationTests\Collector\LogicalDiscInstanceNameProviderTests.cs" />
-    <Compile Include="IntegrationTests\Collector\ProcessorStatusProviderTests.cs" />
+    <Compile Include="IntegrationTests\Collectors\SystemInformation\EnvironmentMachineNameProviderTests.cs" />
+    <Compile Include="IntegrationTests\Collectors\SystemInformation\LogicalDiscInstanceNameProviderTests.cs" />
+    <Compile Include="IntegrationTests\Collectors\SystemInformation\ProcessorStatusProviderTests.cs" />
+    <Compile Include="IntegrationTests\Collectors\SystemInformation\SystemInformationProviderTests.cs" />
+    <Compile Include="IntegrationTests\Collectors\SystemInformation\SystemMemoryStatusProviderTests.cs" />
+    <Compile Include="IntegrationTests\Collectors\SystemInformation\SystemStorageStatusProviderTests.cs" />
     <Compile Include="IntegrationTests\Configuration\AppConfigAgentConfigurationServiceUrlProviderTests.cs" />
     <Compile Include="IntegrationTests\Coordination\AgentCoordinationServiceFactoryTests.cs" />
     <Compile Include="IntegrationTests\Queueing\AppConfigJSONMessageQueuePersistenceConfigurationProviderTests.cs" />
@@ -62,14 +66,12 @@
     <Compile Include="IntegrationTests\Sender\AppConfigAgentConfigurationServiceUrlProviderTests.cs" />
     <Compile Include="IntegrationTests\Sender\JSONRequestFactoryTests.cs" />
     <Compile Include="IntegrationTests\Sender\RESTClientFactoryTests.cs" />
-    <Compile Include="IntegrationTests\Collector\SystemInformationProviderTests.cs" />
-    <Compile Include="IntegrationTests\Collector\SystemMemoryStatusProviderTests.cs" />
-    <Compile Include="IntegrationTests\Collector\SystemStorageStatusProviderTests.cs" />
     <Compile Include="IntegrationTests\SystemInformationDispatchingServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IntegrationTests\Collector\EnvironmentMachineNameProviderTests.cs" />
     <Compile Include="TestUtilities.cs" />
-    <Compile Include="UnitTests\Collector\CustomMachineNameProviderTests.cs" />
+    <Compile Include="UnitTests\Collectors\SystemInformation\CustomMachineNameProviderTests.cs" />
+    <Compile Include="UnitTests\Collectors\SystemInformation\SystemInformationProviderTests.cs" />
+    <Compile Include="UnitTests\Collectors\SystemInformation\SystemMemoryStatusProviderTests.cs" />
     <Compile Include="UnitTests\Configuration\AgentConfigurationAccessorTests.cs" />
     <Compile Include="UnitTests\Configuration\AgentConfigurationProviderTests.cs" />
     <Compile Include="UnitTests\Configuration\RESTBasedSystemInformationSenderConfigurationProviderTests.cs" />
@@ -86,8 +88,6 @@
     <Compile Include="UnitTests\Sender\RESTBasedSystemInformationSenderTests.cs" />
     <Compile Include="UnitTests\Sender\RESTClientFactoryTests.cs" />
     <Compile Include="UnitTests\Sender\RESTServiceConfigurationTests.cs" />
-    <Compile Include="UnitTests\Collector\SystemInformationProviderTests.cs" />
-    <Compile Include="UnitTests\Collector\SystemMemoryStatusProviderTests.cs" />
     <Compile Include="UnitTests\SystemInformationDispatchingServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 using SignalKo.SystemMonitor.Agent.Core;
-using SignalKo.SystemMonitor.Agent.Core.Collector;
+using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemInformation;
 using SignalKo.SystemMonitor.Agent.Core.Configuration;
 using SignalKo.SystemMonitor.Agent.Core.Coordination;
 using SignalKo.SystemMonitor.Agent.Core.Queueing;

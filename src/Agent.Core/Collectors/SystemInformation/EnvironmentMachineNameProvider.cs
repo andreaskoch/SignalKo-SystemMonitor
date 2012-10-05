@@ -1,6 +1,6 @@
 using System;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Collector
+namespace SignalKo.SystemMonitor.Agent.Core.Collectors.SystemInformation
 {
     public class EnvironmentMachineNameProvider : IMachineNameProvider
     {

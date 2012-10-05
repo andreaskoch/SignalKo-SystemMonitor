@@ -1,9 +1,8 @@
 using System;
 
-using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Common.Services;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Collector
+namespace SignalKo.SystemMonitor.Agent.Core.Collectors.SystemInformation
 {
     public class SystemInformationProvider : ISystemInformationProvider
     {
@@ -51,9 +50,9 @@ namespace SignalKo.SystemMonitor.Agent.Core.Collector
             this.systemStorageStatusProvider = systemStorageStatusProvider;
         }
 
-        public SystemInformation GetSystemInfo()
+        public Common.Model.SystemInformation GetSystemInfo()
         {
-            return new SystemInformation
+            return new Common.Model.SystemInformation
                 {
                     Timestamp = this.timeProvider.GetDateAndTime(),
                     MachineName = this.machineNameProvider.GetMachineName(),
