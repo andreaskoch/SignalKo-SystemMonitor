@@ -4,18 +4,21 @@ namespace SignalKo.SystemMonitor.Agent.Core.Configuration
 {
     public class RESTServiceConfiguration : IRESTServiceConfiguration
     {
-        public string BaseUrl { get; set; }
+        public string Hostaddress { get; set; }
+
+        public string Hostname { get; set; }
 
         public string ResourcePath { get; set; }
 
         public bool IsValid()
         {
-            return !string.IsNullOrWhiteSpace(this.BaseUrl) && !string.IsNullOrWhiteSpace(this.ResourcePath);
+            return !string.IsNullOrWhiteSpace(this.Hostaddress) && !string.IsNullOrWhiteSpace(this.Hostname) && !string.IsNullOrWhiteSpace(this.ResourcePath);
         }
 
         public override string ToString()
         {
-            return string.Format("RESTServiceConfiguration (BaseUrl: {0}, ResourcePath: {1})", this.BaseUrl, this.ResourcePath);
+            return string.Format(
+                "RESTServiceConfiguration (Hostaddress: {0}, Hostname: {1}, ResourcePath: {2})", this.Hostaddress, this.Hostname, this.ResourcePath);
         }
 
         public override int GetHashCode()

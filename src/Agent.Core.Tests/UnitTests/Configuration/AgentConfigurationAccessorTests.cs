@@ -90,7 +90,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
 
             var requestFactory = new Mock<IRESTRequestFactory>();
-            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>())).Returns(request.Object);
+            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
             var agentConfigurationAccessor = new AgentConfigurationAccessor(
                 configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
@@ -119,7 +119,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
 
             var requestFactory = new Mock<IRESTRequestFactory>();
-            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>())).Returns(request.Object);
+            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
             var agentConfigurationAccessor = new AgentConfigurationAccessor(
                 configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
@@ -148,7 +148,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
 
             var requestFactory = new Mock<IRESTRequestFactory>();
-            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>())).Returns(request.Object);
+            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
             var agentConfigurationAccessor = new AgentConfigurationAccessor(
                 configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
@@ -157,14 +157,14 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             agentConfigurationAccessor.GetAgentConfiguration();
 
             // Assert
-            requestFactory.Verify(c => c.CreateGetRequest(It.IsAny<string>()), Times.Once());
+            requestFactory.Verify(c => c.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>()), Times.Once());
         }
 
-        [TestCase("http://www.example.com:8181/api/agentconfiguration", "http://www.example.com:8181")]
-        [TestCase("http://www.example.com:80/api/agentconfiguration", "http://www.example.com")]
-        [TestCase("https://www.example.com:443/api/agentconfiguration", "https://www.example.com")]
-        [TestCase("https://www.example.com:80/api/agentconfiguration", "https://www.example.com:80")]
-        public void GetAgentConfiguration_CorrectBaseUrlIsUsedForRestClient(string serviceUrl, string expectedBaseUrl)
+        [TestCase("http://www.example.com:8181/api/agentconfiguration", "www.example.com:8181")]
+        [TestCase("http://www.example.com:80/api/agentconfiguration", "www.example.com")]
+        [TestCase("https://www.example.com:443/api/agentconfiguration", "www.example.com")]
+        [TestCase("https://www.example.com:80/api/agentconfiguration", "www.example.com:80")]
+        public void GetAgentConfiguration_CorrectHostaddressIsUsedForRestClient(string serviceUrl, string expectedHostaddress)
         {
             // Arrange
             var response = new Mock<IRestResponse<AgentConfiguration>>();
@@ -179,7 +179,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
 
             var requestFactory = new Mock<IRESTRequestFactory>();
-            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>())).Returns(request.Object);
+            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
             var agentConfigurationAccessor = new AgentConfigurationAccessor(
                 configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
@@ -188,7 +188,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             agentConfigurationAccessor.GetAgentConfiguration();
 
             // Assert
-            restClientFactory.Verify(c => c.GetRESTClient(expectedBaseUrl), Times.Once());
+            restClientFactory.Verify(c => c.GetRESTClient(expectedHostaddress), Times.Once());
         }
 
         [TestCase("http://www.example.com:8181/api/agentconfiguration", "/api/agentconfiguration")]
@@ -212,7 +212,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
 
             var requestFactory = new Mock<IRESTRequestFactory>();
-            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>())).Returns(request.Object);
+            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
             var agentConfigurationAccessor = new AgentConfigurationAccessor(
                 configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
@@ -221,7 +221,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             agentConfigurationAccessor.GetAgentConfiguration();
 
             // Assert
-            requestFactory.Verify(c => c.CreateGetRequest(expectedResourcePath), Times.Once());
+            requestFactory.Verify(c => c.CreateGetRequest(expectedResourcePath, It.IsAny<string>()), Times.Once());
         }
 
         [Test]
@@ -241,7 +241,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
 
             var requestFactory = new Mock<IRESTRequestFactory>();
-            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>())).Returns(request.Object);
+            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
             var agentConfigurationAccessor = new AgentConfigurationAccessor(
                 configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
@@ -262,7 +262,8 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             var responseData = new AgentConfiguration
                 {
                     AgentsAreEnabled = true,
-                    BaseUrl = "http://www.example.com",
+                    Hostaddress = "127.0.0.1",
+                    Hostname = "www.example.com",
                     CheckIntervalInSeconds = 1,
                     SystemInformationSenderPath = Guid.NewGuid().ToString()
                 };
@@ -281,7 +282,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
 
             var requestFactory = new Mock<IRESTRequestFactory>();
-            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>())).Returns(request.Object);
+            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
             var agentConfigurationAccessor = new AgentConfigurationAccessor(
                 configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);

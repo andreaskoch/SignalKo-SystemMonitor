@@ -59,7 +59,8 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             var agentConfiguration = new AgentConfiguration
                 {
                     AgentsAreEnabled = true,
-                    BaseUrl = "http://www.example.com",
+                    Hostaddress = "127.0.0.1",
+                    Hostname = "www.example.com",
                     CheckIntervalInSeconds = 30,
                     SystemInformationSenderPath = "/api/systeminformation"
                 };
@@ -77,14 +78,15 @@ namespace Agent.Core.Tests.UnitTests.Configuration
         }
 
         [Test]
-        public void GetConfiguration_ResultContainsAgentConfigurationBaseUrl()
+        public void GetConfiguration_ResultContainsAgentConfigurationHostaddress()
         {
             // Arrange
-            string baseUrl = "http://www.example.com";
+            string hostaddress = "127.0.0.1";
             var agentConfiguration = new AgentConfiguration
             {
                 AgentsAreEnabled = true,
-                BaseUrl = baseUrl,
+                Hostaddress = hostaddress,
+                Hostname = "www.example.com",
                 CheckIntervalInSeconds = 30,
                 SystemInformationSenderPath = "/api/systeminformation"
             };
@@ -98,7 +100,33 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             var result = systemInformationSenderConfigurationProvider.GetConfiguration();
 
             // Assert
-            Assert.AreEqual(baseUrl, result.BaseUrl);
+            Assert.AreEqual(hostaddress, result.Hostaddress);
+        }
+
+        [Test]
+        public void GetConfiguration_ResultContainsAgentConfigurationHostname()
+        {
+            // Arrange
+            string hostname = "www.example.com";
+            var agentConfiguration = new AgentConfiguration
+            {
+                AgentsAreEnabled = true,
+                Hostaddress = "127.0.0.1",
+                Hostname = hostname,
+                CheckIntervalInSeconds = 30,
+                SystemInformationSenderPath = "/api/systeminformation"
+            };
+
+            var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
+            agentConfigurationProvider.Setup(a => a.GetAgentConfiguration()).Returns(agentConfiguration);
+
+            var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentConfigurationProvider.Object);
+
+            // Act
+            var result = systemInformationSenderConfigurationProvider.GetConfiguration();
+
+            // Assert
+            Assert.AreEqual(hostname, result.Hostname);
         }
 
         [Test]
@@ -109,7 +137,8 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             var agentConfiguration = new AgentConfiguration
             {
                 AgentsAreEnabled = true,
-                BaseUrl = "http://www.example.com",
+                Hostaddress = "127.0.0.1",
+                Hostname = "www.example.com",
                 CheckIntervalInSeconds = 30,
                 SystemInformationSenderPath = systemInformationSenderPath
             };

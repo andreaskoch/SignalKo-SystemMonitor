@@ -6,14 +6,30 @@ namespace SignalKo.SystemMonitor.Agent.Core.Sender
     {
         public const DataFormat RequestFormat = DataFormat.Json;
 
-        public IRestRequest CreatePutRequest(string resourcePath)
+        public const string RequestHeaderFieldHost = "Host";
+
+        public IRestRequest CreatePutRequest(string resourcePath, string hostname = null)
         {
-            return new RestRequest(resourcePath, Method.PUT) { RequestFormat = RequestFormat };
+            var request = new RestRequest(resourcePath, Method.PUT) { RequestFormat = RequestFormat };
+
+            if (!string.IsNullOrWhiteSpace(hostname))
+            {
+                request.AddHeader(RequestHeaderFieldHost, hostname);
+            }
+
+            return request;
         }
 
-        public IRestRequest CreateGetRequest(string resourcePath)
+        public IRestRequest CreateGetRequest(string resourcePath, string hostname = null)
         {
-            return new RestRequest(resourcePath, Method.GET) { RequestFormat = RequestFormat };
+            var request = new RestRequest(resourcePath, Method.GET) { RequestFormat = RequestFormat };
+
+            if (!string.IsNullOrWhiteSpace(hostname))
+            {
+                request.AddHeader(RequestHeaderFieldHost, hostname);
+            }
+
+            return request;
         }
     }
 }

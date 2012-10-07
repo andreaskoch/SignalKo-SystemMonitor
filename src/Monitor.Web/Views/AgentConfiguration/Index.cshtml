@@ -6,15 +6,18 @@
     <div class="agent-configuration">
     
         <div class="global">
+            
+            <label for="SystemInformationSenderHostaddress">Hostaddress</label>
+            <input type="text" id="SystemInformationSenderHostaddress" data-bind="value: Hostaddress" />
         
-            <label for="SystemInformationSenderUrl">Base URL</label>
-            <input type="text" id="SystemInformationSenderUrl" data-bind="value: BaseUrl" />
+            <label for="SystemInformationSenderHostname">Hostname</label>
+            <input type="text" id="SystemInformationSenderHostname" data-bind="value: Hostname" />
             
-            <label for="SystemInformationSenderUrl">SystemInformationSenderPath</label>
-            <input type="text" id="SystemInformationSenderUrl" data-bind="value: SystemInformationSenderPath" />
+            <label for="SystemInformationSenderPath">SystemInformationSenderPath</label>
+            <input type="text" id="SystemInformationSenderPath" data-bind="value: SystemInformationSenderPath" />
             
-            <label for="SystemInformationSenderUrl">CheckIntervalInSeconds</label>
-            <input type="text" id="SystemInformationSenderUrl" data-bind="value: CheckIntervalInSeconds" />
+            <label for="SystemInformationSenderCheckInterval">Check-interval (in seconds)</label>
+            <input type="text" id="SystemInformationSenderCheckInterval" data-bind="value: CheckIntervalInSeconds" />
         
             <div id="agentStatusSwitch">
                 <input type="radio" name="AgentsAreEnabled" value="true" id="agentStatusEnabled" data-bind="checked: AgentsAreEnabled.ForEditing" />

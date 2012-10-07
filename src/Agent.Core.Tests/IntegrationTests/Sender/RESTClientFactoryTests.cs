@@ -8,14 +8,14 @@ namespace Agent.Core.Tests.IntegrationTests.Sender
     public class RESTClientFactoryTests
     {
         [Test]
-        public void GetRESTClient_BaseUrlParamterIsValid_ResultIsNotNull()
+        public void GetRESTClient_HostaddressParamterIsValid_ResultIsNotNull()
         {
             // Arrange
-            string baseUrl = "http://localhost";
+            string hostaddress = "localhost";
             var clientFactory = new RESTClientFactory();
 
             // Act
-            var result = clientFactory.GetRESTClient(baseUrl);
+            var result = clientFactory.GetRESTClient(hostaddress);
 
             // Assert
             Assert.IsNotNull(result);

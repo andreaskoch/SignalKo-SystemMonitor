@@ -102,10 +102,11 @@ namespace Agent.Core.Tests.UnitTests.Coordination
             var runDurationInMilliseconds = AgentCoordinationService.AgentConfigurationCheckIntervalInMilliseconds * 1;
             var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
 
-            var agentConfiguration = new AgentConfiguration()
+            var agentConfiguration = new AgentConfiguration
                 {
                     AgentsAreEnabled = false,
-                    BaseUrl = "http://www.example.com",
+                    Hostaddress = "127.0.0.1",
+                    Hostname = "www.example.com",
                     CheckIntervalInSeconds = AgentCoordinationService.AgentConfigurationCheckIntervalInMilliseconds,
                     SystemInformationSenderPath = "/api/systeminformation"
                 };
@@ -137,10 +138,11 @@ namespace Agent.Core.Tests.UnitTests.Coordination
             var runDurationInMilliseconds = AgentCoordinationService.AgentConfigurationCheckIntervalInMilliseconds * 1;
             var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
 
-            var agentConfiguration = new AgentConfiguration()
+            var agentConfiguration = new AgentConfiguration
             {
                 AgentsAreEnabled = true,
-                BaseUrl = "http://www.example.com",
+                Hostaddress = "127.0.0.1",
+                Hostname = "www.example.com",
                 CheckIntervalInSeconds = AgentCoordinationService.AgentConfigurationCheckIntervalInMilliseconds,
                 SystemInformationSenderPath = "/api/systeminformation"
             };
@@ -170,10 +172,11 @@ namespace Agent.Core.Tests.UnitTests.Coordination
             // Arrange
             var runDurationInMilliseconds = AgentCoordinationService.AgentConfigurationCheckIntervalInMilliseconds * 3;
             var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
-            var agentConfiguration = new AgentConfiguration()
+            var agentConfiguration = new AgentConfiguration
                 {
                     AgentsAreEnabled = true,
-                    BaseUrl = "http://www.example.com",
+                    Hostaddress = "127.0.0.1",
+                    Hostname = "www.example.com",
                     CheckIntervalInSeconds = AgentCoordinationService.AgentConfigurationCheckIntervalInMilliseconds,
                     SystemInformationSenderPath = "/api/systeminformation"
                 };
@@ -202,10 +205,11 @@ namespace Agent.Core.Tests.UnitTests.Coordination
             var maxDurationInMilliseconds = AgentCoordinationService.AgentConfigurationCheckIntervalInMilliseconds * 3;
             var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
 
-            var agentConfiguration = new AgentConfiguration()
+            var agentConfiguration = new AgentConfiguration
             {
                 AgentsAreEnabled = true,
-                BaseUrl = "http://www.example.com",
+                Hostaddress = "127.0.0.1",
+                Hostname = "www.example.com",
                 CheckIntervalInSeconds = AgentCoordinationService.AgentConfigurationCheckIntervalInMilliseconds,
                 SystemInformationSenderPath = "/api/systeminformation"
             };
@@ -240,10 +244,11 @@ namespace Agent.Core.Tests.UnitTests.Coordination
             var maxDurationInMilliseconds = AgentCoordinationService.AgentConfigurationCheckIntervalInMilliseconds * 3;
             var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
 
-            var agentConfiguration = new AgentConfiguration()
+            var agentConfiguration = new AgentConfiguration
             {
                 AgentsAreEnabled = true,
-                BaseUrl = "http://www.example.com",
+                Hostaddress = "127.0.0.1",
+                Hostname = "www.example.com",
                 CheckIntervalInSeconds = AgentCoordinationService.AgentConfigurationCheckIntervalInMilliseconds,
                 SystemInformationSenderPath = "/api/systeminformation"
             };

@@ -56,20 +56,21 @@ namespace SignalKo.SystemMonitor.Agent.Core.Sender
             }
 
             // create REST client
-            var restClient = this.restClientFactory.GetRESTClient(serviceConfiguration.BaseUrl);
+            var restClient = this.restClientFactory.GetRESTClient(serviceConfiguration.Hostaddress);
             if (restClient == null)
             {
                 throw new SystemInformationSenderSetupException(
-                    "Could not create a REST client using the supplied base URL \"{0}\".", serviceConfiguration.BaseUrl);
+                    "Could not create a REST client using the supplied hostaddress \"{0}\".", serviceConfiguration.Hostaddress);
             }
 
             // create request
-            var request = this.requestFactory.CreatePutRequest(serviceConfiguration.ResourcePath);
+            var request = this.requestFactory.CreatePutRequest(serviceConfiguration.ResourcePath, serviceConfiguration.Hostname);
             if (request == null)
             {
                 throw new FatalSystemInformationSenderException(
-                    "Could not create a request object for the base Url \"{0}\" and the resource path \"{1}\".",
-                    serviceConfiguration.BaseUrl,
+                    "Could not create a request object for the hostaddress \"{0}\", the hostname \"{1}\" and the resource path \"{2}\".",
+                    serviceConfiguration.Hostaddress,
+                    serviceConfiguration.Hostname,
                     serviceConfiguration.ResourcePath);
             }
 

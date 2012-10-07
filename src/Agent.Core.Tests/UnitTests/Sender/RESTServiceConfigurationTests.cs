@@ -13,10 +13,10 @@ namespace Agent.Core.Tests.UnitTests.Sender
         #region IsValid
 
         [Test]
-        public void IsValid_BaseUrlAndResourcePathAreSet_ResultIsTrue()
+        public void IsValid_HostnameAndResourcePathAreSet_ResultIsTrue()
         {
             // Arrange
-            var config = this.GetConfig("http://localhost", "some/path");
+            var config = this.GetConfig("127.0.0.1", "http://localhost", "some/path");
 
             // Act
             var result = config.IsValid();
@@ -28,10 +28,10 @@ namespace Agent.Core.Tests.UnitTests.Sender
         [TestCase(null)]
         [TestCase("")]
         [TestCase(" ")]
-        public void IsValid_BaseUrlIsValid_ResourcePathIsInvalid_ResultIsFalse(string resourcePath)
+        public void IsValid_HostnameIsValid_ResourcePathIsInvalid_ResultIsFalse(string resourcePath)
         {
             // Arrange
-            var config = this.GetConfig("http://localhost", resourcePath);
+            var config = this.GetConfig("127.0.0.1", "http://localhost", resourcePath);
 
             // Act
             var result = config.IsValid();
@@ -43,10 +43,10 @@ namespace Agent.Core.Tests.UnitTests.Sender
         [TestCase(null)]
         [TestCase("")]
         [TestCase(" ")]
-        public void IsValid_BaseUrlIsInvalid_ResourcePathIsValid_ResultIsFalse(string baseUrl)
+        public void IsValid_HostnameIsInvalid_ResourcePathIsValid_ResultIsFalse(string hostname)
         {
             // Arrange
-            var config = this.GetConfig(baseUrl, "some/path");
+            var config = this.GetConfig("127.0.0.1", hostname, "some/path");
 
             // Act
             var result = config.IsValid();
@@ -67,10 +67,10 @@ namespace Agent.Core.Tests.UnitTests.Sender
         [TestCase(" ", "")]
         [TestCase(" ", " ")]
         [TestCase(" ", "some/path")]
-        public void IsValid_BaseUrlAndOrResourcePathIsValid_ResultIsFalse(string baseUrl, string resourcePath)
+        public void IsValid_HostnameAndOrResourcePathIsValid_ResultIsFalse(string hostname, string resourcePath)
         {
             // Arrange
-            var config = this.GetConfig(baseUrl, resourcePath);
+            var config = this.GetConfig("127.0.0.1", hostname, resourcePath);
 
             // Act
             var result = config.IsValid();
@@ -84,23 +84,36 @@ namespace Agent.Core.Tests.UnitTests.Sender
         #region ToString
 
         [Test]
-        public void ToString_Contains_BaseUrl()
+        public void ToString_Contains_Hostaddress()
         {
             // Arrange
-            var config = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "some/path" };
+            var config = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
 
             // Act
             string result = config.ToString();
 
             // Assert
-            Assert.IsTrue(result.Contains(config.BaseUrl));
+            Assert.IsTrue(result.Contains(config.Hostaddress));
+        }
+
+        [Test]
+        public void ToString_Contains_Hostname()
+        {
+            // Arrange
+            var config = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
+
+            // Act
+            string result = config.ToString();
+
+            // Assert
+            Assert.IsTrue(result.Contains(config.Hostname));
         }
 
         [Test]
         public void ToString_Contains_ResourcePath()
         {
             // Arrange
-            var config = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "some/path" };
+            var config = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
 
             // Act
             string result = config.ToString();
@@ -117,8 +130,8 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void Equals_TwoIdenticalInitializedObjects_ResultIsTrue()
         {
             // Arrange
-            var object1 = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "some/path" };
-            var object2 = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "some/path" };
+            var object1 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
+            var object2 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
 
             // Act
             bool result = object1.Equals(object2);
@@ -145,8 +158,8 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void Equals_TwoIdenticalObject_WithDifferentNameCasing_ResultIsTrue()
         {
             // Arrange
-            var object1 = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "some/path" };
-            var object2 = new RESTServiceConfiguration { BaseUrl = "http://LOCALHOST", ResourcePath = "SOME/PATH" };
+            var object1 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
+            var object2 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "LOCALHOST", ResourcePath = "SOME/PATH" };
 
             // Act
             bool result = object1.Equals(object2);
@@ -159,8 +172,8 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void Equals_TwoIdenticalObjects_WithDifferentWhitespaces_ResultIsFalse()
         {
             // Arrange
-            var object1 = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "some/path" };
-            var object2 = new RESTServiceConfiguration { BaseUrl = "http://localhost ", ResourcePath = "some/path " };
+            var object1 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
+            var object2 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost ", ResourcePath = "some/path " };
 
             // Act
             bool result = object1.Equals(object2);
@@ -173,7 +186,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void Equals_SuppliedObjectIsNull_ResultIsFalse()
         {
             // Arrange
-            var object1 = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "some/path" };
+            var object1 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
             RESTServiceConfiguration object2 = null;
 
             // Act
@@ -187,7 +200,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void Equals_SuppliedObjectIsNotInitialized_ResultIsFalse()
         {
             // Arrange
-            var object1 = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "some/path" };
+            var object1 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
             var object2 = new RESTServiceConfiguration();
 
             // Act
@@ -201,7 +214,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void Equals_SuppliedObjectIsOfOtherType_ResultIsFalse()
         {
             // Arrange
-            var object1 = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "some/path" };
+            var object1 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
             var object2 = new object();
 
             // Act
@@ -219,8 +232,8 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void GetHashCode_TwoIdenticalObjects_BothInitialized_HashCodesAreEqual()
         {
             // Arrange
-            var object1 = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "some/path" };
-            var object2 = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "some/path" };
+            var object1 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
+            var object2 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
 
             // Act
             int hashCodeObject1 = object1.GetHashCode();
@@ -234,8 +247,8 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void GetHashCode_TwoDistinctObjects_HashCodesAreDifferent()
         {
             // Arrange
-            var object1 = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "some/path" };
-            var object2 = new RESTServiceConfiguration { BaseUrl = "http://localhost", ResourcePath = "another/path" };
+            var object1 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "some/path" };
+            var object2 = new RESTServiceConfiguration { Hostaddress = "127.0.0.1", Hostname = "localhost", ResourcePath = "another/path" };
 
             // Act
             int hashCodeObject1 = object1.GetHashCode();
@@ -264,16 +277,18 @@ namespace Agent.Core.Tests.UnitTests.Sender
         public void GetHashCode_SameHashCodeIsReturnedEveryTimeTheMethodIsCalled_AsLongAsTheObjectDoesNotChange()
         {
             // Arrange
-            var baseUrl = "http://localhost";
+            var hostaddress = "127.0.0.1";
+            var hostname = "localhost";
             var resourcePath = "some/path";
-            var object1 = new RESTServiceConfiguration { BaseUrl = baseUrl, ResourcePath = resourcePath };
+            var object1 = new RESTServiceConfiguration { Hostaddress = hostaddress, Hostname = hostname, ResourcePath = resourcePath };
 
             int expectedHashcode = object1.GetHashCode();
 
             for (var i = 0; i < 100; i++)
             {
                 // Act
-                object1.BaseUrl = baseUrl;
+                object1.Hostaddress = hostaddress;
+                object1.Hostname = hostname;
                 object1.ResourcePath = resourcePath;
                 int generatedHashCode = object1.GetHashCode();
 
@@ -290,7 +305,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
             for (var i = 0; i < 10000; i++)
             {
                 // Act
-                var object1 = new RESTServiceConfiguration { BaseUrl = "http://" + Guid.NewGuid().ToString(), ResourcePath = "api/" + Guid.NewGuid().ToString() };
+                var object1 = new RESTServiceConfiguration { Hostaddress  = "127.0.0.1", Hostname = Guid.NewGuid().ToString(), ResourcePath = "api/" + Guid.NewGuid().ToString() };
 
                 int generatedHashCode = object1.GetHashCode();
 
@@ -304,9 +319,9 @@ namespace Agent.Core.Tests.UnitTests.Sender
 
         #region utility methods
 
-        private RESTServiceConfiguration GetConfig(string baseUrl, string resourcePath)
+        private RESTServiceConfiguration GetConfig(string hostaddress, string hostname, string resourcePath)
         {
-            return new RESTServiceConfiguration { BaseUrl = baseUrl, ResourcePath = resourcePath };
+            return new RESTServiceConfiguration { Hostaddress = hostaddress, Hostname = hostname, ResourcePath = resourcePath };
         }
 
         #endregion

@@ -83,7 +83,8 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             var agentConfigurationWithReducedInterval = new AgentConfiguration
             {
                 AgentsAreEnabled = true,
-                BaseUrl = "http://www.example.com",
+                Hostaddress = "127.0.0.1",
+                Hostname = "www.example.com",
                 CheckIntervalInSeconds = newCheckIntervalInSeconds,
                 SystemInformationSenderPath = "/api/systeminformation"
             };
@@ -127,7 +128,8 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             var agentConfiguration = new AgentConfiguration
             {
                 AgentsAreEnabled = true,
-                BaseUrl = "http://www.example.com",
+                Hostaddress = "127.0.0.1",
+                Hostname = "www.example.com",
                 CheckIntervalInSeconds = 10,
                 SystemInformationSenderPath = "/api/systeminformation"
             };
@@ -156,7 +158,8 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             var agentConfigurationWithReducedInterval = new AgentConfiguration
                 {
                     AgentsAreEnabled = true,
-                    BaseUrl = "http://www.example.com",
+                    Hostaddress = "127.0.0.1",
+                    Hostname = "www.example.com",
                     CheckIntervalInSeconds = newCheckIntervalInSeconds,
                     SystemInformationSenderPath = "/api/systeminformation"
                 };

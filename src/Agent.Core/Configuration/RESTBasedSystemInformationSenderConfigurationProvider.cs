@@ -26,7 +26,8 @@ namespace SignalKo.SystemMonitor.Agent.Core.Configuration
 
             return new RESTServiceConfiguration
                 {
-                    BaseUrl = agentConfiguration.BaseUrl,
+                    Hostaddress = agentConfiguration.Hostaddress,
+                    Hostname = agentConfiguration.Hostname,
                     ResourcePath = agentConfiguration.SystemInformationSenderPath
                 };
         }

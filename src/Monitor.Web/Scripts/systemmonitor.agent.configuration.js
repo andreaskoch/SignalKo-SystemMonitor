@@ -17,7 +17,8 @@ $.extend(SystemMonitor, {
         function agentConfigurationViewModel(viewModelConfiguration) {
             var self = this;
 
-            self.BaseUrl = ko.observable();
+            self.Hostaddress = ko.observable();
+            self.Hostname = ko.observable();
             self.SystemInformationSenderPath = ko.observable();
             self.AgentsAreEnabled = ko.observable(true);
             self.CheckIntervalInSeconds = ko.observable();
@@ -54,7 +55,8 @@ $.extend(SystemMonitor, {
                             return;
                         }
 
-                        self.BaseUrl(agentConfiguration.BaseUrl);
+                        self.Hostaddress(agentConfiguration.Hostaddress);
+                        self.Hostname(agentConfiguration.Hostname);
                         self.SystemInformationSenderPath(agentConfiguration.SystemInformationSenderPath);
                         self.AgentsAreEnabled(agentConfiguration.AgentsAreEnabled);
                         self.CheckIntervalInSeconds(agentConfiguration.CheckIntervalInSeconds);
@@ -73,7 +75,8 @@ $.extend(SystemMonitor, {
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify({
-                        "BaseUrl": self.BaseUrl(),
+                        "Hostaddress": self.Hostaddress(),
+                        "Hostname": self.Hostname(),
                         "SystemInformationSenderPath": self.SystemInformationSenderPath(),
                         "AgentsAreEnabled": self.AgentsAreEnabled(),
                         "CheckIntervalInSeconds": self.CheckIntervalInSeconds()

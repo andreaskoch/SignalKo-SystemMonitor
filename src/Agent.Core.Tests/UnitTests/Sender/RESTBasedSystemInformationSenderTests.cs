@@ -106,7 +106,8 @@ namespace Agent.Core.Tests.UnitTests.Sender
             SystemInformation systemInformation = null;
 
             var configuration = new Mock<IRESTServiceConfiguration>();
-            configuration.Setup(c => c.BaseUrl).Returns("http://localhost");
+            configuration.Setup(c => c.Hostaddress).Returns("127.0.0.1");
+            configuration.Setup(c => c.Hostname).Returns("localhost");
             configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
             configuration.Setup(c => c.IsValid()).Returns(true);
 
@@ -180,7 +181,8 @@ namespace Agent.Core.Tests.UnitTests.Sender
             // Arrange
             var systemInformation = new SystemInformation();
             var configuration = new Mock<IRESTServiceConfiguration>();
-            configuration.Setup(c => c.BaseUrl).Returns("http://localhost");
+            configuration.Setup(c => c.Hostaddress).Returns("127.0.0.1");
+            configuration.Setup(c => c.Hostname).Returns("localhost");
             configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
             configuration.Setup(c => c.IsValid()).Returns(true);
 
@@ -209,7 +211,8 @@ namespace Agent.Core.Tests.UnitTests.Sender
             var systemInformation = new SystemInformation();
 
             var configuration = new Mock<IRESTServiceConfiguration>();
-            configuration.Setup(c => c.BaseUrl).Returns("http://localhost");
+            configuration.Setup(c => c.Hostaddress).Returns("127.0.0.1");
+            configuration.Setup(c => c.Hostname).Returns("localhost");
             configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
             configuration.Setup(c => c.IsValid()).Returns(true);
 
@@ -224,7 +227,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
 
             IRestRequest request = null;
             var requestFactory = new Mock<IRESTRequestFactory>();
-            requestFactory.Setup(r => r.CreatePutRequest(It.IsAny<string>())).Returns(request);
+            requestFactory.Setup(r => r.CreatePutRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request);
 
             var systemInformationSender = new RESTBasedSystemInformationSender(
                 systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
@@ -241,7 +244,8 @@ namespace Agent.Core.Tests.UnitTests.Sender
             var systemInformation = new SystemInformation();
 
             var configuration = new Mock<IRESTServiceConfiguration>();
-            configuration.Setup(c => c.BaseUrl).Returns("http://localhost");
+            configuration.Setup(c => c.Hostaddress).Returns("127.0.0.1");
+            configuration.Setup(c => c.Hostname).Returns("localhost");
             configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
             configuration.Setup(c => c.IsValid()).Returns(true);
 
@@ -260,7 +264,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
 
             var request = new Mock<IRestRequest>();
             var requestFactory = new Mock<IRESTRequestFactory>();
-            requestFactory.Setup(r => r.CreatePutRequest(It.IsAny<string>())).Returns(request.Object);
+            requestFactory.Setup(r => r.CreatePutRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
             var systemInformationSender = new RESTBasedSystemInformationSender(
                 systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
@@ -276,7 +280,8 @@ namespace Agent.Core.Tests.UnitTests.Sender
             var systemInformation = new SystemInformation();
 
             var configuration = new Mock<IRESTServiceConfiguration>();
-            configuration.Setup(c => c.BaseUrl).Returns("http://localhost");
+            configuration.Setup(c => c.Hostaddress).Returns("127.0.0.1");
+            configuration.Setup(c => c.Hostname).Returns("localhost");
             configuration.Setup(c => c.ResourcePath).Returns("api/systeminformation");
             configuration.Setup(c => c.IsValid()).Returns(true);
 
@@ -294,7 +299,7 @@ namespace Agent.Core.Tests.UnitTests.Sender
 
             var request = new Mock<IRestRequest>();
             var requestFactory = new Mock<IRESTRequestFactory>();
-            requestFactory.Setup(r => r.CreatePutRequest(It.IsAny<string>())).Returns(request.Object);
+            requestFactory.Setup(r => r.CreatePutRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
             var systemInformationSender = new RESTBasedSystemInformationSender(
                 systemInformationSenderConfigurationProvider.Object, restClientFactory.Object, requestFactory.Object);
