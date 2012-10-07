@@ -37,17 +37,10 @@ namespace SignalKo.SystemMonitor.Agent.Core.Configuration
 
         public AgentConfiguration GetAgentConfiguration()
         {
-            var serviceUrl = new Uri(this.configurationServiceUrlProvider.GetServiceUrl());
-            string hostaddress = serviceUrl.Scheme + "://" + serviceUrl.Host;
-            if (!serviceUrl.IsDefaultPort)
-            {
-                hostaddress += ":" + serviceUrl.Port;
-            }
+            var serviceConfiguration = this.configurationServiceUrlProvider.GetServiceConfiguration();
 
-            string resourcePath = serviceUrl.PathAndQuery;
-
-            var restClient = this.restClientFactory.GetRESTClient(hostaddress);
-            var request = this.requestFactory.CreateGetRequest(resourcePath);
+            var restClient = this.restClientFactory.GetRESTClient(serviceConfiguration.Hostaddress);
+            var request = this.requestFactory.CreateGetRequest(serviceConfiguration.ResourcePath, serviceConfiguration.Hostname);
 
             var response = restClient.Execute<AgentConfiguration>(request);
             return response.Data;

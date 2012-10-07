@@ -74,17 +74,18 @@ namespace Agent.Core.Tests.UnitTests.Configuration
         #region GetAgentConfiguration
 
         [Test]
-        public void GetAgentConfiguration_GetServiceUrl_IsCalled_On_AgentConfigurationServiceUrlProvider()
+        public void GetAgentConfiguration_GetServiceConfiguration_IsCalled_On_AgentConfigurationServiceUrlProvider()
         {
             // Arrange
-            var serviceUrl = "http://www.example.com:8181/api/agentconfiguration";
+            var serviceConfiguration = new AgentConfigurationServiceConfiguration { Hostaddress = "127.0.0.0", Hostname = "localhost", ResourcePath = "/api/agentconfiguration" };
+
             var response = new Mock<IRestResponse<AgentConfiguration>>();
             var restClient = new Mock<IRestClient>();
             restClient.Setup(c => c.Execute<AgentConfiguration>(It.IsAny<IRestRequest>())).Returns(response.Object);
             var request = new Mock<IRestRequest>();
 
             var configurationServiceUrlProvider = new Mock<IAgentConfigurationServiceUrlProvider>();
-            configurationServiceUrlProvider.Setup(c => c.GetServiceUrl()).Returns(serviceUrl);
+            configurationServiceUrlProvider.Setup(c => c.GetServiceConfiguration()).Returns(serviceConfiguration);
 
             var restClientFactory = new Mock<IRESTClientFactory>();
             restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
@@ -99,21 +100,22 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             agentConfigurationAccessor.GetAgentConfiguration();
 
             // Assert
-            configurationServiceUrlProvider.Verify(c => c.GetServiceUrl(), Times.Once());
+            configurationServiceUrlProvider.Verify(c => c.GetServiceConfiguration(), Times.Once());
         }
 
         [Test]
         public void GetAgentConfiguration_GetRESTClient_IsCalled_On_RestClientFactory()
         {
             // Arrange
-            var serviceUrl = "http://www.example.com:8181/api/agentconfiguration";
+            var serviceConfiguration = new AgentConfigurationServiceConfiguration { Hostaddress = "127.0.0.0:8181", Hostname = "localhost", ResourcePath = "/api/agentconfiguration" };
+
             var response = new Mock<IRestResponse<AgentConfiguration>>();
             var restClient = new Mock<IRestClient>();
             restClient.Setup(c => c.Execute<AgentConfiguration>(It.IsAny<IRestRequest>())).Returns(response.Object);
             var request = new Mock<IRestRequest>();
 
             var configurationServiceUrlProvider = new Mock<IAgentConfigurationServiceUrlProvider>();
-            configurationServiceUrlProvider.Setup(c => c.GetServiceUrl()).Returns(serviceUrl);
+            configurationServiceUrlProvider.Setup(c => c.GetServiceConfiguration()).Returns(serviceConfiguration);
 
             var restClientFactory = new Mock<IRESTClientFactory>();
             restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
@@ -135,14 +137,14 @@ namespace Agent.Core.Tests.UnitTests.Configuration
         public void GetAgentConfiguration_CreateGetRequest_IsCalled_On_RequestFactory()
         {
             // Arrange
-            var serviceUrl = "http://www.example.com:8181/api/agentconfiguration";
+            var serviceConfiguration = new AgentConfigurationServiceConfiguration { Hostaddress = "127.0.0.0:8181", Hostname = "localhost", ResourcePath = "/api/agentconfiguration" };
             var response = new Mock<IRestResponse<AgentConfiguration>>();
             var restClient = new Mock<IRestClient>();
             restClient.Setup(c => c.Execute<AgentConfiguration>(It.IsAny<IRestRequest>())).Returns(response.Object);
             var request = new Mock<IRestRequest>();
 
             var configurationServiceUrlProvider = new Mock<IAgentConfigurationServiceUrlProvider>();
-            configurationServiceUrlProvider.Setup(c => c.GetServiceUrl()).Returns(serviceUrl);
+            configurationServiceUrlProvider.Setup(c => c.GetServiceConfiguration()).Returns(serviceConfiguration);
 
             var restClientFactory = new Mock<IRESTClientFactory>();
             restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
@@ -160,82 +162,18 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             requestFactory.Verify(c => c.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>()), Times.Once());
         }
 
-        [TestCase("http://www.example.com:8181/api/agentconfiguration", "www.example.com:8181")]
-        [TestCase("http://www.example.com:80/api/agentconfiguration", "www.example.com")]
-        [TestCase("https://www.example.com:443/api/agentconfiguration", "www.example.com")]
-        [TestCase("https://www.example.com:80/api/agentconfiguration", "www.example.com:80")]
-        public void GetAgentConfiguration_CorrectHostaddressIsUsedForRestClient(string serviceUrl, string expectedHostaddress)
-        {
-            // Arrange
-            var response = new Mock<IRestResponse<AgentConfiguration>>();
-            var restClient = new Mock<IRestClient>();
-            restClient.Setup(c => c.Execute<AgentConfiguration>(It.IsAny<IRestRequest>())).Returns(response.Object);
-            var request = new Mock<IRestRequest>();
-
-            var configurationServiceUrlProvider = new Mock<IAgentConfigurationServiceUrlProvider>();
-            configurationServiceUrlProvider.Setup(c => c.GetServiceUrl()).Returns(serviceUrl);
-
-            var restClientFactory = new Mock<IRESTClientFactory>();
-            restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
-
-            var requestFactory = new Mock<IRESTRequestFactory>();
-            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
-
-            var agentConfigurationAccessor = new AgentConfigurationAccessor(
-                configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
-
-            // Act
-            agentConfigurationAccessor.GetAgentConfiguration();
-
-            // Assert
-            restClientFactory.Verify(c => c.GetRESTClient(expectedHostaddress), Times.Once());
-        }
-
-        [TestCase("http://www.example.com:8181/api/agentconfiguration", "/api/agentconfiguration")]
-        [TestCase("http://www.example.com:80/api/agentconfiguration", "/api/agentconfiguration")]
-        [TestCase("https://www.example.com:443/api/agentconfiguration", "/api/agentconfiguration")]
-        [TestCase("https://www.example.com:80/api/agentconfiguration", "/api/agentconfiguration")]
-        [TestCase("https://www.example.com:80/api/agentconfiguration/", "/api/agentconfiguration/")]
-        [TestCase("https://www.example.com:80/api/agentconfiguration?someParam=someValue", "/api/agentconfiguration?someParam=someValue")]
-        public void GetAgentConfiguration_CorrectResourcePathIsUsedForRequest(string serviceUrl, string expectedResourcePath)
-        {
-            // Arrange
-            var response = new Mock<IRestResponse<AgentConfiguration>>();
-            var restClient = new Mock<IRestClient>();
-            restClient.Setup(c => c.Execute<AgentConfiguration>(It.IsAny<IRestRequest>())).Returns(response.Object);
-            var request = new Mock<IRestRequest>();
-
-            var configurationServiceUrlProvider = new Mock<IAgentConfigurationServiceUrlProvider>();
-            configurationServiceUrlProvider.Setup(c => c.GetServiceUrl()).Returns(serviceUrl);
-
-            var restClientFactory = new Mock<IRESTClientFactory>();
-            restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
-
-            var requestFactory = new Mock<IRESTRequestFactory>();
-            requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
-
-            var agentConfigurationAccessor = new AgentConfigurationAccessor(
-                configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
-
-            // Act
-            agentConfigurationAccessor.GetAgentConfiguration();
-
-            // Assert
-            requestFactory.Verify(c => c.CreateGetRequest(expectedResourcePath, It.IsAny<string>()), Times.Once());
-        }
-
         [Test]
         public void GetAgentConfiguration_Execute_IsCalled_On_RestClient_with_RequestObject()
         {
             // Arrange
-            var serviceUrl = "http://www.example.com:8181/api/agentconfiguration";
+            var serviceConfiguration = new AgentConfigurationServiceConfiguration { Hostaddress = "127.0.0.0:8181", Hostname = "localhost", ResourcePath = "/api/agentconfiguration" };
             var response = new Mock<IRestResponse<AgentConfiguration>>();
             var restClient = new Mock<IRestClient>();
             restClient.Setup(c => c.Execute<AgentConfiguration>(It.IsAny<IRestRequest>())).Returns(response.Object);
             var request = new Mock<IRestRequest>();
 
             var configurationServiceUrlProvider = new Mock<IAgentConfigurationServiceUrlProvider>();
-            configurationServiceUrlProvider.Setup(c => c.GetServiceUrl()).Returns(serviceUrl);
+            configurationServiceUrlProvider.Setup(c => c.GetServiceConfiguration()).Returns(serviceConfiguration);
 
             var restClientFactory = new Mock<IRESTClientFactory>();
             restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);
@@ -257,7 +195,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
         public void GetAgentConfiguration_ResponseData_IsReturned()
         {
             // Arrange
-            var serviceUrl = "http://www.example.com:8181/api/agentconfiguration";
+            var serviceConfiguration = new AgentConfigurationServiceConfiguration { Hostaddress = "127.0.0.0:8181", Hostname = "localhost", ResourcePath = "/api/agentconfiguration" };
 
             var responseData = new AgentConfiguration
                 {
@@ -276,7 +214,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
             var request = new Mock<IRestRequest>();
 
             var configurationServiceUrlProvider = new Mock<IAgentConfigurationServiceUrlProvider>();
-            configurationServiceUrlProvider.Setup(c => c.GetServiceUrl()).Returns(serviceUrl);
+            configurationServiceUrlProvider.Setup(c => c.GetServiceConfiguration()).Returns(serviceConfiguration);
 
             var restClientFactory = new Mock<IRESTClientFactory>();
             restClientFactory.Setup(r => r.GetRESTClient(It.IsAny<string>())).Returns(restClient.Object);

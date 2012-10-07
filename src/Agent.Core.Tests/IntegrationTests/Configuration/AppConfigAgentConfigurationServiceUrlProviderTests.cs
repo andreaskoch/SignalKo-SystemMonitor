@@ -7,19 +7,19 @@ namespace Agent.Core.Tests.IntegrationTests.Configuration
     [TestFixture]
     public class AppConfigAgentConfigurationServiceUrlProviderTests
     {
-        #region GetServiceUrl
+        #region GetServiceConfiguration
 
         [Test]
-        public void GetServiceUrl_ResultIsNotNullOrEmpty()
+        public void GetServiceConfiguration_ResultIsNotNull()
         {
             // Arrange
             var appConfigAgentConfigurationServiceUrlProvider = new AppConfigAgentConfigurationServiceUrlProvider();
 
             // Act
-            var result = appConfigAgentConfigurationServiceUrlProvider.GetServiceUrl();
+            var result = appConfigAgentConfigurationServiceUrlProvider.GetServiceConfiguration();
 
             // Assert
-            Assert.IsNotNullOrEmpty(result);
+            Assert.IsNotNull(result);
         }
 
         #endregion

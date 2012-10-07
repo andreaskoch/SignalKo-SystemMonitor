@@ -64,6 +64,7 @@
     <Compile Include="Collectors\SystemInformation\SystemStorageStatusProvider.cs" />
     <Compile Include="Configuration\AgentConfigurationAccessor.cs" />
     <Compile Include="Configuration\AgentConfigurationProvider.cs" />
+    <Compile Include="Configuration\AgentConfigurationServiceConfiguration.cs" />
     <Compile Include="Configuration\AppConfigAgentConfigurationServiceUrlProvider.cs" />
     <Compile Include="Configuration\IAgentConfigurationAccessor.cs" />
     <Compile Include="Configuration\IAgentConfigurationProvider.cs" />

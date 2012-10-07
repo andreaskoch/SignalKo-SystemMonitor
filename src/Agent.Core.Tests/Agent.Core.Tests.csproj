@@ -63,7 +63,6 @@
     <Compile Include="IntegrationTests\Queueing\JSONSystemInformationMessageQueuePersistenceTests.cs" />
     <Compile Include="IntegrationTests\Queueing\SystemInformationMessageQueueFeederFactoryTests.cs" />
     <Compile Include="IntegrationTests\Queueing\SystemInformationMessageQueueTests.cs" />
-    <Compile Include="IntegrationTests\Sender\AppConfigAgentConfigurationServiceUrlProviderTests.cs" />
     <Compile Include="IntegrationTests\Sender\JSONRequestFactoryTests.cs" />
     <Compile Include="IntegrationTests\Sender\RESTClientFactoryTests.cs" />
     <Compile Include="IntegrationTests\SystemInformationDispatchingServiceTests.cs" />
