@@ -12,10 +12,19 @@
 
         public int CheckIntervalInSeconds { get; set; }
 
+        public AgentInstanceConfiguration[] AgentInstanceConfigurations { get; set; }
+
         public bool IsValid()
         {
             return this.CheckIntervalInSeconds > 0 && string.IsNullOrWhiteSpace(this.SystemInformationSenderPath) == false
                    && string.IsNullOrWhiteSpace(this.Hostname) == false;
         }
+    }
+
+    public class AgentInstanceConfiguration
+    {
+        public string MachineName { get; set; }
+
+        public bool AgentIsEnabled { get; set; }
     }
 }

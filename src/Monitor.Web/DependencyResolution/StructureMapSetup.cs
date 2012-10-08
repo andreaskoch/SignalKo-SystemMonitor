@@ -1,4 +1,5 @@
 using SignalKo.SystemMonitor.Common.Services;
+using SignalKo.SystemMonitor.Monitor.Web.Controllers.Api;
 using SignalKo.SystemMonitor.Monitor.Web.Core.Configuration;
 using SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess;
 using SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators;
@@ -25,6 +26,9 @@ namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
 
                     /* data access */
                     x.For<IAgentConfigurationDataAccessor>().Use<JsonAgentConfigurationDataAccessor>();
+
+                    /* archive */
+                    x.For<ISystemInformationArchiveAccessor>().Singleton().Use<FilesystemSystemInformationArchiveAccessor>();
 
                     /* services */
                     x.For<IAgentConfigurationDataAccessor>().Use<JsonAgentConfigurationDataAccessor>();
