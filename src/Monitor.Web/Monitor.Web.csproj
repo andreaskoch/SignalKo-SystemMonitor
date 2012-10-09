@@ -114,6 +114,8 @@
     <Compile Include="Core\DataAccess\JsonAgentConfigurationDataAccessor.cs" />
     <Compile Include="Core\Services\AgentConfigurationService.cs" />
     <Compile Include="Core\Services\IAgentConfigurationService.cs" />
+    <Compile Include="Core\Services\IKnownAgentsProvider.cs" />
+    <Compile Include="Core\Services\KnownAgentsProvider.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapSetup.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyResolver.cs" />

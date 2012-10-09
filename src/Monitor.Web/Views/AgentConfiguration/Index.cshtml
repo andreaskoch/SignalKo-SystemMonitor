@@ -1,51 +1,69 @@
 ﻿@model dynamic
+
 @{
-    ViewBag.Title = "Agent Configuration";
+	ViewBag.Title = "Agent Configuration";
 }
+
 <section class="middleContent" id="configBody">
-    <div class="agent-configuration">
-    
-        <div class="global">
-            
-            <label for="SystemInformationSenderHostaddress">Hostaddress</label>
-            <input type="text" id="SystemInformationSenderHostaddress" data-bind="value: Hostaddress" />
-        
-            <label for="SystemInformationSenderHostname">Hostname</label>
-            <input type="text" id="SystemInformationSenderHostname" data-bind="value: Hostname" />
-            
-            <label for="SystemInformationSenderPath">SystemInformationSenderPath</label>
-            <input type="text" id="SystemInformationSenderPath" data-bind="value: SystemInformationSenderPath" />
-            
-            <label for="SystemInformationSenderCheckInterval">Check-interval (in seconds)</label>
-            <input type="text" id="SystemInformationSenderCheckInterval" data-bind="value: CheckIntervalInSeconds" />
-        
-            <div id="agentStatusSwitch">
-                <input type="radio" name="AgentsAreEnabled" value="true" id="agentStatusEnabled" data-bind="checked: AgentsAreEnabled.ForEditing" />
-                <label for="agentStatusEnabled">Agents are enabled</label>
+	<section class="agent-configuration">
+	
+		<section class="global">
+			
+			<header>
+				<h2>Global Configuration</h2>
+			</header>
+			
+			<label for="SystemInformationSenderHostaddress">Hostaddress</label>
+			<input type="text" placeholder="https://10.1.2.3 or http://www.example.com" id="SystemInformationSenderHostaddress" data-bind="value: Hostaddress" />
+		
+			<label for="SystemInformationSenderHostname">Hostname</label>
+			<input type="text" placeholder="www.example.com" id="SystemInformationSenderHostname" data-bind="value: Hostname" />
+			
+			<label for="SystemInformationSenderPath">SystemInformationSenderPath</label>
+			<input type="text" id="SystemInformationSenderPath" data-bind="value: SystemInformationSenderPath" />
+			
+			<label for="SystemInformationSenderCheckInterval">Check-interval (in seconds)</label>
+			<input type="text" id="SystemInformationSenderCheckInterval" data-bind="value: CheckIntervalInSeconds" />
+		
+			<section id="agentStatusSwitch">
+				<input type="radio" name="AgentsAreEnabled" value="true" id="agentStatusEnabled" data-bind="checked: AgentsAreEnabled.ForEditing" />
+				<label for="agentStatusEnabled">Agents are enabled</label>
 
-                <input type="radio" name="AgentsAreEnabled" value="false" id="agentStatusDisabled" data-bind="checked: AgentsAreEnabled.ForEditing" />
-                <label for="agentStatusDisabled">Agents are disabled</label>
-            </div>
-            
-            <div class="commands">
-                <button class="button btnLoad" data-bind="click: LoadConfiguration">Load</button>
-                <button class="button btnSave" data-bind="click: SaveConfiguration">Save</button>
-            </div>
-        </div>
+				<input type="radio" name="AgentsAreEnabled" value="false" id="agentStatusDisabled" data-bind="checked: AgentsAreEnabled.ForEditing" />
+				<label for="agentStatusDisabled">Agents are disabled</label>
+			</section>
+		   
+		</section>
+		
+		<section class="agent-specific">
+			<header>
+				<h2>Agent Configuration</h2>
+			</header>
+			
+            <ul class="agents" data-bind="foreach: KnownAgents">
+                <li data-bind="text: $data"></></li>
+            </ul>
+		</section>
+		
+		<section class="commands">
+			<button class="button btnLoad" data-bind="click: LoadConfiguration">Load</button>
+			<button class="button btnSave" data-bind="click: SaveConfiguration">Save</button>
+		</section>
 
-    </div>
+	</section>
 </section>
 
 @section CustomScripts {
-    <script type="text/javascript">
-        var agentConfigurationOptions = {
-            SuccessCallback: function (message) {
-                console.info(message);
-            },
-            ErrorCallback: function (message) {
-                console.warn(message);
-            }
-        };
-    </script>
-    <script type="text/javascript" src="@Links.Scripts.systemmonitor_agent_configuration_js"></script>
+	<script type="text/javascript">
+		var agentConfigurationOptions = {
+		    KnownAgents: @Html.Raw(this.ViewBag.AgentsJSON),
+			SuccessCallback: function (message) {
+				console.info(message);
+			},
+			ErrorCallback: function (message) {
+				console.warn(message);
+			}
+		};
+	</script>
+	<script type="text/javascript" src="@Links.Scripts.systemmonitor_agent_configuration_js"></script>
 }

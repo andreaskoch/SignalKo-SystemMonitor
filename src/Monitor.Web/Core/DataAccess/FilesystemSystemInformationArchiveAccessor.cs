@@ -34,6 +34,11 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess
             return this.archive.Where(predicate);
         }
 
+        public IEnumerable<TResult> Select<TResult>(Func<SystemInformation, TResult> selector)
+        {
+            return this.archive.Select(selector);
+        }
+
         public void Dispose()
         {
             this.StoreToDisk();

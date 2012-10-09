@@ -1,7 +1,7 @@
 using SignalKo.SystemMonitor.Common.Services;
-using SignalKo.SystemMonitor.Monitor.Web.Controllers.Api;
 using SignalKo.SystemMonitor.Monitor.Web.Core.Configuration;
 using SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess;
+using SignalKo.SystemMonitor.Monitor.Web.Core.Services;
 using SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators;
 
 using StructureMap;
@@ -32,6 +32,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
 
                     /* services */
                     x.For<IAgentConfigurationDataAccessor>().Use<JsonAgentConfigurationDataAccessor>();
+                    x.For<IKnownAgentsProvider>().Use<KnownAgentsProvider>();
 
                     /* view model orchestrators */
                     x.For<IMemoryStatusOrchestrator>().Use<MemoryStatusOrchestrator>();

@@ -34,13 +34,13 @@ $.extend(SystemMonitor, {
             });
 
             var showSuccessMessage = function (message) {
-                if (self.SuccessCallback && typeof(self.SuccessCallback) === 'function') {
+                if (self.SuccessCallback && typeof (self.SuccessCallback) === 'function') {
                     self.SuccessCallback(message);
                 }
             };
 
             var showErrorMessage = function (message) {
-                if (self.ErrorCallback && typeof(self.ErrorCallback) === 'function') {
+                if (self.ErrorCallback && typeof (self.ErrorCallback) === 'function') {
                     self.SuccessCallback(message);
                 }
             };
@@ -90,18 +90,19 @@ $.extend(SystemMonitor, {
                 });
             };
 
-            self.LoadConfiguration();
-
             var applyConfiguration = function (configuration) {
                 if (!configuration) {
                     return;
                 }
 
+                self.KnownAgents = ko.observableArray(configuration.KnownAgents);
                 self.SuccessCallback = configuration.SuccessCallback;
                 self.ErrorCallback = configuration.ErrorCallback;
             };
 
             applyConfiguration(viewModelConfiguration);
+
+            self.LoadConfiguration();
         }
 
         var viewModel = new agentConfigurationViewModel(moduleConfiguration);

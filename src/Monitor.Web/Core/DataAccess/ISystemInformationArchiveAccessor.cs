@@ -10,5 +10,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess
         void Store(SystemInformation systemInformation);
 
         IEnumerable<SystemInformation> SearchFor(Func<SystemInformation, bool> predicate);
+
+        IEnumerable<TResult> Select<TResult>(Func<SystemInformation, TResult> selector);
     }
 }
