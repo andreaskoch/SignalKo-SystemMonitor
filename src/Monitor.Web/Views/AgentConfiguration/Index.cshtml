@@ -25,12 +25,12 @@
 			<label for="SystemInformationSenderCheckInterval">Check-interval (in seconds)</label>
 			<input type="text" id="SystemInformationSenderCheckInterval" data-bind="value: CheckIntervalInSeconds" />
 		
-			<section id="agentStatusSwitch">
-				<input type="radio" name="AgentsAreEnabled" value="true" id="agentStatusEnabled" data-bind="checked: AgentsAreEnabled.ForEditing" />
-				<label for="agentStatusEnabled">Agents are enabled</label>
+			<section class="agentStatusSwitch">
+				<input type="radio" value="true" data-bind="checked: AgentsAreEnabled.ForEditing" />
+				<label>Agents are enabled</label>
 
-				<input type="radio" name="AgentsAreEnabled" value="false" id="agentStatusDisabled" data-bind="checked: AgentsAreEnabled.ForEditing" />
-				<label for="agentStatusDisabled">Agents are disabled</label>
+				<input type="radio" value="false" data-bind="checked: AgentsAreEnabled.ForEditing" />
+				<label>Agents are disabled</label>
 			</section>
 		   
 		</section>
@@ -40,8 +40,24 @@
 				<h2>Agent Configuration</h2>
 			</header>
 			
-            <ul class="agents" data-bind="foreach: KnownAgents">
-                <li data-bind="text: $data"></></li>
+            <ul class="agents" data-bind="foreach: AgentInstanceConfigurations">
+                <li>
+                    <header>
+                        <h3 data-bind="text: MachineName"></h3>
+                    </header>
+					
+                    <section class="settings">
+                        
+                        <section class="agentStatusSwitch">
+                            <input type="radio" value="true" data-bind="checked: AgentIsEnabled.ForEditing" />
+                            <label>Agent is enabled</label>
+
+                            <input type="radio" value="false" data-bind="checked: AgentIsEnabled.ForEditing" />
+                            <label>Agent is disabled</label>
+                        </section>
+
+                    </section>
+                </li>
             </ul>
 		</section>
 		
@@ -57,6 +73,7 @@
 	<script type="text/javascript">
 		var agentConfigurationOptions = {
 		    KnownAgents: @Html.Raw(this.ViewBag.AgentsJSON),
+		    AgentConfigurationApiUrl: '/api/agentconfiguration',
 			SuccessCallback: function (message) {
 				console.info(message);
 			},

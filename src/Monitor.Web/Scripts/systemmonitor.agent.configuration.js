@@ -14,6 +14,22 @@ $.extend(SystemMonitor, {
 
     "AgentConfiguration": (function (moduleConfiguration) {
 
+        function agentInstanceConfigurationViewModel(instanceName) {
+            var self = this;
+
+            self.MachineName = instanceName;
+            self.AgentIsEnabled = ko.observable(true);
+            self.AgentIsEnabled.ForEditing = ko.computed({
+                read: function () {
+                    return self.AgentIsEnabled().toString();
+                },
+                write: function (newValue) {
+                    return self.AgentIsEnabled(newValue === "true");
+                },
+                owner: self
+            });            
+        }
+
         function agentConfigurationViewModel(viewModelConfiguration) {
             var self = this;
 
@@ -22,6 +38,7 @@ $.extend(SystemMonitor, {
             self.SystemInformationSenderPath = ko.observable();
             self.AgentsAreEnabled = ko.observable(true);
             self.CheckIntervalInSeconds = ko.observable();
+            self.AgentInstanceConfigurations = ko.observableArray();
 
             self.AgentsAreEnabled.ForEditing = ko.computed({
                 read: function () {
@@ -47,7 +64,7 @@ $.extend(SystemMonitor, {
 
             self.LoadConfiguration = function () {
                 $.ajax({
-                    url: "/api/agentconfiguration",
+                    url: self.GetAgentConfigurationApiUrl(),
                     type: "GET",
                     success: function (agentConfiguration) {
                         if (!agentConfiguration) {
@@ -71,7 +88,7 @@ $.extend(SystemMonitor, {
 
             self.SaveConfiguration = function () {
                 $.ajax({
-                    url: "/api/agentconfiguration",
+                    url: self.GetAgentConfigurationApiUrl(),
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify({
@@ -90,12 +107,33 @@ $.extend(SystemMonitor, {
                 });
             };
 
-            var applyConfiguration = function (configuration) {
+            var applyConfiguration = function(configuration) {
                 if (!configuration) {
                     return;
                 }
 
-                self.KnownAgents = ko.observableArray(configuration.KnownAgents);
+                /**
+                Get the AgentConfiguration API URL.
+                @name GetAgentConfigurationApiUrl
+                */
+                self.GetAgentConfigurationApiUrl = function () {
+                    return configuration.AgentConfigurationApiUrl;
+                };
+
+                /**
+                Initialize the agent-instance configuration view models.
+                */
+                var agentInstanceViewModels = [];
+                if (configuration.KnownAgents && configuration.KnownAgents.length > 0) {
+                    for (var i = 0; i < configuration.KnownAgents.length; i++) {
+                        agentInstanceViewModels.push(new agentInstanceConfigurationViewModel(configuration.KnownAgents[i]));
+                    }
+                }
+                self.AgentInstanceConfigurations = ko.observableArray(agentInstanceViewModels);
+
+                /**
+                Initialize the success- and error callback functions.
+                */
                 self.SuccessCallback = configuration.SuccessCallback;
                 self.ErrorCallback = configuration.ErrorCallback;
             };
