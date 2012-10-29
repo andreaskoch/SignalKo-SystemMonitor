@@ -99,6 +99,8 @@
     <Compile Include="Controllers\AgentConfigurationController.cs" />
     <Compile Include="Controllers\Api\AgentConfigurationController.cs" />
     <Compile Include="Controllers\Api\GroupConfigurationController.cs" />
+    <Compile Include="Core\Configuration\IServerConfigurationRepository.cs" />
+    <Compile Include="Core\Configuration\JsonFileConfigurationRepository.cs" />
     <Compile Include="Controllers\Api\SystemInformationController.cs" />
     <Compile Include="Controllers\GroupConfigurationController.cs" />
     <Compile Include="Controllers\SystemMonitorController.cs" />
@@ -186,6 +188,7 @@
     <Content Include="Scripts\monitoring-config.js" />
     <Content Include="Scripts\systemmonitor.agent.configuration.js" />
     <Content Include="Scripts\systemmonitor.base.js" />
+    <Content Include="Scripts\systemmonitor.overview.highcharts.theme.darkblue.js" />
     <Content Include="Scripts\systemmonitor.overview.highcharts.theme.gray.js" />
     <Content Include="Scripts\systemmonitor.utilities.js" />
     <Content Include="Scripts\global.js" />

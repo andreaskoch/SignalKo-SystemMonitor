@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.App_Start
@@ -19,6 +20,11 @@ namespace SignalKo.SystemMonitor.Monitor.Web.App_Start
 
             routes.MapRoute("SaveConfiguration", "SystemMonitor/SaveConfig", new { controller = "SystemMonitor", action = "SaveConfig" });
             routes.MapRoute("LoadConfiguration", "SystemMonitor/LoadConfig", new { controller = "SystemMonitor", action = "LoadConfig" });
+
+            routes.MapHttpRoute(
+                name: "DefaultApi", 
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional });
 
             routes.MapRoute("GroupConfigurationAll", "Configuration/Groups", MVC.GroupConfiguration.EditGroups());
             routes.MapRoute("GroupConfigurationSpecific", "Configuration/Group/{groupName}", MVC.GroupConfiguration.EditGroup());

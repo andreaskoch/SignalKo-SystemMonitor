@@ -39,6 +39,9 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Model\AgentConfiguration.cs" />
+    <Compile Include="Model\Configuration\Machine.cs" />
+    <Compile Include="Model\Configuration\MachineGroup.cs" />
+    <Compile Include="Model\Configuration\MachineGroupConfiguration.cs" />
     <Compile Include="Model\ProcessorUtilizationInformation.cs" />
     <Compile Include="Model\SystemInformation.cs" />
     <Compile Include="Model\SystemMemoryInformation.cs" />
@@ -52,6 +55,7 @@
     <Compile Include="Services\MemoryUnitConverter.cs" />
     <Compile Include="Services\UTCTimeProvider.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

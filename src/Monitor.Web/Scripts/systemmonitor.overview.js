@@ -47,7 +47,6 @@ $.extend(SystemMonitor, {
                 {
                     var name = dataPoints[i].Name;
                     var value = dataPoints[i].Value;
-
                     var series = getOrAddSeries(name);
 
                     var x = (new Date(timestamp)).getTime();
