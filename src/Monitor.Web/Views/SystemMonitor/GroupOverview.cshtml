@@ -11,7 +11,7 @@
         
         <ul data-bind="foreach: machineGroups">
             <li>
-                <a data-bind="attr: { href: '#tabs-' +  groupName() , title: groupName }, text:  groupName "></a>
+                <a data-bind="attr: { href: '#tabs-' +  groupName() , title: groupName }, text:  groupName() + ' / ' + GroupMedianStatus() "></a>
             </li>
         </ul>
 
@@ -67,12 +67,9 @@
                 var machineGroups = self.machineGroups();
                 for (var i = 0; i < machineGroups.length; i++) {
                     var machineStateGroup = machineGroups[i];
-                    var machines = machineStateGroup.monitorMachines();
-
-                    for (var j = 0; j < machines.length; j++) {
-                        if (machines[j].machineName === name) {
-                            return machines[j];
-                        }
+                    var machine = machineStateGroup.GetMachine(name);
+                    if (machine !== null) {
+                        return machine;
                     }
                 }
                 return null;
@@ -84,6 +81,42 @@
             var self = this;
             self.groupName = ko.observable(groupName);
             self.monitorMachines = ko.observableArray([]);
+            self.GroupMedianStatus = ko.computed(function () {
+                var median = 0;
+                for (var i = 0; i < self.monitorMachines().length; i++) {
+                    var current = self.monitorMachines()[i].MedianStatus();
+                    if (current > median) {
+                        median = current;
+                    }
+                }
+                return median.toFixed(2);
+            }, this);
+            
+            self.AddMachine = function (newMachine) {
+                //                newMachine.MedianStatus.subscribe(function () {
+                //                    self.SetMedian();
+                //                });
+                self.monitorMachines.push(newMachine);
+            };
+
+            self.GetMachine = function (machineName) {
+                var match = ko.utils.arrayFirst(self.monitorMachines(), function (item) {
+                    return item.machineName == machineName;
+                });
+                return match;
+            };
+
+            self.SetMedian = function () {
+                var median = 0;
+                for (var i = 0; i < self.monitorMachines().length; i++) {
+                    var current = self.monitorMachines()[i].MedianStatus();
+                    if (current > median) {
+                        median = current;
+                    }
+                }
+                self.GroupMedianStatus(median.toFixed(2));
+            };
+
         };
 
         var GroupOverViewMachine = function (name) {
@@ -125,28 +158,29 @@
 
                     series.addPoint([x, y], redrawChart, shiftChart);
                 }
-                //self.MedianStatus(getMedian(self.chart.series));
+                self.MedianStatus(getMedian(self.chart.series));
                 self.chart.redraw();
             };
 
             var getMedian = function (series) {
                 var value = 0;
+                var ser = [];
                 for (var i = 0; i < series.length; i++) {
                     var entries = series[i].data;
-                    var currentValue = median(entries);
+                    for (var j = 0; j < entries.length; j++) {
+                        ser.push(entries[j].y);
+                    }
+                    var currentValue = median(ser);
                     if (currentValue > value) {
                         value = currentValue;
                     }
                 }
-                return value;
+                return value.toFixed(2);
             };
 
             var median = function (values) {
-
                 values.sort(function (a, b) { return a - b; });
-
                 var half = Math.floor(values.length / 2);
-
                 if (values.length % 2)
                     return values[half];
                 else
@@ -162,13 +196,11 @@
                         return entry;
                     }
                 }
-
                 self.chart.addSeries({
                     "name": seriesName,
                     "data": []
                 });
                 return null;
-
             };
 
             var initializeChart = function (startDateAndTime, initialDataPoints) {
@@ -263,7 +295,7 @@
                         var overviewMachine = new GroupOverViewMachine(machine.machineName());
                         overviewMachine.isWebserver(machine.isWebserver());
                         overviewMachine.monitorAgentEnabled(machine.monitorAgentEnabled());
-                        overViewGroup.monitorMachines.push(overviewMachine);
+                        overViewGroup.AddMachine(overviewMachine);
                     }
                     groupOverViewModel.machineGroups.push(overViewGroup);
                 }
