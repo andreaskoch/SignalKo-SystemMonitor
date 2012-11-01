@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -40,9 +41,16 @@ namespace SignalKo.SystemMonitor.Agent.CommandLine
             Console.WriteLine();
 
             // get custom machine name
-            Console.Write("Enter a machine name (default: {0}):", Environment.MachineName);
-            customMachineName = Console.ReadLine();
-            Console.WriteLine();
+            if (args.Length > 0)
+            {
+                customMachineName = args.First();
+            }
+            else
+            {
+                Console.Write("Enter a machine name (default: {0}):", Environment.MachineName);
+                customMachineName = Console.ReadLine();
+                Console.WriteLine();                
+            }
 #endif
 
             StructureMapSetup.Setup(customMachineName);
