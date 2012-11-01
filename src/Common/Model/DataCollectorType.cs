@@ -2,14 +2,14 @@ namespace SignalKo.SystemMonitor.Common.Model
 {
 	public enum DataCollectorType
 	{
-		SystemPerformance,
+		SystemPerformance = 1,
 
-		HttpStatusCodeCheck,
+		HttpStatusCodeCheck = 2,
 
-		HttpResponseContentCheck,
+		HttpResponseContentCheck = 3,
 
-		HttpResponseTimeCheck,
+		HttpResponseTimeCheck = 4,
 
-		HealthPageCheck
+		HealthPageCheck = 5
 	}
 }

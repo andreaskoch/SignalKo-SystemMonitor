@@ -59,7 +59,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.Mapper
 							CheckIntervalInSeconds = dto.CheckIntervalInSeconds,
 							CheckUrl = dto.CheckUrl,
 							Hostheader = dto.Hostheader,
-							MaxResponseTimeInMilliseconds = dto.MaxResponseTimeInMilliseconds
+							MaxResponseTimeInMilliseconds = dto.MaxResponseTimeInSeconds
 						};
 
 				case DataCollectorType.HealthPageCheck:
@@ -69,7 +69,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.Mapper
 							CheckIntervalInSeconds = dto.CheckIntervalInSeconds,
 							CheckUrl = dto.CheckUrl,
 							Hostheader = dto.Hostheader,
-							MaxResponseTimeInMilliseconds = dto.MaxResponseTimeInMilliseconds
+							MaxResponseTimeInMilliseconds = dto.MaxResponseTimeInSeconds
 						};
 
 				default:

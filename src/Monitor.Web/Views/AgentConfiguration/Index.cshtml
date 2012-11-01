@@ -76,11 +76,11 @@
 										<i class="icon-minus-sign" title="Click to remove collector" data-bind="click: $parent.RemoveCollectorDefinition.bind($data)"></i>
 									</header>
 
-									<!-- ko if: CollectorType == 'System Information' -->
-									<section class="collectorDefinition systemInformation">
-										<label>Checkinterval (in seconds)</label>
+									<!-- ko if: CollectorType == 'System Performance' -->
+									<section class="collectorDefinition systemPerformance">
+										<label>Check interval</label>
 										<input class="checkInterval" type="range" min="1" max="10" data-bind="value: CheckIntervalInSeconds" />
-										<span data-bind="text: CheckIntervalInSeconds"></span>
+										<span data-bind="text: CheckIntervalHumanReadable"></span>
 									</section>
 									<!-- /ko -->
 									
@@ -95,9 +95,9 @@
 										<label>Expected HTTP Status Code</label>
 										<input class="expectedStatusCode" type="text" placeholder="200" data-bind="value: ExpectedStatusCode" />
 										
-										<label>Checkinterval (in seconds)</label>
+										<label>Check interval</label>
 										<input class="checkInterval" type="range" min="1" max="10" data-bind="value: CheckIntervalInSeconds" />
-										<span data-bind="text: CheckIntervalInSeconds"></span>
+										<span data-bind="text: CheckIntervalHumanReadable"></span>
 									</section>
 									<!-- /ko -->
 									
@@ -112,9 +112,9 @@
 										<label>Regular Expression</label>
 										<input class="checkPattern" type="text" placeholder="Cart Content contains \d item" data-bind="value: CheckPattern" />
 										
-										<label>Checkinterval (in seconds)</label>
-										<input class="checkInterval" type="range" min="1" max="10" data-bind="value: CheckIntervalInSeconds" />
-										<span data-bind="text: CheckIntervalInSeconds"></span>
+										<label>Check interval</label>
+										<input class="checkInterval" type="range" min="1" max="360" data-bind="value: CheckIntervalInSeconds" />
+										<span data-bind="text: CheckIntervalHumanReadable"></span>
 									</section>
 									<!-- /ko -->
 									
@@ -126,13 +126,13 @@
 										<label>Hostheader</label>
 										<input type="text" placeholder="example.com" data-bind="value: Hostheader" />
 										
-										<label>Max response time (in milliseconds)</label>
-										<input type="range" min="1" max="20000" data-bind="value: MaxResponseTimeInMilliseconds" />
-										<span data-bind="text: MaxResponseTimeInMilliseconds"></span>
+										<label>Max response time</label>
+										<input type="range" min="1" max="30" data-bind="value: MaxResponseTimeInSeconds" />
+										<span data-bind="text: MaxResponseTimeHumanReadable"></span>
 										
-										<label>Checkinterval (in seconds)</label>
+										<label>Check interval</label>
 										<input class="checkInterval" type="range" min="1" max="10" data-bind="value: CheckIntervalInSeconds" />
-										<span data-bind="text: CheckIntervalInSeconds"></span>
+										<span data-bind="text: CheckIntervalHumanReadable"></span>
 									</section>
 									<!-- /ko -->
 									
@@ -144,13 +144,13 @@
 										<label>Hostheader</label>
 										<input type="text" placeholder="example.com" data-bind="value: Hostheader" />
 										
-										<label>Max response time (in milliseconds)</label>
-										<input type="range" min="1" max="30000" data-bind="value: MaxResponseTimeInMilliseconds" />
-										<span data-bind="text: MaxResponseTimeInMilliseconds"></span>
+										<label>Max response time</label>
+										<input type="range" min="1" max="30" data-bind="value: MaxResponseTimeInSeconds" />
+										<span data-bind="text: MaxResponseTimeHumanReadable"></span>
 										
-										<label>Checkinterval (in minutes)</label>
+										<label>Check interval</label>
 										<input class="checkInterval" type="range" min="60" max="7200" data-bind="value: CheckIntervalInSeconds" />
-										<span data-bind="text: CheckIntervalInMinutes"></span>
+										<span data-bind="text: CheckIntervalHumanReadable"></span>
 									</section>
 									<!-- /ko -->
 								</li>

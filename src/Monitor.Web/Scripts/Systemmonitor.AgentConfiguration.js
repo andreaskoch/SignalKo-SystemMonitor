@@ -21,11 +21,19 @@ $.extend(SystemMonitor, {
 		var healthPageCheck = "Health Page Check";
 
 		var collectorTypes = [systemPerformanceCheck, httpStatusCodeCheck, webPageContentCheck, responseTimeCheck, healthPageCheck];
+		
+		function getHumanReadableTimespanFromSeconds(seconds) {
+			return "{0} seconds".format(seconds);
+		}
 
 		function systemPerformanceCheckDefinition() {
 			var self = this;
 			
 			self.CheckIntervalInSeconds = ko.observable(1);
+			
+			self.CheckIntervalHumanReadable = ko.computed(function () {
+				return getHumanReadableTimespanFromSeconds(self.CheckIntervalInSeconds());
+			}, this);
 		}
 
 		function httpStatusCodeCheckDefinition() {
@@ -35,6 +43,10 @@ $.extend(SystemMonitor, {
 			self.CheckUrl = ko.observable();
 			self.Hostheader = ko.observable();
 			self.ExpectedStatusCode = ko.observable();
+			
+			self.CheckIntervalHumanReadable = ko.computed(function () {
+				return getHumanReadableTimespanFromSeconds(self.CheckIntervalInSeconds());
+			}, this);
 		}
 
 		function webPageContentCheckDefinition() {
@@ -44,6 +56,10 @@ $.extend(SystemMonitor, {
 			self.CheckUrl = ko.observable();
 			self.Hostheader = ko.observable();
 			self.CheckPattern = ko.observable();
+			
+			self.CheckIntervalHumanReadable = ko.computed(function () {
+				return getHumanReadableTimespanFromSeconds(self.CheckIntervalInSeconds());
+			}, this);
 		}
 
 		function responseTimeCheckDefinition() {
@@ -52,7 +68,15 @@ $.extend(SystemMonitor, {
 			self.CheckIntervalInSeconds = ko.observable(1);
 			self.CheckUrl = ko.observable();
 			self.Hostheader = ko.observable();
-			self.MaxResponseTimeInMilliseconds = ko.observable(1000);
+			self.MaxResponseTimeInSeconds = ko.observable(1);
+			
+			self.MaxResponseTimeHumanReadable = ko.computed(function () {
+				return getHumanReadableTimespanFromSeconds(self.MaxResponseTimeInSeconds());
+			}, this);
+			
+			self.CheckIntervalHumanReadable = ko.computed(function () {
+				return getHumanReadableTimespanFromSeconds(self.CheckIntervalInSeconds());
+			}, this);
 		}
 
 		function healthPageCheckDefinition() {
@@ -61,11 +85,14 @@ $.extend(SystemMonitor, {
 			self.CheckIntervalInSeconds = ko.observable(120);
 			self.CheckUrl = ko.observable();
 			self.Hostheader = ko.observable();
-			self.MaxResponseTimeInMilliseconds = ko.observable(10000);
-			self.CheckIntervalInMinutes = ko.computed(function() {
-				var minutes = Math.floor(self.CheckIntervalInSeconds() / 60);
-				var seconds = self.CheckIntervalInSeconds() % 60;
-				return "{0} minutes and {1} seconds".format(minutes, seconds);
+			self.MaxResponseTimeInSeconds = ko.observable(1);
+			
+			self.MaxResponseTimeHumanReadable = ko.computed(function () {
+				return getHumanReadableTimespanFromSeconds(self.MaxResponseTimeInSeconds());
+			}, this);
+			
+			self.CheckIntervalHumanReadable = ko.computed(function() {
+				return getHumanReadableTimespanFromSeconds(self.CheckIntervalInSeconds());
 			}, this);
 		}
 

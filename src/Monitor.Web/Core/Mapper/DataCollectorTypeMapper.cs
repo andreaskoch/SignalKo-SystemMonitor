@@ -21,7 +21,6 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.Mapper
 				case "Web Page Content Check":
 					return DataCollectorType.HttpResponseContentCheck;
 
-				case "System Information":
 				case "System Performance":
 					return DataCollectorType.SystemPerformance;
 

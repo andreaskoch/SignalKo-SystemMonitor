@@ -12,7 +12,7 @@ namespace SignalKo.SystemMonitor.Common.Dto
 
 		public int ExpectedStatusCode { get; set; }
 
-		public int MaxResponseTimeInMilliseconds { get; set; }
+		public int MaxResponseTimeInSeconds { get; set; }
 
 		public string CheckPattern { get; set; }
 	}
