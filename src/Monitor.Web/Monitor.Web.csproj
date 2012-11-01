@@ -18,6 +18,10 @@
     <UseIISExpress>true</UseIISExpress>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -203,6 +207,9 @@
     <Content Include="Scripts\libraries\knockout-2.1.0.js" />
     <Content Include="Scripts\libraries\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\libraries\knockout.mapping-latest.js" />
+    <Content Include="Styles\fonts\fontawesome-webfont.eot" />
+    <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Styles\fonts\fontawesome-webfont.woff" />
     <None Include="Styles\Combined\global.css" />
     <None Include="Styles\Source\03-content.chirp.less" />
     <None Include="Styles\Source\constants.less" />
@@ -225,6 +232,9 @@
       <DependentUpon>03-content.chirp.less</DependentUpon>
     </None>
     <Content Include="Scripts\libraries\toastr.js" />
+    <Content Include="Scripts\libraries\underscore.js" />
+    <Content Include="Scripts\libraries\underscore.min.js" />
+    <Content Include="Styles\fonts\fontawesome-webfont.svg" />
     <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_100_99b2dd_40x100.png" />
     <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_45_b0cbf1_40x100.png" />
     <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_50_99b2dd_40x100.png" />
@@ -257,6 +267,12 @@
     <Content Include="Styles\Combined\jquery-ui\overcast\images\ui-icons_999999_256x240.png" />
     <Content Include="Styles\Combined\jquery-ui\overcast\images\ui-icons_fbc856_256x240.png" />
     <Content Include="Styles\Combined\jquery-ui\overcast\jquery-ui-1.8.23.custom.css" />
+    <None Include="Styles\Source\libraries\font-awesome.css">
+      <DependentUpon>font-awesome.chirp.less</DependentUpon>
+    </None>
+    <None Include="Styles\Source\libraries\font-awesome.min.css">
+      <DependentUpon>font-awesome.chirp.less</DependentUpon>
+    </None>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -299,9 +315,12 @@
     <Content Include="Views\AgentConfiguration\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Styles\combine.chirp.config" />
+    <Content Include="Styles\combine.chirp.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Styles\Source\01-global.chirp.less" />
     <None Include="Styles\Source\02-layout.chirp.less" />
+    <None Include="Styles\Source\libraries\font-awesome.chirp.less" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>

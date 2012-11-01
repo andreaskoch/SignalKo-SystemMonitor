@@ -14,6 +14,73 @@ $.extend(SystemMonitor, {
 
     "AgentConfiguration": (function (moduleConfiguration) {
 
+	    var collectorTypeSystemInformation = "System Information";
+	    var httpStatusCodeCheck = "HTTP Status Code Check";
+	    var webPageContentCheck = "Web Page Content Check";
+	    var responseTimeCheck = "Response Time Check";
+	    
+	    var collectorTypes = [collectorTypeSystemInformation, httpStatusCodeCheck, webPageContentCheck, responseTimeCheck];
+	    
+	    function systemInformationCollectorDefinition() {
+		    var self = this;
+	    }
+	    
+	    function httpStatusCodeCheckDefinition() {
+	    	var self = this;
+		    
+	    	self.CheckUrl = ko.observable();
+	    	self.Hostheader = ko.observable();
+	    	self.ExpectedStatusCode = ko.observable();
+	    }
+	    
+	    function webPageContentCheckDefinition() {
+	    	var self = this;
+		    
+	    	self.CheckUrl = ko.observable();
+	    	self.Hostheader = ko.observable();
+	    	self.CheckPattern = ko.observable();
+	    }
+	    
+	    function responseTimeCheckDefinition() {
+	    	var self = this;
+
+		    self.CheckUrl = ko.observable();
+		    self.Hostheader = ko.observable();
+		    self.MaxResponseTimeInMilliseconds = ko.observable(1000);
+	    }
+
+        function agentInstanceCollectorDefinitionViewModel(collectorType) {
+	        var self = this;
+	        
+	        self.CollectorType = collectorType;
+	        self.CheckIntervalInSeconds = ko.observable(1);
+	        
+	        switch (collectorType) {
+	        	case collectorTypeSystemInformation:
+	        		{
+	        			_.extend(self, new systemInformationCollectorDefinition());
+	        			break;
+	        		}
+	        	case httpStatusCodeCheck:
+	        		{
+	        			_.extend(self, new httpStatusCodeCheckDefinition());
+	        			break;
+	        		}
+	        	case webPageContentCheck:
+	        		{
+	        			_.extend(self, new webPageContentCheckDefinition());
+	        			break;
+	        		}
+	        	case responseTimeCheck:
+	        		{
+	        			_.extend(self, new responseTimeCheckDefinition());
+	        			break;
+	        		}
+	        	default:
+					throw new Error("The collector type '{0}' is unknown.".format(collectorType));
+	        }
+        }
+
         function agentInstanceConfigurationViewModel(instanceName) {
             var self = this;
 
@@ -27,7 +94,33 @@ $.extend(SystemMonitor, {
                     return self.AgentIsEnabled(newValue === "true");
                 },
                 owner: self
-            });            
+            }, this);
+
+            self.CollectorDefinitions = ko.observableArray();
+            self.AvailableCollectorTypes = ko.computed(function () {
+            	var collectorDefinitions = self.CollectorDefinitions();
+                var availableCollectorTypes = collectorTypes;
+                for (var i = 0; i < collectorDefinitions.length; i++) {
+                	var collectorDefinitionViewModel = collectorDefinitions[i];
+                    availableCollectorTypes = _.without(availableCollectorTypes, collectorDefinitionViewModel.CollectorType);
+                }
+
+                return availableCollectorTypes;
+            }, this);
+
+            self.AddCollectorDefinition = function(collectorType) {
+            	console.debug("Adding a collector definition of type '{0}'".format(collectorType));
+	            
+                var collectorDefinition = new agentInstanceCollectorDefinitionViewModel(collectorType);
+                self.CollectorDefinitions.push(collectorDefinition);
+                console.log(self.CollectorDefinitions());
+            };
+
+        	/// <summary>Remove the supplied collector definition view model.</summary>
+        	/// <param name="collectorDefinitionViewModel" type="agentInstanceCollectorDefinitionViewModel">The collector definition to remove.</param>
+            self.RemoveCollectorDefinition = function (collectorDefinitionViewModel) {
+            	self.CollectorDefinitions.remove(collectorDefinitionViewModel);
+            };
         }
 
         function agentConfigurationViewModel(viewModelConfiguration) {
@@ -48,7 +141,7 @@ $.extend(SystemMonitor, {
                     return self.AgentsAreEnabled(newValue === "true");
                 },
                 owner: self
-            });
+            }, this);
 
             var showSuccessMessage = function (message) {
                 if (self.SuccessCallback && typeof (self.SuccessCallback) === 'function') {

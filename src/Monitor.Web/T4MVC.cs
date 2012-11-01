@@ -347,6 +347,9 @@ namespace Links {
                           
             public static readonly string toastr_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/toastr.min.js") ? Url("toastr.min.js") : Url("toastr.js");
                           
+            public static readonly string underscore_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/underscore.min.js") ? Url("underscore.min.js") : Url("underscore.js");
+                          
+            public static readonly string underscore_min_js = Url("underscore.min.js");
         }
     
         public static readonly string monitoring_config_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/monitoring-config.min.js") ? Url("monitoring-config.min.js") : Url("monitoring-config.js");
@@ -374,6 +377,17 @@ namespace Links {
             private const string URLPATH = "~/Styles/Combined";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class fonts {
+                private const string URLPATH = "~/Styles/Combined/fonts";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string fontawesome_webfont_eot = Url("fontawesome-webfont.eot");
+                public static readonly string fontawesome_webfont_svg = Url("fontawesome-webfont.svg");
+                public static readonly string fontawesome_webfont_ttf = Url("fontawesome-webfont.ttf");
+                public static readonly string fontawesome_webfont_woff = Url("fontawesome-webfont.woff");
+            }
+        
             public static readonly string global_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/global.min.css") ? Url("global.min.css") : Url("global.css");
                  
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -465,6 +479,17 @@ namespace Links {
                  
             public static readonly string _03_content_min_css = Url("03-content.min.css");
             public static readonly string constants_less = Url("constants.less");
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class libraries {
+                private const string URLPATH = "~/Styles/Source/libraries";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string font_awesome_chirp_less = Url("font-awesome.chirp.less");
+                public static readonly string font_awesome_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/font-awesome.min.css") ? Url("font-awesome.min.css") : Url("font-awesome.css");
+                     
+                public static readonly string font_awesome_min_css = Url("font-awesome.min.css");
+            }
+        
         }
     
     }
