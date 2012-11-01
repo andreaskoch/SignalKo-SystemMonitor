@@ -23,9 +23,6 @@ using T4MVC;
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
     public partial class AgentConfigurationController {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public AgentConfigurationController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected AgentConfigurationController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

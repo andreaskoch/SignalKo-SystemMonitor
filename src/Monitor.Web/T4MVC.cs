@@ -351,15 +351,15 @@ namespace Links {
     
         public static readonly string monitoring_config_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/monitoring-config.min.js") ? Url("monitoring-config.min.js") : Url("monitoring-config.js");
                       
-        public static readonly string systemmonitor_agent_configuration_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/systemmonitor.agent.configuration.min.js") ? Url("systemmonitor.agent.configuration.min.js") : Url("systemmonitor.agent.configuration.js");
+        public static readonly string Systemmonitor_AgentConfiguration_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.AgentConfiguration.min.js") ? Url("Systemmonitor.AgentConfiguration.min.js") : Url("Systemmonitor.AgentConfiguration.js");
                       
-        public static readonly string systemmonitor_base_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/systemmonitor.base.min.js") ? Url("systemmonitor.base.min.js") : Url("systemmonitor.base.js");
+        public static readonly string Systemmonitor_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.min.js") ? Url("Systemmonitor.min.js") : Url("Systemmonitor.js");
                       
-        public static readonly string systemmonitor_overview_highcharts_theme_gray_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/systemmonitor.overview.highcharts.theme.gray.min.js") ? Url("systemmonitor.overview.highcharts.theme.gray.min.js") : Url("systemmonitor.overview.highcharts.theme.gray.js");
+        public static readonly string Systemmonitor_Overview_Highcharts_Theme_Gray_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.Overview.Highcharts.Theme.Gray.min.js") ? Url("Systemmonitor.Overview.Highcharts.Theme.Gray.min.js") : Url("Systemmonitor.Overview.Highcharts.Theme.Gray.js");
                       
-        public static readonly string systemmonitor_overview_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/systemmonitor.overview.min.js") ? Url("systemmonitor.overview.min.js") : Url("systemmonitor.overview.js");
+        public static readonly string Systemmonitor_Overview_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.Overview.min.js") ? Url("Systemmonitor.Overview.min.js") : Url("Systemmonitor.Overview.js");
                       
-        public static readonly string systemmonitor_utilities_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/systemmonitor.utilities.min.js") ? Url("systemmonitor.utilities.min.js") : Url("systemmonitor.utilities.js");
+        public static readonly string Systemmonitor_Utilities_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.Utilities.min.js") ? Url("Systemmonitor.Utilities.min.js") : Url("Systemmonitor.Utilities.js");
                       
     }
 
