@@ -14,20 +14,24 @@ $.extend(SystemMonitor, {
 
 	"AgentConfiguration": (function (moduleConfiguration) {
 
-		var collectorTypeSystemInformation = "System Information";
+		var systemPerformanceCheck = "System Performance";
 		var httpStatusCodeCheck = "HTTP Status Code Check";
 		var webPageContentCheck = "Web Page Content Check";
 		var responseTimeCheck = "Response Time Check";
+		var healthPageCheck = "Health Page Check";
 
-		var collectorTypes = [collectorTypeSystemInformation, httpStatusCodeCheck, webPageContentCheck, responseTimeCheck];
+		var collectorTypes = [systemPerformanceCheck, httpStatusCodeCheck, webPageContentCheck, responseTimeCheck, healthPageCheck];
 
-		function systemInformationCollectorDefinition() {
+		function systemPerformanceCheckDefinition() {
 			var self = this;
+			
+			self.CheckIntervalInSeconds = ko.observable(1);
 		}
 
 		function httpStatusCodeCheckDefinition() {
 			var self = this;
 
+			self.CheckIntervalInSeconds = ko.observable(1);
 			self.CheckUrl = ko.observable();
 			self.Hostheader = ko.observable();
 			self.ExpectedStatusCode = ko.observable();
@@ -36,6 +40,7 @@ $.extend(SystemMonitor, {
 		function webPageContentCheckDefinition() {
 			var self = this;
 
+			self.CheckIntervalInSeconds = ko.observable(1);
 			self.CheckUrl = ko.observable();
 			self.Hostheader = ko.observable();
 			self.CheckPattern = ko.observable();
@@ -44,21 +49,35 @@ $.extend(SystemMonitor, {
 		function responseTimeCheckDefinition() {
 			var self = this;
 
+			self.CheckIntervalInSeconds = ko.observable(1);
 			self.CheckUrl = ko.observable();
 			self.Hostheader = ko.observable();
 			self.MaxResponseTimeInMilliseconds = ko.observable(1000);
+		}
+
+		function healthPageCheckDefinition() {
+			var self = this;
+
+			self.CheckIntervalInSeconds = ko.observable(120);
+			self.CheckUrl = ko.observable();
+			self.Hostheader = ko.observable();
+			self.MaxResponseTimeInMilliseconds = ko.observable(10000);
+			self.CheckIntervalInMinutes = ko.computed(function() {
+				var minutes = Math.floor(self.CheckIntervalInSeconds() / 60);
+				var seconds = self.CheckIntervalInSeconds() % 60;
+				return "{0} minutes and {1} seconds".format(minutes, seconds);
+			}, this);
 		}
 
 		function agentInstanceCollectorDefinitionViewModel(collectorType) {
 			var self = this;
 
 			self.CollectorType = collectorType;
-			self.CheckIntervalInSeconds = ko.observable(1);
 
 			switch (collectorType) {
-				case collectorTypeSystemInformation:
+				case systemPerformanceCheck:
 					{
-						_.extend(self, new systemInformationCollectorDefinition());
+						_.extend(self, new systemPerformanceCheckDefinition());
 						break;
 					}
 				case httpStatusCodeCheck:
@@ -74,6 +93,11 @@ $.extend(SystemMonitor, {
 				case responseTimeCheck:
 					{
 						_.extend(self, new responseTimeCheckDefinition());
+						break;
+					}
+				case healthPageCheck:
+					{
+						_.extend(self, new healthPageCheckDefinition());
 						break;
 					}
 				default:
@@ -184,13 +208,10 @@ $.extend(SystemMonitor, {
 					url: self.GetAgentConfigurationApiUrl(),
 					type: "POST",
 					contentType: "application/json",
-					data: JSON.stringify({
-						"Hostaddress": self.Hostaddress(),
-						"Hostname": self.Hostname(),
-						"SystemInformationSenderPath": self.SystemInformationSenderPath(),
-						"AgentsAreEnabled": self.AgentsAreEnabled(),
-						"CheckIntervalInSeconds": self.CheckIntervalInSeconds()
-					}),
+					data: function () {
+						var jsonData = ko.toJSON(self);
+						return jsonData;
+					}(),
 					success: function () {
 						showSuccessMessage("Agent configuration has bee saved successfully.");
 					},

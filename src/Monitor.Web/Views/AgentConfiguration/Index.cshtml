@@ -135,6 +135,24 @@
 										<span data-bind="text: CheckIntervalInSeconds"></span>
 									</section>
 									<!-- /ko -->
+									
+									<!-- ko if: CollectorType == 'Health Page Check' -->
+									<section class="collectorDefinition healthPageCheck">
+										<label>URL</label>
+										<input type="text" placeholder="http://10.0.2.14/monitoring.axd/json" data-bind="value: CheckUrl" />
+										
+										<label>Hostheader</label>
+										<input type="text" placeholder="example.com" data-bind="value: Hostheader" />
+										
+										<label>Max response time (in milliseconds)</label>
+										<input type="range" min="1" max="30000" data-bind="value: MaxResponseTimeInMilliseconds" />
+										<span data-bind="text: MaxResponseTimeInMilliseconds"></span>
+										
+										<label>Checkinterval (in minutes)</label>
+										<input class="checkInterval" type="range" min="60" max="7200" data-bind="value: CheckIntervalInSeconds" />
+										<span data-bind="text: CheckIntervalInMinutes"></span>
+									</section>
+									<!-- /ko -->
 								</li>
 							</ul>
 						</section>
