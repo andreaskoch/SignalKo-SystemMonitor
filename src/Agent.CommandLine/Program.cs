@@ -31,7 +31,7 @@ namespace SignalKo.SystemMonitor.Agent.CommandLine
 #if DEBUG
             // wait for debug
             int processId = Process.GetCurrentProcess().Id;
-            Console.Write(string.Format("For debug attach to process {0} and hit <{1}> ...", processId, ConsoleKey.Enter));
+            Console.Write("For debug attach to process {0} and hit <{1}> ...", processId, ConsoleKey.Enter);
             while (Console.ReadKey().Key != ConsoleKey.Enter)
             {
                 Thread.Sleep(100);
@@ -40,7 +40,7 @@ namespace SignalKo.SystemMonitor.Agent.CommandLine
             Console.WriteLine();
 
             // get custom machine name
-            Console.Write(string.Format("Enter a machine name (default: {0}):", Environment.MachineName));
+            Console.Write("Enter a machine name (default: {0}):", Environment.MachineName);
             customMachineName = Console.ReadLine();
             Console.WriteLine();
 #endif
