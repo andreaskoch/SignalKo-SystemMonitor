@@ -118,12 +118,8 @@
     <Compile Include="Core\DataAccess\JsonAgentConfigurationDataAccessor.cs" />
     <Compile Include="Core\Mapper\AgentConfigurationMapper.cs" />
     <Compile Include="Core\Mapper\AgentInstanceConfigurationMapper.cs" />
-    <Compile Include="Core\Mapper\CollectorDefinitionMapper.cs" />
-    <Compile Include="Core\Mapper\DataCollectorTypeMapper.cs" />
     <Compile Include="Core\Mapper\IAgentConfigurationMapper.cs" />
     <Compile Include="Core\Mapper\IAgentInstanceConfigurationMapper.cs" />
-    <Compile Include="Core\Mapper\ICollectorDefinitionMapper.cs" />
-    <Compile Include="Core\Mapper\IDataCollectorTypeMapper.cs" />
     <Compile Include="Core\Services\AgentConfigurationService.cs" />
     <Compile Include="Core\Services\IAgentConfigurationService.cs" />
     <Compile Include="Core\Services\IKnownAgentsProvider.cs" />

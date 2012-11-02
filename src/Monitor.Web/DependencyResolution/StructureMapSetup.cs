@@ -42,8 +42,6 @@ namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
 					x.For<ISystemStatusOrchestrator>().Use<SystemStatusOrchestrator>();
 
 					/* mapper */
-					x.For<IDataCollectorTypeMapper>().Use<DataCollectorTypeMapper>();
-					x.For<ICollectorDefinitionMapper>().Use<CollectorDefinitionMapper>();
 					x.For<IAgentInstanceConfigurationMapper>().Use<AgentInstanceConfigurationMapper>();
 					x.For<IAgentConfigurationMapper>().Use<AgentConfigurationMapper>();
 

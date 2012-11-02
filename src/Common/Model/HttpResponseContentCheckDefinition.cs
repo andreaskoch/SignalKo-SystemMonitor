@@ -2,10 +2,8 @@ using System.Text.RegularExpressions;
 
 namespace SignalKo.SystemMonitor.Common.Model
 {
-	public class HttpResponseContentCheckDefinition : ICollectorDefinition
+	public class HttpResponseContentCheckDefinition
 	{
-		public DataCollectorType CollectorType { get; set; }
-
 		public int CheckIntervalInSeconds { get; set; }
 
 		public string CheckUrl { get; set; }
@@ -16,8 +14,7 @@ namespace SignalKo.SystemMonitor.Common.Model
 
 		public bool IsValid()
 		{
-			return CollectorType.Equals(DataCollectorType.HttpResponseContentCheck) && CheckIntervalInSeconds > 0 && string.IsNullOrWhiteSpace(this.CheckUrl) == false
-				   && this.CheckPattern != null;
+			return CheckIntervalInSeconds > 0 && string.IsNullOrWhiteSpace(this.CheckUrl) == false && this.CheckPattern != null;
 		}
 	}
 }

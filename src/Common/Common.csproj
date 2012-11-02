@@ -43,12 +43,10 @@
     <Compile Include="Dto\CollectorDefinitionDto.cs" />
     <Compile Include="Model\AgentConfiguration.cs" />
     <Compile Include="Model\AgentInstanceConfiguration.cs" />
-    <Compile Include="Model\DataCollectorType.cs" />
     <Compile Include="Model\HealthPageCheckDefinition.cs" />
     <Compile Include="Model\HttpResponseContentCheckDefinition.cs" />
     <Compile Include="Model\HttpResponseTimeCheckDefinition.cs" />
     <Compile Include="Model\HttpStatusCodeCheckDefinition.cs" />
-    <Compile Include="Model\ICollectorDefinition.cs" />
     <Compile Include="Model\ProcessorUtilizationInformation.cs" />
     <Compile Include="Model\SystemInformation.cs" />
     <Compile Include="Model\SystemMemoryInformation.cs" />

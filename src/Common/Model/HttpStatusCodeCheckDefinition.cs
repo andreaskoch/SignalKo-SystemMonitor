@@ -1,9 +1,7 @@
 namespace SignalKo.SystemMonitor.Common.Model
 {
-	public class HttpStatusCodeCheckDefinition : ICollectorDefinition
+	public class HttpStatusCodeCheckDefinition
 	{
-		public DataCollectorType CollectorType { get; set; }
-
 		public int CheckIntervalInSeconds { get; set; }
 
 		public string CheckUrl { get; set; }
@@ -14,8 +12,7 @@ namespace SignalKo.SystemMonitor.Common.Model
 
 		public bool IsValid()
 		{
-			return CollectorType.Equals(DataCollectorType.HttpStatusCodeCheck) && CheckIntervalInSeconds > 0 && string.IsNullOrWhiteSpace(this.CheckUrl) == false
-				   && this.ExpectedStatusCode > 0;
+			return CheckIntervalInSeconds > 0 && string.IsNullOrWhiteSpace(this.CheckUrl) == false && this.ExpectedStatusCode > 0;
 		}
 	}
 }
