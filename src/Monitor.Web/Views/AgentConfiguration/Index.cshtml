@@ -163,7 +163,6 @@
 		</section>
 		
 		<section class="commands">
-			<button class="button btnLoad" data-bind="click: LoadConfiguration">Load</button>
 			<button class="button btnSave" data-bind="click: SaveConfiguration">Save</button>
 		</section>
 
@@ -173,13 +172,12 @@
 @section CustomScripts {
 	<script type="text/javascript">
 		var agentConfigurationOptions = {
-			KnownAgents: @Html.Raw(this.ViewBag.AgentsJSON),
 			AgentConfigurationApiUrl: '/api/agentconfiguration',
 			SuccessCallback: function (message) {
-				console.info(message);
+				console.log(message);
 			},
 			ErrorCallback: function (message) {
-				console.warn(message);
+				$(".agent-configuration:first").html("Cannot load agent configuration from \"{0}\".<br/>The service returned this message:<br/>{1}".format(this.AgentConfigurationApiUrl, message));
 			}
 		};
 	</script>
