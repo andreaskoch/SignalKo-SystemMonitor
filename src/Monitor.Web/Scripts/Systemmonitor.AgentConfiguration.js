@@ -13,7 +13,7 @@ if (typeof (SystemMonitor) === 'undefined') {
 $.extend(SystemMonitor, {
 
 	"AgentConfiguration": (function (moduleConfiguration) {
-
+		
 		var systemPerformanceCheck = "System Performance";
 		var httpStatusCodeCheck = "HTTP Status Code Check";
 		var webPageContentCheck = "Web Page Content Check";
@@ -132,10 +132,27 @@ $.extend(SystemMonitor, {
 			}
 		}
 
+		/**
+			Creates a new agent instance configuration view model.
+			@class Represents an agent instance configuration view model.
+		*/
 		function agentInstanceConfigurationViewModel(instanceName) {
+			
+			/**
+				The current agent configuration view model instance
+			*/
 			var self = this;
 
+			/**
+				Gets the machine/computer name of this agent instance.
+				@returns {String} Returns the computer name of this agent instance.
+			*/
 			self.MachineName = instanceName;
+			
+			/**
+				A value indicating whether this agent is enabled or not.
+				@returns {Boolean} Returns true if this agent is enabled; otherwise false.
+			*/
 			self.AgentIsEnabled = ko.observable(true);
 			self.AgentIsEnabled.ForEditing = ko.computed({
 				read: function () {
@@ -147,7 +164,16 @@ $.extend(SystemMonitor, {
 				owner: self
 			}, this);
 
+			/**
+				A list of all collector definitions that are currently assigned to this agent instance
+				@returns {Array} Returns an array of {agentInstanceCollectorDefinitionViewModel} objects.
+			*/
 			self.CollectorDefinitions = ko.observableArray();
+			
+			/**
+				A list of all collector types that are currently assigned to this agent instance
+				@returns {Array} Returns a string array of the collector types that are currently in use.
+			*/
 			self.AvailableCollectorTypes = ko.computed(function () {
 				var collectorDefinitions = self.CollectorDefinitions();
 				var availableCollectorTypes = collectorTypes;
@@ -159,22 +185,33 @@ $.extend(SystemMonitor, {
 				return availableCollectorTypes;
 			}, this);
 
-			self.AddCollectorDefinition = function (collectorType) {
-				console.debug("Adding a collector definition of type '{0}'".format(collectorType));
-
+			/**
+				Add a new collector definition with the specified type
+				@param {string} collectorType The type of the collector definition to add (System Performance | HTTP Status Code Check | Web Page Content Check | Response Time Check | Health Page Check)
+			*/
+			self.AddNewCollectorDefinition = function (collectorType) {
 				var collectorDefinition = new agentInstanceCollectorDefinitionViewModel(collectorType);
 				self.CollectorDefinitions.push(collectorDefinition);
-				console.log(self.CollectorDefinitions());
 			};
 
-			/// <summary>Remove the supplied collector definition view model.</summary>
-			/// <param name="collectorDefinitionViewModel" type="agentInstanceCollectorDefinitionViewModel">The collector definition to remove.</param>
+			/**
+				Remove the supplied collector definition view model.
+				@param {agentInstanceCollectorDefinitionViewModel} collectorDefinitionViewModel The collector definition to remove
+			*/
 			self.RemoveCollectorDefinition = function (collectorDefinitionViewModel) {
 				self.CollectorDefinitions.remove(collectorDefinitionViewModel);
 			};
 		}
 
+		/**
+			Creates an agent configuration view model.
+			@class Represents an agent configuration view model.
+		*/
 		function agentConfigurationViewModel(viewModelConfiguration) {
+			
+			/**
+				The current agent configuration view model.
+			*/
 			var self = this;
 
 			self.Hostaddress = ko.observable();
