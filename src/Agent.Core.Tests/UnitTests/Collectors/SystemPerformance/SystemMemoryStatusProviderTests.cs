@@ -4,10 +4,10 @@ using Moq;
 
 using NUnit.Framework;
 
-using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemInformation;
+using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
 using SignalKo.SystemMonitor.Common.Services;
 
-namespace Agent.Core.Tests.UnitTests.Collectors.SystemInformation
+namespace Agent.Core.Tests.UnitTests.Collectors.SystemPerformance
 {
     [TestFixture]
     public class SystemMemoryStatusProviderTests

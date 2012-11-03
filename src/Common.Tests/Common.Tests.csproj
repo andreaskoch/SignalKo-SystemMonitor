@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.1\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -50,6 +53,7 @@
     <Compile Include="UnitTests\DefaultEncodingProviderTests.cs" />
     <Compile Include="UnitTests\MemoryUnitConverterTests.cs" />
     <Compile Include="UnitTests\Model\SystemInformationTests.cs" />
+    <Compile Include="UnitTests\Model\SystemPerformanceDataTests.cs" />
     <Compile Include="UnitTests\Model\SystemStorageDeviceInformationTests.cs" />
     <Compile Include="UnitTests\Model\SystemStorageInformationTests.cs" />
     <Compile Include="UnitTests\Model\ProcessorUtilizationInformationTests.cs" />

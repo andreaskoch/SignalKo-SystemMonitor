@@ -50,12 +50,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IntegrationTests\Collectors\SystemInformation\EnvironmentMachineNameProviderTests.cs" />
-    <Compile Include="IntegrationTests\Collectors\SystemInformation\LogicalDiscInstanceNameProviderTests.cs" />
-    <Compile Include="IntegrationTests\Collectors\SystemInformation\ProcessorStatusProviderTests.cs" />
-    <Compile Include="IntegrationTests\Collectors\SystemInformation\SystemInformationProviderTests.cs" />
-    <Compile Include="IntegrationTests\Collectors\SystemInformation\SystemMemoryStatusProviderTests.cs" />
-    <Compile Include="IntegrationTests\Collectors\SystemInformation\SystemStorageStatusProviderTests.cs" />
+    <Compile Include="IntegrationTests\Collectors\SystemPerformance\EnvironmentMachineNameProviderTests.cs" />
+    <Compile Include="IntegrationTests\Collectors\SystemPerformance\LogicalDiscInstanceNameProviderTests.cs" />
+    <Compile Include="IntegrationTests\Collectors\SystemPerformance\ProcessorStatusProviderTests.cs" />
+    <Compile Include="IntegrationTests\Collectors\SystemPerformance\SystemInformationProviderTests.cs" />
+    <Compile Include="IntegrationTests\Collectors\SystemPerformance\SystemMemoryStatusProviderTests.cs" />
+    <Compile Include="IntegrationTests\Collectors\SystemPerformance\SystemStorageStatusProviderTests.cs" />
     <Compile Include="IntegrationTests\Configuration\AppConfigAgentConfigurationServiceUrlProviderTests.cs" />
     <Compile Include="IntegrationTests\Coordination\AgentCoordinationServiceFactoryTests.cs" />
     <Compile Include="IntegrationTests\Queueing\AppConfigJSONMessageQueuePersistenceConfigurationProviderTests.cs" />
@@ -68,9 +68,10 @@
     <Compile Include="IntegrationTests\SystemInformationDispatchingServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtilities.cs" />
-    <Compile Include="UnitTests\Collectors\SystemInformation\CustomMachineNameProviderTests.cs" />
-    <Compile Include="UnitTests\Collectors\SystemInformation\SystemInformationProviderTests.cs" />
-    <Compile Include="UnitTests\Collectors\SystemInformation\SystemMemoryStatusProviderTests.cs" />
+    <Compile Include="UnitTests\Collectors\SystemPerformance\CustomMachineNameProviderTests.cs" />
+    <Compile Include="UnitTests\Collectors\SystemPerformance\SystemInformationProviderTests.cs" />
+    <Compile Include="UnitTests\Collectors\SystemPerformance\SystemMemoryStatusProviderTests.cs" />
+    <Compile Include="UnitTests\Collectors\SystemPerformance\SystemPerformanceDataProviderTests.cs" />
     <Compile Include="UnitTests\Configuration\AgentConfigurationAccessorTests.cs" />
     <Compile Include="UnitTests\Configuration\AgentConfigurationProviderTests.cs" />
     <Compile Include="UnitTests\Configuration\RESTBasedSystemInformationSenderConfigurationProviderTests.cs" />

@@ -49,19 +49,21 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Collectors\SystemInformation\CustomMachineNameProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\EnvironmentMachineNameProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\ILogicalDiscInstanceNameProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\IMachineNameProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\IProcessorStatusProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\ISystemInformationProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\ISystemMemoryStatusProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\ISystemStorageStatusProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\LogicalDiscInstanceNameProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\ProcessorStatusProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\SystemInformationProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\SystemMemoryStatusProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\SystemStorageStatusProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\CustomMachineNameProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\EnvironmentMachineNameProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\ILogicalDiscInstanceNameProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\IMachineNameProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\IProcessorStatusProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\ISystemInformationProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\ISystemMemoryStatusProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\ISystemPerformanceDataProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\ISystemStorageStatusProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\LogicalDiscInstanceNameProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\ProcessorStatusProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\SystemInformationProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\SystemMemoryStatusProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\SystemPerformanceDataProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\SystemStorageStatusProvider.cs" />
     <Compile Include="Configuration\AgentConfigurationAccessor.cs" />
     <Compile Include="Configuration\AgentConfigurationProvider.cs" />
     <Compile Include="Configuration\AgentConfigurationServiceConfiguration.cs" />

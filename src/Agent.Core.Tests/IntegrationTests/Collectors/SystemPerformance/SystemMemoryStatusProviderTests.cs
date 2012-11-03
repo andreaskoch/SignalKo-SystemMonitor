@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 
-using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemInformation;
+using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
 using SignalKo.SystemMonitor.Common.Services;
 
-namespace Agent.Core.Tests.IntegrationTests.Collectors.SystemInformation
+namespace Agent.Core.Tests.IntegrationTests.Collectors.SystemPerformance
 {
     [TestFixture]
     public class SystemMemoryStatusProviderTests

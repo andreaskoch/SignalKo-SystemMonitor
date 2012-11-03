@@ -2,18 +2,18 @@ using System;
 
 namespace SignalKo.SystemMonitor.Common.Model
 {
-	public class SystemInformation
+	public class SystemPerformanceData
 	{
-		public DateTime Timestamp { get; set; }
+		public ProcessorUtilizationInformation ProcessorStatus { get; set; }
 
-		public string MachineName { get; set; }
+		public SystemMemoryInformation MemoryStatus { get; set; }
 
-		public SystemPerformanceData SystemPerformance { get; set; }
+		public SystemStorageInformation StorageStatus { get; set; }
 
 		public override string ToString()
 		{
 			return string.Format(
-				"SystemInformation (Timestamp: {0}, MachineName: {1}, SystemPerformance: {2})", this.Timestamp.ToString(), this.MachineName, this.SystemPerformance);
+				"SystemPerformanceData (ProcessorStatus: {0}, MemoryStatus: {1}, StorageStatus: {2})", this.ProcessorStatus, this.MemoryStatus, this.StorageStatus);
 		}
 
 		public override int GetHashCode()
@@ -30,7 +30,7 @@ namespace SignalKo.SystemMonitor.Common.Model
 				return false;
 			}
 
-			var otherObj = obj as SystemInformation;
+			var otherObj = obj as SystemPerformanceData;
 			if (otherObj != null)
 			{
 				return this.ToString().Equals(otherObj.ToString(), StringComparison.OrdinalIgnoreCase);

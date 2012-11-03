@@ -49,6 +49,7 @@
     <Compile Include="Model\SystemInformation.cs" />
     <Compile Include="Model\SystemMemoryInformation.cs" />
     <Compile Include="Model\SystemPerformanceCollectorDefinition.cs" />
+    <Compile Include="Model\SystemPerformanceData.cs" />
     <Compile Include="Model\SystemStorageDeviceInformation.cs" />
     <Compile Include="Model\SystemStorageInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Common.Services;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Collectors.SystemInformation
+namespace SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance
 {
     public class SystemMemoryStatusProvider : ISystemMemoryStatusProvider, IDisposable
     {

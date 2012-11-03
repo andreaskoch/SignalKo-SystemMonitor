@@ -2,9 +2,9 @@
 
 using NUnit.Framework;
 
-using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemInformation;
+using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
 
-namespace Agent.Core.Tests.UnitTests.Collectors.SystemInformation
+namespace Agent.Core.Tests.UnitTests.Collectors.SystemPerformance
 {
     [TestFixture]
     public class CustomMachineNameProviderTests
