@@ -1,4 +1,5 @@
 using SignalKo.SystemMonitor.Agent.Core;
+using SignalKo.SystemMonitor.Agent.Core.Collectors;
 using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
 using SignalKo.SystemMonitor.Agent.Core.Configuration;
 using SignalKo.SystemMonitor.Agent.Core.Coordination;

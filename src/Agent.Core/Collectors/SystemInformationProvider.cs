@@ -1,8 +1,9 @@
 using System;
 
+using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
 using SignalKo.SystemMonitor.Common.Services;
 
-namespace SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance
+namespace SignalKo.SystemMonitor.Agent.Core.Collectors
 {
 	public class SystemInformationProvider : ISystemInformationProvider
 	{

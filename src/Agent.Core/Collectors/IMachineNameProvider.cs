@@ -1,4 +1,4 @@
-namespace SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance
+namespace SignalKo.SystemMonitor.Agent.Core.Collectors
 {
     public interface IMachineNameProvider
     {

@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 
+using SignalKo.SystemMonitor.Agent.Core.Collectors;
 using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
 using SignalKo.SystemMonitor.Common.Model;
 

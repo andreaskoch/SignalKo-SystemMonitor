@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 
-using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
+using SignalKo.SystemMonitor.Agent.Core.Collectors;
 
-namespace Agent.Core.Tests.IntegrationTests.Collectors.SystemPerformance
+namespace Agent.Core.Tests.IntegrationTests.Collectors
 {
     [TestFixture]
     public class EnvironmentMachineNameProviderTests
