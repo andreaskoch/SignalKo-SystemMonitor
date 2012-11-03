@@ -43,6 +43,7 @@
     <Compile Include="Dto\CollectorDefinitionDto.cs" />
     <Compile Include="Model\AgentConfiguration.cs" />
     <Compile Include="Model\AgentInstanceConfiguration.cs" />
+    <Compile Include="Model\SqlCheckDefinition.cs" />
     <Compile Include="Model\HealthPageCheckDefinition.cs" />
     <Compile Include="Model\HttpResponseContentCheckDefinition.cs" />
     <Compile Include="Model\HttpResponseTimeCheckDefinition.cs" />

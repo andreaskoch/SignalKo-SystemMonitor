@@ -19,8 +19,9 @@ $.extend(SystemMonitor, {
 		var httpResponseContentCheck = "Web Page Content Check";
 		var httpResponseTimeCheck = "Response Time Check";
 		var healthPageCheck = "Health Page Check";
+		var sqlCheck = "Sql Check";
 
-		var collectorTypes = [systemPerformanceCheck, httpStatusCodeCheck, httpResponseContentCheck, httpResponseTimeCheck, healthPageCheck];
+		var collectorTypes = [systemPerformanceCheck, httpStatusCodeCheck, httpResponseContentCheck, httpResponseTimeCheck, healthPageCheck, sqlCheck];
 		
 		function getHumanReadableTimespanFromSeconds(seconds) {
 			return "{0} seconds".format(seconds);
@@ -29,7 +30,7 @@ $.extend(SystemMonitor, {
 		function systemPerformanceCheckDefinition(options) {
 			var self = this;
 			
-			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds);
+			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds || 1);
 			
 			self.CheckIntervalHumanReadable = ko.computed(function () {
 				return getHumanReadableTimespanFromSeconds(self.CheckIntervalInSeconds());
@@ -39,7 +40,7 @@ $.extend(SystemMonitor, {
 		function httpStatusCodeCheckDefinition(options) {
 			var self = this;
 
-			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds);
+			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds || 60);
 			self.CheckUrl = ko.observable(options.CheckUrl);
 			self.Hostheader = ko.observable(options.Hostheader);
 			self.ExpectedStatusCode = ko.observable(options.ExpectedStatusCode);
@@ -52,7 +53,7 @@ $.extend(SystemMonitor, {
 		function webPageContentCheckDefinition(options) {
 			var self = this;
 
-			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds);
+			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds || 60);
 			self.CheckUrl = ko.observable(options.CheckUrl);
 			self.Hostheader = ko.observable(options.Hostheader);
 			self.CheckPattern = ko.observable(options.CheckPattern);
@@ -65,10 +66,10 @@ $.extend(SystemMonitor, {
 		function responseTimeCheckDefinition(options) {
 			var self = this;
 
-			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds);
-			self.CheckUrl = ko.observable(options.CheckIntervalInSeconds);
+			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds || 60);
+			self.CheckUrl = ko.observable(options.CheckUrl);
 			self.Hostheader = ko.observable(options.Hostheader);
-			self.MaxResponseTimeInSeconds = ko.observable(options.MaxResponseTimeInSeconds);
+			self.MaxResponseTimeInSeconds = ko.observable(options.MaxResponseTimeInSeconds || 15);
 			
 			self.MaxResponseTimeHumanReadable = ko.computed(function () {
 				return getHumanReadableTimespanFromSeconds(self.MaxResponseTimeInSeconds());
@@ -82,16 +83,28 @@ $.extend(SystemMonitor, {
 		function healthPageCheckDefinition(options) {
 			var self = this;
 
-			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds);
+			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds || 60);
 			self.CheckUrl = ko.observable(options.CheckUrl);
 			self.Hostheader = ko.observable(options.Hostheader);
-			self.MaxResponseTimeInSeconds = ko.observable(options.MaxResponseTimeInSeconds);
+			self.MaxResponseTimeInSeconds = ko.observable(options.MaxResponseTimeInSeconds || 10);
 			
 			self.MaxResponseTimeHumanReadable = ko.computed(function () {
 				return getHumanReadableTimespanFromSeconds(self.MaxResponseTimeInSeconds());
 			}, this);
 			
 			self.CheckIntervalHumanReadable = ko.computed(function() {
+				return getHumanReadableTimespanFromSeconds(self.CheckIntervalInSeconds());
+			}, this);
+		}
+		
+		function sqlCheckDefinition(options) {
+			var self = this;
+
+			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds || 60);
+			self.ConnectionString = ko.observable(options.ConnectionString);
+			self.SqlQuery = ko.observable(options.SqlQuery);
+
+			self.CheckIntervalHumanReadable = ko.computed(function () {
 				return getHumanReadableTimespanFromSeconds(self.CheckIntervalInSeconds());
 			}, this);
 		}
@@ -127,6 +140,13 @@ $.extend(SystemMonitor, {
 						_.extend(self, new healthPageCheckDefinition(options));
 						break;
 					}
+					
+				case sqlCheck:
+					{
+						_.extend(self, new sqlCheckDefinition(options));
+						break;
+					}
+					
 				default:
 					throw new Error("The collector type '{0}' is unknown.".format(collectorType));
 			}
@@ -225,6 +245,10 @@ $.extend(SystemMonitor, {
 			
 			if (instanceConfiguration.HealthPageCheck) {
 				self.AddNewCollectorDefinition(healthPageCheck, instanceConfiguration.HealthPageCheck);
+			}
+			
+			if (instanceConfiguration.SqlCheck) {
+				self.AddNewCollectorDefinition(sqlCheck, instanceConfiguration.SqlCheck);
 			}
 		}
 

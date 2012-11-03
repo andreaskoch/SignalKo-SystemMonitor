@@ -25,7 +25,8 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.Mapper
 					HttpStatusCodeCheck = GetHttpStatusCodeCheckDefinition(dto.CollectorDefinitions),
 					HttpResponseContentCheck = GetHttpResponseContentCheckDefinition(dto.CollectorDefinitions),
 					HttpResponseTimeCheck = GetHttpResponseTimeCheckDefinition(dto.CollectorDefinitions),
-					HealthPageCheck = GetHealthPageCheckDefinition(dto.CollectorDefinitions)
+					HealthPageCheck = GetHealthPageCheckDefinition(dto.CollectorDefinitions),
+					SqlCheck = GetSqlCheckDefinition(dto.CollectorDefinitions)
 				};
 
 			return agentInstanceConfiguration;
@@ -131,6 +132,27 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.Mapper
 				CheckUrl = dto.CheckUrl,
 				Hostheader = dto.Hostheader,
 				MaxResponseTimeInSeconds = dto.MaxResponseTimeInSeconds,
+				CheckIntervalInSeconds = dto.CheckIntervalInSeconds
+			};
+		}
+
+		private SqlCheckDefinition GetSqlCheckDefinition(IEnumerable<CollectorDefinitionDto> collectorDefinitionDtos)
+		{
+			if (collectorDefinitionDtos == null)
+			{
+				return null;
+			}
+
+			var dto = collectorDefinitionDtos.FirstOrDefault(d => d.CollectorType.Equals("Sql Check"));
+			if (dto == null)
+			{
+				return null;
+			}
+
+			return new SqlCheckDefinition
+			{
+				ConnectionString = dto.ConnectionString,
+				SqlQuery = dto.SqlQuery,
 				CheckIntervalInSeconds = dto.CheckIntervalInSeconds
 			};
 		}

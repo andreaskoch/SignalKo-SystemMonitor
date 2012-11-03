@@ -79,7 +79,7 @@
 									<!-- ko if: CollectorType == 'System Performance' -->
 									<section class="collectorDefinition systemPerformance">
 										<label>Check interval</label>
-										<input class="checkInterval" type="range" min="1" max="10" data-bind="value: CheckIntervalInSeconds" />
+										<input class="checkInterval" type="range" min="1" max="360" data-bind="value: CheckIntervalInSeconds" />
 										<span data-bind="text: CheckIntervalHumanReadable"></span>
 									</section>
 									<!-- /ko -->
@@ -96,7 +96,7 @@
 										<input class="expectedStatusCode" type="text" placeholder="200" data-bind="value: ExpectedStatusCode" />
 										
 										<label>Check interval</label>
-										<input class="checkInterval" type="range" min="1" max="10" data-bind="value: CheckIntervalInSeconds" />
+										<input class="checkInterval" type="range" min="1" max="360" data-bind="value: CheckIntervalInSeconds" />
 										<span data-bind="text: CheckIntervalHumanReadable"></span>
 									</section>
 									<!-- /ko -->
@@ -135,7 +135,7 @@
 										<span data-bind="text: CheckIntervalHumanReadable"></span>
 									</section>
 									<!-- /ko -->
-									
+
 									<!-- ko if: CollectorType == 'Health Page Check' -->
 									<section class="collectorDefinition healthPageCheck">
 										<label>URL</label>
@@ -145,7 +145,7 @@
 										<input type="text" placeholder="example.com" data-bind="value: Hostheader" />
 										
 										<label>Max response time</label>
-										<input type="range" min="1" max="30" data-bind="value: MaxResponseTimeInSeconds" />
+										<input type="range" min="1" max="60" data-bind="value: MaxResponseTimeInSeconds" />
 										<span data-bind="text: MaxResponseTimeHumanReadable"></span>
 										
 										<label>Check interval</label>
@@ -153,6 +153,21 @@
 										<span data-bind="text: CheckIntervalHumanReadable"></span>
 									</section>
 									<!-- /ko -->
+
+									<!-- ko if: CollectorType == 'Sql Check' -->
+									<section class="collectorDefinition sqlCheck">
+										<label>Connection string</label>
+										<input type="text" placeholder="Server=serverAddress;Database=someDatabase;User Id=myUsername;Password=myPassword;" data-bind="value: ConnectionString" />
+										
+										<label>SQL Query</label>
+										<input type="text" placeholder="SELECT COUNT(*) FROM Orders WHERE ..." data-bind="value: SqlQuery" />
+										
+										<label>Check interval</label>
+										<input class="checkInterval" type="range" min="60" max="7200" data-bind="value: CheckIntervalInSeconds" />
+										<span data-bind="text: CheckIntervalHumanReadable"></span>
+									</section>
+									<!-- /ko -->
+
 								</li>
 							</ul>
 						</section>

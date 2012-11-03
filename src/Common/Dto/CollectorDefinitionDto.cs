@@ -15,5 +15,9 @@ namespace SignalKo.SystemMonitor.Common.Dto
 		public int MaxResponseTimeInSeconds { get; set; }
 
 		public string CheckPattern { get; set; }
+
+		public string ConnectionString { get; set; }
+
+		public string SqlQuery { get; set; }
 	}
 }
