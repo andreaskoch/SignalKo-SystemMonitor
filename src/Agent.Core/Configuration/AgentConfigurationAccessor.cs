@@ -44,7 +44,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Configuration
 			var restClient = this.restClientFactory.GetRESTClient(serviceConfiguration.Hostaddress);
 			var request = this.requestFactory.CreateGetRequest(serviceConfiguration.ResourcePath, serviceConfiguration.Hostname);
 
-			var response = restClient.Execute<AgentConfiguration>(request);
+			var response = restClient.Execute(request);
 			string json = response.Content;
 			try
 			{
