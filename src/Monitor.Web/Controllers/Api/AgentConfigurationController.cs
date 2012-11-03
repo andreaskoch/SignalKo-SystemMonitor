@@ -3,9 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-using SignalKo.SystemMonitor.Common.Dto;
 using SignalKo.SystemMonitor.Common.Model;
-using SignalKo.SystemMonitor.Monitor.Web.Core.Mapper;
 using SignalKo.SystemMonitor.Monitor.Web.Core.Services;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers.Api
@@ -14,22 +12,14 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers.Api
 	{
 		private readonly IAgentConfigurationService agentConfigurationService;
 
-		private readonly IAgentConfigurationMapper agentConfigurationMapper;
-
-		public AgentConfigurationController(IAgentConfigurationService agentConfigurationService, IAgentConfigurationMapper agentConfigurationMapper)
+		public AgentConfigurationController(IAgentConfigurationService agentConfigurationService)
 		{
 			if (agentConfigurationService == null)
 			{
 				throw new ArgumentNullException("agentConfigurationService");
 			}
 
-			if (agentConfigurationMapper == null)
-			{
-				throw new ArgumentNullException("agentConfigurationMapper");
-			}
-
 			this.agentConfigurationService = agentConfigurationService;
-			this.agentConfigurationMapper = agentConfigurationMapper;
 		}
 
 		public AgentConfiguration Get()
@@ -37,14 +27,8 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers.Api
 			return this.agentConfigurationService.GetAgentConfiguration();
 		}
 
-		public HttpResponseMessage Post(AgentConfigurationDto agentConfigurationDto)
+		public HttpResponseMessage Post(AgentConfiguration agentConfiguration)
 		{
-			if (agentConfigurationDto == null)
-			{
-				throw new HttpResponseException(HttpStatusCode.BadRequest);
-			}
-
-			var agentConfiguration = this.agentConfigurationMapper.Map(agentConfigurationDto);
 			if (agentConfiguration == null)
 			{
 				throw new HttpResponseException(HttpStatusCode.BadRequest);

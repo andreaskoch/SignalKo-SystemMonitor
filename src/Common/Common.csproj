@@ -38,9 +38,6 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Dto\AgentConfigurationDto.cs" />
-    <Compile Include="Dto\AgentInstanceConfigurationDto.cs" />
-    <Compile Include="Dto\CollectorDefinitionDto.cs" />
     <Compile Include="Model\AgentConfiguration.cs" />
     <Compile Include="Model\AgentInstanceConfiguration.cs" />
     <Compile Include="Model\SqlCheckDefinition.cs" />

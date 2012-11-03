@@ -1,7 +1,6 @@
 using SignalKo.SystemMonitor.Common.Services;
 using SignalKo.SystemMonitor.Monitor.Web.Core.Configuration;
 using SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess;
-using SignalKo.SystemMonitor.Monitor.Web.Core.Mapper;
 using SignalKo.SystemMonitor.Monitor.Web.Core.Services;
 using SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators;
 
@@ -40,10 +39,6 @@ namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
 					x.For<IProcessorStatusOrchestrator>().Use<ProcessorStatusOrchestrator>();
 					x.For<IStorageStatusOrchestrator>().Use<StorageStatusOrchestrator>();
 					x.For<ISystemStatusOrchestrator>().Use<SystemStatusOrchestrator>();
-
-					/* mapper */
-					x.For<IAgentInstanceConfigurationMapper>().Use<AgentInstanceConfigurationMapper>();
-					x.For<IAgentConfigurationMapper>().Use<AgentConfigurationMapper>();
 
 					/* common services */
 					x.For<IEncodingProvider>().Use<DefaultEncodingProvider>();

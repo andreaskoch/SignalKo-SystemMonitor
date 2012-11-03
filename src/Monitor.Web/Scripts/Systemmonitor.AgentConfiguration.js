@@ -30,6 +30,7 @@ $.extend(SystemMonitor, {
 		function systemPerformanceCheckDefinition(options) {
 			var self = this;
 			
+			self.CollectorType = systemPerformanceCheck;
 			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds || 1);
 			
 			self.CheckIntervalHumanReadable = ko.computed(function () {
@@ -40,6 +41,7 @@ $.extend(SystemMonitor, {
 		function httpStatusCodeCheckDefinition(options) {
 			var self = this;
 
+			self.CollectorType = httpStatusCodeCheck;
 			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds || 60);
 			self.CheckUrl = ko.observable(options.CheckUrl);
 			self.Hostheader = ko.observable(options.Hostheader);
@@ -53,6 +55,7 @@ $.extend(SystemMonitor, {
 		function webPageContentCheckDefinition(options) {
 			var self = this;
 
+			self.CollectorType = httpResponseContentCheck;
 			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds || 60);
 			self.CheckUrl = ko.observable(options.CheckUrl);
 			self.Hostheader = ko.observable(options.Hostheader);
@@ -66,6 +69,7 @@ $.extend(SystemMonitor, {
 		function responseTimeCheckDefinition(options) {
 			var self = this;
 
+			self.CollectorType = httpResponseTimeCheck;
 			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds || 60);
 			self.CheckUrl = ko.observable(options.CheckUrl);
 			self.Hostheader = ko.observable(options.Hostheader);
@@ -83,6 +87,7 @@ $.extend(SystemMonitor, {
 		function healthPageCheckDefinition(options) {
 			var self = this;
 
+			self.CollectorType = healthPageCheck;
 			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds || 60);
 			self.CheckUrl = ko.observable(options.CheckUrl);
 			self.Hostheader = ko.observable(options.Hostheader);
@@ -100,6 +105,7 @@ $.extend(SystemMonitor, {
 		function sqlCheckDefinition(options) {
 			var self = this;
 
+			self.CollectorType = sqlCheck;
 			self.CheckIntervalInSeconds = ko.observable(options.CheckIntervalInSeconds || 60);
 			self.ConnectionString = ko.observable(options.ConnectionString);
 			self.SqlQuery = ko.observable(options.SqlQuery);
@@ -107,49 +113,6 @@ $.extend(SystemMonitor, {
 			self.CheckIntervalHumanReadable = ko.computed(function () {
 				return getHumanReadableTimespanFromSeconds(self.CheckIntervalInSeconds());
 			}, this);
-		}
-
-		function agentInstanceCollectorDefinitionViewModel(collectorType, options) {
-			var self = this;
-
-			self.CollectorType = collectorType;
-
-			switch (collectorType) {
-				case systemPerformanceCheck:
-					{
-						_.extend(self, new systemPerformanceCheckDefinition(options));
-						break;
-					}
-				case httpStatusCodeCheck:
-					{
-						_.extend(self, new httpStatusCodeCheckDefinition(options));
-						break;
-					}
-				case httpResponseContentCheck:
-					{
-						_.extend(self, new webPageContentCheckDefinition(options));
-						break;
-					}
-				case httpResponseTimeCheck:
-					{
-						_.extend(self, new responseTimeCheckDefinition(options));
-						break;
-					}
-				case healthPageCheck:
-					{
-						_.extend(self, new healthPageCheckDefinition(options));
-						break;
-					}
-					
-				case sqlCheck:
-					{
-						_.extend(self, new sqlCheckDefinition(options));
-						break;
-					}
-					
-				default:
-					throw new Error("The collector type '{0}' is unknown.".format(collectorType));
-			}
 		}
 
 		/**
@@ -184,12 +147,45 @@ $.extend(SystemMonitor, {
 				},
 				owner: self
 			}, this);
-
-			/**
-				A list of all collector definitions that are currently assigned to this agent instance
-				@returns {Array} Returns an array of {agentInstanceCollectorDefinitionViewModel} objects.
-			*/
+			
 			self.CollectorDefinitions = ko.observableArray();
+
+			var getCollectorDefinitionByType = function(collectorDefinitionType) {
+				var collectorDefinitions = self.CollectorDefinitions();
+				
+				for (var i = 0; i < collectorDefinitions.length; i++) {
+					var collectorDefinitionViewModel = collectorDefinitions[i];
+					if (collectorDefinitionViewModel.CollectorType === collectorDefinitionType) {
+						return collectorDefinitionViewModel;
+					}
+				}
+
+				return null;
+			};
+			
+			self.SystemPerformanceCollector = ko.computed(function () {
+				return getCollectorDefinitionByType(systemPerformanceCheck);
+			}, this);
+
+			self.HttpStatusCodeCheck = ko.computed(function () {
+				return getCollectorDefinitionByType(httpStatusCodeCheck);
+			}, this);
+			
+			self.HttpResponseContentCheck = ko.computed(function () {
+				return getCollectorDefinitionByType(httpResponseContentCheck);
+			}, this);
+			
+			self.HttpResponseTimeCheck = ko.computed(function () {
+				return getCollectorDefinitionByType(httpResponseTimeCheck);
+			}, this);
+			
+			self.HealthPageCheck = ko.computed(function () {
+				return getCollectorDefinitionByType(healthPageCheck);
+			}, this);
+			
+			self.SqlCheck = ko.computed(function () {
+				return getCollectorDefinitionByType(sqlCheck);
+			}, this);
 			
 			/**
 				A list of all collector types that are currently assigned to this agent instance
@@ -211,9 +207,52 @@ $.extend(SystemMonitor, {
 				@param {string} collectorType The type of the collector definition to add (System Performance | HTTP Status Code Check | Web Page Content Check | Response Time Check | Health Page Check)
 				@param {object} options Initialization parameters
 			*/
-			self.AddNewCollectorDefinition = function(collectorType, options) {
-				var collectorDefinition = new agentInstanceCollectorDefinitionViewModel(collectorType, options);
-				self.CollectorDefinitions.push(collectorDefinition);
+			self.AddNewCollectorDefinition = function (collectorType, options) {
+				
+				if (!collectorType) {
+					throw new Error("You must specifiy the type of the collector defintion you want to add.");
+				}
+				
+				if (!options) {
+					options = { };
+				}
+				
+				switch (collectorType) {
+					case systemPerformanceCheck:
+						{
+							self.CollectorDefinitions.push(new systemPerformanceCheckDefinition(options));
+							break;
+						}
+					case httpStatusCodeCheck:
+						{
+							self.CollectorDefinitions.push(new httpStatusCodeCheckDefinition(options));
+							break;
+						}
+					case httpResponseContentCheck:
+						{
+							self.CollectorDefinitions.push(new webPageContentCheckDefinition(options));
+							break;
+						}
+					case httpResponseTimeCheck:
+						{
+							self.CollectorDefinitions.push(new responseTimeCheckDefinition(options));
+							break;
+						}
+					case healthPageCheck:
+						{
+							self.CollectorDefinitions.push(new healthPageCheckDefinition(options));
+							break;
+						}
+
+					case sqlCheck:
+						{
+							self.CollectorDefinitions.push(new sqlCheckDefinition(options));
+							break;
+						}
+
+					default:
+						throw new Error("The collector type '{0}' is unknown.".format(collectorType));
+				}
 			};
 
 			/**

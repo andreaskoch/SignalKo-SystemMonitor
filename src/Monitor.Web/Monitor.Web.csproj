@@ -116,10 +116,6 @@
     <Compile Include="Core\DataAccess\IAgentConfigurationDataAccessor.cs" />
     <Compile Include="Core\DataAccess\ISystemInformationArchiveAccessor.cs" />
     <Compile Include="Core\DataAccess\JsonAgentConfigurationDataAccessor.cs" />
-    <Compile Include="Core\Mapper\AgentConfigurationMapper.cs" />
-    <Compile Include="Core\Mapper\AgentInstanceConfigurationMapper.cs" />
-    <Compile Include="Core\Mapper\IAgentConfigurationMapper.cs" />
-    <Compile Include="Core\Mapper\IAgentInstanceConfigurationMapper.cs" />
     <Compile Include="Core\Services\AgentConfigurationService.cs" />
     <Compile Include="Core\Services\IAgentConfigurationService.cs" />
     <Compile Include="Core\Services\IKnownAgentsProvider.cs" />
