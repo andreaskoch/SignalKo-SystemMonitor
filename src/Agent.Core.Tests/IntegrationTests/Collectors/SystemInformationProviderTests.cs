@@ -1,9 +1,14 @@
 ﻿using System.Threading;
 
+using Moq;
+
 using NUnit.Framework;
 
 using SignalKo.SystemMonitor.Agent.Core.Collectors;
+using SignalKo.SystemMonitor.Agent.Core.Collectors.HttpStatusCodeCheck;
 using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
+using SignalKo.SystemMonitor.Agent.Core.Configuration;
+using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Common.Services;
 
 namespace Agent.Core.Tests.IntegrationTests.Collectors
@@ -25,10 +30,14 @@ namespace Agent.Core.Tests.IntegrationTests.Collectors
 			ISystemPerformanceDataProvider systemPerformanceDataProvider = new SystemPerformanceDataProvider(
 				processorStatusProvider, systemMemoryStatusProvider, systemStorageStatusProvider);
 
+			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
+			var agentControlDefinition = new AgentControlDefinition { AgentIsEnabled = true, CheckIntervalInSeconds = 60 };
+			agentControlDefinitionProvider.Setup(a => a.GetControlDefinition()).Returns(agentControlDefinition);
+
+			IHttpStatusCodeCheckResultProvider httpStatusCodeCheckResultProvider = new HttpStatusCodeCheckResultProvider(agentControlDefinitionProvider.Object);
+
 			var systemInformationProvider = new SystemInformationProvider(
-				timeProvider,
-				machineNameProvider,
-				systemPerformanceDataProvider);
+				timeProvider, machineNameProvider, systemPerformanceDataProvider, httpStatusCodeCheckResultProvider);
 
 			// Act
 			var result = systemInformationProvider.GetSystemInfo();
@@ -51,7 +60,14 @@ namespace Agent.Core.Tests.IntegrationTests.Collectors
 			ISystemPerformanceDataProvider systemPerformanceDataProvider = new SystemPerformanceDataProvider(
 				processorStatusProvider, systemMemoryStatusProvider, systemStorageStatusProvider);
 
-			var systemInformationProvider = new SystemInformationProvider(timeProvider, machineNameProvider, systemPerformanceDataProvider);
+			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
+			var agentControlDefinition = new AgentControlDefinition { AgentIsEnabled = true, CheckIntervalInSeconds = 60 };
+			agentControlDefinitionProvider.Setup(a => a.GetControlDefinition()).Returns(agentControlDefinition);
+
+			IHttpStatusCodeCheckResultProvider httpStatusCodeCheckResultProvider = new HttpStatusCodeCheckResultProvider(agentControlDefinitionProvider.Object);
+
+			var systemInformationProvider = new SystemInformationProvider(
+				timeProvider, machineNameProvider, systemPerformanceDataProvider, httpStatusCodeCheckResultProvider);
 
 			// Act
 			for (var i = 0; i < 10; i++)

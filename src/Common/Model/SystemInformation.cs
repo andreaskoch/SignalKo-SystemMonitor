@@ -10,6 +10,8 @@ namespace SignalKo.SystemMonitor.Common.Model
 
 		public SystemPerformanceData SystemPerformance { get; set; }
 
+		public HttpStatusCodeCheckResult HttpStatusCodeCheck { get; set; }
+
 		public override string ToString()
 		{
 			return string.Format(

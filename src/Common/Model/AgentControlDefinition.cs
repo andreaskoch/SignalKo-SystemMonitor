@@ -1,18 +1,18 @@
 ﻿namespace SignalKo.SystemMonitor.Common.Model
 {
-	public class AgentConfiguration
+	public class AgentControlDefinition
 	{
-		public string Hostaddress { get; set; }
-
-		public string Hostname { get; set; }
-
-		public string SystemInformationSenderPath { get; set; }
-
-		public bool AgentsAreEnabled { get; set; }
+		public bool AgentIsEnabled { get; set; }
 
 		public int CheckIntervalInSeconds { get; set; }
 
-		public AgentInstanceConfiguration[] AgentInstanceConfigurations { get; set; }
+		public string SystemInformationSenderPath { get; set; }
+
+		public string Hostname { get; set; }
+
+		public string Hostaddress { get; set; }
+
+		public HttpStatusCodeCheckDefinition HttpStatusCodeCheck { get; set; }
 
 		public bool IsValid()
 		{

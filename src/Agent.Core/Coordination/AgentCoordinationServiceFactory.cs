@@ -6,16 +6,16 @@ namespace SignalKo.SystemMonitor.Agent.Core.Coordination
 {
     public class AgentCoordinationServiceFactory : IAgentCoordinationServiceFactory
     {
-        private readonly IAgentConfigurationProvider agentConfigurationProvider;
+        private readonly IAgentControlDefinitionProvider agentControlDefinitionProvider;
 
-        public AgentCoordinationServiceFactory(IAgentConfigurationProvider agentConfigurationProvider)
+        public AgentCoordinationServiceFactory(IAgentControlDefinitionProvider agentControlDefinitionProvider)
         {
-            if (agentConfigurationProvider == null)
+            if (agentControlDefinitionProvider == null)
             {
-                throw new ArgumentNullException("agentConfigurationProvider");
+                throw new ArgumentNullException("agentControlDefinitionProvider");
             }
 
-            this.agentConfigurationProvider = agentConfigurationProvider;
+            this.agentControlDefinitionProvider = agentControlDefinitionProvider;
         }
 
         public IAgentCoordinationService GetAgentCoordinationService(Action pauseCallback, Action resumeCallback)
@@ -30,7 +30,7 @@ namespace SignalKo.SystemMonitor.Agent.Core.Coordination
                 throw new ArgumentNullException("resumeCallback");
             }
             
-            return new AgentCoordinationService(this.agentConfigurationProvider, pauseCallback, resumeCallback);
+            return new AgentCoordinationService(this.agentControlDefinitionProvider, pauseCallback, resumeCallback);
         }
     }
 }

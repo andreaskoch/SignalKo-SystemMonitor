@@ -58,7 +58,7 @@
     <Compile Include="IntegrationTests\Collectors\SystemPerformance\ProcessorStatusProviderTests.cs" />
     <Compile Include="IntegrationTests\Collectors\SystemPerformance\SystemMemoryStatusProviderTests.cs" />
     <Compile Include="IntegrationTests\Collectors\SystemPerformance\SystemStorageStatusProviderTests.cs" />
-    <Compile Include="IntegrationTests\Configuration\AppConfigAgentConfigurationServiceUrlProviderTests.cs" />
+    <Compile Include="IntegrationTests\Configuration\AppConfigAgentControlDefinitionServiceUrlProviderTests.cs" />
     <Compile Include="IntegrationTests\Coordination\AgentCoordinationServiceFactoryTests.cs" />
     <Compile Include="IntegrationTests\Queueing\AppConfigJSONMessageQueuePersistenceConfigurationProviderTests.cs" />
     <Compile Include="IntegrationTests\Queueing\SystemInformationMessageQueueWorkerFactoryTests.cs" />
@@ -74,8 +74,8 @@
     <Compile Include="UnitTests\Collectors\SystemInformationProviderTests.cs" />
     <Compile Include="UnitTests\Collectors\SystemPerformance\SystemMemoryStatusProviderTests.cs" />
     <Compile Include="UnitTests\Collectors\SystemPerformance\SystemPerformanceDataProviderTests.cs" />
-    <Compile Include="UnitTests\Configuration\AgentConfigurationAccessorTests.cs" />
-    <Compile Include="UnitTests\Configuration\AgentConfigurationProviderTests.cs" />
+    <Compile Include="UnitTests\Configuration\AgentControlDefinitionAccessorTests.cs" />
+    <Compile Include="UnitTests\Configuration\AgentControlDefinitionProviderTests.cs" />
     <Compile Include="UnitTests\Configuration\RESTBasedSystemInformationSenderConfigurationProviderTests.cs" />
     <Compile Include="UnitTests\Coordination\AgentCoordinationServiceFactoryTests.cs" />
     <Compile Include="UnitTests\Coordination\AgentCoordinationServiceTests.cs" />

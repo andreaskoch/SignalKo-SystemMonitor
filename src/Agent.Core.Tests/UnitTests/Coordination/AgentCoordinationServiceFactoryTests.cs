@@ -9,66 +9,66 @@ using SignalKo.SystemMonitor.Agent.Core.Coordination;
 
 namespace Agent.Core.Tests.UnitTests.Coordination
 {
-    [TestFixture]
-    public class AgentCoordinationServiceFactoryTests
-    {
-        #region constructor
+	[TestFixture]
+	public class AgentCoordinationServiceFactoryTests
+	{
+		#region constructor
 
-        [Test]
-        public void Constructor_AllParametersAreSet_ObjectIsInstantiated()
-        {
-            // Arrange
-            var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
+		[Test]
+		public void Constructor_AllParametersAreSet_ObjectIsInstantiated()
+		{
+			// Arrange
+			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
 
-            // Act
-            var agentCoordinationServiceFactory = new AgentCoordinationServiceFactory(agentConfigurationProvider.Object);
+			// Act
+			var agentCoordinationServiceFactory = new AgentCoordinationServiceFactory(agentControlDefinitionProvider.Object);
 
-            // Assert
-            Assert.IsNotNull(agentCoordinationServiceFactory);
-        }
+			// Assert
+			Assert.IsNotNull(agentCoordinationServiceFactory);
+		}
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_AgentConfigurationProviderParameterIsNull_ArgumentNullExceptionIsThrown()
-        {
-            // Act
-            new AgentCoordinationServiceFactory(null);
-        }
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Constructor_AgentConfigurationProviderParameterIsNull_ArgumentNullExceptionIsThrown()
+		{
+			// Act
+			new AgentCoordinationServiceFactory(null);
+		}
 
-        #endregion
+		#endregion
 
-        #region GetAgentCoordinationService
+		#region GetAgentCoordinationService
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void GetAgentCoordinationService_PauseCallbackIsNull_ArgumentNullExceptionIsThrown()
-        {
-            // Arrange
-            Action pauseCallback = null;
-            Action resumeCallback = () => { };
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void GetAgentCoordinationService_PauseCallbackIsNull_ArgumentNullExceptionIsThrown()
+		{
+			// Arrange
+			Action pauseCallback = null;
+			Action resumeCallback = () => { };
 
-            var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
-            var agentCoordinationServiceFactory = new AgentCoordinationServiceFactory(agentConfigurationProvider.Object);
+			var agentConfigurationProvider = new Mock<IAgentControlDefinitionProvider>();
+			var agentCoordinationServiceFactory = new AgentCoordinationServiceFactory(agentConfigurationProvider.Object);
 
-            // Act
-            agentCoordinationServiceFactory.GetAgentCoordinationService(pauseCallback, resumeCallback);
-        }
+			// Act
+			agentCoordinationServiceFactory.GetAgentCoordinationService(pauseCallback, resumeCallback);
+		}
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void GetAgentCoordinationService_ResumeCallbackIsNull_ArgumentNullExceptionIsThrown()
-        {
-            // Arrange
-            Action pauseCallback = () => { };
-            Action resumeCallback = null;
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void GetAgentCoordinationService_ResumeCallbackIsNull_ArgumentNullExceptionIsThrown()
+		{
+			// Arrange
+			Action pauseCallback = () => { };
+			Action resumeCallback = null;
 
-            var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
-            var agentCoordinationServiceFactory = new AgentCoordinationServiceFactory(agentConfigurationProvider.Object);
+			var agentConfigurationProvider = new Mock<IAgentControlDefinitionProvider>();
+			var agentCoordinationServiceFactory = new AgentCoordinationServiceFactory(agentConfigurationProvider.Object);
 
-            // Act
-            agentCoordinationServiceFactory.GetAgentCoordinationService(pauseCallback, resumeCallback);
-        }
+			// Act
+			agentCoordinationServiceFactory.GetAgentCoordinationService(pauseCallback, resumeCallback);
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

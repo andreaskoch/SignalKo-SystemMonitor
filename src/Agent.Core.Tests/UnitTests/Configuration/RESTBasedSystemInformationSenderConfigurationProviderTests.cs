@@ -9,152 +9,152 @@ using SignalKo.SystemMonitor.Common.Model;
 
 namespace Agent.Core.Tests.UnitTests.Configuration
 {
-    [TestFixture]
-    public class RESTBasedSystemInformationSenderConfigurationProviderTests
-    {
-        #region constructor
+	[TestFixture]
+	public class RESTBasedSystemInformationSenderConfigurationProviderTests
+	{
+		#region constructor
 
-        [Test]
-        public void Constructor_AllParametersAreSet_ObjectIsInstantiated()
-        {
-            // Arrange
-            var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
+		[Test]
+		public void Constructor_AllParametersAreSet_ObjectIsInstantiated()
+		{
+			// Arrange
+			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
 
-            // Act
-            var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentConfigurationProvider.Object);
+			// Act
+			var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentControlDefinitionProvider.Object);
 
-            // Assert
-            Assert.IsNotNull(systemInformationSenderConfigurationProvider);
-        }
+			// Assert
+			Assert.IsNotNull(systemInformationSenderConfigurationProvider);
+		}
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_AgentConfigurationProviderParameterIsNull_ArgumentNullExceptionIsThrown()
-        {
-            new RESTBasedSystemInformationSenderConfigurationProvider(null);
-        }
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Constructor_AgentControlDefinitionProviderParameterIsNull_ArgumentNullExceptionIsThrown()
+		{
+			new RESTBasedSystemInformationSenderConfigurationProvider(null);
+		}
 
-        #endregion
+		#endregion
 
-        #region GetConfiguration
+		#region GetConfiguration
 
-        [Test]
-        public void GetConfiguration_AgentConfigurationProviderReturnsNull_ResultIsNull()
-        {
-            // Arrange
-            var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
-            var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentConfigurationProvider.Object);
+		[Test]
+		public void GetConfiguration_AgentControlDefinitionProviderReturnsNull_ResultIsNull()
+		{
+			// Arrange
+			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
+			var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentControlDefinitionProvider.Object);
 
-            // Act
-            var result = systemInformationSenderConfigurationProvider.GetConfiguration();
+			// Act
+			var result = systemInformationSenderConfigurationProvider.GetConfiguration();
 
-            // Assert
-            Assert.IsNull(result);
-        }
+			// Assert
+			Assert.IsNull(result);
+		}
 
-        [Test]
-        public void GetConfiguration_AgentConfigurationProviderReturnsAgentConfiguration_ResultIsNotNull()
-        {
-            // Arrange
-            var agentConfiguration = new AgentConfiguration
-                {
-                    AgentsAreEnabled = true,
-                    Hostaddress = "127.0.0.1",
-                    Hostname = "www.example.com",
-                    CheckIntervalInSeconds = 30,
-                    SystemInformationSenderPath = "/api/systeminformation"
-                };
+		[Test]
+		public void GetConfiguration_AgentControlDefinitionProviderReturnsAgentConfiguration_ResultIsNotNull()
+		{
+			// Arrange
+			var agentControlDefinition = new AgentControlDefinition
+				{
+					AgentIsEnabled = true,
+					Hostaddress = "127.0.0.1",
+					Hostname = "www.example.com",
+					CheckIntervalInSeconds = 30,
+					SystemInformationSenderPath = "/api/systeminformation"
+				};
 
-            var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
-            agentConfigurationProvider.Setup(a => a.GetAgentConfiguration()).Returns(agentConfiguration);
+			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
+			agentControlDefinitionProvider.Setup(a => a.GetControlDefinition()).Returns(agentControlDefinition);
 
-            var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentConfigurationProvider.Object);
+			var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentControlDefinitionProvider.Object);
 
-            // Act
-            var result = systemInformationSenderConfigurationProvider.GetConfiguration();
+			// Act
+			var result = systemInformationSenderConfigurationProvider.GetConfiguration();
 
-            // Assert
-            Assert.IsNotNull(result);
-        }
+			// Assert
+			Assert.IsNotNull(result);
+		}
 
-        [Test]
-        public void GetConfiguration_ResultContainsAgentConfigurationHostaddress()
-        {
-            // Arrange
-            string hostaddress = "127.0.0.1";
-            var agentConfiguration = new AgentConfiguration
-            {
-                AgentsAreEnabled = true,
-                Hostaddress = hostaddress,
-                Hostname = "www.example.com",
-                CheckIntervalInSeconds = 30,
-                SystemInformationSenderPath = "/api/systeminformation"
-            };
+		[Test]
+		public void GetConfiguration_ResultContainsAgentControlDefinitionHostaddress()
+		{
+			// Arrange
+			string hostaddress = "127.0.0.1";
+			var agentControlDefinition = new AgentControlDefinition
+			{
+				AgentIsEnabled = true,
+				Hostaddress = hostaddress,
+				Hostname = "www.example.com",
+				CheckIntervalInSeconds = 30,
+				SystemInformationSenderPath = "/api/systeminformation"
+			};
 
-            var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
-            agentConfigurationProvider.Setup(a => a.GetAgentConfiguration()).Returns(agentConfiguration);
+			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
+			agentControlDefinitionProvider.Setup(a => a.GetControlDefinition()).Returns(agentControlDefinition);
 
-            var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentConfigurationProvider.Object);
+			var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentControlDefinitionProvider.Object);
 
-            // Act
-            var result = systemInformationSenderConfigurationProvider.GetConfiguration();
+			// Act
+			var result = systemInformationSenderConfigurationProvider.GetConfiguration();
 
-            // Assert
-            Assert.AreEqual(hostaddress, result.Hostaddress);
-        }
+			// Assert
+			Assert.AreEqual(hostaddress, result.Hostaddress);
+		}
 
-        [Test]
-        public void GetConfiguration_ResultContainsAgentConfigurationHostname()
-        {
-            // Arrange
-            string hostname = "www.example.com";
-            var agentConfiguration = new AgentConfiguration
-            {
-                AgentsAreEnabled = true,
-                Hostaddress = "127.0.0.1",
-                Hostname = hostname,
-                CheckIntervalInSeconds = 30,
-                SystemInformationSenderPath = "/api/systeminformation"
-            };
+		[Test]
+		public void GetConfiguration_ResultContainsAgenControlDefinitionHostname()
+		{
+			// Arrange
+			string hostname = "www.example.com";
+			var agentControlDefinition = new AgentControlDefinition
+			{
+				AgentIsEnabled = true,
+				Hostaddress = "127.0.0.1",
+				Hostname = hostname,
+				CheckIntervalInSeconds = 30,
+				SystemInformationSenderPath = "/api/systeminformation"
+			};
 
-            var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
-            agentConfigurationProvider.Setup(a => a.GetAgentConfiguration()).Returns(agentConfiguration);
+			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
+			agentControlDefinitionProvider.Setup(a => a.GetControlDefinition()).Returns(agentControlDefinition);
 
-            var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentConfigurationProvider.Object);
+			var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentControlDefinitionProvider.Object);
 
-            // Act
-            var result = systemInformationSenderConfigurationProvider.GetConfiguration();
+			// Act
+			var result = systemInformationSenderConfigurationProvider.GetConfiguration();
 
-            // Assert
-            Assert.AreEqual(hostname, result.Hostname);
-        }
+			// Assert
+			Assert.AreEqual(hostname, result.Hostname);
+		}
 
-        [Test]
-        public void GetConfiguration_ResultContainsAgentConfigurationSystemInformationSenderPath()
-        {
-            // Arrange
-            string systemInformationSenderPath = "/api/systeminformation";
-            var agentConfiguration = new AgentConfiguration
-            {
-                AgentsAreEnabled = true,
-                Hostaddress = "127.0.0.1",
-                Hostname = "www.example.com",
-                CheckIntervalInSeconds = 30,
-                SystemInformationSenderPath = systemInformationSenderPath
-            };
+		[Test]
+		public void GetConfiguration_ResultContainsAgentControlDefinitionSystemInformationSenderPath()
+		{
+			// Arrange
+			string systemInformationSenderPath = "/api/systeminformation";
+			var agentControlDefinition = new AgentControlDefinition
+			{
+				AgentIsEnabled = true,
+				Hostaddress = "127.0.0.1",
+				Hostname = "www.example.com",
+				CheckIntervalInSeconds = 30,
+				SystemInformationSenderPath = systemInformationSenderPath
+			};
 
-            var agentConfigurationProvider = new Mock<IAgentConfigurationProvider>();
-            agentConfigurationProvider.Setup(a => a.GetAgentConfiguration()).Returns(agentConfiguration);
+			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
+			agentControlDefinitionProvider.Setup(a => a.GetControlDefinition()).Returns(agentControlDefinition);
 
-            var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentConfigurationProvider.Object);
+			var systemInformationSenderConfigurationProvider = new RESTBasedSystemInformationSenderConfigurationProvider(agentControlDefinitionProvider.Object);
 
-            // Act
-            var result = systemInformationSenderConfigurationProvider.GetConfiguration();
+			// Act
+			var result = systemInformationSenderConfigurationProvider.GetConfiguration();
 
-            // Assert
-            Assert.AreEqual(systemInformationSenderPath, result.ResourcePath);
-        }
+			// Assert
+			Assert.AreEqual(systemInformationSenderPath, result.ResourcePath);
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

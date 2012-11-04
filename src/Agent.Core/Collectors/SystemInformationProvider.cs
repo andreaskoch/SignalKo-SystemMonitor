@@ -1,5 +1,6 @@
 using System;
 
+using SignalKo.SystemMonitor.Agent.Core.Collectors.HttpStatusCodeCheck;
 using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
 using SignalKo.SystemMonitor.Common.Services;
 
@@ -11,9 +12,11 @@ namespace SignalKo.SystemMonitor.Agent.Core.Collectors
 
 		private readonly ISystemPerformanceDataProvider systemPerformanceDataProvider;
 
+		private readonly IHttpStatusCodeCheckResultProvider httpStatusCodeCheckResultProvider;
+
 		private readonly IMachineNameProvider machineNameProvider;
 
-		public SystemInformationProvider(ITimeProvider timeProvider, IMachineNameProvider machineNameProvider, ISystemPerformanceDataProvider systemPerformanceDataProvider)
+		public SystemInformationProvider(ITimeProvider timeProvider, IMachineNameProvider machineNameProvider, ISystemPerformanceDataProvider systemPerformanceDataProvider, IHttpStatusCodeCheckResultProvider httpStatusCodeCheckResultProvider)
 		{
 			if (timeProvider == null)
 			{
@@ -30,9 +33,15 @@ namespace SignalKo.SystemMonitor.Agent.Core.Collectors
 				throw new ArgumentNullException("systemPerformanceDataProvider");
 			}
 
+			if (httpStatusCodeCheckResultProvider == null)
+			{
+				throw new ArgumentNullException("httpStatusCodeCheckResultProvider");
+			}
+
 			this.timeProvider = timeProvider;
 			this.machineNameProvider = machineNameProvider;
 			this.systemPerformanceDataProvider = systemPerformanceDataProvider;
+			this.httpStatusCodeCheckResultProvider = httpStatusCodeCheckResultProvider;
 		}
 
 		public Common.Model.SystemInformation GetSystemInfo()
@@ -41,7 +50,8 @@ namespace SignalKo.SystemMonitor.Agent.Core.Collectors
 				{
 					Timestamp = this.timeProvider.GetDateAndTime(),
 					MachineName = this.machineNameProvider.GetMachineName(),
-					SystemPerformance = this.systemPerformanceDataProvider.GetSystemPerformanceData()
+					SystemPerformance = this.systemPerformanceDataProvider.GetSystemPerformanceData(),
+					HttpStatusCodeCheck = this.httpStatusCodeCheckResultProvider.GetHttpStatusCodeCheckResult()
 				};
 		}
 	}

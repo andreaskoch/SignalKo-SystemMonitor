@@ -52,6 +52,8 @@
     </Compile>
     <Compile Include="Collectors\CustomMachineNameProvider.cs" />
     <Compile Include="Collectors\EnvironmentMachineNameProvider.cs" />
+    <Compile Include="Collectors\HttpStatusCodeCheck\HttpStatusCodeCheckResultProvider.cs" />
+    <Compile Include="Collectors\HttpStatusCodeCheck\IHttpStatusCodeCheckResultProvider.cs" />
     <Compile Include="Collectors\IMachineNameProvider.cs" />
     <Compile Include="Collectors\ISystemInformationProvider.cs" />
     <Compile Include="Collectors\SystemInformationProvider.cs" />
@@ -65,13 +67,13 @@
     <Compile Include="Collectors\SystemPerformance\SystemMemoryStatusProvider.cs" />
     <Compile Include="Collectors\SystemPerformance\SystemPerformanceDataProvider.cs" />
     <Compile Include="Collectors\SystemPerformance\SystemStorageStatusProvider.cs" />
-    <Compile Include="Configuration\AgentConfigurationAccessor.cs" />
-    <Compile Include="Configuration\AgentConfigurationProvider.cs" />
-    <Compile Include="Configuration\AgentConfigurationServiceConfiguration.cs" />
-    <Compile Include="Configuration\AppConfigAgentConfigurationServiceUrlProvider.cs" />
-    <Compile Include="Configuration\IAgentConfigurationAccessor.cs" />
-    <Compile Include="Configuration\IAgentConfigurationProvider.cs" />
-    <Compile Include="Configuration\IAgentConfigurationServiceUrlProvider.cs" />
+    <Compile Include="Configuration\AgentControlDefinitionAccessor.cs" />
+    <Compile Include="Configuration\AgentControlDefinitionProvider.cs" />
+    <Compile Include="Configuration\AgentControlDefinitionServiceConfiguration.cs" />
+    <Compile Include="Configuration\AppConfigAgentControlDefinitionServiceUrlProvider.cs" />
+    <Compile Include="Configuration\IAgentControlDefinitionAccessor.cs" />
+    <Compile Include="Configuration\IAgentControlDefinitionProvider.cs" />
+    <Compile Include="Configuration\IAgentControlDefinitionServiceUrlProvider.cs" />
     <Compile Include="Configuration\IRESTBasedSystemInformationSenderConfigurationProvider.cs" />
     <Compile Include="Configuration\IRESTServiceConfiguration.cs" />
     <Compile Include="Configuration\RESTBasedSystemInformationSenderConfigurationProvider.cs" />

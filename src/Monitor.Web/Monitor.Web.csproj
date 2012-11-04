@@ -104,6 +104,7 @@
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Controllers\AgentConfigurationController.cs" />
     <Compile Include="Controllers\Api\AgentConfigurationController.cs" />
+    <Compile Include="Controllers\Api\AgentControlDefinitionController.cs" />
     <Compile Include="Controllers\Api\GroupConfigurationController.cs" />
     <Compile Include="Controllers\Api\SystemInformationArchiveController.cs" />
     <Compile Include="Controllers\Api\SystemInformationController.cs" />
@@ -119,7 +120,9 @@
     <Compile Include="Core\DataAccess\ISystemInformationArchiveAccessor.cs" />
     <Compile Include="Core\DataAccess\JsonAgentConfigurationDataAccessor.cs" />
     <Compile Include="Core\Services\AgentConfigurationService.cs" />
+    <Compile Include="Core\Services\AgentControlDefinitionService.cs" />
     <Compile Include="Core\Services\IAgentConfigurationService.cs" />
+    <Compile Include="Core\Services\IAgentControlDefinitionService.cs" />
     <Compile Include="Core\Services\IKnownAgentsProvider.cs" />
     <Compile Include="Core\Services\KnownAgentsProvider.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />

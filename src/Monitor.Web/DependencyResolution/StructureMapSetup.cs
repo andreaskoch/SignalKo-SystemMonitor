@@ -34,6 +34,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
 					x.For<IAgentConfigurationDataAccessor>().Use<JsonAgentConfigurationDataAccessor>();
 					x.For<IKnownAgentsProvider>().Use<KnownAgentsProvider>();
 					x.For<IAgentConfigurationService>().Use<AgentConfigurationService>();
+					x.For<IAgentControlDefinitionService>().Use<AgentControlDefinitionService>();
 
 					/* view model orchestrators */
 					x.For<IMemoryStatusOrchestrator>().Use<MemoryStatusOrchestrator>();

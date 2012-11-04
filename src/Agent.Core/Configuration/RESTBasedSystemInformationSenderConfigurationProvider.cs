@@ -2,34 +2,34 @@ using System;
 
 namespace SignalKo.SystemMonitor.Agent.Core.Configuration
 {
-    public class RESTBasedSystemInformationSenderConfigurationProvider : IRESTBasedSystemInformationSenderConfigurationProvider
-    {
-        private readonly IAgentConfigurationProvider agentConfigurationProvider;
+	public class RESTBasedSystemInformationSenderConfigurationProvider : IRESTBasedSystemInformationSenderConfigurationProvider
+	{
+		private readonly IAgentControlDefinitionProvider agentControlDefinitionProvider;
 
-        public RESTBasedSystemInformationSenderConfigurationProvider(IAgentConfigurationProvider agentConfigurationProvider)
-        {
-            if (agentConfigurationProvider == null)
-            {
-                throw new ArgumentNullException("agentConfigurationProvider");
-            }
+		public RESTBasedSystemInformationSenderConfigurationProvider(IAgentControlDefinitionProvider agentControlDefinitionProvider)
+		{
+			if (agentControlDefinitionProvider == null)
+			{
+				throw new ArgumentNullException("agentControlDefinitionProvider");
+			}
 
-            this.agentConfigurationProvider = agentConfigurationProvider;
-        }
+			this.agentControlDefinitionProvider = agentControlDefinitionProvider;
+		}
 
-        public IRESTServiceConfiguration GetConfiguration()
-        {
-            var agentConfiguration = this.agentConfigurationProvider.GetAgentConfiguration();
-            if (agentConfiguration == null)
-            {
-                return null;
-            }
+		public IRESTServiceConfiguration GetConfiguration()
+		{
+			var agentControlDefinition = this.agentControlDefinitionProvider.GetControlDefinition();
+			if (agentControlDefinition == null)
+			{
+				return null;
+			}
 
-            return new RESTServiceConfiguration
-                {
-                    Hostaddress = agentConfiguration.Hostaddress,
-                    Hostname = agentConfiguration.Hostname,
-                    ResourcePath = agentConfiguration.SystemInformationSenderPath
-                };
-        }
-    }
+			return new RESTServiceConfiguration
+				{
+					Hostaddress = agentControlDefinition.Hostaddress,
+					Hostname = agentControlDefinition.Hostname,
+					ResourcePath = agentControlDefinition.SystemInformationSenderPath
+				};
+		}
+	}
 }
