@@ -34,7 +34,10 @@ namespace Agent.Core.Tests.IntegrationTests.Collectors
 			var agentControlDefinition = new AgentControlDefinition { AgentIsEnabled = true, CheckIntervalInSeconds = 60 };
 			agentControlDefinitionProvider.Setup(a => a.GetControlDefinition()).Returns(agentControlDefinition);
 
-			IHttpStatusCodeCheckResultProvider httpStatusCodeCheckResultProvider = new HttpStatusCodeCheckResultProvider(agentControlDefinitionProvider.Object);
+			var httpStatusCodeFetcher = new Mock<IHttpStatusCodeFetcher>();
+
+			IHttpStatusCodeCheckResultProvider httpStatusCodeCheckResultProvider = new HttpStatusCodeCheckResultProvider(
+				agentControlDefinitionProvider.Object, httpStatusCodeFetcher.Object);
 
 			var systemInformationProvider = new SystemInformationProvider(
 				timeProvider, machineNameProvider, systemPerformanceDataProvider, httpStatusCodeCheckResultProvider);
@@ -64,7 +67,10 @@ namespace Agent.Core.Tests.IntegrationTests.Collectors
 			var agentControlDefinition = new AgentControlDefinition { AgentIsEnabled = true, CheckIntervalInSeconds = 60 };
 			agentControlDefinitionProvider.Setup(a => a.GetControlDefinition()).Returns(agentControlDefinition);
 
-			IHttpStatusCodeCheckResultProvider httpStatusCodeCheckResultProvider = new HttpStatusCodeCheckResultProvider(agentControlDefinitionProvider.Object);
+			var httpStatusCodeFetcher = new Mock<IHttpStatusCodeFetcher>();
+
+			IHttpStatusCodeCheckResultProvider httpStatusCodeCheckResultProvider = new HttpStatusCodeCheckResultProvider(
+				agentControlDefinitionProvider.Object, httpStatusCodeFetcher.Object);
 
 			var systemInformationProvider = new SystemInformationProvider(
 				timeProvider, machineNameProvider, systemPerformanceDataProvider, httpStatusCodeCheckResultProvider);

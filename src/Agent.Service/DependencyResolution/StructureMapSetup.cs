@@ -1,5 +1,6 @@
 using SignalKo.SystemMonitor.Agent.Core;
 using SignalKo.SystemMonitor.Agent.Core.Collectors;
+using SignalKo.SystemMonitor.Agent.Core.Collectors.HttpStatusCodeCheck;
 using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
 using SignalKo.SystemMonitor.Agent.Core.Configuration;
 using SignalKo.SystemMonitor.Agent.Core.Coordination;
@@ -12,55 +13,61 @@ using StructureMap;
 
 namespace SignalKo.SystemMonitor.Agent.Service.DependencyResolution
 {
-    public static class StructureMapSetup
-    {
-        public static void Setup()
-        {
-            ObjectFactory.Configure(
-                config =>
-                    {
-                        /* common */
-                        config.For<IEncodingProvider>().Use<DefaultEncodingProvider>();
-                        config.For<IMemoryUnitConverter>().Use<MemoryUnitConverter>();
-                        config.For<ITimeProvider>().Use<UTCTimeProvider>();
+	public static class StructureMapSetup
+	{
+		public static void Setup()
+		{
+			ObjectFactory.Configure(
+				config =>
+				{
+					/* common */
+					config.For<IEncodingProvider>().Use<DefaultEncodingProvider>();
+					config.For<IMemoryUnitConverter>().Use<MemoryUnitConverter>();
+					config.For<ITimeProvider>().Use<UTCTimeProvider>();
 
-                        /* collector */
-                        config.For<ILogicalDiscInstanceNameProvider>().Use<LogicalDiscInstanceNameProvider>();
-                        config.For<IMachineNameProvider>().Use<EnvironmentMachineNameProvider>();
-                        config.For<IProcessorStatusProvider>().Use<ProcessorStatusProvider>();
+					/* collector */
+					config.For<ISystemInformationProvider>().Use<SystemInformationProvider>();
+					config.For<IUrlComponentExtractor>().Use<UrlComponentExtractor>();
+					config.For<IMachineNameProvider>().Use<EnvironmentMachineNameProvider>();
 
-                        config.For<ISystemStorageStatusProvider>().Use<SystemStorageStatusProvider>();
-                        config.For<ISystemMemoryStatusProvider>().Use<SystemMemoryStatusProvider>();
-                        config.For<ISystemInformationProvider>().Use<SystemInformationProvider>();
+					/* system performance */
+					config.For<ILogicalDiscInstanceNameProvider>().Use<LogicalDiscInstanceNameProvider>();
+					config.For<IProcessorStatusProvider>().Use<ProcessorStatusProvider>();
+					config.For<ISystemStorageStatusProvider>().Use<SystemStorageStatusProvider>();
+					config.For<ISystemMemoryStatusProvider>().Use<SystemMemoryStatusProvider>();
 
-                        /* coordination */
-                        config.For<IAgentCoordinationServiceFactory>().Use<AgentCoordinationServiceFactory>();
+					/* http status code */
+					config.For<IHttpStatusCodeFetcher>().Use<HttpStatusCodeFetcher>();
+					config.For<IHttpStatusCodeCheckResultProvider>().Use<HttpStatusCodeCheckResultProvider>();
 
-                        /* queuing */
-                        var workQueue = new SystemInformationMessageQueue();
-                        var errorQueue = new SystemInformationMessageQueue();
-                        var messageQueueProvider = new SystemInformationMessageQueueProvider(workQueue, errorQueue);
-                        config.For<IMessageQueueProvider<SystemInformation>>().Singleton().Use(() => messageQueueProvider);
+					/* coordination */
+					config.For<IAgentCoordinationServiceFactory>().Use<AgentCoordinationServiceFactory>();
 
-                        config.For<IMessageQueuePersistence<SystemInformation>>().Use<JSONSystemInformationMessageQueuePersistence>();
-                        config.For<IJSONMessageQueuePersistenceConfigurationProvider>().Use<AppConfigJSONMessageQueuePersistenceConfigurationProvider>();
+					/* queuing */
+					var workQueue = new SystemInformationMessageQueue();
+					var errorQueue = new SystemInformationMessageQueue();
+					var messageQueueProvider = new SystemInformationMessageQueueProvider(workQueue, errorQueue);
+					config.For<IMessageQueueProvider<SystemInformation>>().Singleton().Use(() => messageQueueProvider);
 
-                        config.For<IMessageQueueFeederFactory>().Use<SystemInformationMessageQueueFeederFactory>();
-                        config.For<IMessageQueueWorkerFactory>().Use<SystemInformationMessageQueueWorkerFactory>();
+					config.For<IMessageQueuePersistence<SystemInformation>>().Use<JSONSystemInformationMessageQueuePersistence>();
+					config.For<IJSONMessageQueuePersistenceConfigurationProvider>().Use<AppConfigJSONMessageQueuePersistenceConfigurationProvider>();
 
-                        /* sender configuration */
-                        config.For<IAgentControlDefinitionAccessor>().Use<AgentControlDefinitionAccessor>();
-                        config.For<IAgentControlDefinitionProvider>().Use<AgentControlDefinitionProvider>();
-                        config.For<IAgentControlDefinitionServiceUrlProvider>().Use<AppConfigAgentControlDefinitionServiceUrlProvider>();
-                        config.For<IRESTBasedSystemInformationSenderConfigurationProvider>().Use<RESTBasedSystemInformationSenderConfigurationProvider>();
+					config.For<IMessageQueueFeederFactory>().Use<SystemInformationMessageQueueFeederFactory>();
+					config.For<IMessageQueueWorkerFactory>().Use<SystemInformationMessageQueueWorkerFactory>();
 
-                        /* sender */
-                        config.For<IRESTClientFactory>().Use<RESTClientFactory>();
-                        config.For<IRESTRequestFactory>().Use<JSONRequestFactory>();
-                        config.For<ISystemInformationSender>().Use<RESTBasedSystemInformationSender>();
+					/* sender configuration */
+					config.For<IAgentControlDefinitionAccessor>().Use<AgentControlDefinitionAccessor>();
+					config.For<IAgentControlDefinitionProvider>().Use<AgentControlDefinitionProvider>();
+					config.For<IAgentControlDefinitionServiceUrlProvider>().Use<AppConfigAgentControlDefinitionServiceUrlProvider>();
+					config.For<IRESTBasedSystemInformationSenderConfigurationProvider>().Use<RESTBasedSystemInformationSenderConfigurationProvider>();
 
-                        config.For<ISystemInformationDispatchingService>().Use<SystemInformationDispatchingService>();
-                    });
-        }
-    }
+					/* sender */
+					config.For<IRESTClientFactory>().Use<RESTClientFactory>();
+					config.For<IRESTRequestFactory>().Use<JSONRequestFactory>();
+					config.For<ISystemInformationSender>().Use<RESTBasedSystemInformationSender>();
+
+					config.For<ISystemInformationDispatchingService>().Use<SystemInformationDispatchingService>();
+				});
+		}
+	}
 }

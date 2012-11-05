@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 using RestSharp;
 
+using SignalKo.SystemMonitor.Agent.Core.Collectors;
 using SignalKo.SystemMonitor.Agent.Core.Configuration;
 using SignalKo.SystemMonitor.Agent.Core.Sender;
 using SignalKo.SystemMonitor.Common.Model;
@@ -22,12 +23,13 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 		{
 			// Arrange
 			var configurationServiceUrlProvider = new Mock<IAgentControlDefinitionServiceUrlProvider>();
+			var machineNameProvider = new Mock<IMachineNameProvider>();
 			var restClientFactory = new Mock<IRESTClientFactory>();
 			var requestFactory = new Mock<IRESTRequestFactory>();
 
 			// Act
 			var agentControlDefinitionAccessor = new AgentControlDefinitionAccessor(
-				configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
+				configurationServiceUrlProvider.Object, machineNameProvider.Object, restClientFactory.Object, requestFactory.Object);
 
 			// Assert
 			Assert.IsNotNull(agentControlDefinitionAccessor);
@@ -38,11 +40,25 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 		public void Constructor_AgentControlDefinitionServiceUrlProviderParameterIsNull_ArgumentNullExceptionIsThrown()
 		{
 			// Arrange
+			var machineNameProvider = new Mock<IMachineNameProvider>();
 			var restClientFactory = new Mock<IRESTClientFactory>();
 			var requestFactory = new Mock<IRESTRequestFactory>();
 
 			// Act
-			new AgentControlDefinitionAccessor(null, restClientFactory.Object, requestFactory.Object);
+			new AgentControlDefinitionAccessor(null, machineNameProvider.Object, restClientFactory.Object, requestFactory.Object);
+		}
+
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Constructor_MachineNameProviderParameterIsNull_ArgumentNullExceptionIsThrown()
+		{
+			// Arrange
+			var configurationServiceUrlProvider = new Mock<IAgentControlDefinitionServiceUrlProvider>();
+			var restClientFactory = new Mock<IRESTClientFactory>();
+			var requestFactory = new Mock<IRESTRequestFactory>();
+
+			// Act
+			new AgentControlDefinitionAccessor(configurationServiceUrlProvider.Object, null, restClientFactory.Object, requestFactory.Object);
 		}
 
 		[Test]
@@ -51,10 +67,11 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 		{
 			// Arrange
 			var configurationServiceUrlProvider = new Mock<IAgentControlDefinitionServiceUrlProvider>();
+			var machineNameProvider = new Mock<IMachineNameProvider>();
 			var requestFactory = new Mock<IRESTRequestFactory>();
 
 			// Act
-			new AgentControlDefinitionAccessor(configurationServiceUrlProvider.Object, null, requestFactory.Object);
+			new AgentControlDefinitionAccessor(configurationServiceUrlProvider.Object, machineNameProvider.Object, null, requestFactory.Object);
 		}
 
 		[Test]
@@ -63,10 +80,11 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 		{
 			// Arrange
 			var configurationServiceUrlProvider = new Mock<IAgentControlDefinitionServiceUrlProvider>();
+			var machineNameProvider = new Mock<IMachineNameProvider>();
 			var restClientFactory = new Mock<IRESTClientFactory>();
 
 			// Act
-			new AgentControlDefinitionAccessor(configurationServiceUrlProvider.Object, restClientFactory.Object, null);
+			new AgentControlDefinitionAccessor(configurationServiceUrlProvider.Object, machineNameProvider.Object, restClientFactory.Object, null);
 		}
 
 		#endregion
@@ -77,7 +95,9 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 		public void GetControlDefinition_GetServiceConfiguration_IsCalled_On_AgentControlDefinitionServiceUrlProvider()
 		{
 			// Arrange
-			var serviceConfiguration = new AgentControlDefinitionServiceConfiguration { Hostaddress = "127.0.0.0", Hostname = "localhost", ResourcePath = "/api/agentconfiguration" };
+			var serviceConfiguration = new AgentControlDefinitionServiceConfiguration { Hostaddress = "127.0.0.0", Hostname = "localhost", ResourcePath = "/api/AgentControlDefinition" };
+
+			var machineNameProvider = new Mock<IMachineNameProvider>();
 
 			var response = new Mock<IRestResponse<AgentControlDefinition>>();
 			var restClient = new Mock<IRestClient>();
@@ -94,7 +114,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 			requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
 			var agentControlDefinitionAccessor = new AgentControlDefinitionAccessor(
-				configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
+				configurationServiceUrlProvider.Object, machineNameProvider.Object, restClientFactory.Object, requestFactory.Object);
 
 			// Act
 			agentControlDefinitionAccessor.GetControlDefinition();
@@ -107,7 +127,9 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 		public void GetControlDefinition_GetRESTClient_IsCalled_On_RestClientFactory()
 		{
 			// Arrange
-			var serviceConfiguration = new AgentControlDefinitionServiceConfiguration { Hostaddress = "127.0.0.0:8181", Hostname = "localhost", ResourcePath = "/api/agentconfiguration" };
+			var serviceConfiguration = new AgentControlDefinitionServiceConfiguration { Hostaddress = "127.0.0.0:8181", Hostname = "localhost", ResourcePath = "/api/AgentControlDefinition" };
+
+			var machineNameProvider = new Mock<IMachineNameProvider>();
 
 			var response = new Mock<IRestResponse<AgentControlDefinition>>();
 			var restClient = new Mock<IRestClient>();
@@ -124,7 +146,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 			requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
 			var agentControlDefinitionAccessor = new AgentControlDefinitionAccessor(
-				configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
+				configurationServiceUrlProvider.Object, machineNameProvider.Object, restClientFactory.Object, requestFactory.Object);
 
 			// Act
 			agentControlDefinitionAccessor.GetControlDefinition();
@@ -137,7 +159,9 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 		public void GetControlDefinition_CreateGetRequest_IsCalled_On_RequestFactory()
 		{
 			// Arrange
-			var serviceConfiguration = new AgentControlDefinitionServiceConfiguration { Hostaddress = "127.0.0.0:8181", Hostname = "localhost", ResourcePath = "/api/agentconfiguration" };
+			var machineNameProvider = new Mock<IMachineNameProvider>();
+
+			var serviceConfiguration = new AgentControlDefinitionServiceConfiguration { Hostaddress = "127.0.0.0:8181", Hostname = "localhost", ResourcePath = "/api/AgentControlDefinition" };
 			var response = new Mock<IRestResponse<AgentControlDefinition>>();
 			var restClient = new Mock<IRestClient>();
 			restClient.Setup(c => c.Execute<AgentControlDefinition>(It.IsAny<IRestRequest>())).Returns(response.Object);
@@ -153,7 +177,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 			requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
 			var agentControlDefinitionAccessor = new AgentControlDefinitionAccessor(
-				configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
+				configurationServiceUrlProvider.Object, machineNameProvider.Object, restClientFactory.Object, requestFactory.Object);
 
 			// Act
 			agentControlDefinitionAccessor.GetControlDefinition();
@@ -166,7 +190,9 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 		public void GetControlDefinition_Execute_IsCalled_On_RestClient_with_RequestObject()
 		{
 			// Arrange
-			var serviceConfiguration = new AgentControlDefinitionServiceConfiguration { Hostaddress = "127.0.0.0:8181", Hostname = "localhost", ResourcePath = "/api/agentconfiguration" };
+			var machineNameProvider = new Mock<IMachineNameProvider>();
+
+			var serviceConfiguration = new AgentControlDefinitionServiceConfiguration { Hostaddress = "127.0.0.0:8181", Hostname = "localhost", ResourcePath = "/api/AgentControlDefinition" };
 			var response = new Mock<IRestResponse<AgentControlDefinition>>();
 			var restClient = new Mock<IRestClient>();
 			restClient.Setup(c => c.Execute<AgentControlDefinition>(It.IsAny<IRestRequest>())).Returns(response.Object);
@@ -182,7 +208,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 			requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
 			var agentControlDefinitionAccessor = new AgentControlDefinitionAccessor(
-				configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
+				configurationServiceUrlProvider.Object, machineNameProvider.Object, restClientFactory.Object, requestFactory.Object);
 
 			// Act
 			agentControlDefinitionAccessor.GetControlDefinition();
@@ -195,7 +221,9 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 		public void GetControlDefinition_ResponseData_IsReturned()
 		{
 			// Arrange
-			var serviceConfiguration = new AgentControlDefinitionServiceConfiguration { Hostaddress = "127.0.0.0:8181", Hostname = "localhost", ResourcePath = "/api/agentconfiguration" };
+			var serviceConfiguration = new AgentControlDefinitionServiceConfiguration { Hostaddress = "127.0.0.0:8181", Hostname = "localhost", ResourcePath = "/api/AgentControlDefinition" };
+
+			var machineNameProvider = new Mock<IMachineNameProvider>();
 
 			var responseData = new AgentControlDefinition
 				{
@@ -223,7 +251,7 @@ namespace Agent.Core.Tests.UnitTests.Configuration
 			requestFactory.Setup(f => f.CreateGetRequest(It.IsAny<string>(), It.IsAny<string>())).Returns(request.Object);
 
 			var agentControlDefinitionAccessor = new AgentControlDefinitionAccessor(
-				configurationServiceUrlProvider.Object, restClientFactory.Object, requestFactory.Object);
+				configurationServiceUrlProvider.Object, machineNameProvider.Object, restClientFactory.Object, requestFactory.Object);
 
 			// Act
 			var result = agentControlDefinitionAccessor.GetControlDefinition();

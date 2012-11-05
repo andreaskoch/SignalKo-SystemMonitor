@@ -1,5 +1,6 @@
 using SignalKo.SystemMonitor.Agent.Core;
 using SignalKo.SystemMonitor.Agent.Core.Collectors;
+using SignalKo.SystemMonitor.Agent.Core.Collectors.HttpStatusCodeCheck;
 using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
 using SignalKo.SystemMonitor.Agent.Core.Configuration;
 using SignalKo.SystemMonitor.Agent.Core.Coordination;
@@ -25,7 +26,8 @@ namespace SignalKo.SystemMonitor.Agent.CommandLine.DependencyResolution
 					config.For<ITimeProvider>().Use<UTCTimeProvider>();
 
 					/* collector */
-					config.For<ILogicalDiscInstanceNameProvider>().Use<LogicalDiscInstanceNameProvider>();
+					config.For<ISystemInformationProvider>().Use<SystemInformationProvider>();
+					config.For<IUrlComponentExtractor>().Use<UrlComponentExtractor>();
 
 					if (string.IsNullOrWhiteSpace(machineName))
 					{
@@ -37,11 +39,16 @@ namespace SignalKo.SystemMonitor.Agent.CommandLine.DependencyResolution
 						config.For<IMachineNameProvider>().Use(customMachineNameProvider);
 					}
 
+					/* system performance */
+					config.For<ILogicalDiscInstanceNameProvider>().Use<LogicalDiscInstanceNameProvider>();
 					config.For<ISystemPerformanceDataProvider>().Use<SystemPerformanceDataProvider>();
 					config.For<IProcessorStatusProvider>().Use<ProcessorStatusProvider>();
 					config.For<ISystemStorageStatusProvider>().Use<SystemStorageStatusProvider>();
 					config.For<ISystemMemoryStatusProvider>().Use<SystemMemoryStatusProvider>();
-					config.For<ISystemInformationProvider>().Use<SystemInformationProvider>();
+
+					/* http status code */
+					config.For<IHttpStatusCodeFetcher>().Use<HttpStatusCodeFetcher>();
+					config.For<IHttpStatusCodeCheckResultProvider>().Use<HttpStatusCodeCheckResultProvider>();
 
 					/* coordination */
 					config.For<IAgentCoordinationServiceFactory>().Use<AgentCoordinationServiceFactory>();

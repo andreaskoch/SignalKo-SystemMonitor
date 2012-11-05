@@ -52,8 +52,12 @@
     </Compile>
     <Compile Include="Collectors\CustomMachineNameProvider.cs" />
     <Compile Include="Collectors\EnvironmentMachineNameProvider.cs" />
+    <Compile Include="Collectors\UrlComponentExtractor.cs" />
     <Compile Include="Collectors\HttpStatusCodeCheck\HttpStatusCodeCheckResultProvider.cs" />
+    <Compile Include="Collectors\HttpStatusCodeCheck\HttpStatusCodeFetcher.cs" />
     <Compile Include="Collectors\HttpStatusCodeCheck\IHttpStatusCodeCheckResultProvider.cs" />
+    <Compile Include="Collectors\HttpStatusCodeCheck\IHttpStatusCodeFetcher.cs" />
+    <Compile Include="Collectors\IUrlComponentExtractor.cs" />
     <Compile Include="Collectors\IMachineNameProvider.cs" />
     <Compile Include="Collectors\ISystemInformationProvider.cs" />
     <Compile Include="Collectors\SystemInformationProvider.cs" />
