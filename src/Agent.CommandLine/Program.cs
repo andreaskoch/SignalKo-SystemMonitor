@@ -26,7 +26,7 @@ namespace SignalKo.SystemMonitor.Agent.CommandLine
 
         public static int Main(string[] args)
         {
-            string customMachineName;
+            string customMachineName = null;
 
 #if DEBUG
             // wait for debug

@@ -5,11 +5,17 @@ using StructureMap;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
 {
+    /// <summary>
+    /// This class is for initiating the StructureMap Container
+    /// </summary>
     public static class StructureMapSetup
     {
+        /// <summary>
+        /// Initializes a instance of StructureMap.
+        /// </summary>
+        /// <returns>The initiated StructureMap Container</returns>
         public static IContainer Initialize()
         {
-
             ObjectFactory.Configure(
                 config =>
                     {
@@ -21,14 +27,6 @@ namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
                         config.For<IMemoryStatusOrchestrator>().Use<MemoryStatusOrchestrator>();
                         config.For<IStorageStatusOrchestrator>().Use<StorageStatusOrchestrator>();
                     });
-
-            //ObjectFactory.Initialize(x => x.Scan(
-            //    scan =>
-            //        {
-            //            scan.TheCallingAssembly();
-            //            scan.WithDefaultConventions();
-            //        }));
-
             return ObjectFactory.Container;
         }
     }
