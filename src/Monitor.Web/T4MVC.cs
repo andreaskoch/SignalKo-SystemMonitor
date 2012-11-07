@@ -324,20 +324,20 @@ namespace Links {
             private const string URLPATH = "~/Scripts/libraries";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string jquery_1_8_1_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.1-vsdoc.min.js") ? Url("jquery-1.8.1-vsdoc.min.js") : Url("jquery-1.8.1-vsdoc.js");
+            public static readonly string jquery_1_8_2_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.2.intellisense.min.js") ? Url("jquery-1.8.2.intellisense.min.js") : Url("jquery-1.8.2.intellisense.js");
                           
-            public static readonly string jquery_1_8_1_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.1.min.js") ? Url("jquery-1.8.1.min.js") : Url("jquery-1.8.1.js");
+            public static readonly string jquery_1_8_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.2.min.js") ? Url("jquery-1.8.2.min.js") : Url("jquery-1.8.2.js");
                           
-            public static readonly string jquery_1_8_1_min_js = Url("jquery-1.8.1.min.js");
-            public static readonly string jquery_ui_1_8_23_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-1.8.23.min.js") ? Url("jquery-ui-1.8.23.min.js") : Url("jquery-ui-1.8.23.js");
+            public static readonly string jquery_1_8_2_min_js = Url("jquery-1.8.2.min.js");
+            public static readonly string jquery_ui_1_9_0_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-1.9.0.min.js") ? Url("jquery-ui-1.9.0.min.js") : Url("jquery-ui-1.9.0.js");
                           
-            public static readonly string jquery_ui_1_8_23_min_js = Url("jquery-ui-1.8.23.min.js");
+            public static readonly string jquery_ui_1_9_0_min_js = Url("jquery-ui-1.9.0.min.js");
             public static readonly string jquery_signalR_0_5_3_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.signalR-0.5.3.min.js") ? Url("jquery.signalR-0.5.3.min.js") : Url("jquery.signalR-0.5.3.js");
                           
             public static readonly string jquery_signalR_0_5_3_min_js = Url("jquery.signalR-0.5.3.min.js");
-            public static readonly string knockout_2_1_0_debug_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/knockout-2.1.0.debug.min.js") ? Url("knockout-2.1.0.debug.min.js") : Url("knockout-2.1.0.debug.js");
+            public static readonly string knockout_2_2_0_debug_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/knockout-2.2.0.debug.min.js") ? Url("knockout-2.2.0.debug.min.js") : Url("knockout-2.2.0.debug.js");
                           
-            public static readonly string knockout_2_1_0_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/knockout-2.1.0.min.js") ? Url("knockout-2.1.0.min.js") : Url("knockout-2.1.0.js");
+            public static readonly string knockout_2_2_0_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/knockout-2.2.0.min.js") ? Url("knockout-2.2.0.min.js") : Url("knockout-2.2.0.js");
                           
             public static readonly string knockout_mapping_latest_debug_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/knockout.mapping-latest.debug.min.js") ? Url("knockout.mapping-latest.debug.min.js") : Url("knockout.mapping-latest.debug.js");
                           
@@ -377,17 +377,6 @@ namespace Links {
             private const string URLPATH = "~/Styles/Combined";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-            public static class fonts {
-                private const string URLPATH = "~/Styles/Combined/fonts";
-                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string fontawesome_webfont_eot = Url("fontawesome-webfont.eot");
-                public static readonly string fontawesome_webfont_svg = Url("fontawesome-webfont.svg");
-                public static readonly string fontawesome_webfont_ttf = Url("fontawesome-webfont.ttf");
-                public static readonly string fontawesome_webfont_woff = Url("fontawesome-webfont.woff");
-            }
-        
             public static readonly string global_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/global.min.css") ? Url("global.min.css") : Url("global.css");
                  
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -459,6 +448,17 @@ namespace Links {
             
             }
         
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class fonts {
+            private const string URLPATH = "~/Styles/fonts";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string fontawesome_webfont_eot = Url("fontawesome-webfont.eot");
+            public static readonly string fontawesome_webfont_svg = Url("fontawesome-webfont.svg");
+            public static readonly string fontawesome_webfont_ttf = Url("fontawesome-webfont.ttf");
+            public static readonly string fontawesome_webfont_woff = Url("fontawesome-webfont.woff");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

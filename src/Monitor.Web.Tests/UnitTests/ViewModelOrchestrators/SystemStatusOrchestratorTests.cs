@@ -11,205 +11,207 @@ using SignalKo.SystemMonitor.Monitor.Web.ViewModels;
 
 namespace Monitor.Web.Tests.UnitTests.ViewModelOrchestrators
 {
-    [TestFixture]
-    public class SystemStatusOrchestratorTests
-    {
-        #region constructor
-        
-        [Test]
-        public void Constructor_AllParametersAreSet_ObjectIsInstantiated()
-        {
-            // Arrage
-            var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
-            var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
-            var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
+	[TestFixture]
+	public class SystemStatusOrchestratorTests
+	{
+		#region constructor
 
-            // Act
-            var systemStatusOrchestrator = new SystemStatusOrchestrator(
-                processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
+		[Test]
+		public void Constructor_AllParametersAreSet_ObjectIsInstantiated()
+		{
+			// Arrage
+			var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
+			var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
+			var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
 
-            // Assert
-            Assert.IsNotNull(systemStatusOrchestrator);
-        }
+			// Act
+			var systemStatusOrchestrator = new SystemStatusOrchestrator(
+				processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_ProcessorStatusOrchestratorParameterIsNull_ArgumentNullExceptionIsThrown()
-        {
-            // Arrage
-            var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
-            var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
+			// Assert
+			Assert.IsNotNull(systemStatusOrchestrator);
+		}
 
-            // Act
-            new SystemStatusOrchestrator(null, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
-        }
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Constructor_ProcessorStatusOrchestratorParameterIsNull_ArgumentNullExceptionIsThrown()
+		{
+			// Arrage
+			var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
+			var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_MemoryStatusOrchestratorParameterIsNull_ArgumentNullExceptionIsThrown()
-        {
-            // Arrage
-            var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
-            var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
+			// Act
+			new SystemStatusOrchestrator(null, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
+		}
 
-            // Act
-            new SystemStatusOrchestrator(processorStatusOrchestrator.Object, null, storageStatusOrchestrator.Object);
-        }
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Constructor_MemoryStatusOrchestratorParameterIsNull_ArgumentNullExceptionIsThrown()
+		{
+			// Arrage
+			var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
+			var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_StorageStatusOrchestratorParameterIsNull_ArgumentNullExceptionIsThrown()
-        {
-            // Arrage
-            var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
-            var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
+			// Act
+			new SystemStatusOrchestrator(processorStatusOrchestrator.Object, null, storageStatusOrchestrator.Object);
+		}
 
-            // Act
-            new SystemStatusOrchestrator(processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, null);
-        }
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void Constructor_StorageStatusOrchestratorParameterIsNull_ArgumentNullExceptionIsThrown()
+		{
+			// Arrage
+			var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
+			var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
 
-        #endregion
+			// Act
+			new SystemStatusOrchestrator(processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, null);
+		}
 
-        #region GetSystemStatusViewModel
+		#endregion
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void GetSystemStatusViewModel_ParameterIsNull_ArgumentNullExceptionIsThrown()
-        {
-            // Arrage
-            SystemInformation sytemInformation = null;
+		#region GetSystemStatusViewModel
 
-            var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
-            var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
-            var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
+		[Test]
+		[ExpectedException(typeof(ArgumentNullException))]
+		public void GetSystemStatusViewModel_ParameterIsNull_ArgumentNullExceptionIsThrown()
+		{
+			// Arrage
+			SystemInformation sytemInformation = null;
 
-            var systemStatusOrchestrator = new SystemStatusOrchestrator(
-                processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
+			var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
+			var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
+			var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
 
-            // Act
-            systemStatusOrchestrator.GetSystemStatusViewModel(sytemInformation);
-        }
+			var systemStatusOrchestrator = new SystemStatusOrchestrator(
+				processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
 
-        [TestCase("Some Machine Name")]
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase(" ")]
-        public void GetSystemStatusViewModel_ParameterIsValid_SystemStatusViewModelContainsSuppliedMachineName(string machineName)
-        {
-            // Arrage
-            var sytemInformation = new SystemInformation { MachineName = machineName };
+			// Act
+			systemStatusOrchestrator.GetSystemStatusViewModel(sytemInformation);
+		}
 
-            var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
-            var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
-            var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
+		[TestCase("Some Machine Name")]
+		[TestCase(null)]
+		[TestCase("")]
+		[TestCase(" ")]
+		public void GetSystemStatusViewModel_ParameterIsValid_SystemStatusViewModelContainsSuppliedMachineName(string machineName)
+		{
+			// Arrage
+			var sytemInformation = new SystemInformation { MachineName = machineName };
 
-            var systemStatusOrchestrator = new SystemStatusOrchestrator(
-                processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
+			var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
+			var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
+			var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
 
-            // Act
-            var result = systemStatusOrchestrator.GetSystemStatusViewModel(sytemInformation);
+			var systemStatusOrchestrator = new SystemStatusOrchestrator(
+				processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
 
-            // Assert
-            Assert.AreEqual(machineName, result.MachineName);
-        }
+			// Act
+			var result = systemStatusOrchestrator.GetSystemStatusViewModel(sytemInformation);
 
-        [Test]
-        public void GetSystemStatusViewModel_ParameterIsValid_SystemStatusViewModelContainsSuppliedTimestamp()
-        {
-            // Arrage
-            var timestamp = DateTime.UtcNow;
-            var sytemInformation = new SystemInformation { Timestamp = timestamp };
+			// Assert
+			Assert.AreEqual(machineName, result.MachineName);
+		}
 
-            var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
-            var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
-            var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
+		[Test]
+		public void GetSystemStatusViewModel_ParameterIsValid_SystemStatusViewModelContainsSuppliedTimestamp()
+		{
+			// Arrage
+			var timestamp = DateTime.UtcNow;
+			var sytemInformation = new SystemInformation { Timestamp = timestamp };
 
-            var systemStatusOrchestrator = new SystemStatusOrchestrator(
-                processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
+			var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
+			var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
+			var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
 
-            // Act
-            var result = systemStatusOrchestrator.GetSystemStatusViewModel(sytemInformation);
+			var systemStatusOrchestrator = new SystemStatusOrchestrator(
+				processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
 
-            // Assert
-            Assert.AreEqual(timestamp, result.Timestamp);
-        }
+			// Act
+			var result = systemStatusOrchestrator.GetSystemStatusViewModel(sytemInformation);
 
-        [Test]
-        public void GetSystemStatusViewModel_ProcessorStatusIsNotNull_ResultContainsProcessorStatusDataPoint()
-        {
-            // Arrage
-            var processorStatus = new ProcessorUtilizationInformation { ProcessorUtilizationInPercent = 50d };
-            var systemInformation = new SystemInformation { ProcessorStatus = processorStatus };
-            var processorStatusViewModel = new SystemStatusPointViewModel { Name = "Processor Status", Value = processorStatus.ProcessorUtilizationInPercent };
+			// Assert
+			Assert.AreEqual(timestamp, result.Timestamp);
+		}
 
-            var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
-            processorStatusOrchestrator.Setup(p => p.GetProcessorUtilizationInPercent(It.IsAny<ProcessorUtilizationInformation>())).Returns(
-                processorStatusViewModel);
+		[Test]
+		public void GetSystemStatusViewModel_ProcessorStatusIsNotNull_ResultContainsProcessorStatusDataPoint()
+		{
+			// Arrage
+			var processorStatus = new ProcessorUtilizationInformation { ProcessorUtilizationInPercent = 50d };
+			var systemPerformanceInformation = new SystemPerformanceData { ProcessorStatus = processorStatus };
+			var systemInformation = new SystemInformation { SystemPerformance = systemPerformanceInformation };
+			var processorStatusViewModel = new SystemStatusPointViewModel { Name = "Processor Status", Value = processorStatus.ProcessorUtilizationInPercent };
 
-            var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
-            var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
+			var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
+			processorStatusOrchestrator.Setup(p => p.GetProcessorUtilizationInPercent(It.IsAny<ProcessorUtilizationInformation>())).Returns(
+				processorStatusViewModel);
 
-            var systemStatusOrchestrator = new SystemStatusOrchestrator(
-                processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
+			var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
+			var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
 
-            // Act
-            var result = systemStatusOrchestrator.GetSystemStatusViewModel(systemInformation);
+			var systemStatusOrchestrator = new SystemStatusOrchestrator(
+				processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
 
-            // Assert
-            Assert.AreEqual(processorStatusViewModel.Value, result.DataPoints.First(d => d.Name.Equals(processorStatusViewModel.Name)).Value);
-        }
+			// Act
+			var result = systemStatusOrchestrator.GetSystemStatusViewModel(systemInformation);
 
-        [Test]
-        public void GetSystemStatusViewModel_MemoryStatusIsNotNull_ResultContainsMemoryStatusDataPoint()
-        {
-            // Arrage
-            var memoryStatus = new SystemMemoryInformation { UsedMemoryInGB = 1d, AvailableMemoryInGB = 10d };
-            var systemInformation = new SystemInformation { MemoryStatus = memoryStatus };
-            var memoryStatusViewModel = new SystemStatusPointViewModel { Name = "Memory Status", Value = 10d };
+			// Assert
+			Assert.AreEqual(processorStatusViewModel.Value, result.DataPoints.First(d => d.Name.Equals(processorStatusViewModel.Name)).Value);
+		}
 
-            var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
-            var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
-            memoryStatusOrchestrator.Setup(p => p.GetMemoryUtilizationInPercent(It.IsAny<SystemMemoryInformation>())).Returns(memoryStatusViewModel);
+		[Test]
+		public void GetSystemStatusViewModel_MemoryStatusIsNotNull_ResultContainsMemoryStatusDataPoint()
+		{
+			// Arrage
+			var memoryStatus = new SystemMemoryInformation { UsedMemoryInGB = 1d, AvailableMemoryInGB = 10d };
+			var systemPerformanceInformation = new SystemPerformanceData { MemoryStatus = memoryStatus };
+			var systemInformation = new SystemInformation { SystemPerformance = systemPerformanceInformation };
+			var memoryStatusViewModel = new SystemStatusPointViewModel { Name = "Memory Status", Value = 10d };
 
-            var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
+			var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
+			var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
+			memoryStatusOrchestrator.Setup(p => p.GetMemoryUtilizationInPercent(It.IsAny<SystemMemoryInformation>())).Returns(memoryStatusViewModel);
 
-            var systemStatusOrchestrator = new SystemStatusOrchestrator(
-                processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
+			var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
 
-            // Act
-            var result = systemStatusOrchestrator.GetSystemStatusViewModel(systemInformation);
+			var systemStatusOrchestrator = new SystemStatusOrchestrator(
+				processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
 
-            // Assert
-            Assert.AreEqual(memoryStatusViewModel.Value, result.DataPoints.First(d => d.Name.Equals(memoryStatusViewModel.Name)).Value);
-        }
+			// Act
+			var result = systemStatusOrchestrator.GetSystemStatusViewModel(systemInformation);
 
-        [Test]
-        public void GetSystemStatusViewModel_StorageStatusIsNotNull_ResultContainsStorageStatusDataPoint()
-        {
-            // Arrage
-            var deviceInfo1 = new SystemStorageDeviceInformation { DeviceName = "C:", FreeDiscSpaceInPercent = 20d };
-            var deviceInfos = new[] { deviceInfo1 };
-            var storageStatus = new SystemStorageInformation { StorageDeviceInfos = deviceInfos };
-            var systemInformation = new SystemInformation { StorageStatus = storageStatus };
-            var storageStatusViewModel = new SystemStatusPointViewModel
-                { Name = "Storage Status" + deviceInfo1.DeviceName, Value = deviceInfo1.FreeDiscSpaceInPercent };
+			// Assert
+			Assert.AreEqual(memoryStatusViewModel.Value, result.DataPoints.First(d => d.Name.Equals(memoryStatusViewModel.Name)).Value);
+		}
 
-            var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
-            var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
-            var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
-            storageStatusOrchestrator.Setup(s => s.GetStorageUtilizationInPercent(It.IsAny<SystemStorageInformation>())).Returns(
-                new[] { storageStatusViewModel });
+		[Test]
+		public void GetSystemStatusViewModel_StorageStatusIsNotNull_ResultContainsStorageStatusDataPoint()
+		{
+			// Arrage
+			var deviceInfo1 = new SystemStorageDeviceInformation { DeviceName = "C:", FreeDiscSpaceInPercent = 20d };
+			var deviceInfos = new[] { deviceInfo1 };
+			var storageStatus = new SystemStorageInformation { StorageDeviceInfos = deviceInfos };
+			var systemPerformanceInformation = new SystemPerformanceData { StorageStatus = storageStatus };
+			var systemInformation = new SystemInformation { SystemPerformance = systemPerformanceInformation };
+			var storageStatusViewModel = new SystemStatusPointViewModel { Name = "Storage Status" + deviceInfo1.DeviceName, Value = deviceInfo1.FreeDiscSpaceInPercent };
 
-            var systemStatusOrchestrator = new SystemStatusOrchestrator(
-                processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
+			var processorStatusOrchestrator = new Mock<IProcessorStatusOrchestrator>();
+			var memoryStatusOrchestrator = new Mock<IMemoryStatusOrchestrator>();
+			var storageStatusOrchestrator = new Mock<IStorageStatusOrchestrator>();
+			storageStatusOrchestrator.Setup(s => s.GetStorageUtilizationInPercent(It.IsAny<SystemStorageInformation>())).Returns(
+				new[] { storageStatusViewModel });
 
-            // Act
-            var result = systemStatusOrchestrator.GetSystemStatusViewModel(systemInformation);
+			var systemStatusOrchestrator = new SystemStatusOrchestrator(
+				processorStatusOrchestrator.Object, memoryStatusOrchestrator.Object, storageStatusOrchestrator.Object);
 
-            // Assert
-            Assert.AreEqual(storageStatusViewModel.Value, result.DataPoints.First(d => d.Name.Equals(storageStatusViewModel.Name)).Value);
-        }
+			// Act
+			var result = systemStatusOrchestrator.GetSystemStatusViewModel(systemInformation);
 
-        #endregion
-    }
+			// Assert
+			Assert.AreEqual(storageStatusViewModel.Value, result.DataPoints.First(d => d.Name.Equals(storageStatusViewModel.Name)).Value);
+		}
+
+		#endregion
+	}
 }

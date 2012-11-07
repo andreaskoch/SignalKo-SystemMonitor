@@ -2,10 +2,10 @@ using SignalKo.SystemMonitor.Common.Model;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.Core.Services
 {
-    public interface IAgentConfigurationService
-    {
-        AgentConfiguration GetAgentConfiguration();
+	public interface IAgentConfigurationService
+	{
+		AgentConfiguration GetAgentConfiguration();
 
-        void SaveAgentConfiguration(AgentConfiguration agentConfiguration);
-    }
+		void SaveAgentConfiguration(AgentConfiguration agentConfiguration);
+	}
 }

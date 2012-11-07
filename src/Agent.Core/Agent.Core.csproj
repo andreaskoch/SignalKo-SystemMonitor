@@ -33,8 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.10\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=104.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -49,26 +50,34 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Collectors\SystemInformation\CustomMachineNameProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\EnvironmentMachineNameProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\ILogicalDiscInstanceNameProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\IMachineNameProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\IProcessorStatusProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\ISystemInformationProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\ISystemMemoryStatusProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\ISystemStorageStatusProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\LogicalDiscInstanceNameProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\ProcessorStatusProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\SystemInformationProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\SystemMemoryStatusProvider.cs" />
-    <Compile Include="Collectors\SystemInformation\SystemStorageStatusProvider.cs" />
-    <Compile Include="Configuration\AgentConfigurationAccessor.cs" />
-    <Compile Include="Configuration\AgentConfigurationProvider.cs" />
-    <Compile Include="Configuration\AgentConfigurationServiceConfiguration.cs" />
-    <Compile Include="Configuration\AppConfigAgentConfigurationServiceUrlProvider.cs" />
-    <Compile Include="Configuration\IAgentConfigurationAccessor.cs" />
-    <Compile Include="Configuration\IAgentConfigurationProvider.cs" />
-    <Compile Include="Configuration\IAgentConfigurationServiceUrlProvider.cs" />
+    <Compile Include="Collectors\CustomMachineNameProvider.cs" />
+    <Compile Include="Collectors\EnvironmentMachineNameProvider.cs" />
+    <Compile Include="Collectors\UrlComponentExtractor.cs" />
+    <Compile Include="Collectors\HttpStatusCodeCheck\HttpStatusCodeCheckResultProvider.cs" />
+    <Compile Include="Collectors\HttpStatusCodeCheck\HttpStatusCodeFetcher.cs" />
+    <Compile Include="Collectors\HttpStatusCodeCheck\IHttpStatusCodeCheckResultProvider.cs" />
+    <Compile Include="Collectors\HttpStatusCodeCheck\IHttpStatusCodeFetcher.cs" />
+    <Compile Include="Collectors\IUrlComponentExtractor.cs" />
+    <Compile Include="Collectors\IMachineNameProvider.cs" />
+    <Compile Include="Collectors\ISystemInformationProvider.cs" />
+    <Compile Include="Collectors\SystemInformationProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\ILogicalDiscInstanceNameProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\IProcessorStatusProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\ISystemMemoryStatusProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\ISystemPerformanceDataProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\ISystemStorageStatusProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\LogicalDiscInstanceNameProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\ProcessorStatusProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\SystemMemoryStatusProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\SystemPerformanceDataProvider.cs" />
+    <Compile Include="Collectors\SystemPerformance\SystemStorageStatusProvider.cs" />
+    <Compile Include="Configuration\AgentControlDefinitionAccessor.cs" />
+    <Compile Include="Configuration\AgentControlDefinitionProvider.cs" />
+    <Compile Include="Configuration\AgentControlDefinitionServiceConfiguration.cs" />
+    <Compile Include="Configuration\AppConfigAgentControlDefinitionServiceUrlProvider.cs" />
+    <Compile Include="Configuration\IAgentControlDefinitionAccessor.cs" />
+    <Compile Include="Configuration\IAgentControlDefinitionProvider.cs" />
+    <Compile Include="Configuration\IAgentControlDefinitionServiceUrlProvider.cs" />
     <Compile Include="Configuration\IRESTBasedSystemInformationSenderConfigurationProvider.cs" />
     <Compile Include="Configuration\IRESTServiceConfiguration.cs" />
     <Compile Include="Configuration\RESTBasedSystemInformationSenderConfigurationProvider.cs" />

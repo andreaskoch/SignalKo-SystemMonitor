@@ -17,7 +17,7 @@
 		public bool IsValid()
 		{
 			return this.CheckIntervalInSeconds > 0 && string.IsNullOrWhiteSpace(this.SystemInformationSenderPath) == false
-				   && string.IsNullOrWhiteSpace(this.Hostname) == false;
+				   && string.IsNullOrWhiteSpace(this.Hostaddress) == false;
 		}
 	}
 }

@@ -1,5 +1,7 @@
 using SignalKo.SystemMonitor.Agent.Core;
-using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemInformation;
+using SignalKo.SystemMonitor.Agent.Core.Collectors;
+using SignalKo.SystemMonitor.Agent.Core.Collectors.HttpStatusCodeCheck;
+using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
 using SignalKo.SystemMonitor.Agent.Core.Configuration;
 using SignalKo.SystemMonitor.Agent.Core.Coordination;
 using SignalKo.SystemMonitor.Agent.Core.Queueing;
@@ -11,65 +13,71 @@ using StructureMap;
 
 namespace SignalKo.SystemMonitor.Agent.CommandLine.DependencyResolution
 {
-    public static class StructureMapSetup
-    {
-        public static void Setup(string machineName = null)
-        {
-            ObjectFactory.Configure(
-                config =>
-                    {
-                        /* common */
-                        config.For<IEncodingProvider>().Use<DefaultEncodingProvider>();
-                        config.For<IMemoryUnitConverter>().Use<MemoryUnitConverter>();
-                        config.For<ITimeProvider>().Use<UTCTimeProvider>();
+	public static class StructureMapSetup
+	{
+		public static void Setup(string machineName = null)
+		{
+			ObjectFactory.Configure(
+				config =>
+				{
+					/* common */
+					config.For<IEncodingProvider>().Use<DefaultEncodingProvider>();
+					config.For<IMemoryUnitConverter>().Use<MemoryUnitConverter>();
+					config.For<ITimeProvider>().Use<UTCTimeProvider>();
 
-                        /* collector */
-                        config.For<ILogicalDiscInstanceNameProvider>().Use<LogicalDiscInstanceNameProvider>();
+					/* collector */
+					config.For<ISystemInformationProvider>().Use<SystemInformationProvider>();
+					config.For<IUrlComponentExtractor>().Use<UrlComponentExtractor>();
 
-                        if (string.IsNullOrWhiteSpace(machineName))
-                        {
-                            config.For<IMachineNameProvider>().Use<EnvironmentMachineNameProvider>();
-                        }
-                        else
-                        {
-                            var customMachineNameProvider = new CustomMachineNameProvider(machineName);
-                            config.For<IMachineNameProvider>().Use(customMachineNameProvider);
-                        }
+					if (string.IsNullOrWhiteSpace(machineName))
+					{
+						config.For<IMachineNameProvider>().Use<EnvironmentMachineNameProvider>();
+					}
+					else
+					{
+						var customMachineNameProvider = new CustomMachineNameProvider(machineName);
+						config.For<IMachineNameProvider>().Use(customMachineNameProvider);
+					}
 
-                        config.For<IProcessorStatusProvider>().Use<ProcessorStatusProvider>();
+					/* system performance */
+					config.For<ILogicalDiscInstanceNameProvider>().Use<LogicalDiscInstanceNameProvider>();
+					config.For<ISystemPerformanceDataProvider>().Use<SystemPerformanceDataProvider>();
+					config.For<IProcessorStatusProvider>().Use<ProcessorStatusProvider>();
+					config.For<ISystemStorageStatusProvider>().Use<SystemStorageStatusProvider>();
+					config.For<ISystemMemoryStatusProvider>().Use<SystemMemoryStatusProvider>();
 
-                        config.For<ISystemStorageStatusProvider>().Use<SystemStorageStatusProvider>();
-                        config.For<ISystemMemoryStatusProvider>().Use<SystemMemoryStatusProvider>();
-                        config.For<ISystemInformationProvider>().Use<SystemInformationProvider>();
+					/* http status code */
+					config.For<IHttpStatusCodeFetcher>().Use<HttpStatusCodeFetcher>();
+					config.For<IHttpStatusCodeCheckResultProvider>().Use<HttpStatusCodeCheckResultProvider>();
 
-                        /* coordination */
-                        config.For<IAgentCoordinationServiceFactory>().Use<AgentCoordinationServiceFactory>();
+					/* coordination */
+					config.For<IAgentCoordinationServiceFactory>().Use<AgentCoordinationServiceFactory>();
 
-                        /* queuing */
-                        var workQueue = new SystemInformationMessageQueue();
-                        var errorQueue = new SystemInformationMessageQueue();
-                        var messageQueueProvider = new SystemInformationMessageQueueProvider(workQueue, errorQueue);
-                        config.For<IMessageQueueProvider<SystemInformation>>().Singleton().Use(() => messageQueueProvider);
+					/* queuing */
+					var workQueue = new SystemInformationMessageQueue();
+					var errorQueue = new SystemInformationMessageQueue();
+					var messageQueueProvider = new SystemInformationMessageQueueProvider(workQueue, errorQueue);
+					config.For<IMessageQueueProvider<SystemInformation>>().Singleton().Use(() => messageQueueProvider);
 
-                        config.For<IMessageQueuePersistence<SystemInformation>>().Use<JSONSystemInformationMessageQueuePersistence>();
-                        config.For<IJSONMessageQueuePersistenceConfigurationProvider>().Use<AppConfigJSONMessageQueuePersistenceConfigurationProvider>();
+					config.For<IMessageQueuePersistence<SystemInformation>>().Use<JSONSystemInformationMessageQueuePersistence>();
+					config.For<IJSONMessageQueuePersistenceConfigurationProvider>().Use<AppConfigJSONMessageQueuePersistenceConfigurationProvider>();
 
-                        config.For<IMessageQueueFeederFactory>().Use<SystemInformationMessageQueueFeederFactory>();
-                        config.For<IMessageQueueWorkerFactory>().Use<SystemInformationMessageQueueWorkerFactory>();
+					config.For<IMessageQueueFeederFactory>().Use<SystemInformationMessageQueueFeederFactory>();
+					config.For<IMessageQueueWorkerFactory>().Use<SystemInformationMessageQueueWorkerFactory>();
 
-                        /* sender configuration */
-                        config.For<IAgentConfigurationAccessor>().Use<AgentConfigurationAccessor>();
-                        config.For<IAgentConfigurationProvider>().Use<AgentConfigurationProvider>();
-                        config.For<IAgentConfigurationServiceUrlProvider>().Use<AppConfigAgentConfigurationServiceUrlProvider>();
-                        config.For<IRESTBasedSystemInformationSenderConfigurationProvider>().Use<RESTBasedSystemInformationSenderConfigurationProvider>();
+					/* sender configuration */
+					config.For<IAgentControlDefinitionAccessor>().Use<AgentControlDefinitionAccessor>();
+					config.For<IAgentControlDefinitionProvider>().Use<AgentControlDefinitionProvider>();
+					config.For<IAgentControlDefinitionServiceUrlProvider>().Use<AppConfigAgentControlDefinitionServiceUrlProvider>();
+					config.For<IRESTBasedSystemInformationSenderConfigurationProvider>().Use<RESTBasedSystemInformationSenderConfigurationProvider>();
 
-                        /* sender */
-                        config.For<IRESTClientFactory>().Use<RESTClientFactory>();
-                        config.For<IRESTRequestFactory>().Use<JSONRequestFactory>();
-                        config.For<ISystemInformationSender>().Use<RESTBasedSystemInformationSender>();
+					/* sender */
+					config.For<IRESTClientFactory>().Use<RESTClientFactory>();
+					config.For<IRESTRequestFactory>().Use<JSONRequestFactory>();
+					config.For<ISystemInformationSender>().Use<RESTBasedSystemInformationSender>();
 
-                        config.For<ISystemInformationDispatchingService>().Use<SystemInformationDispatchingService>();
-                    });
-        }
-    }
+					config.For<ISystemInformationDispatchingService>().Use<SystemInformationDispatchingService>();
+				});
+		}
+	}
 }

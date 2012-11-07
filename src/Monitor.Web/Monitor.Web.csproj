@@ -45,8 +45,9 @@
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.10\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SignalR">
       <HintPath>..\packages\SignalR.Server.0.5.3\lib\net40\SignalR.dll</HintPath>
@@ -60,14 +61,15 @@
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMapAdapter">
-      <HintPath>..\packages\CommonServiceLocator.StructureMapAdapter.1.1.0.3\lib\StructureMapAdapter.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20715.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Net.Http">
       <Private>True</Private>
@@ -87,9 +89,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
     </Reference>
-    <Reference Include="WebActivator, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="WebActivator, Version=1.5.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\WebActivator.1.5.1\lib\net40\WebActivator.dll</HintPath>
+      <HintPath>..\packages\WebActivator.1.5.2\lib\net40\WebActivator.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +104,7 @@
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Controllers\AgentConfigurationController.cs" />
     <Compile Include="Controllers\Api\AgentConfigurationController.cs" />
+    <Compile Include="Controllers\Api\AgentControlDefinitionController.cs" />
     <Compile Include="Controllers\Api\GroupConfigurationController.cs" />
     <Compile Include="Controllers\Api\SystemInformationArchiveController.cs" />
     <Compile Include="Controllers\Api\SystemInformationController.cs" />
@@ -116,16 +119,10 @@
     <Compile Include="Core\DataAccess\IAgentConfigurationDataAccessor.cs" />
     <Compile Include="Core\DataAccess\ISystemInformationArchiveAccessor.cs" />
     <Compile Include="Core\DataAccess\JsonAgentConfigurationDataAccessor.cs" />
-    <Compile Include="Core\Mapper\AgentConfigurationMapper.cs" />
-    <Compile Include="Core\Mapper\AgentInstanceConfigurationMapper.cs" />
-    <Compile Include="Core\Mapper\CollectorDefinitionMapper.cs" />
-    <Compile Include="Core\Mapper\DataCollectorTypeMapper.cs" />
-    <Compile Include="Core\Mapper\IAgentConfigurationMapper.cs" />
-    <Compile Include="Core\Mapper\IAgentInstanceConfigurationMapper.cs" />
-    <Compile Include="Core\Mapper\ICollectorDefinitionMapper.cs" />
-    <Compile Include="Core\Mapper\IDataCollectorTypeMapper.cs" />
     <Compile Include="Core\Services\AgentConfigurationService.cs" />
+    <Compile Include="Core\Services\AgentControlDefinitionService.cs" />
     <Compile Include="Core\Services\IAgentConfigurationService.cs" />
+    <Compile Include="Core\Services\IAgentControlDefinitionService.cs" />
     <Compile Include="Core\Services\IKnownAgentsProvider.cs" />
     <Compile Include="Core\Services\KnownAgentsProvider.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -195,13 +192,15 @@
     <Content Include="Assets\x_alt_24x24.png" />
     <Content Include="content\toastr-responsive.css" />
     <Content Include="content\toastr.css" />
+    <Content Include="Scripts\libraries\jquery-ui-1.9.0.js" />
+    <Content Include="Scripts\libraries\jquery-ui-1.9.0.min.js" />
+    <Content Include="Scripts\libraries\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\libraries\jquery-1.8.2.js" />
+    <Content Include="Scripts\libraries\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\libraries\knockout-2.2.0.debug.js" />
+    <Content Include="Scripts\libraries\knockout-2.2.0.js" />
     <Content Include="Scripts\libraries\modernizr-2.6.2.js" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\libraries\jquery-ui-1.8.23.js" />
-    <Content Include="Scripts\libraries\jquery-ui-1.8.23.min.js" />
-    <Content Include="Scripts\libraries\jquery-1.8.1-vsdoc.js" />
-    <Content Include="Scripts\libraries\jquery-1.8.1.js" />
-    <Content Include="Scripts\libraries\jquery-1.8.1.min.js" />
     <Content Include="Scripts\monitoring-config.js" />
     <Content Include="Scripts\Systemmonitor.js" />
     <Content Include="Scripts\Systemmonitor.Utilities.js" />
@@ -211,8 +210,6 @@
     <Content Include="Scripts\global.js" />
     <Content Include="Scripts\libraries\jquery.signalR-0.5.3.js" />
     <Content Include="Scripts\libraries\jquery.signalR-0.5.3.min.js" />
-    <Content Include="Scripts\libraries\knockout-2.1.0.debug.js" />
-    <Content Include="Scripts\libraries\knockout-2.1.0.js" />
     <Content Include="Scripts\libraries\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\libraries\knockout.mapping-latest.js" />
     <Content Include="Styles\fonts\fontawesome-webfont.eot" />

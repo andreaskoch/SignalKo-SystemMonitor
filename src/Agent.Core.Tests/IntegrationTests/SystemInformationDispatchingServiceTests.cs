@@ -9,7 +9,8 @@ using Moq;
 using NUnit.Framework;
 
 using SignalKo.SystemMonitor.Agent.Core;
-using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemInformation;
+using SignalKo.SystemMonitor.Agent.Core.Collectors;
+using SignalKo.SystemMonitor.Agent.Core.Collectors.SystemPerformance;
 using SignalKo.SystemMonitor.Agent.Core.Coordination;
 using SignalKo.SystemMonitor.Agent.Core.Exceptions;
 using SignalKo.SystemMonitor.Agent.Core.Queueing;

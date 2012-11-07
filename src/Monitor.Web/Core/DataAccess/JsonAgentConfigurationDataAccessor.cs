@@ -30,16 +30,8 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess
 				return null;
 			}
 
-			try
-			{
-				string json = File.ReadAllText(this.configurationFilePath, this.encodingProvider.GetEncoding());
-				return JsonConvert.DeserializeObject<AgentConfiguration>(json);
-			}
-			catch (JsonSerializationException)
-			{
-				File.Delete(this.configurationFilePath);
-				return null;
-			}
+			string json = File.ReadAllText(this.configurationFilePath, this.encodingProvider.GetEncoding());
+			return JsonConvert.DeserializeObject<AgentConfiguration>(json);
 		}
 
 		public void Store(AgentConfiguration agentConfiguration)
