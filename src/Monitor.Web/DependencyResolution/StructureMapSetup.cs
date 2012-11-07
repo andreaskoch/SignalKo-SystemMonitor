@@ -23,6 +23,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
 					/* configuration */
 					x.For<IFileSystemDataStoreConfigurationProvider>().Use<AppConfigFileSystemDataStoreConfigurationProvider>();
 					x.For<IDefaultAgentConfigurationProvider>().Use<AppConfigDefaultAgentConfigurationProvider>();
+					x.For<IServerConfigurationRepository>().Use<JsonFileConfigurationRepository>();
 
 					/* data access */
 					x.For<IAgentConfigurationDataAccessor>().Use<JsonAgentConfigurationDataAccessor>();

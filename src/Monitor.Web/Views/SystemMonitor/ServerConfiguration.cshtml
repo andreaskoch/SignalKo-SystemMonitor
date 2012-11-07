@@ -18,8 +18,8 @@
             <div class="configDiv">
                 <span class="groupName">Available Machines</span>
             </div>
-            <div class="container" data-bind="foreach: availableMashines, sortableList: availableMashines, parentList: availableMashines">
-                <div class="item" data-bind="sortableItem: { item: $data, parentList: $parent.availableMashines } , attr: { 'id': machineName }, css: { webserver: IsWebserver() , sqlserver: !(IsWebserver()) }">
+            <div class="container" data-bind="foreach: availableMachines, sortableList: availableMachines, parentList: availableMachines">
+                <div class="item" data-bind="sortableItem: { item: $data, parentList: $parent.availableMachines } , attr: { 'id': machineName }, css: { webserver: isWebserver() , sqlserver: !(isWebserver()) }">
                     <div class="configDiv">
                         <span data-bind="text: machineName">
                         </span>
@@ -39,7 +39,7 @@
                     <div class="configsmall"  data-bind="click:  $parent.openGroupConfigOverlay"></div>
                 </div>
                 <div class="container" data-bind="foreach: monitorMachines, sortableList: monitorMachines, parentList: monitorMachines">
-                    <div class="item" data-bind="sortableItem: { item: $data, parentList: $parent.monitorMachines } , attr: { 'id': machineName }, css: { webserver: IsWebserver() , sqlserver: !(IsWebserver()) }" >
+                    <div class="item" data-bind="sortableItem: { item: $data, parentList: $parent.monitorMachines } , attr: { 'id': machineName }, css: { webserver: isWebserver() , sqlserver: !(isWebserver()) }" >
                         <div class="configDiv">
                             <span data-bind="text: machineName">
                             </span>
@@ -51,7 +51,6 @@
         </div>
     </div>
     <div style="clear: both"></div>
-    <span data-bind="text: ko.toJSON(configViewModel.allMonitorMachines)"></span>
 </section>
 <div class="box-overlay" style="display: none;">
     <div class="configDivBox" style="padding: 6px;">
@@ -61,15 +60,15 @@
         <dl style="margin: 6px;">
             <dt style="margin-top: 12px;">Is Webserver: </dt>
             <dd style="margin: 4px 0px 0px 17px;">
-                <input type="checkbox" value="IsWebserver" data-bind="checked: IsWebserver" />
+                <input type="checkbox" value="isWebserver" data-bind="checked: isWebserver" />
             </dd>
             <dt style="margin-top: 12px;">Monitoring Url: </dt>
             <dd style="margin: 4px 0px 0px 17px;">
                 <input style="width: 94%;" type="url" data-bind="value: monitoringUrl"/>
             </dd>
-            <dt style="margin-top: 12px;">Config Value 3: </dt>
+            <dt style="margin-top: 12px;">Monitor Agent Enabled</dt>
             <dd style="margin: 4px 0px 0px 17px;">
-                <input style="width: 94%;" type="url"/>
+                <input type="checkbox" value="isWebserver" data-bind="checked: monitorAgentEnabled" />
             </dd>
         </dl>
     </div>

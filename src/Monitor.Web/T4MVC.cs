@@ -24,7 +24,6 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static class MVC {
     public static SignalKo.SystemMonitor.Monitor.Web.Controllers.AgentConfigurationController AgentConfiguration = new SignalKo.SystemMonitor.Monitor.Web.Controllers.T4MVC_AgentConfigurationController();
-    public static SignalKo.SystemMonitor.Monitor.Web.Controllers.GroupConfigurationController GroupConfiguration = new SignalKo.SystemMonitor.Monitor.Web.Controllers.T4MVC_GroupConfigurationController();
     public static SignalKo.SystemMonitor.Monitor.Web.Controllers.SystemMonitorController SystemMonitor = new SignalKo.SystemMonitor.Monitor.Web.Controllers.T4MVC_SystemMonitorController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }

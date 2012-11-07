@@ -108,13 +108,14 @@
     <Compile Include="Controllers\Api\GroupConfigurationController.cs" />
     <Compile Include="Controllers\Api\SystemInformationArchiveController.cs" />
     <Compile Include="Controllers\Api\SystemInformationController.cs" />
-    <Compile Include="Controllers\GroupConfigurationController.cs" />
     <Compile Include="Controllers\SystemMonitorController.cs" />
     <Compile Include="Core\Configuration\AppConfigFileSystemDataStoreConfigurationProvider.cs" />
     <Compile Include="Core\Configuration\AppConfigDefaultAgentConfigurationProvider.cs" />
     <Compile Include="Core\Configuration\FileSystemDataStoreConfiguration.cs" />
     <Compile Include="Core\Configuration\IDefaultAgentConfigurationProvider.cs" />
     <Compile Include="Core\Configuration\IFileSystemDataStoreConfigurationProvider.cs" />
+    <Compile Include="Core\Configuration\IServerConfigurationRepository.cs" />
+    <Compile Include="Core\Configuration\JsonFileConfigurationRepository.cs" />
     <Compile Include="Core\DataAccess\FilesystemSystemInformationArchiveAccessor.cs" />
     <Compile Include="Core\DataAccess\IAgentConfigurationDataAccessor.cs" />
     <Compile Include="Core\DataAccess\ISystemInformationArchiveAccessor.cs" />
@@ -131,9 +132,6 @@
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="GroupConfigurationController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Hubs\SystemInformationHub.cs" />
@@ -309,12 +307,6 @@
   <ItemGroup>
     <Content Include="Views\SystemMonitor\Group.cshtml" />
     <Content Include="Views\SystemMonitor\GroupOverview.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\GroupConfiguration\EditGroups.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\GroupConfiguration\EditGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\AgentConfiguration\Index.cshtml" />

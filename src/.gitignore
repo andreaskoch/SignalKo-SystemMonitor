@@ -33,6 +33,7 @@ obj/
 [Bb]uild[Ll]og.*
 *.[Pp]ublish.xml
 StyleCop.Cache
+_bin_deployableAssemblies
 
 # Don't ignore exe files the tools folder
 !tools/*/*.exe

@@ -39,6 +39,9 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Model\AgentConfiguration.cs" />
+    <Compile Include="Model\Configuration\Machine.cs" />
+    <Compile Include="Model\Configuration\MachineGroup.cs" />
+    <Compile Include="Model\Configuration\MachineGroupConfiguration.cs" />
     <Compile Include="Model\AgentControlDefinition.cs" />
     <Compile Include="Model\AgentInstanceConfiguration.cs" />
     <Compile Include="Model\HttpStatusCodeCheckResult.cs" />

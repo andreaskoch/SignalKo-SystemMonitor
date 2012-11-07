@@ -23,9 +23,6 @@ using T4MVC;
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
     public partial class SystemMonitorController {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public SystemMonitorController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected SystemMonitorController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

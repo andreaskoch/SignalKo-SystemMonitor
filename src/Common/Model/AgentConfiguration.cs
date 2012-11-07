@@ -2,6 +2,11 @@
 {
 	public class AgentConfiguration
 	{
+		public AgentConfiguration()
+		{
+			this.AgentInstanceConfigurations = new AgentInstanceConfiguration[] { };
+		}
+
 		public string Hostaddress { get; set; }
 
 		public string Hostname { get; set; }
