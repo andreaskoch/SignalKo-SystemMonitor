@@ -120,6 +120,7 @@
     <Compile Include="Core\DataAccess\IAgentConfigurationDataAccessor.cs" />
     <Compile Include="Core\DataAccess\ISystemInformationArchiveAccessor.cs" />
     <Compile Include="Core\DataAccess\JsonAgentConfigurationDataAccessor.cs" />
+    <Compile Include="Core\DataAccess\ISystemStatusHistoryDataAccessor.cs" />
     <Compile Include="Core\Services\AgentConfigurationService.cs" />
     <Compile Include="Core\Services\AgentControlDefinitionService.cs" />
     <Compile Include="Core\Services\IAgentConfigurationService.cs" />
@@ -288,6 +289,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Core\Persistence\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
