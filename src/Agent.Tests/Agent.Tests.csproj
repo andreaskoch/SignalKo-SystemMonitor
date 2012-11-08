@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9CEC7B4B-563C-4516-A2F6-C14C699F2743}</ProjectGuid>
+    <ProjectGuid>{89733172-7C63-4637-A7BA-A29E6C4340A4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Agent.Service.Tests</RootNamespace>
-    <AssemblyName>Agent.Service.Tests</AssemblyName>
+    <RootNamespace>Agent.CommandLine.Tests</RootNamespace>
+    <AssemblyName>Agent.CommandLine.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -45,13 +45,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Agent.Service\Agent.Service.csproj">
-      <Project>{E3953B37-DF1E-4BE2-AE69-8B560E5D82F7}</Project>
-      <Name>Agent.Service</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Agent\Agent.csproj">
+      <Project>{8a4c0279-df94-4dc5-b387-7e3f1171f812}</Project>
+      <Name>Agent %28Agent\Agent%29</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

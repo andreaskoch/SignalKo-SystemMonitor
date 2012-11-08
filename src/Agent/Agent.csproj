@@ -1,20 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
-  </PropertyGroup>
   <Import Project="$(SolutionDir)\Build\BuildVariables.targets" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E3953B37-DF1E-4BE2-AE69-8B560E5D82F7}</ProjectGuid>
+    <ProjectGuid>{8A4C0279-DF94-4DC5-B387-7E3F1171F812}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SignalKo.SystemMonitor.Agent.Service</RootNamespace>
-    <AssemblyName>SignalKo.SystemMonitor.Agent.Service</AssemblyName>
+    <RootNamespace>SignalKo.SystemMonitor.Agent</RootNamespace>
+    <AssemblyName>SignalKo.SystemMonitor.Agent</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -50,6 +46,7 @@
       <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Topshelf">
       <HintPath>..\packages\TopShelf.3.1.0\lib\net40-full\Topshelf.dll</HintPath>
@@ -64,6 +61,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Agent.Core\Agent.Core.csproj">
       <Project>{3D2B39FE-4E97-4261-85FA-FD4020F32C18}</Project>
       <Name>Agent.Core</Name>
@@ -74,19 +77,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="ilmerge.internalize.ignore.txt" />
   </ItemGroup>
   <Target Name="MergeExecutable">
     <PropertyGroup>
       <ILMergeExe>$(SolutionDir)tools\ILMerge\ILMerge.exe</ILMergeExe>
       <ILMergeInternalizeIgnoreFile>$(ProjectDir)ilmerge.internalize.ignore.txt</ILMergeInternalizeIgnoreFile>
-      <ILMergeOutputFile>SystemMonitorService.exe</ILMergeOutputFile>
+      <ILMergeOutputFile>SystemMonitorAgent.exe</ILMergeOutputFile>
       <ILMergeOutputFolder>$(SolutionDir)..\binaries\$(AssemblyName)</ILMergeOutputFolder>
       <ILMergeOutputFilePath>$(ILMergeOutputFolder)\$(ILMergeOutputFile)</ILMergeOutputFilePath>
       <ILMergeLogFilePath>$(ILMergeOutputFolder)\ilmerge.msbuild.log</ILMergeLogFilePath>
@@ -95,15 +92,13 @@
     <ItemGroup>
       <ILMergeItems Include="$(OutputPath)\*.dll,$(OutputPath)\*.exe" />
       <ConfigFiles Include="$(OutputPath)\*.config" />
-      <InstallScripts Include="$(OutputPath)\*.cmd" />
     </ItemGroup>
     <MakeDir Directories="$(ILMergeOutputFolder)" />
     <Delete Files="$(ILMergeOutputFilePath)" Condition="Exists($(ILMergeOutputFilePath))" />
     <!-- ILMerge does not yet support .NET 4.0  http://nitoprograms.blogspot.com/2010/09/using-ilmerge-with-net-40-andor-rx.html /targetplatform:v4,"%ProgramFiles%\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" -->
     <Error Condition="!Exists('$(FrameworkPath)')" Text="Could not find 4.0 reference assemblies in $(FrameworkPath)" />
-    <Exec Command="&quot;$(ILMergeExe)&quot; /targetplatform:&quot;v4, $(FrameworkPath)&quot; /internalize:&quot;$(ILMergeInternalizeIgnoreFile)&quot; /target:exe /out:&quot;$(ILMergeOutputFilePath)&quot; /log:&quot;$(ILMergeLogFilePath)&quot; /allowDup SignalKo.SystemMonitor.Agent.Service.exe SignalKo.SystemMonitor.Agent.Core.dll SignalKo.SystemMonitor.Common.dll Newtonsoft.Json.dll StructureMap.dll RestSharp.dll Topshelf.dll" WorkingDirectory="$(OutputPath)" />
+    <Exec Command="&quot;$(ILMergeExe)&quot; /targetplatform:&quot;v4, $(FrameworkPath)&quot; /internalize:&quot;$(ILMergeInternalizeIgnoreFile)&quot; /target:exe /out:&quot;$(ILMergeOutputFilePath)&quot; /log:&quot;$(ILMergeLogFilePath)&quot; /allowDup SignalKo.SystemMonitor.Agent.exe SignalKo.SystemMonitor.Agent.Core.dll  SignalKo.SystemMonitor.Common.dll Newtonsoft.Json.dll StructureMap.dll RestSharp.dll Topshelf.dll" WorkingDirectory="$(OutputPath)" />
     <Copy SourceFiles="@(ConfigFiles)" DestinationFiles="@(ConfigFiles->'$(ILMergeOutputFolder)\%(RecursiveDir)$(ILMergeOutputFile)%(Extension)')" />
-    <Copy SourceFiles="@(InstallScripts)" DestinationFiles="@(InstallScripts->'$(ILMergeOutputFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

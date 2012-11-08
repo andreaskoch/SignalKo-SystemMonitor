@@ -1,2 +1,0 @@
-SignalKo.SystemMonitor.*
-SignalKo.SystemMonitor.*

@@ -11,7 +11,7 @@ using SignalKo.SystemMonitor.Common.Services;
 
 using StructureMap;
 
-namespace SignalKo.SystemMonitor.Agent.Service.DependencyResolution
+namespace SignalKo.SystemMonitor.Agent.DependencyResolution
 {
 	public static class StructureMapSetup
 	{
