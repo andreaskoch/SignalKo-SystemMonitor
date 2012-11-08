@@ -24,9 +24,9 @@ namespace SignalKo.SystemMonitor.Agent.Service
             this.serviceInstaller.DisplayName = "SignalKo.SystemMonitor.Agent.Service";
             this.serviceInstaller.ServiceName = "SignalKo.SystemMonitor.Agent.Service";
 
-            this.serviceProcessInstaller.Account = ServiceAccount.User;
-            this.serviceProcessInstaller.Password = null;
-            this.serviceProcessInstaller.Username = null;
+            this.serviceProcessInstaller.Account = ServiceAccount.LocalSystem;
+            //this.serviceProcessInstaller.Password = null;
+            //this.serviceProcessInstaller.Username = null;
 
             this.Installers.AddRange(new Installer[] { this.serviceProcessInstaller, this.serviceInstaller });
         }         
