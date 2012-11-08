@@ -32,6 +32,7 @@ namespace SignalKo.SystemMonitor.Agent.Service.DependencyResolution
 
 					/* system performance */
 					config.For<ILogicalDiscInstanceNameProvider>().Use<LogicalDiscInstanceNameProvider>();
+					config.For<ISystemPerformanceDataProvider>().Use<SystemPerformanceDataProvider>();
 					config.For<IProcessorStatusProvider>().Use<ProcessorStatusProvider>();
 					config.For<ISystemStorageStatusProvider>().Use<SystemStorageStatusProvider>();
 					config.For<ISystemMemoryStatusProvider>().Use<SystemMemoryStatusProvider>();
