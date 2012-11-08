@@ -281,7 +281,13 @@ namespace Agent.Core.Tests.UnitTests
 			var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
 			messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker.Object);
 
+			var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+			var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
+
 			var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
+			messageQueueProvider.Setup(m => m.WorkQueue).Returns(workQueue.Object);
+			messageQueueProvider.Setup(m => m.ErrorQueue).Returns(errorQueue.Object);
+
 			var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
 
 			var systemInformationDispatchingService = new SystemInformationDispatchingService(
@@ -316,7 +322,13 @@ namespace Agent.Core.Tests.UnitTests
 			var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
 			messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker.Object);
 
+			var workQueue = new Mock<IMessageQueue<SystemInformation>>();
+			var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
+
 			var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
+			messageQueueProvider.Setup(m => m.WorkQueue).Returns(workQueue.Object);
+			messageQueueProvider.Setup(m => m.ErrorQueue).Returns(errorQueue.Object);
+
 			var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
 
 			var systemInformationDispatchingService = new SystemInformationDispatchingService(
@@ -351,47 +363,6 @@ namespace Agent.Core.Tests.UnitTests
 			var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
 			messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker.Object);
 
-			var messageQueueProvider = new Mock<IMessageQueueProvider<SystemInformation>>();
-			var messageQueuePersistence = new Mock<IMessageQueuePersistence<SystemInformation>>();
-
-			var systemInformationDispatchingService = new SystemInformationDispatchingService(
-				agentCoordinationServiceFactory.Object,
-				messageQueueFeederFactory.Object,
-				messageQueueWorkerFactory.Object,
-				messageQueueProvider.Object,
-				messageQueuePersistence.Object);
-
-			// Act
-			systemInformationDispatchingService.Stop();
-
-			// Assert
-			messageQueueWorker.Verify(f => f.Stop(), Times.Once());
-		}
-
-		#endregion
-
-		#region parallel
-
-		[Test]
-		public void Start_MethodDoesNotEndbeforeTheFeederAndWorkerHaveExited()
-		{
-			// Arrange
-			var durationTheWorkerIsRunning = 1000;
-			var durationTheFeederIsRunning = 500;
-
-			var agentCoordinationService = new Mock<IAgentCoordinationService>();
-			var messageQueueFeeder = new WaitingFeeder(durationTheFeederIsRunning);
-			var messageQueueWorker = new WaitingWorker(durationTheWorkerIsRunning);
-
-			var agentCoordinationServiceFactory = new Mock<IAgentCoordinationServiceFactory>();
-			agentCoordinationServiceFactory.Setup(f => f.GetAgentCoordinationService(It.IsAny<Action>(), It.IsAny<Action>())).Returns(agentCoordinationService.Object);
-
-			var messageQueueFeederFactory = new Mock<IMessageQueueFeederFactory>();
-			messageQueueFeederFactory.Setup(f => f.GetMessageQueueFeeder()).Returns(messageQueueFeeder);
-
-			var messageQueueWorkerFactory = new Mock<IMessageQueueWorkerFactory>();
-			messageQueueWorkerFactory.Setup(f => f.GetMessageQueueWorker()).Returns(messageQueueWorker);
-
 			var workQueue = new Mock<IMessageQueue<SystemInformation>>();
 			var errorQueue = new Mock<IMessageQueue<SystemInformation>>();
 
@@ -409,16 +380,10 @@ namespace Agent.Core.Tests.UnitTests
 				messageQueuePersistence.Object);
 
 			// Act
-			var stopwatch = new Stopwatch();
-			stopwatch.Start();
-
-			systemInformationDispatchingService.Start();
-
-			stopwatch.Stop();
+			systemInformationDispatchingService.Stop();
 
 			// Assert
-			int tolerance = 100;
-			Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds, Math.Max(durationTheFeederIsRunning, durationTheWorkerIsRunning) - tolerance);
+			messageQueueWorker.Verify(f => f.Stop(), Times.Once());
 		}
 
 		#endregion

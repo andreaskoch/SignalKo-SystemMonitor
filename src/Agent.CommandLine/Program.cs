@@ -11,88 +11,91 @@ using StructureMap;
 
 namespace SignalKo.SystemMonitor.Agent.CommandLine
 {
-    public class Program
-    {
-        private readonly ISystemInformationDispatchingService systemInformationDispatchingService;
+	public class Program
+	{
+		private readonly ISystemInformationDispatchingService systemInformationDispatchingService;
 
-        public Program(ISystemInformationDispatchingService systemInformationDispatchingService)
-        {
-            if (systemInformationDispatchingService == null)
-            {
-                throw new ArgumentNullException("systemInformationDispatchingService");
-            }
+		public Program(ISystemInformationDispatchingService systemInformationDispatchingService)
+		{
+			if (systemInformationDispatchingService == null)
+			{
+				throw new ArgumentNullException("systemInformationDispatchingService");
+			}
 
-            this.systemInformationDispatchingService = systemInformationDispatchingService;
-        }
+			this.systemInformationDispatchingService = systemInformationDispatchingService;
+		}
 
-        public static int Main(string[] args)
-        {
-            string customMachineName;
+		public static int Main(string[] args)
+		{
+			string customMachineName = null;
 
 #if DEBUG
-            // wait for debug
-            int processId = Process.GetCurrentProcess().Id;
-            Console.Write("For debug attach to process {0} and hit <{1}> ...", processId, ConsoleKey.Enter);
-            while (Console.ReadKey().Key != ConsoleKey.Enter)
-            {
-                Thread.Sleep(100);
-            }
+			// wait for debug
+			int processId = Process.GetCurrentProcess().Id;
+			Console.Write("For debug attach to process {0} and hit <{1}> ...", processId, ConsoleKey.Enter);
+			while (Console.ReadKey().Key != ConsoleKey.Enter)
+			{
+				Thread.Sleep(100);
+			}
 
-            Console.WriteLine();
+			Console.WriteLine();
 
-            // get custom machine name
-            if (args.Length > 0)
-            {
-                customMachineName = args.First();
-            }
-            else
-            {
-                Console.Write("Enter a machine name (default: {0}):", Environment.MachineName);
-                customMachineName = Console.ReadLine();
-                Console.WriteLine();                
-            }
+			// get custom machine name
+			if (args.Length > 0)
+			{
+				customMachineName = args.First();
+			}
+			else
+			{
+				Console.Write("Enter a machine name (default: {0}):", Environment.MachineName);
+				customMachineName = Console.ReadLine();
+				Console.WriteLine();
+			}
 #endif
 
-            StructureMapSetup.Setup(customMachineName);
-            
-            var program = new Program(ObjectFactory.GetInstance<ISystemInformationDispatchingService>());
-            return program.Run(args);
-        }
+			StructureMapSetup.Setup(customMachineName);
 
-        public int Run(string[] commandLineArguments)
-        {
-            try
-            {
-                var dispatcher = new Task(this.systemInformationDispatchingService.Start);
-                var escapeWatch = new Task(
-                    () =>
-                        {
-                            System.Console.WriteLine("Hit <ESC> to stop.");
+			var program = new Program(ObjectFactory.GetInstance<ISystemInformationDispatchingService>());
+			return program.Run(args);
+		}
 
-                            while (true)
-                            {
-                                var input = System.Console.ReadKey();
-                                if (input.Key == ConsoleKey.Escape)
-                                {
-                                    this.systemInformationDispatchingService.Stop();
-                                    break;
-                                }
+		public int Run(string[] commandLineArguments)
+		{
+			try
+			{
+				var dispatcher = new Task(this.systemInformationDispatchingService.Start);
+				var escapeWatch = new Task(
+					() =>
+					{
+						Console.WriteLine("Hit <ESC> to stop.");
 
-                                Thread.Sleep(1000);
-                            }
-                        });
+						while (true)
+						{
+							var input = Console.ReadKey();
+							if (input.Key == ConsoleKey.Escape)
+							{
+								this.systemInformationDispatchingService.Stop();
+								break;
+							}
 
-                escapeWatch.Start();
-                dispatcher.Start();
+							Thread.Sleep(1000);
+						}
+					});
 
-                Task.WaitAll(new[] { dispatcher });
+				escapeWatch.Start();
+				dispatcher.Start();
 
-                return 0;
-            }
-            catch (Exception exception)
-            {
-                return 1;
-            }            
-        }
-    }
+				Task.WaitAll(new[] { escapeWatch });
+
+				return 0;
+			}
+			catch (Exception exception)
+			{
+				Console.WriteLine(exception.Message);
+				Console.WriteLine(exception.StackTrace);
+
+				return 1;
+			}
+		}
+	}
 }
