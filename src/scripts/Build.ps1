@@ -1,4 +1,30 @@
 ﻿
+Function Prepare-Directory {
+
+    [CmdletBinding()]
+    Param(
+        [Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
+        [string]$path
+    )
+
+	if ((Test-Path $path) -eq $false) {
+	
+		New-Item $path -type directory
+		
+	} else {
+	
+		if ((Get-ChildItem $path).Count -gt 0)
+		{
+			Remove-Item -Recurse -Force $path
+			if ($? -eq $false) {
+				Throw "Could not cleanup the directory `"$path`""
+			}
+		}
+	
+	}
+	
+}
+
 Function Build-Solution {
 
     [CmdletBinding()]
@@ -20,13 +46,7 @@ Function Build-Solution {
 		Throw "The soltuion file `"$solutionPath`" was not found."
 	}
 	
-	if ((Get-ChildItem $buildOutputFolder).Count -gt 0)
-	{
-		Remove-Item -Recurse -Force $buildOutputFolder
-        if ($? -eq $false) {
-            Throw "Could not cleanup the build output folder `"$buildOutputFolder`""
-        }
-	}
+	Prepare-Directory -path $buildOutputFolder
 
 	$buildCommand = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild `"$solutionPath`" /p:Configuration=`"$buildConfiguration`" /p:Platform=`"$targetPlatform`" /p:OutputPath=`"$buildOutputFolder`" /t:Rebuild"
 	Invoke-Expression $buildCommand

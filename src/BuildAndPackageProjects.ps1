@@ -5,24 +5,27 @@ $scriptsDirectory = Join-Path $currentDirectory "scripts"
 $toolsDirectory = Join-Path $currentDirectory "tools"
 $projectDirectory = Split-Path -Parent $currentDirectory
 
-$binariesDirectory = Join-Path $projectDirectory "binaries"
-$packageDirectory = Join-Path $projectDirectory "packages"
-
-$buildOutputDirectory = Join-Path $projectDirectory "build"
-$publishedWebsitesDirectory = Join-Path $buildOutputDirectory "_PublishedWebsites"
-$publishedApplicationsDirectory = Join-Path $buildOutputDirectory "_PublishedApplications"
-
-$prepackagingDirectory = Join-Path $projectDirectory "prepackaging"
-$prepackagingContentDirectory = Join-Path $prepackagingDirectory "content"
-
 # Imports
 Import-Module (Join-Path $scriptsDirectory "Build.ps1")
 
-# Build
+
+################################################################################################
+
+
+#################
+# Build - Agent #
+#################
+$buildOutputDirectory = Join-Path $projectDirectory "build"
+$publishedWebsitesDirectory = Join-Path $buildOutputDirectory "_PublishedWebsites"
+$publishedApplicationsDirectory = Join-Path $buildOutputDirectory "_PublishedApplications"
 $solutionPath = Join-Path $currentDirectory "SignalKo.SystemMonitor.Agent.sln"
+
 Build-Solution -solutionPath $solutionPath -buildOutputFolder $buildOutputDirectory -buildConfiguration "Release" -targetPlatform "Any CPU"
 
-# Merge Agent
+
+#################
+# Merge - Agent #
+#################
 $ilMergeExecutablePath = Join-Path $toolsDirectory "ILMerge\ILMerge.exe"
 $buildResultAgentDirecotry = Join-Path $publishedApplicationsDirectory "Agent"
 $targetFilename = "SystemMonitorAgent"
@@ -40,15 +43,12 @@ if ((Test-Path $netFrameworkFolder) -eq $false){
 	$netFrameworkFolder = "${env:ProgramFiles(x86)}\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0"
 }
 
-$mergeCommand = "$ilMergeExecutablePath /targetplatform:`"v4,$netFrameworkFolder`" /internalize:`"ilmerge.internalize.ignore.txt`" /target:exe /out:`"$targetFilename.exe`" /allowDup $sourceFilesParameter"
-
-# Merge
+# Execute merge
 $previousLocation = get-location
 set-location $buildResultAgentDirecotry
-
+$mergeCommand = "$ilMergeExecutablePath /targetplatform:`"v4,$netFrameworkFolder`" /internalize:`"ilmerge.internalize.ignore.txt`" /target:exe /out:`"$targetFilename.exe`" /allowDup $sourceFilesParameter"
 Invoke-Expression $mergeCommand
 $mergeSucceeded = ($LASTEXITCODE -eq 0)
-
 set-location $previousLocation
 
 if ($mergeSucceeded -eq $false)
@@ -62,8 +62,8 @@ Get-ChildItem -Path $buildResultAgentDirecotry -Filter *.config | Rename-Item -N
 # Delete all source files that have been used for the merge
 Get-ChildItem -Path $buildResultAgentDirecotry | Where { ($_ -notlike "$targetFilename*") } | Remove-Item
 
-# Package SignalKo.SystemMonitor.Agent
-$agentBinariesDirectory = Join-Path $binariesDirectory "SignalKo.SystemMonitor.Agent"
 
-# copy package content to prepackaging folder
-# Get-ChildItem -Path "$agentBinariesDirectory\*.*" -include *.exe | Copy-Item -Destination $prepackagingContentDirectory
+###################
+# Package - Agent #
+###################
+$packageDirectory = Join-Path $projectDirectory "packages"
