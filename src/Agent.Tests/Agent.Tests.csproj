@@ -49,8 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Agent\Agent.csproj">
-      <Project>{8a4c0279-df94-4dc5-b387-7e3f1171f812}</Project>
-      <Name>Agent %28Agent\Agent%29</Name>
+      <Project>{8A4C0279-DF94-4DC5-B387-7E3F1171F812}</Project>
+      <Name>Agent</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

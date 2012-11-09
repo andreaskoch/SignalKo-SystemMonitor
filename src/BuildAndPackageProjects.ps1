@@ -16,11 +16,10 @@ $prepackagingDirectory = Join-Path $projectDirectory "prepackaging"
 $prepackagingContentDirectory = Join-Path $prepackagingDirectory "content"
 
 # Imports
-Import-Module (Join-Path $scriptsDirectory "Packaging.ps1")
 Import-Module (Join-Path $scriptsDirectory "Build.ps1")
 
 # Build
-$solutionPath = Join-Path $currentDirectory "SignalKo.SystemMonitor.sln"
+$solutionPath = Join-Path $currentDirectory "SignalKo.SystemMonitor.Agent.sln"
 Build-Solution -solutionPath $solutionPath -buildOutputFolder $buildOutputDirectory -buildConfiguration "Release" -targetPlatform "Any CPU"
 
 # Merge Agent
