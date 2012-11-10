@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2E966F56-C89A-4882-A739-533A69C306B0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Agent.Deployment</RootNamespace>
+    <AssemblyName>Agent.Deployment</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>Properties\GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="deploymentpackageadditions\SignalKo.SystemMonitor.Agent.nuspec">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="deploymentpackageadditions\tools\systemsettings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.targets" />
+  <Target Name="AfterBuild">
+    <PropertyGroup>
+      <DeploymentPackageAdditionsFolder>deploymentpackageadditions</DeploymentPackageAdditionsFolder>
+      <NugetPackageId>SignalKo.SystemMonitor.Agent</NugetPackageId>
+    </PropertyGroup>
+    <PropertyGroup>
+      <DeploymentPackageAssemblyFilename>$(AssemblyName).dll</DeploymentPackageAssemblyFilename>
+      <NuspecFileFilename>$(DeploymentPackageAdditionsFolder)\$(NugetPackageId).nuspec</NuspecFileFilename>
+    </PropertyGroup>
+    <ItemGroup>
+      <DeploymentPackageAdditions Include="$(DeploymentPackageAdditionsFolder)\*" />
+      <DeploymentPackageAdditions Include="$(DeploymentPackageAdditionsFolder)\**\*.*" />
+    </ItemGroup>
+    <PropertyGroup>
+      <DeploymentPackageAsseblyPath>$(OutputPath)\$(DeploymentPackageAssemblyFilename)</DeploymentPackageAsseblyPath>
+      <NuspecFilePath>$(OutputPath)\$(NuspecFileFilename)</NuspecFilePath>
+    </PropertyGroup>
+    <Copy SourceFiles="@(DeploymentPackageAdditions)" DestinationFiles="@(DeploymentPackageAdditions->'$(OutputPath)$(DeploymentPackageAdditionsFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Message Text="Path of the assembly: $(DeploymentPackageAsseblyPath)" />
+    <GetAssemblyIdentity AssemblyFiles="$(DeploymentPackageAsseblyPath)">
+      <Output TaskParameter="Assemblies" ItemName="deploymentAssemblyInfo" />
+    </GetAssemblyIdentity>
+    <Message Text="Setting NuGet Package Version on file $(NuspecFilePath) to %(deploymentAssemblyInfo.Version)" />
+    <XmlPoke XmlInputPath="$(NuspecFilePath)" Query="/package/metadata/version" Value="%(deploymentAssemblyInfo.Version)" />
+  </Target>
+</Project>

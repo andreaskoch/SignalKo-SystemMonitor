@@ -61,10 +61,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App.config">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="packages.config" />
+    <Content Include="SignalKo.SystemMonitor.Agent.exe.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Agent.Core\Agent.Core.csproj">
@@ -76,14 +74,9 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="ilmerge.internalize.ignore.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)Build\Microsoft.Application.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <Target Name="BeforeBuild">
-  </Target>
+  <Import Project="$(SolutionDir)Build\Microsoft.Application.targets" />
   <Target Name="AfterBuild">
   </Target>
 </Project>
