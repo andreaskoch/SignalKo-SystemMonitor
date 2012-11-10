@@ -3,12 +3,12 @@
 	<metadata>
 		<id>SignalKo.SystemMonitor.Agent</id>
 		<version>1.0.0</version>
-		<authors>Soeren Wolter, Andreas Koch</authors>
+		<authors>Sören Wolter, Andreas Koch</authors>
 		<owners>Sören Wolter, Andreas Koch</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>The service collects information such as system performance data and sends them over the configured monitoring service where the information is displayed in real-time. For further details and the source code to this service visit https://github.com/andreaskoch/SignalKo-SystemMonitor</description>
+		<description>The agent (service) collects information such as system performance data and sends them over the configured monitoring service where the information is displayed in real-time. For further details and the source code to this service visit https://github.com/andreaskoch/SignalKo-SystemMonitor</description>
 		<releaseNotes></releaseNotes>
-		<copyright>Soeren Wolter and Andreas Koch 2012</copyright>
+		<copyright>Sören Wolter and Andreas Koch 2012</copyright>
 		<tags>Monitoring Agent</tags>
 	</metadata>
 </package>

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2E966F56-C89A-4882-A739-533A69C306B0}</ProjectGuid>
+    <ProjectGuid>{29E9FC70-16A9-4739-9D91-4C5EF4638DE3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SignalKo.SystemMonitor.Agent.Deployment</RootNamespace>
-    <AssemblyName>SignalKo.SystemMonitor.Agent.Deployment</AssemblyName>
+    <RootNamespace>SignalKo.SystemMonitor.Monitor.Web.Deployment</RootNamespace>
+    <AssemblyName>SignalKo.SystemMonitor.Monitor.Web.Deployment</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,7 +41,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="deploymentpackageadditions\SignalKo.SystemMonitor.Agent.nuspec">
+    <None Include="deploymentpackageadditions\SignalKo.SystemMonitor.Web.nuspec">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="deploymentpackageadditions\tools\systemsettings.xml">
@@ -53,7 +53,7 @@
   <Target Name="AfterBuild">
     <PropertyGroup>
       <DeploymentPackageAdditionsFolder>deploymentpackageadditions</DeploymentPackageAdditionsFolder>
-      <NugetPackageId>SignalKo.SystemMonitor.Agent</NugetPackageId>
+      <NugetPackageId>SignalKo.SystemMonitor.Web</NugetPackageId>
     </PropertyGroup>
     <PropertyGroup>
       <DeploymentPackageAssemblyFilename>$(AssemblyName).dll</DeploymentPackageAssemblyFilename>

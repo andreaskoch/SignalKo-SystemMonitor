@@ -4,9 +4,9 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyCompany("arvato Hightech EMEA")]
+[assembly: AssemblyCompany("Sören Wolter and Andreas Koch")]
 [assembly: AssemblyProduct("SignalKo.SystemMonitor")]
-[assembly: AssemblyCopyright("Copyright © arvato Hightech EMEA 2012")]
+[assembly: AssemblyCopyright("Copyright © Sören Wolter and Andreas Koch 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
