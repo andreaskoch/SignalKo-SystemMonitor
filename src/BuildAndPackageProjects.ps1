@@ -3,6 +3,7 @@
 $currentDirectory = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scriptsDirectory = Join-Path $currentDirectory "scripts"
 $toolsDirectory = Join-Path $currentDirectory "tools"
+$deploymentPackageAdditionsDirectory = Join-Path $currentDirectory "deployment"
 $projectDirectory = Split-Path -Parent $currentDirectory
 
 # Imports
@@ -44,12 +45,13 @@ if ((Test-Path $netFrameworkFolder) -eq $false){
 }
 
 # Execute merge
-$previousLocation = get-location
 set-location $buildResultAgentDirecotry
+
 $mergeCommand = "$ilMergeExecutablePath /targetplatform:`"v4,$netFrameworkFolder`" /internalize:`"ilmerge.internalize.ignore.txt`" /target:exe /out:`"$targetFilename.exe`" /allowDup $sourceFilesParameter"
 Invoke-Expression $mergeCommand
 $mergeSucceeded = ($LASTEXITCODE -eq 0)
-set-location $previousLocation
+
+set-location $currentDirectory
 
 if ($mergeSucceeded -eq $false)
 {
@@ -67,3 +69,24 @@ Get-ChildItem -Path $buildResultAgentDirecotry | Where { ($_ -notlike "$targetFi
 # Package - Agent #
 ###################
 $packageDirectory = Join-Path $projectDirectory "packages"
+$nuDeployDirectory = Join-Path $toolsDirectory "NuDeploy"
+$nuDeployExecutablePath = Join-Path $nuDeployDirectory "NuDeploy.exe"
+$buildOutputDeploymentPackageAdditions = Join-Path $buildOutputDirectory "deploymentpackageadditions"
+$agentDeploymentPackageAdditions =  Join-Path $deploymentPackageAdditionsDirectory "SignalKo.SystemMonitor.Agent"
+
+# Add Deployment Package Additions to build result folder
+Copy-Item $agentDeploymentPackageAdditions -Destination $buildOutputDeploymentPackageAdditions -Recurse
+
+# Package the build output
+set-location $nuDeployDirectory
+
+$nuDeployPackageCommand = "$nuDeployExecutablePath packagebuildoutput `"-BuildOutputPath=$buildOutputDirectory`""
+Invoke-Expression $nuDeployPackageCommand
+$packageSucceeded = ($LASTEXITCODE -eq 0)
+
+set-location $currentDirectory
+
+if ($packageSucceeded -eq $false)
+{
+    Throw "Packaging failed. Executed command: $nuDeployPackageCommand"
+}
