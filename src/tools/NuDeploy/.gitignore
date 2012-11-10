@@ -3,3 +3,6 @@ NuDeployBuilds
 NuDeployLogs
 NuDeployPackages
 NuDeployPrepackaging
+
+# NuDeploy Config Files
+NuDeploy.Publish.config

@@ -4,6 +4,7 @@ $currentDirectory = Split-Path -Parent $MyInvocation.MyCommand.Path
 $toolsDirectory = Join-Path $currentDirectory "tools"
 $nuDeployExecutablePath = Join-Path $toolsDirectory "NuDeploy\NuDeploy.exe"
 $projectDirectory = Split-Path -Parent $currentDirectory
+$publishLocation = Join-Path $projectDirectory "packages"
 
 # Functions
 Function Package-Solution
@@ -14,7 +15,10 @@ Function Package-Solution
         [string]$nuDeployExePath,    
     
         [Parameter(Position=1, Mandatory=$True, ValueFromPipeline=$True)]
-        [string]$solutionPath
+        [string]$solutionPath,
+		
+        [Parameter(Position=2, Mandatory=$False, ValueFromPipeline=$True)]
+        [string]$publishLocation
     )
 	
 	if ((Test-Path -Path $nuDeployExePath) -eq $false) {
@@ -31,6 +35,24 @@ Function Package-Solution
 	$previousLocation = get-location
 	$nuDeployDirectory = Split-Path -Parent $nuDeployExePath
 	$nuDeployPackageCommand = "$nuDeployExecutablePath packagesolution `"-SolutionPath=$solutionPath`" `"-BuildConfiguration=Release`""
+	
+	# Add Publishing Profile
+	if ($publishLocation -ne $null) {
+	
+		if ((Test-Path -Path $publishLocation) -eq $false) {
+			New-Item $publishLocation -type directory
+		}
+	
+		$publishConfigurationName = "Publish"
+		$ensurePublishConfigurationExistsCommand = "$nuDeployExecutablePath targets `"-Action=add`" `"-Name=$publishConfigurationName`" `"-Location=$publishLocation`""
+		set-location $nuDeployDirectory	
+		Invoke-Expression $ensurePublishConfigurationExistsCommand
+		$addPublishConfigurationSucceeded = ($LASTEXITCODE -eq 0)
+		
+		if ($addPublishConfigurationSucceeded -eq $true) {
+			$nuDeployPackageCommand += " `"-PublishingConfiguration=$publishConfigurationName`""
+		}
+	}	
 
 	# Switch to the NuDeploy folder
 	set-location $nuDeployDirectory
@@ -50,8 +72,8 @@ Function Package-Solution
 
 # Package the Agent
 $solutionPath = Join-Path $currentDirectory "SignalKo.SystemMonitor.Agent.sln"
-Package-Solution -nuDeployExePath $nuDeployExecutablePath -solutionPath $solutionPath
+Package-Solution -nuDeployExePath $nuDeployExecutablePath -solutionPath $solutionPath -publishLocation $publishLocation
 
 # Package the Web Monitor
 $solutionPath = Join-Path $currentDirectory "SignalKo.SystemMonitor.Web.sln"
-Package-Solution -nuDeployExePath $nuDeployExecutablePath -solutionPath $solutionPath
+Package-Solution -nuDeployExePath $nuDeployExecutablePath -solutionPath $solutionPath -publishLocation $publishLocation
