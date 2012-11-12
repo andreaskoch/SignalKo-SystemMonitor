@@ -5,4 +5,9 @@ NuDeployPackages
 NuDeployPrepackaging
 
 # NuDeploy Config Files
+NuDeploy.Sources.config
 NuDeploy.Publish.config
+NuDeploy.Packages.config
+
+# Installed Packages
+SignalKo.SystemMonitor.*

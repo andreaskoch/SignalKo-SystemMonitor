@@ -6,7 +6,7 @@
 	</DeploymentSettings>
 	
 	<TopshelfServices>
-		<Service StartAfterInstallation="true" Executable="C:\SignalKo.SystemMonitor.Agent\applications\Agent\SystemMonitorAgent.exe" />
+		<Service StartAfterInstallation="true" Executable="C:\SignalKo.SystemMonitor.Agent\applications\Agent\SignalKo.SystemMonitor.Agent.exe" />
 	</TopshelfServices>
 
 </Settings>

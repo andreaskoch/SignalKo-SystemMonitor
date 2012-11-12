@@ -1,8 +1,57 @@
 ﻿<Settings>
 
 	<DeploymentSettings>
-		<NugetPackageId>SignalKo.SystemMonitor.Monitor.Web</NugetPackageId>
-		<TargetFolder>C:\SignalKo.SystemMonitor.Monitor.Web</TargetFolder>
+		<NugetPackageId>SignalKo.SystemMonitor.Web</NugetPackageId>
+		<TargetFolder>C:\SignalKo.SystemMonitor.Web</TargetFolder>
 	</DeploymentSettings>
+	
+	<Authorization>
+		<UserAccounts>
+			<UserAccount IsLocal="true" Username="SystemMonitor" Password="fOjuEXed6o4e" FullName="SignalKo.SystemMonitor.Web Runtime" Description="Runtime user for the SignalKo.SystemMonitor.Web" />
+		</UserAccounts>
+		
+		<UserGroups>
+		</UserGroups>
+	</Authorization>
+
+	<SecurityPolicies>
+		<LocalSecurityPolicies Areas="USER_RIGHTS">
+			<LocalSecurityPolicy Action="Add" SectionName="Privilege Rights" Key="SeDenyInteractiveLogonRight" Value="SystemMonitor" />
+		</LocalSecurityPolicies>
+	</SecurityPolicies>	
+	
+	<FileSystemPermissions>
+	
+		<FolderPermissions>
+			<FolderPermission Path="C:\SignalKo.SystemMonitor.Web" User="SystemMonitor" Permissions="Read, Write, ExecuteFile" />
+		</FolderPermissions>
+		
+	</FileSystemPermissions>	
+	
+	<IIS>
+		<ApplicationPools>
+			<ApplicationPool Name="System Monitor" PipelineMode="Integrated" RuntimeVersion="v4.0" Username="SystemMonitor" Password="fOjuEXed6o4e" />
+		</ApplicationPools>
+
+		<Sites>
+			<Site Name="SignalKo System Monitor">
+				<PhysicalPath>C:\SignalKo.SystemMonitor.Web\webapplications\Monitor.Web</PhysicalPath>
+				<ApplicationPoolName>System Monitor</ApplicationPoolName>
+				<LogfileDirectory>C:\logs\SignalKo.SystemMonitor.Web\iis</LogfileDirectory>
+				<LogFieldFlags>4194303</LogFieldFlags>
+
+				<Bindings>
+					<Binding Protocol="http" IPAddress="*" Port="80" HostHeader="" />
+				</Bindings>
+
+				<SslBindings>
+				</SslBindings>
+				
+				<WebApplications>
+				</WebApplications>
+			</Site>
+			
+		</Sites>
+	</IIS>	
 
 </Settings>

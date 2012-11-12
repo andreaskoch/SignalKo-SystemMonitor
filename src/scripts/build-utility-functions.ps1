@@ -1,18 +1,18 @@
 ﻿
-Function Prepare-Directory {
+Function Prepare-Directory
+{
+	[CmdletBinding()]
+	Param(
+		[Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
+		[string]$path
+	)
 
-    [CmdletBinding()]
-    Param(
-        [Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
-        [string]$path
-    )
-
-	if ((Test-Path $path) -eq $false) {
-	
+	if ((Test-Path $path) -eq $false)
+	{
 		New-Item $path -type directory
-		
-	} else {
-	
+	}
+	else
+	{
 		if ((Get-ChildItem $path).Count -gt 0)
 		{
 			Remove-Item -Recurse -Force $path
@@ -20,29 +20,29 @@ Function Prepare-Directory {
 				Throw "Could not cleanup the directory `"$path`""
 			}
 		}
-	
 	}
 	
 }
 
-Function Build-Solution {
-
-    [CmdletBinding()]
-    Param(
-        [Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
-        [string]$solutionPath,
+Function Build-Solution
+{
+	[CmdletBinding()]
+	Param(
+		[Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
+		[string]$solutionPath,
 		
-        [Parameter(Position=1, Mandatory=$True, ValueFromPipeline=$True)]
-        [string]$buildOutputFolder,		
+		[Parameter(Position=1, Mandatory=$True, ValueFromPipeline=$True)]
+		[string]$buildOutputFolder,		
 		
-        [Parameter(Position=2, Mandatory=$False, ValueFromPipeline=$True)]
-        [string]$buildConfiguration="Release",
+		[Parameter(Position=2, Mandatory=$False, ValueFromPipeline=$True)]
+		[string]$buildConfiguration="Release",
 		
-        [Parameter(Position=3, Mandatory=$False, ValueFromPipeline=$True)]
-        [string]$targetPlatform="Any CPU"
-    )
+		[Parameter(Position=3, Mandatory=$False, ValueFromPipeline=$True)]
+		[string]$targetPlatform="Any CPU"
+	)
 	
-	if ((Test-Path $solutionPath) -eq $false) {
+	if ((Test-Path $solutionPath) -eq $false)
+	{
 		Throw "The soltuion file `"$solutionPath`" was not found."
 	}
 	
@@ -52,30 +52,33 @@ Function Build-Solution {
 	Invoke-Expression $buildCommand
 	$buildSucceeded = ($LASTEXITCODE -eq 0)
 
-	if ($buildSucceeded -eq 0) {
+	if ($buildSucceeded -eq 0)
+	{
 		Throw "Building solution `"$solutionPath`" failed."
 	}
 }
 
 Function Package-Solution
 {
-   [CmdletBinding()]
-    Param(
-        [Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
-        [string]$nuDeployExePath,    
-    
-        [Parameter(Position=1, Mandatory=$True, ValueFromPipeline=$True)]
-        [string]$solutionPath,
-		
-        [Parameter(Position=2, Mandatory=$False, ValueFromPipeline=$True)]
-        [string]$publishLocation
-    )
+	[CmdletBinding()]
+	Param(
+		[Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
+		[string]$nuDeployExePath,
 	
-	if ((Test-Path -Path $nuDeployExePath) -eq $false) {
+		[Parameter(Position=1, Mandatory=$True, ValueFromPipeline=$True)]
+		[string]$solutionPath,
+		
+		[Parameter(Position=2, Mandatory=$False, ValueFromPipeline=$True)]
+		[string]$publishLocation
+	)
+	
+	if ((Test-Path -Path $nuDeployExePath) -eq $false)
+	{
 		Throw "NuDeploy was not found at `"$nuDeployExePath`""
 	}
 	
-	if ((Test-Path -Path $solutionPath) -eq $false) {
+	if ((Test-Path -Path $solutionPath) -eq $false)
+	{
 		Throw "No solution file found at `"$solutionPath`""
 	}
 	
@@ -86,10 +89,11 @@ Function Package-Solution
 	$nuDeployDirectory = Split-Path -Parent $nuDeployExePath
 	$nuDeployPackageCommand = "$nuDeployExecutablePath packagesolution `"-SolutionPath=$solutionPath`" `"-BuildConfiguration=Release`""
 	
-	# Add Publishing Profile
-	if ($publishLocation -ne $null) {
-	
-		if ((Test-Path -Path $publishLocation) -eq $false) {
+	# Register Publishing Profile
+	if ($publishLocation -ne $null)
+	{
+		if ((Test-Path -Path $publishLocation) -eq $false)
+		{
 			New-Item $publishLocation -type directory
 		}
 	
@@ -99,7 +103,8 @@ Function Package-Solution
 		Invoke-Expression $ensurePublishConfigurationExistsCommand
 		$addPublishConfigurationSucceeded = ($LASTEXITCODE -eq 0)
 		
-		if ($addPublishConfigurationSucceeded -eq $true) {
+		if ($addPublishConfigurationSucceeded -eq $true)
+		{
 			$nuDeployPackageCommand += " `"-PublishingConfiguration=$publishConfigurationName`""
 		}
 	}	
@@ -118,4 +123,61 @@ Function Package-Solution
 	{
 		Throw "Packaging the solution `"$solutionPath`" failed (Command: $nuDeployPackageCommand)."
 	}
+}
+
+Function Install-Package
+{
+	[CmdletBinding()]
+	Param(
+		[Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
+		[string]$nuDeployExePath,
+		
+		[Parameter(Position=1, Mandatory=$True, ValueFromPipeline=$True)]
+		[string]$packageId,    
+	
+		[Parameter(Position=2, Mandatory=$True, ValueFromPipeline=$True)]
+		[string]$sourceRepositoryPath
+	)
+	
+	if ((Test-Path -Path $nuDeployExePath) -eq $false)
+	{
+		Throw "NuDeploy was not found at `"$nuDeployExePath`""
+	}
+	
+	if ((Test-Path -Path $sourceRepositoryPath) -eq $false)
+	{
+		Throw "The source repository `"$sourceRepositoryPath`" does not exist."
+	}
+	
+	Write-Host "Installing package `"$packageId`""
+	
+	$nuDeployDirectory = Split-Path -Parent $nuDeployExePath
+	$previousLocation = get-location
+	
+	# Register Source Repository
+	$sourceRepositoryName = "Source"
+	$registerSourceRepositoryCommand = "$nuDeployExePath sources `"-Action=add`" `"-Name=$sourceRepositoryName`" `"-Url=$sourceRepositoryPath`""
+	
+	set-location $nuDeployDirectory
+	Invoke-Expression $registerSourceRepositoryCommand
+	$registerSourceRepositorySucceeded = ($LASTEXITCODE -eq 0)
+	set-location $previousLocation
+	
+	if ($registerSourceRepositorySucceeded -eq $false)
+	{
+		Throw "Could not register the path `"$sourceRepositoryPath`" as a source repository."
+	}
+	
+	# Install Package
+	$installPackageCommand = "$nuDeployExePath install `"-NugetPackageId=$packageId`" `"-DeploymentType=Full`""
+	
+	set-location $nuDeployDirectory
+	Invoke-Expression $installPackageCommand
+	$installationSucceeded = ($LASTEXITCODE -eq 0)
+	set-location $previousLocation
+	
+	if ($installationSucceeded -eq $false)
+	{
+		Throw "Installation of the package `"$packageId`" failed."
+	}	
 }

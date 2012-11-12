@@ -214,7 +214,7 @@
     <Content Include="Styles\fonts\fontawesome-webfont.eot" />
     <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
     <Content Include="Styles\fonts\fontawesome-webfont.woff" />
-    <None Include="Styles\Combined\global.css" />
+    <Content Include="Styles\Combined\global.css" />
     <None Include="Styles\Source\03-content.chirp.less" />
     <None Include="Styles\Source\constants.less" />
     <None Include="Styles\Source\01-global.css">
