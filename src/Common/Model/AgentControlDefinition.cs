@@ -12,6 +12,8 @@
 
 		public string Hostaddress { get; set; }
 
+		public SystemPerformanceCollectorDefinition SystemPerformanceCheck { get; set; }
+
 		public HttpStatusCodeCheckDefinition HttpStatusCodeCheck { get; set; }
 
 		public bool IsValid()

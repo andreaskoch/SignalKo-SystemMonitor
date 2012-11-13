@@ -62,7 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="SignalKo.SystemMonitor.Agent.exe.config" />
+    <Content Include="SignalKo.SystemMonitor.Agent.exe.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Agent.Core\Agent.Core.csproj">
