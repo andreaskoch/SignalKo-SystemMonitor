@@ -216,6 +216,7 @@
     <Content Include="Styles\fonts\fontawesome-webfont.woff" />
     <Content Include="Styles\Combined\global.css" />
     <None Include="Styles\Source\03-content.chirp.less" />
+    <None Include="Styles\Source\04-agent-configuration.chirp.less" />
     <None Include="Styles\Source\constants.less" />
     <None Include="Styles\Source\01-global.css">
       <DependentUpon>01-global.chirp.less</DependentUpon>
@@ -277,6 +278,12 @@
     <None Include="Styles\Source\libraries\font-awesome.min.css">
       <DependentUpon>font-awesome.chirp.less</DependentUpon>
     </None>
+    <Content Include="Styles\Source\04-agent-configuration.css">
+      <DependentUpon>04-agent-configuration.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Source\04-agent-configuration.min.css">
+      <DependentUpon>04-agent-configuration.chirp.less</DependentUpon>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\SystemMonitor\ServerConfiguration.cshtml" />
