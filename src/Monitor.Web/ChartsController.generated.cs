@@ -21,9 +21,12 @@ using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
-    public partial class SystemMonitorController {
+    public partial class ChartsController {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected SystemMonitorController(Dummy d) { }
+        public ChartsController() { }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected ChartsController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result) {
@@ -39,44 +42,40 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Group() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Group);
+        public System.Web.Mvc.ActionResult AgentGroup() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.AgentGroup);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public SystemMonitorController Actions { get { return MVC.SystemMonitor; } }
+        public ChartsController Actions { get { return MVC.Charts; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "SystemMonitor";
+        public readonly string Name = "Charts";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "SystemMonitor";
+        public const string NameConst = "Charts";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
-            public readonly string GroupOverview = "GroupOverview";
-            public readonly string Group = "Group";
-            public readonly string ServerConfiguration = "ServerConfiguration";
-            public readonly string LoadConfig = "LoadConfig";
+            public readonly string AgentGroupOverview = "AgentGroupOverview";
+            public readonly string AgentGroup = "AgentGroup";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants {
-            public const string GroupOverview = "GroupOverview";
-            public const string Group = "Group";
-            public const string ServerConfiguration = "ServerConfiguration";
-            public const string LoadConfig = "LoadConfig";
+            public const string AgentGroupOverview = "AgentGroupOverview";
+            public const string AgentGroup = "AgentGroup";
         }
 
 
-        static readonly ActionParamsClass_Group s_params_Group = new ActionParamsClass_Group();
+        static readonly ActionParamsClass_AgentGroup s_params_AgentGroup = new ActionParamsClass_AgentGroup();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Group GroupParams { get { return s_params_Group; } }
+        public ActionParamsClass_AgentGroup AgentGroupParams { get { return s_params_AgentGroup; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Group {
+        public class ActionParamsClass_AgentGroup {
             public readonly string groupName = "groupName";
         }
         static readonly ViewNames s_views = new ViewNames();
@@ -84,34 +83,23 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
-            public readonly string Group = "~/Views/SystemMonitor/Group.cshtml";
-            public readonly string GroupOverview = "~/Views/SystemMonitor/GroupOverview.cshtml";
-            public readonly string ServerConfiguration = "~/Views/SystemMonitor/ServerConfiguration.cshtml";
+            public readonly string AgentGroup = "~/Views/Charts/AgentGroup.cshtml";
+            public readonly string AgentGroupOverview = "~/Views/Charts/AgentGroupOverview.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_SystemMonitorController: SignalKo.SystemMonitor.Monitor.Web.Controllers.SystemMonitorController {
-        public T4MVC_SystemMonitorController() : base(Dummy.Instance) { }
+    public class T4MVC_ChartsController: SignalKo.SystemMonitor.Monitor.Web.Controllers.ChartsController {
+        public T4MVC_ChartsController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult GroupOverview() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.GroupOverview);
+        public override System.Web.Mvc.ActionResult AgentGroupOverview() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.AgentGroupOverview);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Group(string groupName) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Group);
+        public override System.Web.Mvc.ActionResult AgentGroup(string groupName) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.AgentGroup);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "groupName", groupName);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult ServerConfiguration() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ServerConfiguration);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.JsonResult LoadConfig() {
-            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.LoadConfig);
             return callInfo;
         }
 

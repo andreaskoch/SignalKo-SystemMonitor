@@ -1,0 +1,22 @@
+﻿@model dynamic
+@{
+	ViewBag.Title = "Overview";
+}
+<section class="content machines">
+	
+	<ul data-bind="foreach: machineStateViewModels">
+		<li><span data-bind="text: MachineName"></span>
+			<div data-bind="html: ChartContainer">
+			</div>
+		</li>
+	</ul>
+
+</section>
+
+@section CustomScripts {
+	<script src="@Links.Scripts.highcharts.highcharts_js" type="text/javascript"></script>
+	<script src="@Links.Scripts.highcharts.highcharts_theme_gray_js" type="text/javascript"></script>
+	<script src="@Links.Scripts.Systemmonitor_Overview_js"></script>
+	<script type="text/javascript">
+	</script>
+}

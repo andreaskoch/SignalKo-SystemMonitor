@@ -98,17 +98,20 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AgentConfigurationController.generated.cs">
+    <Compile Include="App_Start\StructuremapMvc.cs" />
+    <Compile Include="ChartsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="App_Start\StructuremapMvc.cs" />
-    <Compile Include="Controllers\AgentConfigurationController.cs" />
+    <Compile Include="ConfigurationController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\Api\AgentConfigurationController.cs" />
     <Compile Include="Controllers\Api\AgentControlDefinitionController.cs" />
     <Compile Include="Controllers\Api\GroupConfigurationController.cs" />
     <Compile Include="Controllers\Api\SystemInformationArchiveController.cs" />
     <Compile Include="Controllers\Api\SystemInformationController.cs" />
-    <Compile Include="Controllers\SystemMonitorController.cs" />
+    <Compile Include="Controllers\ChartsController.cs" />
+    <Compile Include="Controllers\ConfigurationControler.cs" />
     <Compile Include="Core\Configuration\AppConfigFileSystemDataStoreConfigurationProvider.cs" />
     <Compile Include="Core\Configuration\AppConfigDefaultAgentConfigurationProvider.cs" />
     <Compile Include="Core\Configuration\FileSystemDataStoreConfiguration.cs" />
@@ -136,9 +139,6 @@
     </Compile>
     <Compile Include="Hubs\SystemInformationHub.cs" />
     <Compile Include="SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SystemMonitorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="T4MVC.cs">
@@ -188,8 +188,7 @@
     <Content Include="Assets\wrench_8x8.png" />
     <Content Include="Assets\x_alt_12x12.png" />
     <Content Include="Assets\x_alt_24x24.png" />
-    <Content Include="content\toastr-responsive.css" />
-    <Content Include="content\toastr.css" />
+    <Content Include="Scripts\highcharts\highcharts.js" />
     <Content Include="Scripts\libraries\jquery-ui-1.9.0.js" />
     <Content Include="Scripts\libraries\jquery-ui-1.9.0.min.js" />
     <Content Include="Scripts\libraries\jquery-1.8.2.intellisense.js" />
@@ -199,11 +198,10 @@
     <Content Include="Scripts\libraries\knockout-2.2.0.js" />
     <Content Include="Scripts\libraries\modernizr-2.6.2.js" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\monitoring-config.js" />
     <Content Include="Scripts\Systemmonitor.js" />
     <Content Include="Scripts\Systemmonitor.Utilities.js" />
     <Content Include="Scripts\Systemmonitor.Overview.js" />
-    <Content Include="Scripts\Systemmonitor.Overview.Highcharts.Theme.Gray.js" />
+    <Content Include="Scripts\highcharts\highcharts.theme.gray.js" />
     <Content Include="Scripts\Systemmonitor.AgentConfiguration.js" />
     <Content Include="Scripts\global.js" />
     <Content Include="Scripts\libraries\jquery.signalR-0.5.3.js" />
@@ -214,28 +212,7 @@
     <Content Include="Styles\fonts\fontawesome-webfont.ttf" />
     <Content Include="Styles\fonts\fontawesome-webfont.woff" />
     <Content Include="Styles\Combined\global.css" />
-    <None Include="Styles\Source\03-content.chirp.less" />
-    <None Include="Styles\Source\04-agent-configuration.chirp.less" />
-    <None Include="Styles\Source\constants.less" />
-    <None Include="Styles\Source\01-global.css">
-      <DependentUpon>01-global.chirp.less</DependentUpon>
-    </None>
-    <None Include="Styles\Source\01-global.min.css">
-      <DependentUpon>01-global.chirp.less</DependentUpon>
-    </None>
-    <None Include="Styles\Source\02-layout.css">
-      <DependentUpon>02-layout.chirp.less</DependentUpon>
-    </None>
-    <None Include="Styles\Source\02-layout.min.css">
-      <DependentUpon>02-layout.chirp.less</DependentUpon>
-    </None>
-    <None Include="Styles\Source\03-content.css">
-      <DependentUpon>03-content.chirp.less</DependentUpon>
-    </None>
-    <None Include="Styles\Source\03-content.min.css">
-      <DependentUpon>03-content.chirp.less</DependentUpon>
-    </None>
-    <Content Include="Scripts\libraries\toastr.js" />
+    <None Include="Styles\Source\agent-configuration.chirp.less" />
     <Content Include="Scripts\libraries\underscore.js" />
     <Content Include="Scripts\libraries\underscore.min.js" />
     <Content Include="Styles\fonts\fontawesome-webfont.svg" />
@@ -256,21 +233,43 @@
     <None Include="Styles\Combined\jquery-ui\overcast\jquery-ui-1.8.23.custom.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Styles\Source\agent-group-overview.chirp.less" />
+    <None Include="Styles\Source\agent-group.chirp.less" />
     <None Include="Styles\Source\libraries\font-awesome.css">
       <DependentUpon>font-awesome.chirp.less</DependentUpon>
     </None>
     <None Include="Styles\Source\libraries\font-awesome.min.css">
       <DependentUpon>font-awesome.chirp.less</DependentUpon>
     </None>
-    <Content Include="Styles\Source\04-agent-configuration.css">
-      <DependentUpon>04-agent-configuration.chirp.less</DependentUpon>
+    <Content Include="Styles\Source\agent-configuration.css">
+      <DependentUpon>agent-configuration.chirp.less</DependentUpon>
     </Content>
-    <Content Include="Styles\Source\04-agent-configuration.min.css">
-      <DependentUpon>04-agent-configuration.chirp.less</DependentUpon>
+    <Content Include="Styles\Source\agent-configuration.min.css">
+      <DependentUpon>agent-configuration.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Source\agent-group-overview.css">
+      <DependentUpon>agent-group-overview.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Source\agent-group-overview.min.css">
+      <DependentUpon>agent-group-overview.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Source\agent-group.css">
+      <DependentUpon>agent-group.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Source\agent-group.min.css">
+      <DependentUpon>agent-group.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Source\global.css">
+      <DependentUpon>global.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Source\global.min.css">
+      <DependentUpon>global.chirp.less</DependentUpon>
     </Content>
     <Content Include="Web.config" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\SystemMonitor\ServerConfiguration.cshtml" />
+    <Content Include="Views\Configuration\AgentConfiguration.cshtml" />
+    <Content Include="Views\Charts\AgentGroup.cshtml" />
+    <Content Include="Views\Charts\AgentGroupOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -292,18 +291,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\SystemMonitor\Group.cshtml" />
-    <Content Include="Views\SystemMonitor\GroupOverview.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\AgentConfiguration\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Styles\combine.chirp.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Styles\Source\01-global.chirp.less" />
-    <None Include="Styles\Source\02-layout.chirp.less" />
+    <None Include="Styles\Source\global.chirp.less" />
     <None Include="Styles\Source\libraries\font-awesome.chirp.less" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

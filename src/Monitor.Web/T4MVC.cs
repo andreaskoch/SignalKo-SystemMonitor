@@ -23,8 +23,8 @@ using T4MVC;
 
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static class MVC {
-    public static SignalKo.SystemMonitor.Monitor.Web.Controllers.AgentConfigurationController AgentConfiguration = new SignalKo.SystemMonitor.Monitor.Web.Controllers.T4MVC_AgentConfigurationController();
-    public static SignalKo.SystemMonitor.Monitor.Web.Controllers.SystemMonitorController SystemMonitor = new SignalKo.SystemMonitor.Monitor.Web.Controllers.T4MVC_SystemMonitorController();
+    public static SignalKo.SystemMonitor.Monitor.Web.Controllers.ChartsController Charts = new SignalKo.SystemMonitor.Monitor.Web.Controllers.T4MVC_ChartsController();
+    public static SignalKo.SystemMonitor.Monitor.Web.Controllers.ConfigurationController Configuration = new SignalKo.SystemMonitor.Monitor.Web.Controllers.T4MVC_ConfigurationController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -296,17 +296,6 @@ public class T4MVC_ActionResult : System.Web.Mvc.ActionResult, IT4MVCActionResul
     public string Protocol { get; set; }
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
-[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-public class T4MVC_JsonResult : System.Web.Mvc.JsonResult, IT4MVCActionResult {
-    public T4MVC_JsonResult(string area, string controller, string action, string protocol = null): base()  {
-        this.InitMVCT4Result(area, controller, action, protocol);
-    }
-    
-    public string Controller { get; set; }
-    public string Action { get; set; }
-    public string Protocol { get; set; }
-    public RouteValueDictionary RouteValueDictionary { get; set; }
-}
 
 
 
@@ -318,6 +307,17 @@ namespace Links {
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string global_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/global.min.js") ? Url("global.min.js") : Url("global.js");
                       
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class highcharts {
+            private const string URLPATH = "~/Scripts/highcharts";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string highcharts_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/highcharts.min.js") ? Url("highcharts.min.js") : Url("highcharts.js");
+                          
+            public static readonly string highcharts_theme_gray_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/highcharts.theme.gray.min.js") ? Url("highcharts.theme.gray.min.js") : Url("highcharts.theme.gray.js");
+                          
+        }
+    
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class libraries {
             private const string URLPATH = "~/Scripts/libraries";
@@ -344,20 +344,14 @@ namespace Links {
                           
             public static readonly string modernizr_2_6_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/modernizr-2.6.2.min.js") ? Url("modernizr-2.6.2.min.js") : Url("modernizr-2.6.2.js");
                           
-            public static readonly string toastr_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/toastr.min.js") ? Url("toastr.min.js") : Url("toastr.js");
-                          
             public static readonly string underscore_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/underscore.min.js") ? Url("underscore.min.js") : Url("underscore.js");
                           
             public static readonly string underscore_min_js = Url("underscore.min.js");
         }
     
-        public static readonly string monitoring_config_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/monitoring-config.min.js") ? Url("monitoring-config.min.js") : Url("monitoring-config.js");
-                      
         public static readonly string Systemmonitor_AgentConfiguration_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.AgentConfiguration.min.js") ? Url("Systemmonitor.AgentConfiguration.min.js") : Url("Systemmonitor.AgentConfiguration.js");
                       
         public static readonly string Systemmonitor_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.min.js") ? Url("Systemmonitor.min.js") : Url("Systemmonitor.js");
-                      
-        public static readonly string Systemmonitor_Overview_Highcharts_Theme_Gray_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.Overview.Highcharts.Theme.Gray.min.js") ? Url("Systemmonitor.Overview.Highcharts.Theme.Gray.min.js") : Url("Systemmonitor.Overview.Highcharts.Theme.Gray.js");
                       
         public static readonly string Systemmonitor_Overview_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.Overview.min.js") ? Url("Systemmonitor.Overview.min.js") : Url("Systemmonitor.Overview.js");
                       

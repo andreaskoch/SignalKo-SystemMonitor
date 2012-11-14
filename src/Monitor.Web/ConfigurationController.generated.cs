@@ -21,9 +21,12 @@ using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
-    public partial class AgentConfigurationController {
+    public partial class ConfigurationController {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected AgentConfigurationController(Dummy d) { }
+        public ConfigurationController() { }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected ConfigurationController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result) {
@@ -39,25 +42,25 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
 
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public AgentConfigurationController Actions { get { return MVC.AgentConfiguration; } }
+        public ConfigurationController Actions { get { return MVC.Configuration; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "AgentConfiguration";
+        public readonly string Name = "Configuration";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "AgentConfiguration";
+        public const string NameConst = "Configuration";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
-            public readonly string Index = "Index";
+            public readonly string AgentConfiguration = "AgentConfiguration";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants {
-            public const string Index = "Index";
+            public const string AgentConfiguration = "AgentConfiguration";
         }
 
 
@@ -66,16 +69,16 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
-            public readonly string Index = "~/Views/AgentConfiguration/Index.cshtml";
+            public readonly string AgentConfiguration = "~/Views/Configuration/AgentConfiguration.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_AgentConfigurationController: SignalKo.SystemMonitor.Monitor.Web.Controllers.AgentConfigurationController {
-        public T4MVC_AgentConfigurationController() : base(Dummy.Instance) { }
+    public class T4MVC_ConfigurationController: SignalKo.SystemMonitor.Monitor.Web.Controllers.ConfigurationController {
+        public T4MVC_ConfigurationController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Index() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+        public override System.Web.Mvc.ActionResult AgentConfiguration() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.AgentConfiguration);
             return callInfo;
         }
 

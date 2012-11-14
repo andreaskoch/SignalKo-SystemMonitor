@@ -15,21 +15,24 @@
 	</head>
 
 	<body>
-		<div class="body">
-			<header>
-				<h1>@ViewBag.Title</h1>
-				
-				<nav class="righttopnavigation">
-					<ul>
-						<li>@Html.ActionLink("Overview", MVC.SystemMonitor.GroupOverview())</li>
-						<li>@Html.ActionLink("Configuration", MVC.AgentConfiguration.Index())</li>
-						
-					</ul>
-				</nav>
-			</header>
 
-			@RenderBody()
-		</div>
+		<header>
+			<h1>@ViewBag.Title</h1>
+				
+			<nav>
+				<ul>
+					<li>@Html.ActionLink("Overview", MVC.Charts.AgentGroupOverview())</li>
+					<li>@Html.ActionLink("Configuration", MVC.Configuration.AgentConfiguration())</li>
+						
+				</ul>
+			</nav>
+		</header>
+
+		@RenderBody()
+		
+		<footer>
+			
+		</footer>
 
 		<script type="text/javascript" src="@Links.Scripts.libraries.jquery_signalR_0_5_3_min_js"></script>
 		<script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
