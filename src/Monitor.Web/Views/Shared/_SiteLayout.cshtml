@@ -1,59 +1,43 @@
-﻿@using SignalKo.SystemMonitor.Monitor.Web.Extensions
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-<head>
-    <meta name="viewport" content="width=device-width" />
+	
+	<head>
+		<meta name="viewport" content="width=device-width" />
 
-    <title>@ViewBag.Title - System Monitor</title>
+		<title>@ViewBag.Title - System Monitor</title>
 
-    <link href="@Links.Styles.Combined.jquery_ui.blue_flat_theme.jquery_ui_1_8_23_custom_css" rel="stylesheet" type="text/css" />
-    <link href="@Links.Styles.Combined.global_css" rel="stylesheet" type="text/css" />
+		<link href="@Links.Styles.Combined.global_css" rel="stylesheet" type="text/css" />
 
-    <script type="text/javascript" src="@Links.Scripts.libraries.jquery_1_8_2_js"></script>
-    <script type="text/javascript" src="@Links.Scripts.libraries.modernizr_2_6_2_js"></script>
-    <script type="text/javascript" src="@Links.Scripts.libraries.jquery_ui_1_9_0_js"></script>
-    <script type="text/javascript" src="@Links.Scripts.libraries.underscore_min_js"></script>
-</head>
-    <body>
-         <div class="body">
-             <header>
-                 <div id="title" class="page-head">
-                     <div class="logoleft">
-                     </div>
-                     <div class="title">
-                         @ViewBag.Title
-                     </div>
-                     <div class="logoright"></div>
-                     <nav class="righttopnavigation">
-                         <ul>
-                             @Html.MenuLink("Overview", "GroupOverview", "SystemMonitor", "activmenue")
-                             @Html.MenuLink("Server Configuration", "ServerConfiguration", "SystemMonitor", "activmenue")
-                             @Html.MenuLink("Agent Configuration", "Index", "AgentConfiguration", "activmenue")
-                         </ul>
-                     </nav>
-                     
-                 </div>
-                  
-             </header>
-             <div class="clear"></div>
-             <div class="headerEnd"></div>
-             
-                @RenderBody()
-              
-        </div>
+		<script type="text/javascript" src="@Links.Scripts.libraries.jquery_1_8_2_js"></script>
+		<script type="text/javascript" src="@Links.Scripts.libraries.modernizr_2_6_2_js"></script>
+		<script type="text/javascript" src="@Links.Scripts.libraries.jquery_ui_1_9_0_js"></script>
+		<script type="text/javascript" src="@Links.Scripts.libraries.underscore_min_js"></script>
+	</head>
 
-       
+	<body>
+		<div class="body">
+			<header>
+				<h1>@ViewBag.Title</h1>
+				
+				<nav class="righttopnavigation">
+					<ul>
+						<li>@Html.ActionLink("Overview", MVC.SystemMonitor.GroupOverview())</li>
+						<li>@Html.ActionLink("Configuration", MVC.AgentConfiguration.Index())</li>
+						
+					</ul>
+				</nav>
+			</header>
 
-        <script type="text/javascript" src="@Links.Scripts.libraries.jquery_signalR_0_5_3_min_js"></script>
-        <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
-    
-        <script type="text/javascript" src="@Links.Scripts.libraries.knockout_2_2_0_js"></script>
-        <script type="text/javascript" src="@Links.Scripts.libraries.knockout_mapping_latest_js"></script>
-        
-        <script type="text/javascript" src="@Url.Content(@Links.Scripts.global_js)"></script>
-        <script type="text/javascript" src="@Url.Content(@Links.Scripts.Systemmonitor_js)"></script>
-        <script type="text/javascript" src="@Url.Content(@Links.Scripts.Systemmonitor_Utilities_js)"></script>
+			@RenderBody()
+		</div>
 
-        @RenderSection("CustomScripts", false)
-    </body>
+		<script type="text/javascript" src="@Links.Scripts.libraries.jquery_signalR_0_5_3_min_js"></script>
+		<script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
+		<script type="text/javascript" src="@Links.Scripts.libraries.knockout_2_2_0_js"></script>
+		<script type="text/javascript" src="@Links.Scripts.libraries.knockout_mapping_latest_js"></script>
+		<script type="text/javascript" src="@Url.Content(@Links.Scripts.global_js)"></script>
+		<script type="text/javascript" src="@Url.Content(@Links.Scripts.Systemmonitor_js)"></script>
+		<script type="text/javascript" src="@Url.Content(@Links.Scripts.Systemmonitor_Utilities_js)"></script>
+		@RenderSection("CustomScripts", false)
+	</body>
 </html>

@@ -134,7 +134,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Hubs\SystemInformationHub.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -240,23 +239,6 @@
     <Content Include="Scripts\libraries\underscore.js" />
     <Content Include="Scripts\libraries\underscore.min.js" />
     <Content Include="Styles\fonts\fontawesome-webfont.svg" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_100_99b2dd_40x100.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_45_b0cbf1_40x100.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_50_99b2dd_40x100.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_55_999999_40x100.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_55_f8da4e_40x100.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_75_99b2dd_40x100.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_flat_75_aaaaaa_40x100.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_glass_75_79c9ec_1x400.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-bg_gloss-wave_45_e14f1c_500x100.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-icons_0078ae_256x240.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-icons_056b93_256x240.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-icons_d8e7f3_256x240.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-icons_e0fdff_256x240.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-icons_f5e175_256x240.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-icons_f7a50d_256x240.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\images\ui-icons_fcd113_256x240.png" />
-    <Content Include="Styles\Combined\jquery-ui\blue_flat_theme\jquery-ui-1.8.23.custom.css" />
     <Content Include="Styles\Combined\jquery-ui\overcast\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Styles\Combined\jquery-ui\overcast\images\ui-bg_flat_0_eeeeee_40x100.png" />
     <Content Include="Styles\Combined\jquery-ui\overcast\images\ui-bg_flat_55_c0402a_40x100.png" />
@@ -271,7 +253,9 @@
     <Content Include="Styles\Combined\jquery-ui\overcast\images\ui-icons_70b2e1_256x240.png" />
     <Content Include="Styles\Combined\jquery-ui\overcast\images\ui-icons_999999_256x240.png" />
     <Content Include="Styles\Combined\jquery-ui\overcast\images\ui-icons_fbc856_256x240.png" />
-    <Content Include="Styles\Combined\jquery-ui\overcast\jquery-ui-1.8.23.custom.css" />
+    <None Include="Styles\Combined\jquery-ui\overcast\jquery-ui-1.8.23.custom.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Styles\Source\libraries\font-awesome.css">
       <DependentUpon>font-awesome.chirp.less</DependentUpon>
     </None>
