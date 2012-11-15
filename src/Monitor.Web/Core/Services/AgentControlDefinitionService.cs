@@ -54,6 +54,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.Services
 					Hostaddress = agentConfiguration.Hostaddress,
 					Hostname = agentConfiguration.Hostname,
 					SystemInformationSenderPath = agentConfiguration.SystemInformationSenderPath,
+					SystemPerformanceCheck = agentInstanceConfiguration.SystemPerformanceCollector,
 					HttpStatusCodeCheck = agentInstanceConfiguration.HttpStatusCodeCheck
 				};
 		}

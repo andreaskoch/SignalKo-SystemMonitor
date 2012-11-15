@@ -1,0 +1,12 @@
+﻿<Settings>
+
+	<DeploymentSettings>
+		<NugetPackageId>SignalKo.SystemMonitor.Agent</NugetPackageId>
+		<TargetFolder>C:\SignalKo.SystemMonitor.Agent</TargetFolder>
+	</DeploymentSettings>
+	
+	<TopshelfServices>
+		<Service StartAfterInstallation="true" Executable="C:\SignalKo.SystemMonitor.Agent\applications\Agent\SignalKo.SystemMonitor.Agent.exe" />
+	</TopshelfServices>
+
+</Settings>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package>
+	<metadata>
+		<id>SignalKo.SystemMonitor.Web</id>
+		<version>1.0.0</version>
+		<authors>Sören Wolter, Andreas Koch</authors>
+		<owners>Sören Wolter, Andreas Koch</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>The SignalKo Systemmontior web frontend displays live data using SignalR and KnockoutJS. For more information and the source code to this application visit https://github.com/andreaskoch/SignalKo-SystemMonitor</description>
+		<releaseNotes></releaseNotes>
+		<copyright>Sören Wolter and Andreas Koch 2012</copyright>
+		<tags>Monitoring Web SingalR KnockoutJS</tags>
+	</metadata>
+</package>

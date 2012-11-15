@@ -22,17 +22,18 @@ namespace Agent.Core.Tests.IntegrationTests.Collectors
 			// Arrange
 			ITimeProvider timeProvider = new UTCTimeProvider();
 			IMachineNameProvider machineNameProvider = new EnvironmentMachineNameProvider();
+
+			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
+			var agentControlDefinition = new AgentControlDefinition { AgentIsEnabled = true, CheckIntervalInSeconds = 60 };
+			agentControlDefinitionProvider.Setup(a => a.GetControlDefinition()).Returns(agentControlDefinition);
+
 			IProcessorStatusProvider processorStatusProvider = new ProcessorStatusProvider();
 			IMemoryUnitConverter memoryUnitConverter = new MemoryUnitConverter();
 			ISystemMemoryStatusProvider systemMemoryStatusProvider = new SystemMemoryStatusProvider(memoryUnitConverter);
 			ILogicalDiscInstanceNameProvider logicalDiscInstanceNameProvider = new LogicalDiscInstanceNameProvider();
 			ISystemStorageStatusProvider systemStorageStatusProvider = new SystemStorageStatusProvider(logicalDiscInstanceNameProvider);
 			ISystemPerformanceDataProvider systemPerformanceDataProvider = new SystemPerformanceDataProvider(
-				processorStatusProvider, systemMemoryStatusProvider, systemStorageStatusProvider);
-
-			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
-			var agentControlDefinition = new AgentControlDefinition { AgentIsEnabled = true, CheckIntervalInSeconds = 60 };
-			agentControlDefinitionProvider.Setup(a => a.GetControlDefinition()).Returns(agentControlDefinition);
+				agentControlDefinitionProvider.Object, processorStatusProvider, systemMemoryStatusProvider, systemStorageStatusProvider);
 
 			var httpStatusCodeFetcher = new Mock<IHttpStatusCodeFetcher>();
 
@@ -55,17 +56,18 @@ namespace Agent.Core.Tests.IntegrationTests.Collectors
 			// Arrange
 			ITimeProvider timeProvider = new UTCTimeProvider();
 			IMachineNameProvider machineNameProvider = new EnvironmentMachineNameProvider();
+
+			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
+			var agentControlDefinition = new AgentControlDefinition { AgentIsEnabled = true, CheckIntervalInSeconds = 60 };
+			agentControlDefinitionProvider.Setup(a => a.GetControlDefinition()).Returns(agentControlDefinition);
+
 			IProcessorStatusProvider processorStatusProvider = new ProcessorStatusProvider();
 			IMemoryUnitConverter memoryUnitConverter = new MemoryUnitConverter();
 			ISystemMemoryStatusProvider systemMemoryStatusProvider = new SystemMemoryStatusProvider(memoryUnitConverter);
 			ILogicalDiscInstanceNameProvider logicalDiscInstanceNameProvider = new LogicalDiscInstanceNameProvider();
 			ISystemStorageStatusProvider systemStorageStatusProvider = new SystemStorageStatusProvider(logicalDiscInstanceNameProvider);
 			ISystemPerformanceDataProvider systemPerformanceDataProvider = new SystemPerformanceDataProvider(
-				processorStatusProvider, systemMemoryStatusProvider, systemStorageStatusProvider);
-
-			var agentControlDefinitionProvider = new Mock<IAgentControlDefinitionProvider>();
-			var agentControlDefinition = new AgentControlDefinition { AgentIsEnabled = true, CheckIntervalInSeconds = 60 };
-			agentControlDefinitionProvider.Setup(a => a.GetControlDefinition()).Returns(agentControlDefinition);
+				agentControlDefinitionProvider.Object, processorStatusProvider, systemMemoryStatusProvider, systemStorageStatusProvider);
 
 			var httpStatusCodeFetcher = new Mock<IHttpStatusCodeFetcher>();
 

@@ -61,10 +61,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
+    <Content Include="SignalKo.SystemMonitor.Agent.exe.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Agent.Core\Agent.Core.csproj">
@@ -76,35 +76,9 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="ilmerge.internalize.ignore.txt" />
-  </ItemGroup>
-  <Target Name="MergeExecutable">
-    <PropertyGroup>
-      <ILMergeExe>$(SolutionDir)tools\ILMerge\ILMerge.exe</ILMergeExe>
-      <ILMergeInternalizeIgnoreFile>$(ProjectDir)ilmerge.internalize.ignore.txt</ILMergeInternalizeIgnoreFile>
-      <ILMergeOutputFile>SystemMonitorAgent.exe</ILMergeOutputFile>
-      <ILMergeOutputFolder>$(SolutionDir)..\binaries\$(AssemblyName)</ILMergeOutputFolder>
-      <ILMergeOutputFilePath>$(ILMergeOutputFolder)\$(ILMergeOutputFile)</ILMergeOutputFilePath>
-      <ILMergeLogFilePath>$(ILMergeOutputFolder)\ilmerge.msbuild.log</ILMergeLogFilePath>
-      <FrameworkPath>$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0</FrameworkPath>
-    </PropertyGroup>
-    <ItemGroup>
-      <ILMergeItems Include="$(OutputPath)\*.dll,$(OutputPath)\*.exe" />
-      <ConfigFiles Include="$(OutputPath)\*.config" />
-    </ItemGroup>
-    <MakeDir Directories="$(ILMergeOutputFolder)" />
-    <Delete Files="$(ILMergeOutputFilePath)" Condition="Exists($(ILMergeOutputFilePath))" />
-    <!-- ILMerge does not yet support .NET 4.0  http://nitoprograms.blogspot.com/2010/09/using-ilmerge-with-net-40-andor-rx.html /targetplatform:v4,"%ProgramFiles%\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" -->
-    <Error Condition="!Exists('$(FrameworkPath)')" Text="Could not find 4.0 reference assemblies in $(FrameworkPath)" />
-    <Exec Command="&quot;$(ILMergeExe)&quot; /targetplatform:&quot;v4, $(FrameworkPath)&quot; /internalize:&quot;$(ILMergeInternalizeIgnoreFile)&quot; /target:exe /out:&quot;$(ILMergeOutputFilePath)&quot; /log:&quot;$(ILMergeLogFilePath)&quot; /allowDup SignalKo.SystemMonitor.Agent.exe SignalKo.SystemMonitor.Agent.Core.dll  SignalKo.SystemMonitor.Common.dll Newtonsoft.Json.dll StructureMap.dll RestSharp.dll Topshelf.dll" WorkingDirectory="$(OutputPath)" />
-    <Copy SourceFiles="@(ConfigFiles)" DestinationFiles="@(ConfigFiles->'$(ILMergeOutputFolder)\%(RecursiveDir)$(ILMergeOutputFile)%(Extension)')" />
-  </Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <Target Name="BeforeBuild">
-  </Target>
+  <Import Project="$(SolutionDir)Build\Microsoft.Application.targets" />
   <Target Name="AfterBuild">
-    <CallTarget Targets="MergeExecutable" />
   </Target>
 </Project>
