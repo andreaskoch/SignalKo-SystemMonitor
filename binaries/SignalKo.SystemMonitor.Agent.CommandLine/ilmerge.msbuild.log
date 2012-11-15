@@ -1,0 +1,402 @@
+ILMerge version 2.11.1103.0
+Copyright (C) Microsoft Corporation 2004-2006. All rights reserved.
+ILMerge /targetplatform:v4, C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0 /internalize:E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\ilmerge.internalize.ignore.txt /target:exe /out:E:\GitHubReository\SignalKo-SystemMonitor\src\..\binaries\SignalKo.SystemMonitor.Agent.CommandLine\SystemMonitorAgent.exe /log:E:\GitHubReository\SignalKo-SystemMonitor\src\..\binaries\SignalKo.SystemMonitor.Agent.CommandLine\ilmerge.msbuild.log /allowDup SignalKo.SystemMonitor.Agent.CommandLine.exe SignalKo.SystemMonitor.Agent.Core.dll SignalKo.SystemMonitor.Common.dll Newtonsoft.Json.dll StructureMap.dll RestSharp.dll 
+Set platform to 'v4', using directory ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0' for mscorlib.dll
+Running on Microsoft (R) .NET Framework v2.0.50727
+mscorlib.dll version = 2.0.0.0
+Read 2 lines from the exclusion file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\ilmerge.internalize.ignore.txt'.
+The list of input assemblies is:
+	SignalKo.SystemMonitor.Agent.CommandLine.exe
+	SignalKo.SystemMonitor.Agent.Core.dll
+	SignalKo.SystemMonitor.Common.dll
+	Newtonsoft.Json.dll
+	StructureMap.dll
+	RestSharp.dll
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\SignalKo.SystemMonitor.Agent.CommandLine.exe'.
+	Successfully read in assembly.
+	There were no errors reported in SignalKo.SystemMonitor.Agent.CommandLine's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\SignalKo.SystemMonitor.Agent.Core.dll'.
+	Successfully read in assembly.
+	There were no errors reported in SignalKo.SystemMonitor.Agent.Core's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\SignalKo.SystemMonitor.Common.dll'.
+	Successfully read in assembly.
+	There were no errors reported in SignalKo.SystemMonitor.Common's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\Newtonsoft.Json.dll'.
+Can not find PDB file. Debug info will not be available for assembly 'Newtonsoft.Json.dll'.
+	Successfully read in assembly.
+	There were no errors reported in Newtonsoft.Json's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\StructureMap.dll'.
+	Successfully read in assembly.
+	There were no errors reported in StructureMap's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\RestSharp.dll'.
+Can not find PDB file. Debug info will not be available for assembly 'RestSharp.dll'.
+	Successfully read in assembly.
+	There were no errors reported in RestSharp's metadata.
+Checking to see that all of the input assemblies have a compatible PeKind.
+	SignalKo.SystemMonitor.Agent.CommandLine.PeKind = ILonly
+	SignalKo.SystemMonitor.Agent.Core.PeKind = ILonly
+	SignalKo.SystemMonitor.Common.PeKind = ILonly
+	Newtonsoft.Json.PeKind = ILonly
+	StructureMap.PeKind = ILonly
+	RestSharp.PeKind = ILonly
+All input assemblies have a compatible PeKind value.
+AssemblyResolver: Assembly 'Newtonsoft.Json' is referencing assembly 'System.Core'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Core'.
+Resolved assembly reference 'System.Core' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll'. (Used framework directory.)
+AssemblyResolver: Assembly 'Newtonsoft.Json' is referencing assembly 'System.Runtime.Serialization'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Runtime.Serialization'.
+Resolved assembly reference 'System.Runtime.Serialization' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Runtime.Serialization.dll'. (Used framework directory.)
+AssemblyResolver: Assembly 'Newtonsoft.Json' is referencing assembly 'System.Xml.Linq'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Xml.Linq'.
+Resolved assembly reference 'System.Xml.Linq' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.Linq.dll'. (Used framework directory.)
+AssemblyResolver: Assembly 'StructureMap' is referencing assembly 'System.Core'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Core'.
+Resolved assembly reference 'System.Core' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll'. (Used framework directory.)
+Using assembly 'SignalKo.SystemMonitor.Agent.CommandLine' for assembly-level attributes for the target assembly.
+Merging assembly 'SignalKo.SystemMonitor.Agent.CommandLine' into target assembly.
+Merging assembly 'SignalKo.SystemMonitor.Agent.Core' into target assembly.
+Merging assembly 'SignalKo.SystemMonitor.Common' into target assembly.
+Merging assembly 'Newtonsoft.Json' into target assembly.
+Assembly level attribute 'System.Security.AllowPartiallyTrustedCallersAttribute' from assembly 'Newtonsoft.Json' being deleted from target assembly
+Merging assembly 'StructureMap' into target assembly.
+Assembly level attribute 'System.Security.AllowPartiallyTrustedCallersAttribute' from assembly 'StructureMap' being deleted from target assembly
+Merging assembly 'RestSharp' into target assembly.
+Copying 2 Win32 Resources from assembly 'SignalKo.SystemMonitor.Agent.CommandLine' into target assembly.
+Transferring entry point 'SignalKo.SystemMonitor.Agent.CommandLine.Program.Main(System.String[])' from assembly 'SignalKo.SystemMonitor.Agent.CommandLine' to assembly 'SystemMonitorAgent'.
+	There were no errors reported in the target assembly's metadata.
+ILMerge: Writing target assembly 'E:\GitHubReository\SignalKo-SystemMonitor\src\..\binaries\SignalKo.SystemMonitor.Agent.CommandLine\SystemMonitorAgent.exe'.
+AssemblyResolver: Assembly 'SignalKo.SystemMonitor.Agent.Core' is referencing assembly 'System.Configuration'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Configuration'.
+Resolved assembly reference 'System.Configuration' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Configuration.dll'. (Used framework directory.)
+AssemblyResolver: Assembly 'StructureMap' is referencing assembly 'System.Configuration'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Configuration'.
+Resolved assembly reference 'System.Configuration' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Configuration.dll'. (Used framework directory.)
+Location for referenced assembly 'mscorlib' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll'
+	There were no errors reported in  mscorlib's metadata.
+Location for referenced assembly 'System' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\system.dll'
+	There were no errors reported in  System's metadata.
+Location for referenced assembly 'System.Core' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll'
+	There were no errors reported in  System.Core's metadata.
+Location for referenced assembly 'System.Configuration' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Configuration.dll'
+	There were no errors reported in  System.Configuration's metadata.
+Location for referenced assembly 'System.Data' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll'
+	There were no errors reported in  System.Data's metadata.
+Location for referenced assembly 'System.Runtime.Serialization' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Runtime.Serialization.dll'
+	There were no errors reported in  System.Runtime.Serialization's metadata.
+Location for referenced assembly 'System.Xml' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll'
+	There were no errors reported in  System.Xml's metadata.
+Location for referenced assembly 'System.Xml.Linq' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.Linq.dll'
+	There were no errors reported in  System.Xml.Linq's metadata.
+Location for referenced assembly 'System.Web' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.dll'
+	There were no errors reported in  System.Web's metadata.
+ILMerge: Done.
+ILMerge version 2.11.1103.0
+Copyright (C) Microsoft Corporation 2004-2006. All rights reserved.
+ILMerge /targetplatform:v4, C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0 /internalize:E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\ilmerge.internalize.ignore.txt /target:exe /out:E:\GitHubReository\SignalKo-SystemMonitor\src\..\binaries\SignalKo.SystemMonitor.Agent.CommandLine\SystemMonitorAgent.exe /log:E:\GitHubReository\SignalKo-SystemMonitor\src\..\binaries\SignalKo.SystemMonitor.Agent.CommandLine\ilmerge.msbuild.log /allowDup SignalKo.SystemMonitor.Agent.CommandLine.exe SignalKo.SystemMonitor.Agent.Core.dll SignalKo.SystemMonitor.Common.dll Newtonsoft.Json.dll StructureMap.dll RestSharp.dll 
+Set platform to 'v4', using directory ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0' for mscorlib.dll
+Running on Microsoft (R) .NET Framework v2.0.50727
+mscorlib.dll version = 2.0.0.0
+Read 2 lines from the exclusion file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\ilmerge.internalize.ignore.txt'.
+The list of input assemblies is:
+	SignalKo.SystemMonitor.Agent.CommandLine.exe
+	SignalKo.SystemMonitor.Agent.Core.dll
+	SignalKo.SystemMonitor.Common.dll
+	Newtonsoft.Json.dll
+	StructureMap.dll
+	RestSharp.dll
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\SignalKo.SystemMonitor.Agent.CommandLine.exe'.
+	Successfully read in assembly.
+	There were no errors reported in SignalKo.SystemMonitor.Agent.CommandLine's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\SignalKo.SystemMonitor.Agent.Core.dll'.
+	Successfully read in assembly.
+	There were no errors reported in SignalKo.SystemMonitor.Agent.Core's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\SignalKo.SystemMonitor.Common.dll'.
+	Successfully read in assembly.
+	There were no errors reported in SignalKo.SystemMonitor.Common's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\Newtonsoft.Json.dll'.
+Can not find PDB file. Debug info will not be available for assembly 'Newtonsoft.Json.dll'.
+	Successfully read in assembly.
+	There were no errors reported in Newtonsoft.Json's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\StructureMap.dll'.
+	Successfully read in assembly.
+	There were no errors reported in StructureMap's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\RestSharp.dll'.
+Can not find PDB file. Debug info will not be available for assembly 'RestSharp.dll'.
+	Successfully read in assembly.
+	There were no errors reported in RestSharp's metadata.
+Checking to see that all of the input assemblies have a compatible PeKind.
+	SignalKo.SystemMonitor.Agent.CommandLine.PeKind = ILonly
+	SignalKo.SystemMonitor.Agent.Core.PeKind = ILonly
+	SignalKo.SystemMonitor.Common.PeKind = ILonly
+	Newtonsoft.Json.PeKind = ILonly
+	StructureMap.PeKind = ILonly
+	RestSharp.PeKind = ILonly
+All input assemblies have a compatible PeKind value.
+AssemblyResolver: Assembly 'Newtonsoft.Json' is referencing assembly 'System.Core'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Core'.
+Resolved assembly reference 'System.Core' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll'. (Used framework directory.)
+AssemblyResolver: Assembly 'Newtonsoft.Json' is referencing assembly 'System.Runtime.Serialization'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Runtime.Serialization'.
+Resolved assembly reference 'System.Runtime.Serialization' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Runtime.Serialization.dll'. (Used framework directory.)
+AssemblyResolver: Assembly 'Newtonsoft.Json' is referencing assembly 'System.Xml.Linq'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Xml.Linq'.
+Resolved assembly reference 'System.Xml.Linq' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.Linq.dll'. (Used framework directory.)
+AssemblyResolver: Assembly 'StructureMap' is referencing assembly 'System.Core'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Core'.
+Resolved assembly reference 'System.Core' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll'. (Used framework directory.)
+Using assembly 'SignalKo.SystemMonitor.Agent.CommandLine' for assembly-level attributes for the target assembly.
+Merging assembly 'SignalKo.SystemMonitor.Agent.CommandLine' into target assembly.
+Merging assembly 'SignalKo.SystemMonitor.Agent.Core' into target assembly.
+Merging assembly 'SignalKo.SystemMonitor.Common' into target assembly.
+Merging assembly 'Newtonsoft.Json' into target assembly.
+Assembly level attribute 'System.Security.AllowPartiallyTrustedCallersAttribute' from assembly 'Newtonsoft.Json' being deleted from target assembly
+Merging assembly 'StructureMap' into target assembly.
+Assembly level attribute 'System.Security.AllowPartiallyTrustedCallersAttribute' from assembly 'StructureMap' being deleted from target assembly
+Merging assembly 'RestSharp' into target assembly.
+Copying 2 Win32 Resources from assembly 'SignalKo.SystemMonitor.Agent.CommandLine' into target assembly.
+Transferring entry point 'SignalKo.SystemMonitor.Agent.CommandLine.Program.Main(System.String[])' from assembly 'SignalKo.SystemMonitor.Agent.CommandLine' to assembly 'SystemMonitorAgent'.
+	There were no errors reported in the target assembly's metadata.
+ILMerge: Writing target assembly 'E:\GitHubReository\SignalKo-SystemMonitor\src\..\binaries\SignalKo.SystemMonitor.Agent.CommandLine\SystemMonitorAgent.exe'.
+AssemblyResolver: Assembly 'SignalKo.SystemMonitor.Agent.Core' is referencing assembly 'System.Configuration'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Configuration'.
+Resolved assembly reference 'System.Configuration' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Configuration.dll'. (Used framework directory.)
+AssemblyResolver: Assembly 'StructureMap' is referencing assembly 'System.Configuration'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Configuration'.
+Resolved assembly reference 'System.Configuration' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Configuration.dll'. (Used framework directory.)
+Location for referenced assembly 'mscorlib' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll'
+	There were no errors reported in  mscorlib's metadata.
+Location for referenced assembly 'System' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\system.dll'
+	There were no errors reported in  System's metadata.
+Location for referenced assembly 'System.Core' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll'
+	There were no errors reported in  System.Core's metadata.
+Location for referenced assembly 'System.Configuration' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Configuration.dll'
+	There were no errors reported in  System.Configuration's metadata.
+Location for referenced assembly 'System.Data' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll'
+	There were no errors reported in  System.Data's metadata.
+Location for referenced assembly 'System.Runtime.Serialization' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Runtime.Serialization.dll'
+	There were no errors reported in  System.Runtime.Serialization's metadata.
+Location for referenced assembly 'System.Xml' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll'
+	There were no errors reported in  System.Xml's metadata.
+Location for referenced assembly 'System.Xml.Linq' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.Linq.dll'
+	There were no errors reported in  System.Xml.Linq's metadata.
+Location for referenced assembly 'System.Web' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.dll'
+	There were no errors reported in  System.Web's metadata.
+ILMerge: Done.
+ILMerge version 2.11.1103.0
+Copyright (C) Microsoft Corporation 2004-2006. All rights reserved.
+ILMerge /targetplatform:v4, C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0 /internalize:E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\ilmerge.internalize.ignore.txt /target:exe /out:E:\GitHubReository\SignalKo-SystemMonitor\src\..\binaries\SignalKo.SystemMonitor.Agent.CommandLine\SystemMonitorAgent.exe /log:E:\GitHubReository\SignalKo-SystemMonitor\src\..\binaries\SignalKo.SystemMonitor.Agent.CommandLine\ilmerge.msbuild.log /allowDup SignalKo.SystemMonitor.Agent.CommandLine.exe SignalKo.SystemMonitor.Agent.Core.dll SignalKo.SystemMonitor.Common.dll Newtonsoft.Json.dll StructureMap.dll RestSharp.dll 
+Set platform to 'v4', using directory ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0' for mscorlib.dll
+Running on Microsoft (R) .NET Framework v2.0.50727
+mscorlib.dll version = 2.0.0.0
+Read 2 lines from the exclusion file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\ilmerge.internalize.ignore.txt'.
+The list of input assemblies is:
+	SignalKo.SystemMonitor.Agent.CommandLine.exe
+	SignalKo.SystemMonitor.Agent.Core.dll
+	SignalKo.SystemMonitor.Common.dll
+	Newtonsoft.Json.dll
+	StructureMap.dll
+	RestSharp.dll
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\SignalKo.SystemMonitor.Agent.CommandLine.exe'.
+	Successfully read in assembly.
+	There were no errors reported in SignalKo.SystemMonitor.Agent.CommandLine's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\SignalKo.SystemMonitor.Agent.Core.dll'.
+	Successfully read in assembly.
+	There were no errors reported in SignalKo.SystemMonitor.Agent.Core's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\SignalKo.SystemMonitor.Common.dll'.
+	Successfully read in assembly.
+	There were no errors reported in SignalKo.SystemMonitor.Common's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\Newtonsoft.Json.dll'.
+Can not find PDB file. Debug info will not be available for assembly 'Newtonsoft.Json.dll'.
+	Successfully read in assembly.
+	There were no errors reported in Newtonsoft.Json's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\StructureMap.dll'.
+	Successfully read in assembly.
+	There were no errors reported in StructureMap's metadata.
+Trying to read assembly from the file 'E:\GitHubReository\SignalKo-SystemMonitor\src\Agent.CommandLine\bin\Debug\RestSharp.dll'.
+Can not find PDB file. Debug info will not be available for assembly 'RestSharp.dll'.
+	Successfully read in assembly.
+	There were no errors reported in RestSharp's metadata.
+Checking to see that all of the input assemblies have a compatible PeKind.
+	SignalKo.SystemMonitor.Agent.CommandLine.PeKind = ILonly
+	SignalKo.SystemMonitor.Agent.Core.PeKind = ILonly
+	SignalKo.SystemMonitor.Common.PeKind = ILonly
+	Newtonsoft.Json.PeKind = ILonly
+	StructureMap.PeKind = ILonly
+	RestSharp.PeKind = ILonly
+All input assemblies have a compatible PeKind value.
+AssemblyResolver: Assembly 'Newtonsoft.Json' is referencing assembly 'System.Core'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Core'.
+Resolved assembly reference 'System.Core' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll'. (Used framework directory.)
+AssemblyResolver: Assembly 'Newtonsoft.Json' is referencing assembly 'System.Runtime.Serialization'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Runtime.Serialization'.
+Resolved assembly reference 'System.Runtime.Serialization' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Runtime.Serialization.dll'. (Used framework directory.)
+AssemblyResolver: Assembly 'Newtonsoft.Json' is referencing assembly 'System.Xml.Linq'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Xml.Linq'.
+Resolved assembly reference 'System.Xml.Linq' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.Linq.dll'. (Used framework directory.)
+AssemblyResolver: Assembly 'StructureMap' is referencing assembly 'System.Core'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Core'.
+Resolved assembly reference 'System.Core' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll'. (Used framework directory.)
+Using assembly 'SignalKo.SystemMonitor.Agent.CommandLine' for assembly-level attributes for the target assembly.
+Merging assembly 'SignalKo.SystemMonitor.Agent.CommandLine' into target assembly.
+Merging assembly 'SignalKo.SystemMonitor.Agent.Core' into target assembly.
+Merging assembly 'SignalKo.SystemMonitor.Common' into target assembly.
+Merging assembly 'Newtonsoft.Json' into target assembly.
+Assembly level attribute 'System.Security.AllowPartiallyTrustedCallersAttribute' from assembly 'Newtonsoft.Json' being deleted from target assembly
+Merging assembly 'StructureMap' into target assembly.
+Assembly level attribute 'System.Security.AllowPartiallyTrustedCallersAttribute' from assembly 'StructureMap' being deleted from target assembly
+Merging assembly 'RestSharp' into target assembly.
+Copying 2 Win32 Resources from assembly 'SignalKo.SystemMonitor.Agent.CommandLine' into target assembly.
+Transferring entry point 'SignalKo.SystemMonitor.Agent.CommandLine.Program.Main(System.String[])' from assembly 'SignalKo.SystemMonitor.Agent.CommandLine' to assembly 'SystemMonitorAgent'.
+	There were no errors reported in the target assembly's metadata.
+ILMerge: Writing target assembly 'E:\GitHubReository\SignalKo-SystemMonitor\src\..\binaries\SignalKo.SystemMonitor.Agent.CommandLine\SystemMonitorAgent.exe'.
+AssemblyResolver: Assembly 'SignalKo.SystemMonitor.Agent.Core' is referencing assembly 'System.Configuration'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Configuration'.
+Resolved assembly reference 'System.Configuration' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Configuration.dll'. (Used framework directory.)
+AssemblyResolver: Assembly 'StructureMap' is referencing assembly 'System.Configuration'.
+	AssemblyResolver: Attempting referencing assembly's directory.
+	AssemblyResolver: Did not find assembly in referencing assembly's directory.
+	AssemblyResolver: Attempting input directory.
+	AssemblyResolver: Did not find assembly in input directory.
+	AssemblyResolver: Attempting user-supplied directories.
+	AssemblyResolver: No user-supplied directories.
+	AssemblyResolver: Attempting framework directory.
+Can not find PDB file. Debug info will not be available for assembly 'System.Configuration'.
+Resolved assembly reference 'System.Configuration' to ' C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Configuration.dll'. (Used framework directory.)
+Location for referenced assembly 'mscorlib' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\mscorlib.dll'
+	There were no errors reported in  mscorlib's metadata.
+Location for referenced assembly 'System' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\system.dll'
+	There were no errors reported in  System's metadata.
+Location for referenced assembly 'System.Core' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll'
+	There were no errors reported in  System.Core's metadata.
+Location for referenced assembly 'System.Configuration' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Configuration.dll'
+	There were no errors reported in  System.Configuration's metadata.
+Location for referenced assembly 'System.Data' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll'
+	There were no errors reported in  System.Data's metadata.
+Location for referenced assembly 'System.Runtime.Serialization' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Runtime.Serialization.dll'
+	There were no errors reported in  System.Runtime.Serialization's metadata.
+Location for referenced assembly 'System.Xml' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll'
+	There were no errors reported in  System.Xml's metadata.
+Location for referenced assembly 'System.Xml.Linq' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.Linq.dll'
+	There were no errors reported in  System.Xml.Linq's metadata.
+Location for referenced assembly 'System.Web' is 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.dll'
+	There were no errors reported in  System.Web's metadata.
+ILMerge: Done.
