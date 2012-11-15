@@ -1,10 +1,10 @@
 ﻿@font-face{font-family:'FontAwesome';src:url('../fonts/fontawesome-webfont.eot');src:url('../fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),url('../fonts/fontawesome-webfont.woff') format('woff'),url('../fonts/fontawesome-webfont.ttf') format('truetype'),url('../fonts/fontawesome-webfont.svg#FontAwesome') format('svg');font-weight:normal;font-style:normal}
 [class^="icon-"]:before,[class*=" icon-"]:before{font-family:FontAwesome;font-weight:normal;font-style:normal;display:inline-block;text-decoration:inherit}
 a [class^="icon-"],a [class*=" icon-"]{display:inline-block;text-decoration:inherit}
-.icon-large:before{vertical-align:middle;font-size:1.333333333em}
+.icon-large:before{vertical-align:middle;font-size:1.33em}
 .btn [class^="icon-"],.nav-tabs [class^="icon-"],.btn [class*=" icon-"],.nav-tabs [class*=" icon-"]{line-height:.9em}
 li [class^="icon-"],li [class*=" icon-"]{display:inline-block;width:1.25em;text-align:center}
-li .icon-large:before,li .icon-large:before{width:1.875em}
+li .icon-large:before,li .icon-large:before{width:1.88em}
 ul.icons{list-style-type:none;margin-left:2em;text-indent:-0.8em}
 ul.icons li [class^="icon-"],ul.icons li [class*=" icon-"]{width:.8em}
 ul.icons li .icon-large:before,ul.icons li .icon-large:before{vertical-align:initial}
@@ -263,7 +263,7 @@ ul.icons li .icon-large:before,ul.icons li .icon-large:before{vertical-align:ini
 .icon-taxi-sign:before{content:"\f52d"}
 .icon-truck-sign:before{content:"\f52e"}
 .icon-handicap-sign:before{content:"\f52f"}
-html{background-color:#fff;font-family:Arial,Verdana,Helvetica,sans-serif;color:black}
+html{background-color:white;font-family:Arial,Verdana,Helvetica,sans-serif;color:black}
 h1{margin:0;padding:0;font-family:'Segoe UI Light','SegoeUI',sans-serif}
 h2{margin:0;padding:0;font-family:'Segoe UI Light','SegoeUI',sans-serif}
 h3{margin:0;padding:0;font-family:'Segoe UI Light','SegoeUI',sans-serif}
@@ -273,22 +273,34 @@ a:hover{color:#bcbcbc}
 .cleaner{clear:both}
 .cleaner-left{clear:left}
 .cleaner-right{clear:left}
+@media screen and (max-width:10000px){.page-head .logoleft{background:url("../../Assets/remote_monitoring_left.png") no-repeat;width:126px;height:83px;float:left;margin:5px}
+.page-head .logoright{background:url("../../Assets/remote_monitoring.png") no-repeat;width:90px;height:83px;float:right;margin:5px}
+.page-head .title{color:#003C66;font-size:36px;font-family:Segoe,Arial,Verdana;padding-top:14px;float:left;text-shadow:rgba(0,0,0,0.5) 0 6px 6px;-webkit-box-reflect:below 0 -webkit-gradient(linear,left top,left bottom,from(transparent),to(rgba(255,255,255,0.1)))}
 .righttopnavigation{top:0;float:right;margin-right:45px}
-.righttopnavigation ul{list-style:none;background:#b0cbf1}
-.righttopnavigation li{list-style:none;float:left;position:relative;top:1px;margin:0 .2em 1px 0;border-top:0!important;padding:0;white-space:nowrap;min-width:125px;text-align:center;border:1px solid #003c66;border-bottom-left-radius:5px;border-bottom-right-radius:5px;height:33px}
-.righttopnavigation li a{position:relative;margin:21px;text-decoration:none;color:#555;top:7px;font-size:18px}
-.righttopnavigation li.activmenue{background:#b0cbf1}
-.righttopnavigation li.activmenue a{color:#003c66;font-weight:bold}
+.righttopnavigation li{list-style:none;float:left;position:relative;top:1px;margin:0 .2em 1px 0;border-top:0!important;padding:0;white-space:nowrap;text-align:center;border:1px solid #003C66;border-bottom-left-radius:5px;border-bottom-right-radius:5px;height:33px}
+.righttopnavigation li a{position:relative;margin:21px;text-decoration:none;color:#555;top:7px;font-size:1em}
+}
+@media screen and (max-width:1000px){.page-head .logoleft{display:none}
+.page-head .logoright{display:none}
+.page-head .title{color:#003C66;font-size:1em;font-family:Segoe,Arial,Verdana;padding-top:1px;float:left;margin-left:5px;text-shadow:rgba(0,0,0,0.5) 0 6px 6px}
+.righttopnavigation{top:0;float:right;margin-right:0}
+.righttopnavigation li{list-style:none;float:left;position:relative;top:1px;margin:0 .2em 1px 0;border-top:0!important;padding:0;white-space:nowrap;text-align:center;border:1px solid #003C66;border-bottom-left-radius:5px;border-bottom-right-radius:5px;height:20px}
+.righttopnavigation li a{position:relative;margin:5px;text-decoration:none;font-size:.8em;top:0}
+}
+@media screen and (max-width:400px){.righttopnavigation{display:none}
+}
+.righttopnavigation ul{list-style:none;background:#B0CBF1}
+.righttopnavigation li.activmenue{background:#B0CBF1}
+.righttopnavigation li.activmenue a{color:#003C66;font-weight:bold}
 body{width:100%;height:100%;line-height:1;font-size:.85em;font-family:"Trebuchet MS",Verdana,Helvetica,Sans-Serif}
 header{display:block;height:100%;background:#b0cbf1}
-.headerEnd{background:#b0cbf1;height:5px}
+.headerEnd{background:#B0CBF1;height:5px}
 section{margin-top:3px}
 .clear{clear:both}
-.body{width:100%;min-height:100%;min-width:1000px;position:absolute;display:block;background:#99b2dd}
-.content-body{margin:20px;min-width:940px}
-.page-head .logoleft{background:url("../../Assets/remote_monitoring_left.png") no-repeat;width:126px;height:83px;float:left;margin:5px}
-.page-head .logoright{background:url("../../Assets/remote_monitoring.png") no-repeat;width:90px;height:83px;float:right;margin:5px}
-.page-head .title{color:#003c66;font-size:36px;font-family:Segoe,Arial,Verdana;padding-top:14px;float:left;text-shadow:rgba(0,0,0,0.5) 0 6px 6px;-webkit-box-reflect:below 0 -webkit-gradient(linear,left top,left bottom,from(transparent),to(rgba(255,255,255,0.1)))}
+.body{width:100%;min-height:100%;position:absolute;display:block;background:#99b2dd}
+.content-body{margin:20px}
+.Error{background:#f00;background:-moz-linear-gradient(left,red 0,red 52%,#99b2dd 100%);background:-webkit-gradient(linear,left top,right top,color-stop(0%,red),color-stop(52%,red),color-stop(100%,#99b2dd));background:-webkit-linear-gradient(left,red 0,red 52%,#99b2dd 100%);background:-o-linear-gradient(left,red 0,red 52%,#99b2dd 100%);background:-ms-linear-gradient(left,red 0,red 52%,#99b2dd 100%);background:linear-gradient(to right,red 0,red 52%,#99b2dd 100%)}
+.Warn{background:#f99100;background:-moz-linear-gradient(left,#f99100 0,#f99100 52%,#99b2dd 100%);background:-webkit-gradient(linear,left top,right top,color-stop(0%,#f99100),color-stop(52%,#f99100),color-stop(100%,#99b2dd));background:-webkit-linear-gradient(left,#f99100 0,#f99100 52%,#99b2dd 100%);background:-o-linear-gradient(left,#f99100 0,#f99100 52%,#99b2dd 100%);background:-ms-linear-gradient(left,#f99100 0,#f99100 52%,#99b2dd 100%);background:linear-gradient(to right,#f99100 0,#f99100 52%,#99b2dd 100%)}
 html{margin:0;padding:0}
 body{margin:0;padding:0}
 body>header{margin:0 0 20px 0}
@@ -300,14 +312,20 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 .groupoverview.controls{text-align:right;margin:0 0 20px 0}
 .leftMashineName{margin-top:40px}
 .leftMashineName span{font-size:12px;color:black;font-weight:bold}
-.middleContent{float:left;width:100%;height:auto;background:#b0cbf1}
-span,dt,dd{color:#003c66}
+.middleContent{float:left;width:100%;height:auto;background:#99B2DD}
+span,dt,dd{color:#003C66}
 .item{text-align:center;cursor:move;margin:4px;border:1px solid #7b8ce8;padding:2px;border-radius:5px;margin-top:14px;height:39px}
+@media screen and (max-width:10000px){.chartBox{margin:24px 5px 5px 5px;width:800px;height:100px;float:left;text-align:center;padding:2px;border-radius:5px}
+}
+@media screen and (max-width:800px){.chartBox{margin:24px 5px 5px 5px;width:100%;height:30%;float:left;text-align:center;padding:2px;-moz-transform:rotate(90deg);-webkit-transform:rotate(90deg);-o-transform:rotate(90deg);transform:rotate(90deg);-webkit-transform-origin:28% 48%}
+}
+@media screen and (max-width:400px){.chartBox{margin:24px 5px 5px 5px;width:380px;height:120px;float:left;text-align:center;padding:2px;-moz-transform:rotate(90deg);-webkit-transform:rotate(90deg);-o-transform:rotate(90deg);transform:rotate(90deg)}
+}
 .item.webserver{background:url("../../Assets/webserver48.png") no-repeat left}
 .item.sqlserver{background:url("../../Assets/dbserver48.png") no-repeat left}
 .configSection{background-color:#dadef6;border:1px solid #7b8ce8;padding:2px;border-radius:5px;margin:0 27px 0 27px}
 .addButton{margin-bottom:-3px;cursor:pointer;background:url("../../Assets/plus_alt_16x16.png") no-repeat fixed center;border:0}
-.machineGroup{border:2px solid #7b8ce8;border-radius:5px;background:#dadef6;width:225px;margin:20px;padding:10px;float:left;min-height:200px;min-width:225px}
+.machineGroup{border:2px solid #7b8ce8;border-radius:5px;background:#DADEF6;width:225px;margin:20px;padding:10px;float:left;min-height:200px;min-width:225px}
 .deletesmall{background:url(../../Assets/x_alt_12x12.png) no-repeat;height:12px;background-position:right;float:right;padding-right:14px;margin-left:2px;cursor:pointer;border-radius:4px}
 .deletesmall:hover,.configsmall:hover{background-color:#3d9dd5}
 .configsmall{background:url(../../Assets/wrench_12x12.png) no-repeat;height:14px;background-position:right;float:right;padding-right:12px;cursor:pointer;border-radius:4px}
@@ -318,7 +336,7 @@ span,dt,dd{color:#003c66}
 .machineGroup .groupName{font-weight:bold;margin-bottom:20px;font-size:20px}
 .container{min-height:50px}
 .closeConfig{background:url(../../Assets/x_alt_24x24.png) no-repeat;height:24px;background-position:right;float:right;padding-right:24px;margin-left:2px;cursor:pointer;border:4px solid rgba(0,0,0,0);position:absolute;right:-12px;top:-12px}
-.box-overlay,.box-overlay-group{width:400px;height:400px;border:2px solid #7b8ce8;border-radius:5px;background:#dadef6}
+.box-overlay,.box-overlay-group{width:400px;height:400px;border:2px solid #7B8CE8;border-radius:5px;background:#DADEF6}
 .smallbutton{border-radius:5px;background:#2e52a4;padding:2px 28px 2px 28px;color:white;margin-left:28px;cursor:pointer;font-weight:bold}
-.smallbutton:hover{background:#003c66}
+.smallbutton:hover{background:#003C66}
 .autobutton{z-index:2;position:absolute;right:25px;top:118px}

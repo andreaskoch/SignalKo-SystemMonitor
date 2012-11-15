@@ -39,38 +39,115 @@ a:hover {
 .cleaner-right {
   clear: left;
 }
-.righttopnavigation {
-  top: 0;
-  float: right;
-  margin-right: 45px;
+@media screen and (max-width: 10000px) {
+  .page-head .logoleft {
+    background: url("../../Assets/remote_monitoring_left.png") no-repeat;
+    width: 126px;
+    height: 83px;
+    float: left;
+    margin: 5px;
+  }
+  .page-head .logoright {
+    background: url("../../Assets/remote_monitoring.png") no-repeat;
+    width: 90px;
+    height: 83px;
+    float: right;
+    margin: 5px;
+  }
+  .page-head .title {
+    color: #003C66;
+    font-size: 36px;
+    font-family: Segoe, Arial, Verdana;
+    padding-top: 14px;
+    float: left;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 6px 6px;
+    -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, 0.1)));
+  }
+  
+  .righttopnavigation {
+    top: 0;
+    float: right;
+    margin-right: 45px;
+  }
+  .righttopnavigation li {
+    list-style: none;
+    float: left;
+    position: relative;
+    top: 1px;
+    margin: 0 .2em 1px 0;
+    border-top: 0 !important;
+    padding: 0;
+    white-space: nowrap;
+    /*min-width: 125px;*/
+    text-align: center;
+    border: 1px solid #003C66;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: 33px;
+  }
+  .righttopnavigation li a {
+    position: relative;
+    margin: 21px;
+    text-decoration: none;
+    color: #555;
+    top: 7px;
+    font-size: 1em;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .page-head .logoleft {
+    display: none;
+  }
+  .page-head .logoright {
+    display: none;
+  }
+  .page-head .title {
+    color: #003C66;
+    font-size: 1em;
+    font-family: Segoe, Arial, Verdana;
+    padding-top: 1px;
+    float: left;
+    margin-left: 5px;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 6px 6px;
+  }
+  
+  .righttopnavigation {
+    top: 0;
+    float: right;
+    margin-right: 0px;
+  }
+  .righttopnavigation li {
+    list-style: none;
+    float: left;
+    position: relative;
+    top: 1px;
+    margin: 0 .2em 1px 0;
+    border-top: 0 !important;
+    padding: 0;
+    white-space: nowrap;
+    /*min-width: 125px;*/
+    text-align: center;
+    border: 1px solid #003C66;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: 20px;
+  }
+  .righttopnavigation li a {
+    position: relative;
+    margin: 5px;
+    text-decoration: none;
+    font-size: 0.8em;
+    top: 0px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .righttopnavigation {
+    display: none;
+  }
 }
 .righttopnavigation ul {
   list-style: none;
   background: #B0CBF1;
-}
-.righttopnavigation li {
-  list-style: none;
-  float: left;
-  position: relative;
-  top: 1px;
-  margin: 0 .2em 1px 0;
-  border-top: 0 !important;
-  padding: 0;
-  white-space: nowrap;
-  min-width: 125px;
-  text-align: center;
-  border: 1px solid #003C66;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  height: 33px;
-}
-.righttopnavigation li a {
-  position: relative;
-  margin: 21px;
-  text-decoration: none;
-  color: #555;
-  top: 7px;
-  font-size: 18px;
 }
 .righttopnavigation li.activmenue {
   background: #B0CBF1;
@@ -104,35 +181,30 @@ section {
 .body {
   width: 100%;
   min-height: 100%;
-  min-width: 1000px;
+  /*min-width: 1000px;*/
   position: absolute;
   display: block;
   background: #99b2dd;
 }
 .content-body {
   margin: 20px;
-  min-width: 940px;
+  /*min-width: 940px; */
 }
-.page-head .logoleft {
-  background: url("../../Assets/remote_monitoring_left.png") no-repeat;
-  width: 126px;
-  height: 83px;
-  float: left;
-  margin: 5px;
+.Error {
+  background: #ff0000;
+  background: -moz-linear-gradient(left, red 0%, red 52%, #99b2dd 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, red), color-stop(52%, red), color-stop(100%, #99b2dd));
+  background: -webkit-linear-gradient(left, red 0%, red 52%, #99b2dd 100%);
+  background: -o-linear-gradient(left, red 0%, red 52%, #99b2dd 100%);
+  background: -ms-linear-gradient(left, red 0%, red 52%, #99b2dd 100%);
+  background: linear-gradient(to right, red 0%, red 52%, #99b2dd 100%);
 }
-.page-head .logoright {
-  background: url("../../Assets/remote_monitoring.png") no-repeat;
-  width: 90px;
-  height: 83px;
-  float: right;
-  margin: 5px;
-}
-.page-head .title {
-  color: #003C66;
-  font-size: 36px;
-  font-family: Segoe, Arial, Verdana;
-  padding-top: 14px;
-  float: left;
-  text-shadow: rgba(0, 0, 0, 0.5) 0 6px 6px;
-  -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, 0.1)));
+.Warn {
+  background: #f99100;
+  background: -moz-linear-gradient(left, #f99100 0%, #f99100 52%, #99b2dd 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #f99100), color-stop(52%, #f99100), color-stop(100%, #99b2dd));
+  background: -webkit-linear-gradient(left, #f99100 0%, #f99100 52%, #99b2dd 100%);
+  background: -o-linear-gradient(left, #f99100 0%, #f99100 52%, #99b2dd 100%);
+  background: -ms-linear-gradient(left, #f99100 0%, #f99100 52%, #99b2dd 100%);
+  background: linear-gradient(to right, #f99100 0%, #f99100 52%, #99b2dd 100%);
 }

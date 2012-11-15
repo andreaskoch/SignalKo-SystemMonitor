@@ -12,7 +12,7 @@
 ----------------------------------*/
 .ui-helper-hidden { display: none; }
 .ui-helper-hidden-accessible { position: absolute !important; clip: rect(1px 1px 1px 1px); clip: rect(1px,1px,1px,1px); }
-.ui-helper-reset { margin: 0; padding: 0; border: 0; outline: 0; line-height: 1.3; text-decoration: none; font-size: 100%; list-style: none; }
+.ui-helper-reset { margin: 0; padding: 0; border: 0; outline: 0; line-height: 1; text-decoration: none; font-size: 100%; list-style: none; }
 .ui-helper-clearfix:before, .ui-helper-clearfix:after { content: ""; display: table; }
 .ui-helper-clearfix:after { clear: both; }
 .ui-helper-clearfix { zoom: 1; }
@@ -483,8 +483,10 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 1px; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
-.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
+.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 0em 0em; background: none; }
 .ui-tabs .ui-tabs-hide { display: none !important; }
+
+
 /*!
  * jQuery UI Datepicker 1.8.23
  *
