@@ -37,6 +37,7 @@ html {
 				font-size: @font-size-page-title;
 				color: @font-color-page-title;
 				font-family: @font-family-page-title;
+				margin: 0px;
 			}
 
 			>nav {
@@ -62,25 +63,24 @@ html {
 		}
 
 		>.content {
+			display: inline-block;
+			margin: 20px;
+
 			header {
 				h2 {
 					font-size: @font-size-section-title;
 					color: @font-color-section-title;
 					font-family: @font-family-section-title;
+					margin: 0px;
 				}
 
 				h3 {
 					font-size: @font-size-block-title;
 					color: @font-color-block-title;
 					font-family: @font-family-block-title;
+					margin: 0px;
 				}
 			}
-		}
-
-		>section {
-			@import "agent-configuration.chirp.less";
-			@import "agent-group.chirp.less";
-			@import "agent-group-overview.chirp.less";
 		}
 
 		>footer {

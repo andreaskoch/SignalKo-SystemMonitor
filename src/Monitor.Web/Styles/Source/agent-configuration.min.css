@@ -1,1 +1,6 @@
-﻿
+﻿.agent-configuration .inputRow{display:block;margin:0 0 10px 0}
+.agent-configuration .inputRow>label{display:inline-block;width:230px}
+.agent-configuration .inputRow>input[type=text]{width:300px;background:#f2f2f2;border-top:0;border-right:0;border-bottom:1px solid #b3b3b3;border-left:0;font-weight:bold;padding:5px}
+.agent-configuration .inputRow>input[type=text]:focus{outline:0;border-right:5px solid #000;border-bottom:1px solid #000}
+.agent-configuration .switches{display:inline-block}
+.agent-configuration .switches>.switch{display:inline}

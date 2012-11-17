@@ -1,6 +1,49 @@
 ﻿
+@input-border-color: #B3B3B3;
+@input-border-color-highlight: #000000;
+@input-background-color: #F2F2F2;
+
 .agent-configuration {
+	.inputRow {
+		display: block;
+		margin: 0 0 10px 0;
+
+		>label {
+			display: inline-block;
+			width: 230px;
+		}
+
+		>input[type=text] {
+			width: 300px;
+			background: @input-background-color;
+			border-top: 0px;
+			border-right: 0px;
+			border-bottom: 1px solid @input-border-color;
+			border-left: 0px;
+
+			font-weight: bold;
+			padding: 5px;
+
+			&:focus {
+				outline: none;
+				border-right: 5px solid @input-border-color-highlight;
+				border-bottom: 1px solid @input-border-color-highlight;
+			}
+		}
+	}
+
+	.switches {
+		display: inline-block;
+
+		>.switch {
+			display: inline;
+		}
+	}
+	
 	>.global {
-		
+	}
+
+	>.agent-specific {
+
 	}
 }

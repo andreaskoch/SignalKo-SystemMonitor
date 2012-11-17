@@ -11,26 +11,42 @@
 		<header>
 			<h2>Global Configuration</h2>
 		</header>
+		
+		<div class="inputRow">
+			<label>Status</label>
 
-		<label for="SystemInformationSenderHostaddress">Hostaddress</label>
-		<input type="text" placeholder="https://10.1.2.3 or http://www.example.com" id="SystemInformationSenderHostaddress" data-bind="value: Hostaddress" />
-
-		<label for="SystemInformationSenderHostname">Hostname</label>
-		<input type="text" placeholder="www.example.com" id="SystemInformationSenderHostname" data-bind="value: Hostname" />
-
-		<label for="SystemInformationSenderPath">SystemInformationSenderPath</label>
-		<input type="text" id="SystemInformationSenderPath" data-bind="value: SystemInformationSenderPath" />
-
-		<label for="SystemInformationSenderCheckInterval">Check-interval (in seconds)</label>
-		<input type="text" id="SystemInformationSenderCheckInterval" data-bind="value: CheckIntervalInSeconds" />
-
-		<section class="agentStatusSwitch">
-			<input type="radio" value="true" data-bind="checked: AgentsAreEnabled.ForEditing" />
-			<label>Agents are enabled</label>
-
-			<input type="radio" value="false" data-bind="checked: AgentsAreEnabled.ForEditing" />
-			<label>Agents are disabled</label>
-		</section>
+			<div class="switches">
+				<div class="switch">
+					<input type="radio" value="true" data-bind="checked: AgentsAreEnabled.ForEditing" />
+					<label>Agents are enabled</label>
+				</div>
+				
+				<div class="switch">
+					<input type="radio" value="false" data-bind="checked: AgentsAreEnabled.ForEditing" />
+					<label>Agents are disabled</label>
+				</div>
+			</div>
+		</div>
+		
+		<div class="inputRow">
+			<label for="SystemInformationSenderHostaddress">Hostaddress</label>
+			<input type="text" placeholder="https://10.1.2.3 or http://www.example.com" id="SystemInformationSenderHostaddress" data-bind="value: Hostaddress" />
+		</div>
+		
+		<div class="inputRow">
+			<label for="SystemInformationSenderHostname">Hostname</label>
+			<input type="text" placeholder="www.example.com" id="SystemInformationSenderHostname" data-bind="value: Hostname" />
+		</div>
+		
+		<div class="inputRow">
+			<label for="SystemInformationSenderPath">SystemInformationSenderPath</label>
+			<input type="text" id="SystemInformationSenderPath" data-bind="value: SystemInformationSenderPath" />
+		</div>
+		
+		<div class="inputRow">
+			<label for="SystemInformationSenderCheckInterval">Check-interval (in seconds)</label>
+			<input type="text" id="SystemInformationSenderCheckInterval" data-bind="value: CheckIntervalInSeconds" />
+		</div>
 
 	</section>
 		
