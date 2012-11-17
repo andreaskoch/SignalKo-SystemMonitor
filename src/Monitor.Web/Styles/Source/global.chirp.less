@@ -1,5 +1,27 @@
-﻿html {
-	color: black;
+﻿/* font size */
+@font-size-page-title: 24px;
+@font-size-section-title: 20px;
+@font-size-block-title: 16px;
+@font-size-text: 14px;
+
+/* font colors */
+@font-color-page-title: black;
+@font-color-section-title: black;
+@font-color-block-title: black;
+@font-color-text: black;
+
+/* font family */
+@font-family-page-title: Verdana, sans-serif;
+@font-family-section-title: Verdana, sans-serif;
+@font-family-block-title: Verdana, sans-serif;
+@font-family-text: Verdana, sans-serif;
+
+
+html {
+	font-size: @font-size-text;
+	color: @font-color-text;
+	font-family: @font-family-text;
+
 	margin: 0px;
 	padding: 0px;
 
@@ -10,6 +32,12 @@
 
 		>header {
 			margin: 0px 0px 20px 0px;
+
+			h1 {
+				font-size: @font-size-page-title;
+				color: @font-color-page-title;
+				font-family: @font-family-page-title;
+			}
 
 			>nav {
 				float: left;
@@ -29,6 +57,22 @@
 						float: left;
 						list-style-type: none;
 					}
+				}
+			}
+		}
+
+		>.content {
+			header {
+				h2 {
+					font-size: @font-size-section-title;
+					color: @font-color-section-title;
+					font-family: @font-family-section-title;
+				}
+
+				h3 {
+					font-size: @font-size-block-title;
+					color: @font-color-block-title;
+					font-family: @font-family-block-title;
 				}
 			}
 		}
