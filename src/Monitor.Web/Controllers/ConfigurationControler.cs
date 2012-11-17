@@ -8,5 +8,10 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 		{
 			return this.View();
 		}
+
+		public virtual ActionResult UIConfiguration()
+		{
+			return this.View();
+		}
 	}
 }

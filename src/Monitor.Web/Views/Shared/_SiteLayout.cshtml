@@ -22,8 +22,13 @@
 			<nav>
 				<ul>
 					<li>@Html.ActionLink("Overview", MVC.Charts.AgentGroupOverview())</li>
-					<li>@Html.ActionLink("Configuration", MVC.Configuration.AgentConfiguration())</li>
-						
+					<li>
+						Configuration
+						<ul>
+							<li>@Html.ActionLink("UI Configuration", MVC.Configuration.UIConfiguration())</li>
+							<li>@Html.ActionLink("Agent Configuration", MVC.Configuration.AgentConfiguration())</li>
+						</ul>
+					</li>	
 				</ul>
 			</nav>
 		</header>

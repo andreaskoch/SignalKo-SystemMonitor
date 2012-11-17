@@ -427,23 +427,22 @@ namespace Links {
             private const string URLPATH = "~/Styles/Source";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string _01_global_chirp_less = Url("01-global.chirp.less");
-            public static readonly string _01_global_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/01-global.min.css") ? Url("01-global.min.css") : Url("01-global.css");
+            public static readonly string agent_configuration_chirp_less = Url("agent-configuration.chirp.less");
+            public static readonly string agent_configuration_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/agent-configuration.min.css") ? Url("agent-configuration.min.css") : Url("agent-configuration.css");
                  
-            public static readonly string _01_global_min_css = Url("01-global.min.css");
-            public static readonly string _02_layout_chirp_less = Url("02-layout.chirp.less");
-            public static readonly string _02_layout_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/02-layout.min.css") ? Url("02-layout.min.css") : Url("02-layout.css");
+            public static readonly string agent_configuration_min_css = Url("agent-configuration.min.css");
+            public static readonly string agent_group_overview_chirp_less = Url("agent-group-overview.chirp.less");
+            public static readonly string agent_group_overview_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/agent-group-overview.min.css") ? Url("agent-group-overview.min.css") : Url("agent-group-overview.css");
                  
-            public static readonly string _02_layout_min_css = Url("02-layout.min.css");
-            public static readonly string _03_content_chirp_less = Url("03-content.chirp.less");
-            public static readonly string _03_content_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/03-content.min.css") ? Url("03-content.min.css") : Url("03-content.css");
+            public static readonly string agent_group_overview_min_css = Url("agent-group-overview.min.css");
+            public static readonly string agent_group_chirp_less = Url("agent-group.chirp.less");
+            public static readonly string agent_group_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/agent-group.min.css") ? Url("agent-group.min.css") : Url("agent-group.css");
                  
-            public static readonly string _03_content_min_css = Url("03-content.min.css");
-            public static readonly string _04_agent_configuration_chirp_less = Url("04-agent-configuration.chirp.less");
-            public static readonly string _04_agent_configuration_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/04-agent-configuration.min.css") ? Url("04-agent-configuration.min.css") : Url("04-agent-configuration.css");
+            public static readonly string agent_group_min_css = Url("agent-group.min.css");
+            public static readonly string global_chirp_less = Url("global.chirp.less");
+            public static readonly string global_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/global.min.css") ? Url("global.min.css") : Url("global.css");
                  
-            public static readonly string _04_agent_configuration_min_css = Url("04-agent-configuration.min.css");
-            public static readonly string constants_less = Url("constants.less");
+            public static readonly string global_min_css = Url("global.min.css");
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public static class libraries {
                 private const string URLPATH = "~/Styles/Source/libraries";

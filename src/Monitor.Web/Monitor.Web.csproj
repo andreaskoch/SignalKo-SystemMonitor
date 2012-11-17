@@ -270,6 +270,7 @@
     <Content Include="Views\Configuration\AgentConfiguration.cshtml" />
     <Content Include="Views\Charts\AgentGroup.cshtml" />
     <Content Include="Views\Charts\AgentGroupOverview.cshtml" />
+    <Content Include="Views\Configuration\UIConfiguration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
