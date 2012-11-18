@@ -13,15 +13,15 @@
 		</header>
 		
 		<div class="inputRow">
-			<label>Status</label>
+			<label title="Enable or Disable the data collection on all agent instances">Status</label>
 
 			<div class="switches">
-				<div class="switch">
+				<div class="switch" title="Enable data collection. But please be aware that you have to activate each agent individually as well.">
 					<input type="radio" value="true" data-bind="checked: AgentsAreEnabled.ForEditing" />
 					<label>Agents are enabled</label>
 				</div>
 				
-				<div class="switch">
+				<div class="switch" title="Disable data collection for all agents. Note: this will disable all agents, even if the specific agent instances are enabled.">
 					<input type="radio" value="false" data-bind="checked: AgentsAreEnabled.ForEditing" />
 					<label>Agents are disabled</label>
 				</div>
@@ -30,22 +30,22 @@
 		
 		<div class="inputRow">
 			<label for="SystemInformationSenderHostaddress">Hostaddress</label>
-			<input type="text" placeholder="https://10.1.2.3 or http://www.example.com" id="SystemInformationSenderHostaddress" data-bind="value: Hostaddress" />
+			<input type="text" placeholder="https://10.1.2.3 or http://www.example.com" id="SystemInformationSenderHostaddress" data-bind="value: Hostaddress" title="The base address of the system information API (examples: http://10.0.0.10:8080, https://monitoring.example.com)." />
 		</div>
 		
 		<div class="inputRow">
 			<label for="SystemInformationSenderHostname">Hostname</label>
-			<input type="text" placeholder="www.example.com" id="SystemInformationSenderHostname" data-bind="value: Hostname" />
+			<input type="text" placeholder="www.example.com" id="SystemInformationSenderHostname" data-bind="value: Hostname" title="The host/dns name of the system information API service (default: &lt;empty&gt;)." />
 		</div>
 		
 		<div class="inputRow">
-			<label for="SystemInformationSenderPath">SystemInformationSenderPath</label>
-			<input type="text" id="SystemInformationSenderPath" data-bind="value: SystemInformationSenderPath" />
+			<label for="SystemInformationSenderPath">System Information API Url</label>
+			<input type="text" placeholder="/api/systeminformation" id="SystemInformationSenderPath" data-bind="value: SystemInformationSenderPath" title="The path to the system information API (example: /api/systeminformation)." />
 		</div>
 		
 		<div class="inputRow">
-			<label for="SystemInformationSenderCheckInterval">Check-interval (in seconds)</label>
-			<input type="text" id="SystemInformationSenderCheckInterval" data-bind="value: CheckIntervalInSeconds" />
+			<label for="SystemInformationSenderCheckInterval">Check interval (in seconds)</label>
+			<input type="text" placeholder="120" id="SystemInformationSenderCheckInterval" data-bind="value: CheckIntervalInSeconds" title="The interval in which the agents will check for a new agent configuration." />
 		</div>
 
 	</section>
