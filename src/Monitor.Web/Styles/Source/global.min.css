@@ -1,7 +1,7 @@
 ﻿.cleaner{clear:both}
 html{font-size:14px;color:#000;font-family:Verdana,sans-serif;margin:0;padding:0}
 html body{margin:0;padding:0}
-html body>header{margin:0 0 20px 0}
+html body>header{position:fixed;width:100%;background:gray;margin:0;padding:0;z-index:2}
 html body>header h1{font-size:24px;color:#000;font-family:Verdana,sans-serif;margin:0 0 10px 0;cursor:default}
 html body>header>nav{float:left;clear:left;width:100%;border-bottom:1px solid black}
 html body>header>nav>ul{float:left;margin:0;padding:0}
@@ -9,4 +9,4 @@ html body>header>nav>ul li{margin:0 10px 0 00px;padding:0;float:left;list-style-
 html body>.content{display:inline-block;margin:20px}
 html body>.content header h2{font-size:20px;color:#000;font-family:Verdana,sans-serif;margin:0 0 5px 0;cursor:default}
 html body>.content header h3{font-size:16px;color:#000;font-family:Verdana,sans-serif;margin:0 0 3px 0;cursor:default}
-html body>footer{border-top:1px solid black}
+html body>footer{z-index:2;position:fixed;bottom:0;background:gray;width:100%;min-height:20px;border-top:1px solid black}

@@ -31,12 +31,16 @@
 					</li>	
 				</ul>
 			</nav>
+			
+			<section class="subNavigation">
+				@RenderSection("SubNavigation", false)
+			</section>
 		</header>
 
 		@RenderBody()
 		
 		<footer>
-			
+			@RenderSection("FooterContent", false)
 		</footer>
 
 		<script type="text/javascript" src="@Links.Scripts.libraries.jquery_signalR_0_5_3_min_js"></script>
@@ -46,6 +50,7 @@
 		<script type="text/javascript" src="@Url.Content(@Links.Scripts.global_js)"></script>
 		<script type="text/javascript" src="@Url.Content(@Links.Scripts.Systemmonitor_js)"></script>
 		<script type="text/javascript" src="@Url.Content(@Links.Scripts.Systemmonitor_Utilities_js)"></script>
+		<script type="text/javascript" src="@Url.Content(@Links.Scripts.Systemmonitor_Layout_js)"></script>
 		@RenderSection("CustomScripts", false)
 	</body>
 </html>

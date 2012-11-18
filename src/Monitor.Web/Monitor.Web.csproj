@@ -188,6 +188,7 @@
     <Content Include="Assets\wrench_8x8.png" />
     <Content Include="Assets\x_alt_12x12.png" />
     <Content Include="Assets\x_alt_24x24.png" />
+    <Content Include="Scripts\Systemmonitor.Layout.js" />
     <Content Include="Scripts\highcharts\highcharts.js" />
     <Content Include="Scripts\libraries\jquery-ui-1.9.0.js" />
     <Content Include="Scripts\libraries\jquery-ui-1.9.0.min.js" />

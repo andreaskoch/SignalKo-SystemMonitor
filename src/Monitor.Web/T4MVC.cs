@@ -353,6 +353,8 @@ namespace Links {
                       
         public static readonly string Systemmonitor_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.min.js") ? Url("Systemmonitor.min.js") : Url("Systemmonitor.js");
                       
+        public static readonly string Systemmonitor_Layout_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.Layout.min.js") ? Url("Systemmonitor.Layout.min.js") : Url("Systemmonitor.Layout.js");
+                      
         public static readonly string Systemmonitor_Overview_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.Overview.min.js") ? Url("Systemmonitor.Overview.min.js") : Url("Systemmonitor.Overview.js");
                       
         public static readonly string Systemmonitor_Utilities_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.Utilities.min.js") ? Url("Systemmonitor.Utilities.min.js") : Url("Systemmonitor.Utilities.js");

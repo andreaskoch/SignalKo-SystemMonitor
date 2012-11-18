@@ -4,6 +4,12 @@
 	ViewBag.Title = "Agent Configuration";
 }
 
+@section SubNavigation {
+	<section class="commands">
+		<button class="button btnSave icon-save" data-bind="click: SaveConfiguration">Save</button>
+	</section>
+}
+
 <section class="content agent-configuration">
 
 	<section class="global" id="global">
@@ -264,10 +270,6 @@
 				</section>
 			</li>
 		</ul>
-	</section>
-		
-	<section class="commands">
-		<button class="button btnSave icon-save" data-bind="click: SaveConfiguration">Save</button>
 	</section>
 
 </section>
