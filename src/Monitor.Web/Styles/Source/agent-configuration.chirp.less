@@ -30,6 +30,10 @@
 				border-bottom: 1px solid @input-border-color-highlight;
 			}
 		}
+
+		>input[type=range] {
+			width: 200px;
+		}
 	}
 
 	.switches {
@@ -41,9 +45,136 @@
 	}
 	
 	>.global {
+		
 	}
 
 	>.agent-specific {
+		margin: 50px 0 0 0;
+		padding: 0px;
 
+		>header {
+			margin: 0 0 15px 0;
+		}
+
+		>.agents {
+
+			list-style-type: none;
+			margin: 0;
+			padding: 0px;
+
+			>.agent {
+				margin: 0 0 30px 0;
+
+				>header {
+					margin: 0 0 10px 0;
+					border-bottom: 1px solid black;
+					cursor: default;
+				}
+
+				>.agent-settings {
+
+					>.agent-status {
+
+						>header {
+							cursor: default;
+						}
+
+						>.switches {
+						}
+					}
+
+					>.collectorRepository {
+						float: left;
+						width: 230px;
+
+						>header {
+							cursor: default;
+						}
+
+						>ul {
+							list-style-type: none;
+							margin: 0;
+							padding: 0;
+
+							>li {
+								display: inline-block;
+								padding: 3px 5px 3px 5px;
+								margin: 0 15px 15px 0;
+								white-space: nowrap;
+
+								cursor: default;
+
+								background: #8BD864;
+
+								border-radius: 30px; 
+								-moz-border-radius: 30px; 
+								-webkit-border-radius: 30px; 
+								border: 1px solid #000000;
+
+								>i {
+									cursor: pointer;
+								}
+							}
+						}
+
+						>.noCollectorsAvailable {
+							color: #757575;
+							display: inline-block;
+							padding: 3px 5px 3px 5px;
+							margin: 0 15px 15px 0;
+							white-space: nowrap;
+
+							cursor: default;
+
+							background: #CCCCCC;
+
+							border-radius: 30px; 
+							-moz-border-radius: 30px; 
+							-webkit-border-radius: 30px;
+						}
+					}
+
+					>.collectorDefinitions {
+						float: left;
+
+						>header {
+							cursor: default;
+						}
+
+						>ul {
+							list-style-type: decimal-leading-zero;
+
+							>li {
+								margin: 0 0 35px 0;
+
+								>header {
+									display: inline-block;
+									padding: 3px 5px 3px 5px;
+									margin: 0 0px 0px 0;
+									white-space: nowrap;
+
+									cursor: default;
+
+									background: #FFFFFF;
+
+									border-radius: 30px; 
+									-moz-border-radius: 30px; 
+									-webkit-border-radius: 30px; 
+									border: 1px solid #000000;
+
+									>i {
+										cursor: pointer;
+									}
+								}
+
+								>.collectorDefinition {
+								}
+							}
+						}
+					}
+				}
+			}
+
+		}
 	}
 }

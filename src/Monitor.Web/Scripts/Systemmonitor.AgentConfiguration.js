@@ -307,6 +307,11 @@ $.extend(SystemMonitor, {
 			self.SystemInformationSenderPath = ko.observable();
 			self.AgentsAreEnabled = ko.observable(true);
 			self.CheckIntervalInSeconds = ko.observable();
+			
+			self.CheckIntervalHumanReadable = ko.computed(function () {
+				return getHumanReadableTimespanFromSeconds(self.CheckIntervalInSeconds());
+			}, this);
+
 			self.AgentInstanceConfigurations = ko.observableArray();
 
 			self.AgentsAreEnabled.ForEditing = ko.computed({
