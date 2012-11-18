@@ -20,6 +20,7 @@
 .agent-configuration>.agent-specific>.agents>.agent>.agent-settings>.collectorDefinitions{float:left}
 .agent-configuration>.agent-specific>.agents>.agent>.agent-settings>.collectorDefinitions>header{cursor:default}
 .agent-configuration>.agent-specific>.agents>.agent>.agent-settings>.collectorDefinitions>ul{list-style-type:decimal-leading-zero}
-.agent-configuration>.agent-specific>.agents>.agent>.agent-settings>.collectorDefinitions>ul>li{margin:0 0 35px 0}
+.agent-configuration>.agent-specific>.agents>.agent>.agent-settings>.collectorDefinitions>ul>li{padding:35px 10px 10px 10px;border-bottom:1px dashed #757575}
 .agent-configuration>.agent-specific>.agents>.agent>.agent-settings>.collectorDefinitions>ul>li>header{display:inline-block;padding:3px 5px 3px 5px;margin:0;white-space:nowrap;cursor:default;background:#fff;border-radius:30px;-moz-border-radius:30px;-webkit-border-radius:30px;border:1px solid #000}
 .agent-configuration>.agent-specific>.agents>.agent>.agent-settings>.collectorDefinitions>ul>li>header>i{cursor:pointer}
+.agent-configuration>.agent-specific>.agents>.agent>.agent-settings>.collectorDefinitions>ul>li:last-child{border-bottom:0}
