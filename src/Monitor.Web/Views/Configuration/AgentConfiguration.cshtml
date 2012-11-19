@@ -5,8 +5,18 @@
 }
 
 @section SubNavigation {
-	<section class="commands">
-		<button class="button btnSave icon-save" data-bind="click: SaveConfiguration">Save</button>
+	<section class="contextMenu">
+		<div class="machines">
+			<label>Machines:</label>
+			<ul data-bind="foreach: AgentInstanceConfigurations">
+				<li><a data-bind="attr: { href: '#' + MachineName }"><span data-bind="text: MachineName"></span></a></li>
+			</ul>
+		</div>
+		
+		<div class="actions">
+			<label>Actions:</label>
+			<button class="button btnSave" data-bind="click: SaveConfiguration" title="Save all changes"><i class="icon-save"></i><span class="text">Save</span></button>
+		</div>
 	</section>
 }
 
@@ -63,7 +73,8 @@
 		</header>
 			
 		<ul class="agents" data-bind="foreach: AgentInstanceConfigurations">
-			<li class="agent" data-bind="attr: { id: MachineName }">
+			<li class="agent">
+				<div data-bind="attr: { id: MachineName }" class="agentAnchor"></div>
 				<header>
 					<h3 data-bind="text: MachineName"></h3>
 				</header>

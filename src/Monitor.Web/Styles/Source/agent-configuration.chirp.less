@@ -3,6 +3,53 @@
 @input-border-color-highlight: #000000;
 @input-background-color: #F2F2F2;
 
+@contextmenu-background-color: #F2F2F2;
+
+.contextMenu {
+	background-color: @contextmenu-background-color;
+	display: inline-block;
+	width: 100%;
+	padding: 15px;
+
+	>.machines {
+		margin: 0 0 10px 0;
+		>label {
+			display: inline-block;
+		}
+
+		>ul {
+			display: inline-block;
+			margin: 0;
+			padding: 0;
+
+			>li {
+				display: inline-block;
+				margin: 0 10px 0 0;
+			}
+		}
+	}
+
+	>.actions {
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+
+		>button {
+			cursor: pointer;
+
+			/* icon */
+			>i {
+				margin-right: 3px;
+			}
+
+			/* button text */
+			>.text {
+				
+			}
+		}
+	}
+}
+
 .agent-configuration {
 	.inputRow {
 		display: block;
@@ -51,6 +98,10 @@
 	>.agent-specific {
 		margin: 50px 0 0 0;
 		padding: 0px;
+
+		.agentAnchor {
+			position: relative;
+		}
 
 		>header {
 			margin: 0 0 15px 0;

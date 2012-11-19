@@ -16,6 +16,8 @@
 @font-family-block-title: Verdana, sans-serif;
 @font-family-text: Verdana, sans-serif;
 
+@navigation-background-color: #B5B5B5;
+
 .cleaner {
 	clear: both;
 }
@@ -37,7 +39,7 @@ html {
 			position: fixed;
 			width: 100%;
 
-			background: gray;
+			background: @navigation-background-color;
 
 			margin: 0px;
 			padding: 0px;
@@ -57,6 +59,7 @@ html {
 				clear: left;
 				width: 100%;
 
+				padding: 0 0 5px 0;
 				border-bottom: 1px solid black;
 
 				>ul {
@@ -65,15 +68,59 @@ html {
 					padding: 0px;
 
 					li {
+						cursor: pointer;
+
+						>a {
+							display: inline-block;
+							text-decoration: none;
+							color: #FFFFFF;
+
+							margin: 3px 0 0 0;
+							padding: 2px 7px 2px 7px; 
+
+							background-color: #000000;
+							border-radius: 30px; 
+							-moz-border-radius: 30px; 
+							-webkit-border-radius: 30px; 
+							border: 2px solid #FFFFFF;
+
+							&:hover {
+								border: 2px solid red;
+							}
+
+							&:active {
+								position: relative;
+								top: 1px;
+							}
+						}
+					}
+
+					>li {
 						margin: 0px 10px 0px 00px;
 						padding: 0px;
-						float: left;
+						display: inline-block;
 						list-style-type: none;
+
+						>label {
+							color: #5E5E5E;
+						}
+
+						>ul {
+							display: inline-block;
+							list-style-type: none;
+							padding: 0px;
+							margin: 0px;
+
+							>li {
+								display: inline-block;
+							}
+						}
+						
 					}
 				}
 			}
 
-			>.subNavigation {
+			>.contextMenu {
 				
 			}
 		}
@@ -106,12 +153,27 @@ html {
 			position: fixed;
 			bottom: 0px;
 
-			background: gray;
+			background: @navigation-background-color;
 
 			width: 100%;
 			min-height: 20px;
 
 			border-top: 1px solid black;
+
+			>.links {
+				margin: 0;
+				padding: 0;
+
+				>li {
+					display: inline-block;
+
+					>a {
+						color: @font-color-text;
+						text-decoration: none;
+					}
+				}
+
+			}
 		}
 	}
 }

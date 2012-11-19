@@ -19,12 +19,15 @@ $.extend(SystemMonitor, {
 		/* set top margin */
 		var headerHeight = $(layout.header).height();
 		var currentTopMargin = parseInt($(layout.content).css("margin-top"));
-		$(layout.content).css("margin-top", headerHeight + currentTopMargin);
+		var newTopMargin = headerHeight + currentTopMargin;
+		$(layout.content).css("margin-top", newTopMargin);
+		$(".agentAnchor").css("top", newTopMargin * -1);
 		
 		/* set bottom margin */
 		var footerHeight = $(layout.footer).height();
-		var currentBottomMargin = parseInt($(layout.content).css("margin-top"));
-		$(layout.content).css("margin-bottom", footerHeight + currentBottomMargin);
+		var currentBottomMargin = parseInt($(layout.content).css("margin-bottom"));
+		var newBottomMargin = footerHeight + currentBottomMargin;
+		$(layout.content).css("margin-bottom", newBottomMargin);
 
 		return layout;
 	})()

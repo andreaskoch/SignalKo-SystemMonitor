@@ -4,7 +4,7 @@
 	<head>
 		<meta name="viewport" content="width=device-width" />
 
-		<title>@ViewBag.Title - System Monitor</title>
+		<title>@ViewBag.Title &ndash; System Monitor</title>
 
 		<link href="@Links.Styles.Combined.global_css" rel="stylesheet" type="text/css" />
 
@@ -17,13 +17,13 @@
 	<body>
 
 		<header>
-			<h1>@ViewBag.Title</h1>
+			<h1>System Monitor: @ViewBag.Title</h1>
 				
 			<nav>
 				<ul>
 					<li>@Html.ActionLink("Overview", MVC.Charts.AgentGroupOverview())</li>
 					<li>
-						Configuration
+						<label>Configuration:</label>
 						<ul>
 							<li>@Html.ActionLink("UI Configuration", MVC.Configuration.UIConfiguration())</li>
 							<li>@Html.ActionLink("Agent Configuration", MVC.Configuration.AgentConfiguration())</li>
@@ -41,6 +41,12 @@
 		
 		<footer>
 			@RenderSection("FooterContent", false)
+			
+			<ul class="links">
+				<li>
+					<a href="https://github.com/andreaskoch/SignalKo-SystemMonitor" target="_blank" title="SignalKo System Monitor at Github"><i class="icon-github"></i>SignalKo SystemMonitor</a>
+				</li>
+			</ul>
 		</footer>
 
 		<script type="text/javascript" src="@Links.Scripts.libraries.jquery_signalR_0_5_3_min_js"></script>
