@@ -366,6 +366,14 @@ namespace Links {
         private const string URLPATH = "~/Styles";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class assets {
+            private const string URLPATH = "~/Styles/assets";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string icon_chart_png = Url("icon-chart.png");
+        }
+    
         public static readonly string combine_chirp_config = Url("combine.chirp.config");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class Combined {

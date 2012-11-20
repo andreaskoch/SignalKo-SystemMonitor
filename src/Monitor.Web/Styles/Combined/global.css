@@ -267,13 +267,17 @@ ul.icons li .icon-large:before,ul.icons li .icon-large:before{vertical-align:ini
 html{font-size:14px;color:#000;font-family:Verdana,sans-serif;margin:0;padding:0}
 html body{margin:0;padding:0}
 html body>header{position:fixed;width:100%;background:#b5b5b5;margin:0;padding:0;z-index:2}
-html body>header h1{font-size:24px;color:#000;font-family:Verdana,sans-serif;margin:0 0 10px 0;cursor:default}
-html body>header>nav{float:left;clear:left;width:100%;padding:0 0 5px 0;border-bottom:1px solid black}
+html body>header>.logo{margin:2px;display:inline-block;width:50px;font-size:30px;border-radius:50px;-moz-border-radius:50px;-webkit-border-radius:50px;border:1px solid #000;text-align:center}
+html body>header>.logo>a{text-decoration:none;color:#000}
+html body>header>.logo>a:hover{color:red}
+html body>header>.logo>a:active{color:red}
+html body>header>h1{display:inline-block;font-size:24px;color:#000;font-family:Verdana,sans-serif;margin:0 0 10px 0;cursor:default}
+html body>header>nav{float:left;clear:left;width:100%;padding:15px 0 5px 15px;border-bottom:1px solid black}
 html body>header>nav>ul{float:left;margin:0;padding:0}
 html body>header>nav>ul li{cursor:pointer}
 html body>header>nav>ul li>a{display:inline-block;text-decoration:none;color:#fff;margin:3px 0 0 0;padding:2px 7px 2px 7px;background-color:#000;border-radius:30px;-moz-border-radius:30px;-webkit-border-radius:30px;border:2px solid #fff}
 html body>header>nav>ul li>a:hover{border:2px solid red}
-html body>header>nav>ul li>a:active{position:relative;top:1px}
+html body>header>nav>ul li>a:active{border:2px solid red;position:relative;top:1px}
 html body>header>nav>ul>li{margin:0 10px 0 00px;padding:0;display:inline-block;list-style-type:none}
 html body>header>nav>ul>li>label{color:#5e5e5e}
 html body>header>nav>ul>li>ul{display:inline-block;list-style-type:none;padding:0;margin:0}

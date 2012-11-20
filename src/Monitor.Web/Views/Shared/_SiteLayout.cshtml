@@ -5,7 +5,8 @@
 		<meta name="viewport" content="width=device-width" />
 
 		<title>@ViewBag.Title &ndash; System Monitor</title>
-
+		
+		<link rel="icon" type="image/png" href="@Links.Styles.assets.icon_chart_png" />
 		<link href="@Links.Styles.Combined.global_css" rel="stylesheet" type="text/css" />
 
 		<script type="text/javascript" src="@Links.Scripts.libraries.jquery_1_8_2_js"></script>
@@ -17,7 +18,11 @@
 	<body>
 
 		<header>
-			<h1>System Monitor: @ViewBag.Title</h1>
+			<div class="logo" title="System Monitor">
+				<a href="@Url.Action(MVC.Charts.AgentGroupOverview())" title="System Monitor"><i class="icon-bar-chart"></i></a>
+			</div>
+
+			<h1>@ViewBag.Title</h1>
 				
 			<nav>
 				<ul>

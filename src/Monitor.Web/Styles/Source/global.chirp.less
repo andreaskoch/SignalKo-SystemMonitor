@@ -17,6 +17,7 @@
 @font-family-text: Verdana, sans-serif;
 
 @navigation-background-color: #B5B5B5;
+@link-highlight-color: red;
 
 .cleaner {
 	clear: both;
@@ -46,7 +47,35 @@ html {
 
 			z-index: 2;
 
-			h1 {
+			>.logo {
+				margin: 2px;
+				display: inline-block;
+				width: 50px;
+
+				font-size: 30px;
+				border-radius: 50px; 
+				-moz-border-radius: 50px; 
+				-webkit-border-radius: 50px; 
+				border: 1px solid #000000;
+
+				text-align: center;
+
+				>a {
+					text-decoration: none;
+					color: #000000;
+
+					&:hover {
+						color: @link-highlight-color;
+					}
+
+					&:active {
+						color: @link-highlight-color;
+					}
+				}
+			}
+
+			>h1 {
+				display: inline-block;
 				font-size: @font-size-page-title;
 				color: @font-color-page-title;
 				font-family: @font-family-page-title;
@@ -59,7 +88,7 @@ html {
 				clear: left;
 				width: 100%;
 
-				padding: 0 0 5px 0;
+				padding: 15px 0 5px 15px;
 				border-bottom: 1px solid black;
 
 				>ul {
@@ -85,10 +114,11 @@ html {
 							border: 2px solid #FFFFFF;
 
 							&:hover {
-								border: 2px solid red;
+								border: 2px solid @link-highlight-color;
 							}
 
 							&:active {
+								border: 2px solid @link-highlight-color;
 								position: relative;
 								top: 1px;
 							}
@@ -120,7 +150,7 @@ html {
 				}
 			}
 
-			>.contextMenu {
+			>.subNavigation {
 				
 			}
 		}
