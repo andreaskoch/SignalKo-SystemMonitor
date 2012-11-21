@@ -371,7 +371,38 @@ namespace Links {
             private const string URLPATH = "~/Styles/assets";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string icon_chart_ico = Url("icon-chart.ico");
             public static readonly string icon_chart_png = Url("icon-chart.png");
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class source {
+                private const string URLPATH = "~/Styles/assets/source";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class logo {
+                    private const string URLPATH = "~/Styles/assets/source/logo";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    public static readonly string icon_chart_128_ico = Url("icon-chart-128.ico");
+                    public static readonly string icon_chart_128_png = Url("icon-chart-128.png");
+                    public static readonly string icon_chart_128_psd = Url("icon-chart-128.psd");
+                    public static readonly string icon_chart_16_ico = Url("icon-chart-16.ico");
+                    public static readonly string icon_chart_16_png = Url("icon-chart-16.png");
+                    public static readonly string icon_chart_16_psd = Url("icon-chart-16.psd");
+                    public static readonly string icon_chart_32_ico = Url("icon-chart-32.ico");
+                    public static readonly string icon_chart_32_png = Url("icon-chart-32.png");
+                    public static readonly string icon_chart_32_psd = Url("icon-chart-32.psd");
+                    public static readonly string icon_chart_48_ico = Url("icon-chart-48.ico");
+                    public static readonly string icon_chart_48_png = Url("icon-chart-48.png");
+                    public static readonly string icon_chart_48_psd = Url("icon-chart-48.psd");
+                    public static readonly string icon_chart_64_ico = Url("icon-chart-64.ico");
+                    public static readonly string icon_chart_64_png = Url("icon-chart-64.png");
+                    public static readonly string icon_chart_64_psd = Url("icon-chart-64.psd");
+                    public static readonly string icon_chart_ai = Url("icon-chart.ai");
+                }
+            
+            }
+        
         }
     
         public static readonly string combine_chirp_config = Url("combine.chirp.config");
