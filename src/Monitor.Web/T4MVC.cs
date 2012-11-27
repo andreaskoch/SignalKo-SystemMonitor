@@ -358,6 +358,9 @@ namespace Links {
             public static readonly string underscore_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/underscore.min.js") ? Url("underscore.min.js") : Url("underscore.js");
                           
             public static readonly string underscore_min_js = Url("underscore.min.js");
+            public static readonly string underscore_string_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/underscore.string.min.js") ? Url("underscore.string.min.js") : Url("underscore.string.js");
+                          
+            public static readonly string underscore_string_min_js = Url("underscore.string.min.js");
         }
     
         public static readonly string Systemmonitor_AgentConfiguration_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.AgentConfiguration.min.js") ? Url("Systemmonitor.AgentConfiguration.min.js") : Url("Systemmonitor.AgentConfiguration.js");

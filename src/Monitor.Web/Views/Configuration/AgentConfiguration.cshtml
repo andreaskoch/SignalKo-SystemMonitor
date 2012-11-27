@@ -75,12 +75,14 @@
 		<section>
 			<label>Add a new agent instance configuration</label>
 
-			<input type="text" list="unlistedMachinenames"/>
+			<input type="text" list="unlistedMachinenames" data-bind="value: NewAgentInstanceConfigurationId"/>
 			<datalist id="unlistedMachinenames" data-bind="foreach: UnconfiguredAgents">
 				<option data-bind="text: $data"></option>
 			</datalist>
 			
-			<i class="icon-plus-sign"></i>
+			<div data-bind="click: AddAgentInstanceConfiguration">
+				<i class="icon-plus-sign"></i>
+			</div>
 		</section>
 			
 		<ul class="agents" data-bind="foreach: AgentInstanceConfigurations">
@@ -88,6 +90,10 @@
 				<div data-bind="attr: { id: MachineName }" class="agentAnchor"></div>
 				<header>
 					<h3 data-bind="text: MachineName"></h3>
+
+					<span data-bind="click: $parent.RemoveAgentInstanceConfiguration">
+						<i class="icon-minus-sign"></i>
+					</span>
 				</header>
 					
 				<section class="agent-settings">
@@ -299,7 +305,8 @@
 @section CustomScripts {
 	<script type="text/javascript">
 		var agentConfigurationOptions = {
-			AgentConfigurationApiUrl: '@Url.Action(MVC.Configuration.ActionNames.GetAgentConfiguration)',
+			ViewModelSourceUrl: '@Url.Action(MVC.Configuration.ActionNames.GetAgentConfigurationEditorViewModel)',
+			AgentConfigurationApiUrl: '/api/agentconfiguration',
 			SuccessCallback: function (message) {
 				console.log(message);
 			},

@@ -52,14 +52,14 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
-            public readonly string GetAgentConfiguration = "GetAgentConfigurationEditorViewModel";
+            public readonly string GetAgentConfigurationEditorViewModel = "GetAgentConfigurationEditorViewModel";
             public readonly string AgentConfiguration = "AgentConfiguration";
             public readonly string UIConfiguration = "UIConfiguration";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants {
-            public const string GetAgentConfiguration = "GetAgentConfigurationEditorViewModel";
+            public const string GetAgentConfigurationEditorViewModel = "GetAgentConfigurationEditorViewModel";
             public const string AgentConfiguration = "AgentConfiguration";
             public const string UIConfiguration = "UIConfiguration";
         }
@@ -80,7 +80,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
         public T4MVC_ConfigurationController() : base(Dummy.Instance) { }
 
         public override System.Web.Mvc.JsonResult GetAgentConfigurationEditorViewModel() {
-            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.GetAgentConfiguration);
+            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.GetAgentConfigurationEditorViewModel);
             return callInfo;
         }
 

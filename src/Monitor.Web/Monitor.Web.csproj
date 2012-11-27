@@ -168,6 +168,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Scripts\libraries\underscore.string.js" />
+    <Content Include="Scripts\libraries\underscore.string.min.js" />
     <Content Include="Scripts\Systemmonitor.Layout.js" />
     <Content Include="Scripts\highcharts\highcharts.js" />
     <Content Include="Scripts\libraries\jquery-ui-1.9.0.js" />

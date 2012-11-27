@@ -17,7 +17,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.App_Start
 
 			/* agent configuration */
 			routes.MapRoute(MVC.Configuration.ActionNames.AgentConfiguration, "configuration/agents.html", MVC.Configuration.AgentConfiguration());
-			routes.MapRoute(MVC.Configuration.ActionNames.GetAgentConfiguration, "configuration/agents/viewmodel.json", MVC.Configuration.GetAgentConfigurationEditorViewModel());
+			routes.MapRoute(MVC.Configuration.ActionNames.GetAgentConfigurationEditorViewModel, "configuration/agents/viewmodel.json", MVC.Configuration.GetAgentConfigurationEditorViewModel());
 		}
 	}
 }

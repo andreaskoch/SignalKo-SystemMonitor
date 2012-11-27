@@ -324,7 +324,57 @@ $.extend(SystemMonitor, {
 				owner: self
 			}, this);
 
+			self.NewAgentInstanceConfigurationId = ko.observable();
 			self.UnconfiguredAgents = ko.observableArray();
+			
+			/**
+				Add a new agent instance configuration
+				@returns {Boolean} Return true if the agent instance configuration with the supplied machineName has been added; otherwise false.
+			*/
+			self.AddAgentInstanceConfiguration = function () {
+				
+				var machineName = self.NewAgentInstanceConfigurationId();
+				if (!machineName || machineName.trim() === "") {
+					return false;
+				}
+
+				var agentInstanceConfigurationIsAlreadyPresent = _.any(self.AgentInstanceConfigurations(), function(item) {
+					return item.MachineName == machineName;
+				});
+				
+				if (agentInstanceConfigurationIsAlreadyPresent) {
+					return false;
+				}
+
+				self.AgentInstanceConfigurations.push(
+					new agentInstanceConfigurationViewModel(
+						{
+							"MachineName": machineName,
+							"AgentIsEnabled": false
+						}
+					)
+				);
+				
+				self.NewAgentInstanceConfigurationId("");
+				return true;
+			};
+
+			/**
+				Remove the specified agent instance configuration
+				@param {agentInstanceConfigurationViewModel} instanceConfiguration The agent instance configuration viewmodel to remove
+			*/
+			self.RemoveAgentInstanceConfiguration = function(instanceConfiguration) {
+
+				var instanceId = instanceConfiguration.MachineName;
+				
+				self.AgentInstanceConfigurations.remove(
+					function (item) {
+						return item.MachineName == instanceId;
+					}
+				);
+
+				self.UnconfiguredAgents.push(instanceId);
+			};
 
 			var successCallback = function (message) { };
 			var errorCallback = function (message) { };
@@ -366,6 +416,14 @@ $.extend(SystemMonitor, {
 					return configuration.AgentConfigurationApiUrl;
 				};
 				
+				/**
+					Get the ViewModel Source URL.
+					@name GetViewModelSourceUrl
+				*/
+				self.GetViewModelSourceUrl = function () {
+					return configuration.ViewModelSourceUrl;
+				};
+				
 				if (configuration.SuccessCallback && typeof (configuration.SuccessCallback) === 'function') {
 					successCallback = function(message) {
 						configuration.SuccessCallback(message);
@@ -384,7 +442,7 @@ $.extend(SystemMonitor, {
 			*/
 			(function() {
 				$.ajax({
-					url: self.GetAgentConfigurationApiUrl(),
+					url: self.GetViewModelSourceUrl(),
 					type: "GET",
 					success: function (agentConfigurationViewModel) {
 						if (!agentConfigurationViewModel || !agentConfigurationViewModel.Configuration) {
