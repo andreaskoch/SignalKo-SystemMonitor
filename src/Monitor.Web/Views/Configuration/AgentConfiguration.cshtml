@@ -76,9 +76,8 @@
 			<label>Add a new agent instance configuration</label>
 
 			<input type="text" list="unlistedMachinenames"/>
-			<datalist id="unlistedMachinenames">
-				<option>A</option>
-				<option>B</option>
+			<datalist id="unlistedMachinenames" data-bind="foreach: UnconfiguredAgents">
+				<option data-bind="text: $data"></option>
 			</datalist>
 			
 			<i class="icon-plus-sign"></i>

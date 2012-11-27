@@ -392,8 +392,10 @@ $.extend(SystemMonitor, {
 							return;
 						}
 
-						var agentConfiguration = agentConfigurationViewModel.Configuration;
+						self.UnconfiguredAgents = ko.observableArray(agentConfigurationViewModel.UnconfiguredAgents);
 
+						var agentConfiguration = agentConfigurationViewModel.Configuration;
+						
 						self.Hostaddress(agentConfiguration.Hostaddress);
 						self.Hostname(agentConfiguration.Hostname);
 						self.SystemInformationSenderPath(agentConfiguration.SystemInformationSenderPath);
