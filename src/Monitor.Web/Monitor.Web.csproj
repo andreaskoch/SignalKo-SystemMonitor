@@ -149,6 +149,8 @@
     <Compile Include="T4MVC.ModelUnbinder.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModelOrchestrators\AgentConfigurationViewModelOrchestrator.cs" />
+    <Compile Include="ViewModelOrchestrators\IAgentConfigurationViewModelOrchestrator.cs" />
     <Compile Include="ViewModelOrchestrators\IMemoryStatusOrchestrator.cs" />
     <Compile Include="ViewModelOrchestrators\IProcessorStatusOrchestrator.cs" />
     <Compile Include="ViewModelOrchestrators\IStorageStatusOrchestrator.cs" />
@@ -158,6 +160,7 @@
     <Compile Include="ViewModelOrchestrators\StorageStatusOrchestrator.cs" />
     <Compile Include="ViewModelOrchestrators\SystemStatusOrchestrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AgentConfigurationViewModel.cs" />
     <Compile Include="ViewModels\SystemStatusPointViewModel.cs" />
     <Compile Include="ViewModels\SystemStatusViewModel.cs" />
   </ItemGroup>

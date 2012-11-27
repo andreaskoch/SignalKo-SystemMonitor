@@ -42,20 +42,18 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.Services
 			var agentConfiguration = this.agentConfigurationDataAccessor.Load();
 			agentConfiguration = agentConfiguration ?? this.defaultAgentConfigurationProvider.GetDefaultAgentConfiguration();
 
-			// add configurations for known agents
-			var newAgentInstanceConfigurationList = agentConfiguration.AgentInstanceConfigurations.ToList();
-
-			foreach (string nameOfKnownAgent in this.knownAgentsProvider.GetKnownAgents())
-			{
-				if (agentConfiguration.AgentInstanceConfigurations.Any(c => c.MachineName.Equals(nameOfKnownAgent)) == false)
-				{
-					newAgentInstanceConfigurationList.Add(new AgentInstanceConfiguration { MachineName = nameOfKnownAgent, AgentIsEnabled = false });
-				}
-			}
-
-			agentConfiguration.AgentInstanceConfigurations = newAgentInstanceConfigurationList.ToArray();
-
 			return agentConfiguration;
+		}
+
+		public string[] GetNamesOfUnconfiguredAgents()
+		{
+			var agentConfiguration = this.agentConfigurationDataAccessor.Load();
+			agentConfiguration = agentConfiguration ?? this.defaultAgentConfigurationProvider.GetDefaultAgentConfiguration();
+
+			var agentsWithConfigurations = agentConfiguration.AgentInstanceConfigurations.Select(agent => agent.MachineName);
+			var allKnownAgents = this.knownAgentsProvider.GetKnownAgents();
+
+			return allKnownAgents.Where(agent => agentsWithConfigurations.Any(a => a.Equals(agent, StringComparison.OrdinalIgnoreCase)) == false).ToArray();
 		}
 
 		public void SaveAgentConfiguration(AgentConfiguration agentConfiguration)

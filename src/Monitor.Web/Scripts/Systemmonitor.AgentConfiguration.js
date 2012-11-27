@@ -324,6 +324,8 @@ $.extend(SystemMonitor, {
 				owner: self
 			}, this);
 
+			self.UnconfiguredAgents = ko.observableArray();
+
 			var successCallback = function (message) { };
 			var errorCallback = function (message) { };
 
@@ -384,11 +386,13 @@ $.extend(SystemMonitor, {
 				$.ajax({
 					url: self.GetAgentConfigurationApiUrl(),
 					type: "GET",
-					success: function (agentConfiguration) {
-						if (!agentConfiguration) {
+					success: function (agentConfigurationViewModel) {
+						if (!agentConfigurationViewModel || !agentConfigurationViewModel.Configuration) {
 							errorCallback("Cannot load empty agent configuration.");
 							return;
 						}
+
+						var agentConfiguration = agentConfigurationViewModel.Configuration;
 
 						self.Hostaddress(agentConfiguration.Hostaddress);
 						self.Hostname(agentConfiguration.Hostname);

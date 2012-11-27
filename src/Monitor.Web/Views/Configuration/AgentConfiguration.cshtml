@@ -71,6 +71,18 @@
 		<header>
 			<h2>Agent Instance Configurations</h2>
 		</header>
+		
+		<section>
+			<label>Add a new agent instance configuration</label>
+
+			<input type="text" list="unlistedMachinenames"/>
+			<datalist id="unlistedMachinenames">
+				<option>A</option>
+				<option>B</option>
+			</datalist>
+			
+			<i class="icon-plus-sign"></i>
+		</section>
 			
 		<ul class="agents" data-bind="foreach: AgentInstanceConfigurations">
 			<li class="agent">
@@ -288,7 +300,7 @@
 @section CustomScripts {
 	<script type="text/javascript">
 		var agentConfigurationOptions = {
-			AgentConfigurationApiUrl: '/api/agentconfiguration',
+			AgentConfigurationApiUrl: '/Configuration/Agents/GetConfiguration',
 			SuccessCallback: function (message) {
 				console.log(message);
 			},

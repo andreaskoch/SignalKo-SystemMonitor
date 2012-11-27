@@ -7,5 +7,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.Services
 		AgentConfiguration GetAgentConfiguration();
 
 		void SaveAgentConfiguration(AgentConfiguration agentConfiguration);
+
+		string[] GetNamesOfUnconfiguredAgents();
 	}
 }

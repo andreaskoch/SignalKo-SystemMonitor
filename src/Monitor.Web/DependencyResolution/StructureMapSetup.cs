@@ -43,6 +43,8 @@ namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
 					x.For<IStorageStatusOrchestrator>().Use<StorageStatusOrchestrator>();
 					x.For<ISystemStatusOrchestrator>().Use<SystemStatusOrchestrator>();
 
+					x.For<IAgentConfigurationViewModelOrchestrator>().Use<AgentConfigurationViewModelOrchestrator>();
+
 					/* common services */
 					x.For<IEncodingProvider>().Use<DefaultEncodingProvider>();
 					x.For<IMemoryUnitConverter>().Use<MemoryUnitConverter>();
