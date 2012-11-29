@@ -10,14 +10,15 @@ namespace SignalKo.SystemMonitor.Monitor.Web.App_Start
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 			/* charts */
-			routes.MapRoute(MVC.Charts.ActionNames.AgentGroupOverview, "charts/overview.html", MVC.Charts.AgentGroupOverview());
+			routes.MapRoute(MVC.Charts.Name + MVC.Charts.ActionNames.AgentGroupOverview, "charts/overview.html", MVC.Charts.AgentGroupOverview());
 
 			/* ui configuration */
-			routes.MapRoute(MVC.Configuration.ActionNames.UIConfiguration, "configuration/display.html", MVC.Configuration.UIConfiguration());
+			routes.MapRoute(MVC.UIConfiguration.Name + MVC.UIConfiguration.ActionNames.Editor, "configuration/ui/editor.html", MVC.UIConfiguration.Editor());
 
 			/* agent configuration */
-			routes.MapRoute(MVC.Configuration.ActionNames.AgentConfiguration, "configuration/agents.html", MVC.Configuration.AgentConfiguration());
-			routes.MapRoute(MVC.Configuration.ActionNames.GetAgentConfigurationEditorViewModel, "configuration/agents/viewmodel.json", MVC.Configuration.GetAgentConfigurationEditorViewModel());
+			routes.MapRoute(MVC.AgentConfiguration.Name + MVC.AgentConfiguration.ActionNames.Editor, "configuration/agents/editor", MVC.AgentConfiguration.Editor());
+			routes.MapRoute(MVC.AgentConfiguration.Name + MVC.AgentConfiguration.ActionNames.Load, "configuration/agents/load", MVC.AgentConfiguration.Load());
+			routes.MapRoute(MVC.AgentConfiguration.Name + MVC.AgentConfiguration.ActionNames.Save, "configuration/agents/save", MVC.AgentConfiguration.Save());
 		}
 	}
 }

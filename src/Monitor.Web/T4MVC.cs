@@ -23,8 +23,9 @@ using T4MVC;
 
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static class MVC {
+    public static SignalKo.SystemMonitor.Monitor.Web.Controllers.AgentConfigurationController AgentConfiguration = new SignalKo.SystemMonitor.Monitor.Web.Controllers.T4MVC_AgentConfigurationController();
     public static SignalKo.SystemMonitor.Monitor.Web.Controllers.ChartsController Charts = new SignalKo.SystemMonitor.Monitor.Web.Controllers.T4MVC_ChartsController();
-    public static SignalKo.SystemMonitor.Monitor.Web.Controllers.ConfigurationController Configuration = new SignalKo.SystemMonitor.Monitor.Web.Controllers.T4MVC_ConfigurationController();
+    public static SignalKo.SystemMonitor.Monitor.Web.Controllers.UIConfigurationController UIConfiguration = new SignalKo.SystemMonitor.Monitor.Web.Controllers.T4MVC_UIConfigurationController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -284,12 +285,10 @@ public interface IT4MVCActionResult {
   
 
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-public class T4MVC_ActionResult : System.Web.Mvc.ActionResult, IT4MVCActionResult {
-    public T4MVC_ActionResult(string area, string controller, string action, string protocol = null): base()  {
+public class T4MVC_JsonResult : System.Web.Mvc.JsonResult, IT4MVCActionResult {
+    public T4MVC_JsonResult(string area, string controller, string action, string protocol = null): base()  {
         this.InitMVCT4Result(area, controller, action, protocol);
     }
-     
-    public override void ExecuteResult(System.Web.Mvc.ControllerContext context) { }
     
     public string Controller { get; set; }
     public string Action { get; set; }
@@ -297,10 +296,12 @@ public class T4MVC_ActionResult : System.Web.Mvc.ActionResult, IT4MVCActionResul
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-public class T4MVC_JsonResult : System.Web.Mvc.JsonResult, IT4MVCActionResult {
-    public T4MVC_JsonResult(string area, string controller, string action, string protocol = null): base()  {
+public class T4MVC_ActionResult : System.Web.Mvc.ActionResult, IT4MVCActionResult {
+    public T4MVC_ActionResult(string area, string controller, string action, string protocol = null): base()  {
         this.InitMVCT4Result(area, controller, action, protocol);
     }
+     
+    public override void ExecuteResult(System.Web.Mvc.ControllerContext context) { }
     
     public string Controller { get; set; }
     public string Action { get; set; }

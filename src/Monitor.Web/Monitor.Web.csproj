@@ -98,20 +98,20 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AgentConfigurationController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="ChartsController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="ConfigurationController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Controllers\Api\AgentConfigurationController.cs" />
+    <Compile Include="Controllers\AgentConfigurationController.cs" />
     <Compile Include="Controllers\Api\AgentControlDefinitionController.cs" />
     <Compile Include="Controllers\Api\GroupConfigurationController.cs" />
     <Compile Include="Controllers\Api\SystemInformationArchiveController.cs" />
     <Compile Include="Controllers\Api\SystemInformationController.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
-    <Compile Include="Controllers\ConfigurationControler.cs" />
+    <Compile Include="Controllers\UIConfigurationController.cs" />
     <Compile Include="Core\Configuration\AppConfigFileSystemDataStoreConfigurationProvider.cs" />
     <Compile Include="Core\Configuration\AppConfigDefaultAgentConfigurationProvider.cs" />
     <Compile Include="Core\Configuration\FileSystemDataStoreConfiguration.cs" />
@@ -147,6 +147,9 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="T4MVC.ModelUnbinder.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UIConfigurationController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModelOrchestrators\AgentConfigurationViewModelOrchestrator.cs" />
@@ -266,12 +269,14 @@
     <Content Include="Styles\Source\global.min.css">
       <DependentUpon>global.chirp.less</DependentUpon>
     </Content>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Configuration\AgentConfiguration.cshtml" />
     <Content Include="Views\Charts\AgentGroup.cshtml" />
     <Content Include="Views\Charts\AgentGroupOverview.cshtml" />
-    <Content Include="Views\Configuration\UIConfiguration.cshtml" />
+    <Content Include="Views\AgentConfiguration\Editor.cshtml" />
+    <Content Include="Views\UIConfiguration\Editor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

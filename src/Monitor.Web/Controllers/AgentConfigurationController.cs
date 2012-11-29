@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Web.Mvc;
 
+using Newtonsoft.Json;
+
+using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Monitor.Web.Core.Services;
 using SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 {
-	public partial class ConfigurationController : Controller
+	public partial class AgentConfigurationController : Controller
 	{
 		private readonly IAgentConfigurationService agentConfigurationService;
 
 		private readonly IAgentConfigurationViewModelOrchestrator agentConfigurationViewModelOrchestrator;
 
-		public ConfigurationController(IAgentConfigurationService agentConfigurationService, IAgentConfigurationViewModelOrchestrator agentConfigurationViewModelOrchestrator)
+		public AgentConfigurationController(IAgentConfigurationService agentConfigurationService, IAgentConfigurationViewModelOrchestrator agentConfigurationViewModelOrchestrator)
 		{
 			if (agentConfigurationService == null)
 			{
@@ -28,7 +31,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 			this.agentConfigurationViewModelOrchestrator = agentConfigurationViewModelOrchestrator;
 		}
 
-		public virtual JsonResult GetAgentConfigurationEditorViewModel()
+		public virtual JsonResult Load()
 		{
 			var agentConfiguration = this.agentConfigurationService.GetAgentConfiguration();
 			var viewModel = this.agentConfigurationViewModelOrchestrator.GetAgentConfigurationViewModel(agentConfiguration);
@@ -36,12 +39,24 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 			return this.Json(viewModel, JsonRequestBehavior.AllowGet);
 		}
 
-		public virtual ActionResult AgentConfiguration()
+		[HttpPost]
+		public virtual ActionResult Save(AgentConfiguration agentConfiguration)
 		{
-			return this.View();
+			if (agentConfiguration == null)
+			{
+				return new HttpStatusCodeResult(400);
+			}
+
+			if (agentConfiguration.IsValid() == false)
+			{
+				return new HttpStatusCodeResult(400);
+			}
+
+			this.agentConfigurationService.SaveAgentConfiguration(agentConfiguration);
+			return new ContentResult { Content = "" };
 		}
 
-		public virtual ActionResult UIConfiguration()
+		public virtual ActionResult Editor()
 		{
 			return this.View();
 		}

@@ -11,7 +11,7 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess
 {
 	public class JsonAgentConfigurationDataAccessor : IAgentConfigurationDataAccessor
 	{
-		private const string ConfigurationFilename = "AgentConfiguration.json";
+		private const string ConfigurationFilename = "Editor.json";
 
 		private readonly IEncodingProvider encodingProvider;
 

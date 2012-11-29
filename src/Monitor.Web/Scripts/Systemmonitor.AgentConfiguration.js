@@ -354,8 +354,10 @@ $.extend(SystemMonitor, {
 						}
 					)
 				);
-				
+
+				self.UnconfiguredAgents(_.without(self.UnconfiguredAgents(), machineName));
 				self.NewAgentInstanceConfigurationId("");
+				
 				return true;
 			};
 
@@ -386,7 +388,7 @@ $.extend(SystemMonitor, {
 				$.ajax({
 					url: self.GetAgentConfigurationApiUrl(),
 					type: "POST",
-					contentType: "application/json",
+					contentType: "application/json; charset=utf-8",
 					data: function () {
 						var jsonData = ko.toJSON(self);
 						return jsonData;

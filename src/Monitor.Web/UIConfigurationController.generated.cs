@@ -21,9 +21,12 @@ using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
-    public partial class ConfigurationController {
+    public partial class UIConfigurationController {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected ConfigurationController(Dummy d) { }
+        public UIConfigurationController() { }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected UIConfigurationController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result) {
@@ -39,29 +42,25 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
 
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ConfigurationController Actions { get { return MVC.Configuration; } }
+        public UIConfigurationController Actions { get { return MVC.UIConfiguration; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Configuration";
+        public readonly string Name = "UIConfiguration";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Configuration";
+        public const string NameConst = "UIConfiguration";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
-            public readonly string GetAgentConfigurationEditorViewModel = "GetAgentConfigurationEditorViewModel";
-            public readonly string AgentConfiguration = "AgentConfiguration";
-            public readonly string UIConfiguration = "UIConfiguration";
+            public readonly string Editor = "Editor";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants {
-            public const string GetAgentConfigurationEditorViewModel = "GetAgentConfigurationEditorViewModel";
-            public const string AgentConfiguration = "AgentConfiguration";
-            public const string UIConfiguration = "UIConfiguration";
+            public const string Editor = "Editor";
         }
 
 
@@ -70,27 +69,16 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
-            public readonly string AgentConfiguration = "~/Views/Configuration/AgentConfiguration.cshtml";
-            public readonly string UIConfiguration = "~/Views/Configuration/UIConfiguration.cshtml";
+            public readonly string Editor = "~/Views/UIConfiguration/Editor.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_ConfigurationController: SignalKo.SystemMonitor.Monitor.Web.Controllers.ConfigurationController {
-        public T4MVC_ConfigurationController() : base(Dummy.Instance) { }
+    public class T4MVC_UIConfigurationController: SignalKo.SystemMonitor.Monitor.Web.Controllers.UIConfigurationController {
+        public T4MVC_UIConfigurationController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.JsonResult GetAgentConfigurationEditorViewModel() {
-            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.GetAgentConfigurationEditorViewModel);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult AgentConfiguration() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.AgentConfiguration);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult UIConfiguration() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UIConfiguration);
+        public override System.Web.Mvc.ActionResult Editor() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Editor);
             return callInfo;
         }
 

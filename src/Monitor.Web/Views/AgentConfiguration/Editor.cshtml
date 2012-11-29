@@ -305,8 +305,8 @@
 @section CustomScripts {
 	<script type="text/javascript">
 		var agentConfigurationOptions = {
-			ViewModelSourceUrl: '@Url.Action(MVC.Configuration.ActionNames.GetAgentConfigurationEditorViewModel)',
-			AgentConfigurationApiUrl: '/api/agentconfiguration',
+			ViewModelSourceUrl: '@Url.Action(MVC.AgentConfiguration.ActionNames.Load)',
+			AgentConfigurationApiUrl: '@Url.Action(MVC.AgentConfiguration.ActionNames.Save)',
 			SuccessCallback: function (message) {
 				console.log(message);
 			},
