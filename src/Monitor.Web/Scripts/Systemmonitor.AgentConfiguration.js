@@ -400,7 +400,7 @@ $.extend(SystemMonitor, {
 			*/
 			self.SaveConfiguration = function () {
 				$.ajax({
-					url: self.GetAgentConfigurationApiUrl(),
+					url: self.GetViewModelSaveUrl(),
 					type: "POST",
 					contentType: "application/json; charset=utf-8",
 					data: function () {
@@ -425,19 +425,19 @@ $.extend(SystemMonitor, {
 				}
 
 				/**
-					Get the AgentConfiguration API URL.
-					@name GetAgentConfigurationApiUrl
+					Get the ViewModel save URL.
+					@name GetViewModelSaveUrl
 				*/
-				self.GetAgentConfigurationApiUrl = function () {
-					return configuration.AgentConfigurationApiUrl;
+				self.GetViewModelSaveUrl = function () {
+					return configuration.ViewModelSaveUrl;
 				};
 				
 				/**
-					Get the ViewModel Source URL.
-					@name GetViewModelSourceUrl
+					Get the ViewModel load URL.
+					@name GetViewModelLoadUrl
 				*/
-				self.GetViewModelSourceUrl = function () {
-					return configuration.ViewModelSourceUrl;
+				self.GetViewModelLoadUrl = function () {
+					return configuration.ViewModelLoadUrl;
 				};
 				
 				if (configuration.SuccessCallback && typeof (configuration.SuccessCallback) === 'function') {
@@ -458,7 +458,7 @@ $.extend(SystemMonitor, {
 			*/
 			(function() {
 				$.ajax({
-					url: self.GetViewModelSourceUrl(),
+					url: self.GetViewModelLoadUrl(),
 					type: "GET",
 					success: function (agentConfigurationViewModel) {
 						if (!agentConfigurationViewModel || !agentConfigurationViewModel.Configuration) {

@@ -311,13 +311,13 @@
 @section CustomScripts {
 	<script type="text/javascript">
 		var agentConfigurationOptions = {
-			ViewModelSourceUrl: '@Url.Action(MVC.AgentConfiguration.ActionNames.Load)',
-			AgentConfigurationApiUrl: '@Url.Action(MVC.AgentConfiguration.ActionNames.Save)',
+			ViewModelLoadUrl: '@Url.Action(MVC.AgentConfiguration.ActionNames.Load)',
+			ViewModelSaveUrl: '@Url.Action(MVC.AgentConfiguration.ActionNames.Save)',
 			SuccessCallback: function (message) {
 				console.log(message);
 			},
 			ErrorCallback: function (message) {
-				$(".agent-configuration:first").html("Cannot load agent configuration from \"{0}\".<br/>The service returned this message:<br/>{1}".format(this.AgentConfigurationApiUrl, message));
+				$(".agent-configuration:first").html("Cannot load agent configuration from \"{0}\".<br/>The service returned this message:<br/>{1}".format(this.ViewModelSaveUrl, message));
 			}
 		};
 	</script>
