@@ -6,6 +6,7 @@
 .contextMenu>.actions{display:inline-block;margin:0;padding:0}
 .contextMenu>.actions>button{cursor:pointer}
 .contextMenu>.actions>button>i{margin-right:3px}
+.contextMenu>.actions>button:active{position:relative;top:1px}
 .agent-configuration .inputRow{display:block;margin:0 0 10px 0}
 .agent-configuration .inputRow>label{display:inline-block;width:230px}
 .agent-configuration .inputRow>input[type=text]{width:300px;background:#f2f2f2;border-top:0;border-right:0;border-bottom:1px solid #b3b3b3;border-left:0;font-weight:bold;padding:5px}
