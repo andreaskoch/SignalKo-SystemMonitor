@@ -318,6 +318,8 @@
 			},
 			ErrorCallback: function (message) {
 				$(".agent-configuration:first").html("Cannot load agent configuration from \"{0}\".<br/>The service returned this message:<br/>{1}".format(this.ViewModelSaveUrl, message));
+			},
+			ModelReadyCallback: function() {
 			}
 		};
 	</script>

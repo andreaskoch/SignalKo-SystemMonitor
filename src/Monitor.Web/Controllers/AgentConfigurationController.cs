@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
 
-using Newtonsoft.Json;
-
 using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Monitor.Web.Core.Services;
 using SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators;

@@ -440,6 +440,21 @@ $.extend(SystemMonitor, {
 					return configuration.ViewModelLoadUrl;
 				};
 				
+				/**
+					The callback function that is executed when the view model has been loaded
+					@name ModelReadyCallback
+				*/
+				self.ModelReadyCallback = function() {
+					if (typeof (configuration.ModelReadyCallback) === "function") {
+						try {
+							configuration.ModelReadyCallback();
+						} catch (callbackError) {
+							console.log("Error while executing the model ready callback function. {0}".format(callbackError));
+						}
+						
+					}
+				};
+				
 				if (configuration.SuccessCallback && typeof (configuration.SuccessCallback) === 'function') {
 					successCallback = function(message) {
 						configuration.SuccessCallback(message);
@@ -487,6 +502,8 @@ $.extend(SystemMonitor, {
 
 						ko.applyBindings(self);
 						successCallback("Agent configuration loaded.");
+
+						self.ModelReadyCallback();
 					},
 					error: function () {
 						errorCallback("Cannot retrieve agent configuration from server.");
