@@ -8,7 +8,7 @@
 	<section class="contextMenu">
 		<div class="machines">
 			<label>Machines:</label>
-			<ul data-bind="foreach: AgentInstanceConfigurations">
+			<ul data-bind="sortable: AgentInstanceConfigurations">
 				<li><a data-bind="attr: { href: '#' + MachineName }"><span data-bind="text: MachineName"></span></a></li>
 			</ul>
 		</div>
@@ -87,7 +87,7 @@
 			</div>
 		</section>
 			
-		<ul class="agents" data-bind="foreach: AgentInstanceConfigurations">
+		<ul class="agents" data-bind="sortable: AgentInstanceConfigurations">
 			<li class="agent">
 				<div data-bind="attr: { id: MachineName }" class="agentAnchor"></div>
 				<header>

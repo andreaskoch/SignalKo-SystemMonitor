@@ -171,6 +171,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Scripts\libraries\knockout-sortable.js" />
+    <Content Include="Scripts\libraries\knockout-sortable.min.js" />
     <Content Include="Scripts\libraries\underscore.string.js" />
     <Content Include="Scripts\libraries\underscore.string.min.js" />
     <Content Include="Scripts\Systemmonitor.Layout.js" />

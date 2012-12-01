@@ -350,6 +350,9 @@ namespace Links {
                           
             public static readonly string knockout_2_2_0_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/knockout-2.2.0.min.js") ? Url("knockout-2.2.0.min.js") : Url("knockout-2.2.0.js");
                           
+            public static readonly string knockout_sortable_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/knockout-sortable.min.js") ? Url("knockout-sortable.min.js") : Url("knockout-sortable.js");
+                          
+            public static readonly string knockout_sortable_min_js = Url("knockout-sortable.min.js");
             public static readonly string knockout_mapping_latest_debug_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/knockout.mapping-latest.debug.min.js") ? Url("knockout.mapping-latest.debug.min.js") : Url("knockout.mapping-latest.debug.js");
                           
             public static readonly string knockout_mapping_latest_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/knockout.mapping-latest.min.js") ? Url("knockout.mapping-latest.min.js") : Url("knockout.mapping-latest.js");
