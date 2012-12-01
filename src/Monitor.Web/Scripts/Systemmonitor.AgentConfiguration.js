@@ -10,6 +10,20 @@ if (typeof (SystemMonitor) === 'undefined') {
 	throw new Error("SystemMonitor is required to run this component");
 }
 
+ko.bindingHandlers.executeOnEnter = {
+	init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+		var allBindings = allBindingsAccessor();
+		$(element).keypress(function (event) {
+			var keyCode = (event.which ? event.which : event.keyCode);
+			if (keyCode === 13) {
+				allBindings.executeOnEnter.call(viewModel);
+				return false;
+			}
+			return true;
+		});
+	}
+};
+
 $.extend(SystemMonitor, {
 
 	"AgentConfiguration": (function (moduleConfiguration) {

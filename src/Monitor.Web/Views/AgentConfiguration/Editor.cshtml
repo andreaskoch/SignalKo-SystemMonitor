@@ -72,16 +72,18 @@
 			<h2>Agent Instance Configurations</h2>
 		</header>
 		
-		<section>
-			<label>Add a new agent instance configuration</label>
+		<section class="actions">
+			<div class="add-agent">
+				<label>Add a new agent instance configuration:</label>
 
-			<input type="text" list="unlistedMachinenames" data-bind="value: NewAgentInstanceConfigurationId"/>
-			<datalist id="unlistedMachinenames" data-bind="foreach: UnconfiguredAgents">
-				<option data-bind="text: $data"></option>
-			</datalist>
+				<input type="text" list="unlistedMachinenames" placeholder="e.g. WebServer01" data-bind="value: NewAgentInstanceConfigurationId, executeOnEnter: AddAgentInstanceConfiguration" title="Double click to select one of the currently unconfigured machines or enter a custom machine name." />
+				<datalist id="unlistedMachinenames" data-bind="foreach: UnconfiguredAgents">
+					<option data-bind="text: $data"></option>
+				</datalist>
 			
-			<div data-bind="click: AddAgentInstanceConfiguration">
-				<i class="icon-plus-sign"></i>
+				<span class="action" data-bind="click: AddAgentInstanceConfiguration" title="Click to create an agent instance configuration for the agent with the supplied name.">
+					<i class="icon-plus-sign"></i>
+				</span>
 			</div>
 		</section>
 			
@@ -91,7 +93,7 @@
 				<header>
 					<h3 data-bind="text: MachineName"></h3>
 
-					<span data-bind="click: $parent.RemoveAgentInstanceConfiguration">
+					<span class="action" data-bind="click: $parent.RemoveAgentInstanceConfiguration" title="Click to remove this agent instance configuration.">
 						<i class="icon-minus-sign"></i>
 					</span>
 				</header>
@@ -123,7 +125,9 @@
 						<ul data-bind="foreach: AvailableCollectorTypes">
 							<li>
 								<span data-bind="text: $data"></span>
-								<i class="icon-plus-sign" data-bind="click: $parent.AddNewCollectorDefinition.bind($data)"></i>
+								<span class="action" title="Click to add this collector to the current agent instance.">
+									<i class="icon-plus-sign" data-bind="click: $parent.AddNewCollectorDefinition.bind($data)"></i>
+								</span>
 							</li>
 						</ul>
 						<!-- /ko -->
@@ -142,7 +146,9 @@
 							<li>
 								<header>
 									<span data-bind="text: CollectorType"></span>
-									<i class="icon-minus-sign" data-bind="click: $parent.RemoveCollectorDefinition.bind($data)"></i>
+									<span class="action" title="Click to remove this collector definition">
+										<i class="icon-minus-sign" data-bind="click: $parent.RemoveCollectorDefinition.bind($data)"></i>
+									</span>
 								</header>
 
 								<!-- ko if: CollectorType == 'System Performance' -->
