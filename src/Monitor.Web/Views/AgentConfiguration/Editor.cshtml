@@ -9,7 +9,14 @@
 		<div class="machines">
 			<label>Machines:</label>
 			<ul data-bind="sortable: AgentInstanceConfigurations">
-				<li><a data-bind="attr: { href: '#' + MachineName }"><span data-bind="text: MachineName"></span></a></li>
+				<li>
+					<span class="agent-name">
+						<a data-bind="attr: { href: '#' + MachineName }, text: MachineName, css: { enabled: AgentIsEnabled() === true, disabled: AgentIsEnabled() === false }"></a>
+					</span>
+					<span class="agent-status">
+						<i class="icon-off" data-bind="css: { enabled: AgentIsEnabled() === true, disabled: AgentIsEnabled() === false }"></i>
+					</span>
+				</li>
 			</ul>
 		</div>
 		

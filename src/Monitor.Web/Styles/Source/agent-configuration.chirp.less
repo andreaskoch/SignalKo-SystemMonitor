@@ -5,8 +5,11 @@
 
 @contextmenu-background-color: #F2F2F2;
 
-@icon-hover-color-negative: red;
-@icon-hover-color-positive: green;
+@action-color-positive: #006633;
+@action-color-negative: #AD0000;
+
+@item-color-enabled: #006633;
+@item-color-disabled: #AD0000;
 
 .contextMenu {
 	background-color: @contextmenu-background-color;
@@ -27,7 +30,50 @@
 
 			>li {
 				display: inline-block;
-				margin: 0 10px 0 0;
+				margin: 0 5px 0 0;
+				padding: 3px 7px 3px 7px;
+				white-space:nowrap;
+				background: @contextmenu-background-color;
+
+				>.agent-name {
+					text-transform: lowercase;
+
+					>a {
+						text-decoration: underline;
+					}
+
+					>a.enabled {
+						color: darken(@item-color-enabled, 20%);
+
+						&:hover {
+							color: darken(@item-color-enabled, 10%);
+						}
+					}
+
+					>a.disabled {
+						color: darken(@item-color-disabled, 20%);
+
+						&:hover {
+							color: darken(@item-color-disabled, 10%);
+						}
+					}
+				}
+
+				>.agent-status {
+					cursor: default;
+
+					>.enabled {
+						color: @item-color-enabled;
+					}
+
+					>.disabled {
+						color: @item-color-disabled;
+					}
+				}
+
+				&:hover {
+					background: darken(@contextmenu-background-color, 10%);
+				}
 			}
 		}
 	}
@@ -147,13 +193,13 @@
 					cursor: pointer;
 
 					&:hover {
-						color: @icon-hover-color-positive;
+						color: @action-color-positive;
 					}
 
 					&:active {
 						position: relative;
 						top: 1px;
-						color: @icon-hover-color-positive;
+						color: @action-color-positive;
 					}
 				}
 			}
@@ -181,13 +227,13 @@
 						cursor: pointer;
 
 						&:hover {
-							color: @icon-hover-color-negative;
+							color: @action-color-negative;
 						}
 
 						&:active {
 							position: relative;
 							top: 1px;
-							color: @icon-hover-color-negative;
+							color: @action-color-negative;
 						}
 					}
 				}
@@ -293,13 +339,13 @@
 										cursor: pointer;
 
 										&:hover {
-											color: @icon-hover-color-negative;
+											color: @action-color-negative;
 										}
 
 										&:active {
 											position: relative;
 											top: 1px;
-											color: @icon-hover-color-negative;
+											color: @action-color-negative;
 										}
 									}
 								}
