@@ -45,7 +45,23 @@
 
 .ui-configuration {
 
+	.trash {
+		background: red;
+		height: 50px;
+	}
+
 	>.unassigned-agents {
+		>ul {
+			min-height: 50px;
+
+			&:active {
+				border: 1px dotted black;
+			}
+
+			>li {
+
+			}
+		}
 	}
 
 	>.groups {
@@ -61,11 +77,11 @@
 
 				/* Agents */
 				>ul {
+					min-height: 50px;
 
-						&:active {
-							min-height: 50px;
-							border: 1px dotted black;
-						}
+					&:active {
+						border: 1px dotted black;
+					}
 
 					/* Agent */
 					>li {

@@ -19,9 +19,12 @@
 	<div class="unassigned-agents">
 
 		<label>Unassigned agents</label>
-
-		<ul data-bind="sortable: UnassignedAgents">
-			<li data-bind="text: $data"></li>
+		
+		<!-- Agents -->
+		<ul class="agent-dropzone" data-bind="foreach: UnassignedAgents, sortableListOfAgents: UnassignedAgents, parentList: UnassignedAgents">
+			
+			<!-- Agent -->
+			<li data-bind="sortableItem: { item: $data, parentList: $parent.UnassignedAgents }, text: $data"></li>
 		</ul>
 
 	</div>
@@ -29,9 +32,14 @@
 	<div class="groups">
 
 		<label>Groups</label>
-
-		<ul data-bind="sortable: Groups">
-			<li>
+		
+		<!-- Groups -->
+		<ul data-bind="foreach: Groups, sortableListOfAgentGroups: Groups, parentList: Groups">
+			
+			<!-- Group -->
+			<li data-bind="sortableItem: { item: $data, parentList: $parent.Groups }">
+				
+				<!-- Group name -->
 				<div>
 					<div data-bind="visible: !$root.isTaskSelected($data)">
 						<span data-bind="text: Name, click: $root.selectedTask"></span>
@@ -41,9 +49,13 @@
 						<input type="text" data-bind="value: Name, event: { blur: $root.clearTask }" />
 					</div>
 				</div>
+				
+				<!-- Agents assigned to this group -->
+				<ul class="agent-dropzone" data-bind="foreach: Agents, sortableListOfAgents: Agents, parentList: Agents">
+					
+					<!-- Agent -->
+					<li data-bind="sortableItem: { item: $data, parentList: $parent.Agents }, text: $data"></li>
 
-				<ul data-bind="sortable: Agents">
-					<li data-bind="text: $data"></li>
 				</ul>
 			</li>
 		</ul>

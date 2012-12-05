@@ -10,6 +10,66 @@ if (typeof (SystemMonitor) === 'undefined') {
 	throw new Error("SystemMonitor is required to run this component");
 }
 
+ko.bindingHandlers.sortableListOfAgents = {
+	init: function (element, valueAccessor, allBindingsAccessor, context) {
+		$(element).data("sortList", valueAccessor()); //attach meta-data
+		$(element).sortable({
+			update: function (event, ui) {
+				var item = ko.dataFor(ui.item[0]);
+				if (item) {
+					//identify parents
+					var originalParent = ui.item.data("parentList");
+					var newParent = ui.item.parent().data("sortList");
+					//figure out its new position
+					var position = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
+					if (position >= 0) {
+						originalParent.remove(item);
+						newParent.splice(position, 0, item);
+					}
+
+					ui.item.remove();
+				}
+			},
+			connectWith: '.agent-dropzone'
+		});
+	}
+};
+
+ko.bindingHandlers.sortableListOfAgentGroups = {
+	init: function (element, valueAccessor, allBindingsAccessor, context) {
+		$(element).data("sortList", valueAccessor()); //attach meta-data
+		$(element).sortable({
+			update: function (event, ui) {
+				var item = ko.dataFor(ui.item[0]);
+				//var item = ui.item.data("sortItem");
+				if (item) {
+					//identify parents
+					var originalParent = ui.item.data("parentList");
+					var newParent = ui.item.parent().data("sortList");
+					//figure out its new position
+					var position = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
+					if (position >= 0) {
+						originalParent.remove(item);
+						newParent.splice(position, 0, item);
+					}
+
+					ui.item.remove();
+				}
+			},
+			connectWith: ''
+		});
+	}
+};
+
+//attach meta-data
+ko.bindingHandlers.sortableItem = {
+	init: function (element, valueAccessor) {
+		var options = valueAccessor();
+		$(element).data("sortItem", options.item);
+		$(element).data("parentList", options.parentList);
+	}
+};
+
 //control visibility, give element focus, and select the contents (in order)
 ko.bindingHandlers.visibleAndSelect = {
 	update: function (element, valueAccessor) {
@@ -17,7 +77,7 @@ ko.bindingHandlers.visibleAndSelect = {
 		if (valueAccessor()) {
 			setTimeout(function () {
 				$(element).find("input").focus().select();
-			}, 0); //new tasks are not in DOM yet
+			}, 0);
 		}
 	}
 };
