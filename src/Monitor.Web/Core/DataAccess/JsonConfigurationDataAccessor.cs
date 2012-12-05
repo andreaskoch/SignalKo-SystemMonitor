@@ -3,27 +3,24 @@ using System.IO;
 
 using Newtonsoft.Json;
 
-using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Common.Services;
 using SignalKo.SystemMonitor.Monitor.Web.Core.Configuration;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess
 {
-	public class JsonAgentConfigurationDataAccessor : IAgentConfigurationDataAccessor
+	public class JsonConfigurationDataAccessor<T> : IConfigurationDataAccessor<T> where T : class
 	{
-		private const string ConfigurationFilename = "Editor.json";
-
 		private readonly IEncodingProvider encodingProvider;
 
 		private readonly string configurationFilePath;
 
-		public JsonAgentConfigurationDataAccessor(IFileSystemDataStoreConfigurationProvider fileSystemDataStoreConfigurationProvider, IEncodingProvider encodingProvider)
+		public JsonConfigurationDataAccessor(IFileSystemDataStoreConfigurationProvider fileSystemDataStoreConfigurationProvider, IEncodingProvider encodingProvider)
 		{
 			this.configurationFilePath = this.GetConfigurationFilePath(fileSystemDataStoreConfigurationProvider.GetConfiguration());
 			this.encodingProvider = encodingProvider;
 		}
 
-		public AgentConfiguration Load()
+		public T Load()
 		{
 			if (!File.Exists(this.configurationFilePath))
 			{
@@ -31,12 +28,12 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess
 			}
 
 			string json = File.ReadAllText(this.configurationFilePath, this.encodingProvider.GetEncoding());
-			return JsonConvert.DeserializeObject<AgentConfiguration>(json);
+			return JsonConvert.DeserializeObject<T>(json);
 		}
 
-		public void Store(AgentConfiguration agentConfiguration)
+		public void Store(T configuration)
 		{
-			string json = JsonConvert.SerializeObject(agentConfiguration);
+			string json = JsonConvert.SerializeObject(configuration);
 			File.WriteAllText(this.configurationFilePath, json, this.encodingProvider.GetEncoding());
 		}
 
@@ -57,7 +54,8 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess
 				throw new DirectoryNotFoundException(string.Format("The configuration folder \"{0}\" does not exist.", fileSystemDataStoreConfiguration.ConfigurationFolder));
 			}
 
-			return Path.Combine(fileSystemDataStoreConfiguration.ConfigurationFolder, ConfigurationFilename);
+			string configurationFilename = typeof(T).Name + ".json";
+			return Path.Combine(fileSystemDataStoreConfiguration.ConfigurationFolder, configurationFilename);
 		}
 	}
 }

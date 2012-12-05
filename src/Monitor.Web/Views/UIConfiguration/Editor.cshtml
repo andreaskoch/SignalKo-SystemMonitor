@@ -4,6 +4,67 @@
 	ViewBag.Title = "UI Configuration";
 }
 
+@section SubNavigation {
+	<section class="contextMenu">
+		<div class="actions">
+			<label>Actions:</label>
+			<button class="button btnSave" data-bind="click: SaveConfiguration" title="Save all changes"><i class="icon-save"></i><span class="text">Save</span></button>
+			<button class="button btnAddGroup" data-bind="click: addGroup" title="Add a new group"><i class="icon-plus-sign"></i><span class="text">Add group</span></button>
+		</div>
+	</section>
+}
+
 <section class="content ui-configuration">
-	
+
+	<div class="unassigned-agents">
+
+		<label>Unassigned agents</label>
+
+		<ul data-bind="sortable: UnassignedAgents">
+			<li data-bind="text: $data"></li>
+		</ul>
+
+	</div>
+
+	<div class="groups">
+
+		<label>Groups</label>
+
+		<ul data-bind="sortable: Groups">
+			<li>
+				<div>
+					<div data-bind="visible: !$root.isTaskSelected($data)">
+						<span data-bind="text: Name, click: $root.selectedTask"></span>
+					</div>
+
+					<div data-bind="visibleAndSelect: $root.isTaskSelected($data)">
+						<input type="text" data-bind="value: Name, event: { blur: $root.clearTask }" />
+					</div>
+				</div>
+
+				<ul data-bind="sortable: Agents">
+					<li data-bind="text: $data"></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
 </section>
+
+@section CustomScripts {
+	<script type="text/javascript">
+		var uiConfigurationOptions = {
+			ViewModelLoadUrl: '@Url.Action(MVC.UIConfiguration.ActionNames.Load)',
+			ViewModelSaveUrl: '@Url.Action(MVC.UIConfiguration.ActionNames.Save)',
+			SuccessCallback: function (message) {
+				console.log(message);
+			},
+			ErrorCallback: function (message) {
+				$(".ui-configuration:first").html("Cannot load agent configuration from \"{0}\".<br/>The service returned this message:<br/>{1}".format(this.ViewModelSaveUrl, message));
+			},
+			ModelReadyCallback: function () {
+			}
+		};
+	</script>
+	<script type="text/javascript" src="@Links.Scripts.Systemmonitor_UIConfiguration_js"></script>
+}

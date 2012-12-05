@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Monitor.Web.Core.Services;
 using SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators;
+using SignalKo.SystemMonitor.Monitor.Web.ViewModels;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 {
@@ -29,11 +30,12 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
 			this.agentConfigurationViewModelOrchestrator = agentConfigurationViewModelOrchestrator;
 		}
 
+		[HttpGet]
 		public virtual JsonResult Load()
 		{
 			var agentConfiguration = this.agentConfigurationService.GetAgentConfiguration();
-			var viewModel = this.agentConfigurationViewModelOrchestrator.GetAgentConfigurationViewModel(agentConfiguration);
 
+			AgentConfigurationViewModel viewModel = this.agentConfigurationViewModelOrchestrator.GetAgentConfigurationViewModel(agentConfiguration);
 			return this.Json(viewModel, JsonRequestBehavior.AllowGet);
 		}
 

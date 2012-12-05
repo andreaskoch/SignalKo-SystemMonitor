@@ -1,0 +1,79 @@
+﻿
+@input-border-color: #B3B3B3;
+@input-border-color-highlight: #000000;
+@input-background-color: #F2F2F2;
+
+@contextmenu-background-color: #F2F2F2;
+
+@action-color-positive: #006633;
+@action-color-negative: #AD0000;
+
+@item-color-enabled: #006633;
+@item-color-disabled: #AD0000;
+
+.contextMenu {
+	background-color: @contextmenu-background-color;
+	display: inline-block;
+	width: 100%;
+	padding: 15px;
+
+	>.actions {
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+
+		>button {
+			cursor: pointer;
+
+			/* icon */
+			>i {
+				margin-right: 3px;
+			}
+
+			/* button text */
+			>.text {
+
+			}
+
+			&:active {
+				position: relative;
+				top: 1px;
+			}
+		}
+	}
+}
+
+.ui-configuration {
+
+	>.unassigned-agents {
+	}
+
+	>.groups {
+
+		/* Groups */
+		>ul {
+			margin: 0;
+			padding: 0;
+			cursor: default;
+
+			/* Group */
+			>li {
+
+				/* Agents */
+				>ul {
+
+						&:active {
+							min-height: 50px;
+							border: 1px dotted black;
+						}
+
+					/* Agent */
+					>li {
+
+					}
+				}
+			}
+		}
+	}
+
+}

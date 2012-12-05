@@ -375,6 +375,8 @@ namespace Links {
                       
         public static readonly string Systemmonitor_Overview_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.Overview.min.js") ? Url("Systemmonitor.Overview.min.js") : Url("Systemmonitor.Overview.js");
                       
+        public static readonly string Systemmonitor_UIConfiguration_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.UIConfiguration.min.js") ? Url("Systemmonitor.UIConfiguration.min.js") : Url("Systemmonitor.UIConfiguration.js");
+                      
         public static readonly string Systemmonitor_Utilities_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/Systemmonitor.Utilities.min.js") ? Url("Systemmonitor.Utilities.min.js") : Url("Systemmonitor.Utilities.js");
                       
     }
@@ -513,6 +515,10 @@ namespace Links {
                 public static readonly string font_awesome_min_css = Url("font-awesome.min.css");
             }
         
+            public static readonly string ui_configuration_chirp_less = Url("ui-configuration.chirp.less");
+            public static readonly string ui_configuration_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ui-configuration.min.css") ? Url("ui-configuration.min.css") : Url("ui-configuration.css");
+                 
+            public static readonly string ui_configuration_min_css = Url("ui-configuration.min.css");
         }
     
     }

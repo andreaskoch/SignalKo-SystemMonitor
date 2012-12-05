@@ -146,6 +146,17 @@ $.extend(SystemMonitor, {
 				@returns {String} Returns the computer name of this agent instance.
 			*/
 			self.MachineName = instanceConfiguration.MachineName;
+
+			self.GroupNamesEditor = ko.observable(_.string.join(", ", instanceConfiguration.GroupNames));
+			
+			/**
+				Gets a list all group names that this agent is a member of
+				@returns {Array} Returns a string array of group names that this particular agent is a member of
+			*/
+			self.GroupNames = ko.computed(function() {
+				var groupNameList = self.GroupNamesEditor();
+				return _.map(_.string.words(groupNameList, ","), function (n) { return _.string.trim(n); });
+			}, self);
 			
 			/**
 				A value indicating whether this agent is enabled or not.
@@ -408,7 +419,7 @@ $.extend(SystemMonitor, {
 						return jsonData;
 					}(),
 					success: function () {
-						successCallback("Agent configuration has bee saved successfully.");
+						successCallback("Agent configuration has been saved successfully.");
 					},
 					error: function () {
 						errorCallback("Cannot save agent configuration to server.");
@@ -475,6 +486,7 @@ $.extend(SystemMonitor, {
 				$.ajax({
 					url: self.GetViewModelLoadUrl(),
 					type: "GET",
+					contentType: "application/json; charset=utf-8",
 					success: function (agentConfigurationViewModel) {
 						if (!agentConfigurationViewModel || !agentConfigurationViewModel.Configuration) {
 							errorCallback("Cannot load empty agent configuration.");

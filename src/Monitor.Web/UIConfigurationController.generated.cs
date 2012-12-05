@@ -23,9 +23,6 @@ using T4MVC;
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
     public partial class UIConfigurationController {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public UIConfigurationController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected UIConfigurationController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -40,6 +37,11 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Save() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Save);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public UIConfigurationController Actions { get { return MVC.UIConfiguration; } }
@@ -56,14 +58,25 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Editor = "Editor";
+            public readonly string Load = "Load";
+            public readonly string Save = "Save";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants {
             public const string Editor = "Editor";
+            public const string Load = "Load";
+            public const string Save = "Save";
         }
 
 
+        static readonly ActionParamsClass_Save s_params_Save = new ActionParamsClass_Save();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Save SaveParams { get { return s_params_Save; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Save {
+            public readonly string groupConfiguration = "groupConfiguration";
+        }
         static readonly ViewNames s_views = new ViewNames();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewNames Views { get { return s_views; } }
@@ -79,6 +92,17 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult Editor() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Editor);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.JsonResult Load() {
+            var callInfo = new T4MVC_JsonResult(Area, Name, ActionNames.Load);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Save(SignalKo.SystemMonitor.Monitor.Web.Controllers.GroupConfiguration groupConfiguration) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Save);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "groupConfiguration", groupConfiguration);
             return callInfo;
         }
 

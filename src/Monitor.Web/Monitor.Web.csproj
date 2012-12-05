@@ -120,10 +120,10 @@
     <Compile Include="Core\Configuration\IServerConfigurationRepository.cs" />
     <Compile Include="Core\Configuration\JsonFileConfigurationRepository.cs" />
     <Compile Include="Core\DataAccess\FilesystemSystemInformationArchiveAccessor.cs" />
-    <Compile Include="Core\DataAccess\IAgentConfigurationDataAccessor.cs" />
+    <Compile Include="Core\DataAccess\IConfigurationDataAccessor.cs" />
     <Compile Include="Core\DataAccess\ISystemInformationArchiveAccessor.cs" />
-    <Compile Include="Core\DataAccess\JsonAgentConfigurationDataAccessor.cs" />
     <Compile Include="Core\DataAccess\ISystemStatusHistoryDataAccessor.cs" />
+    <Compile Include="Core\DataAccess\JsonConfigurationDataAccessor.cs" />
     <Compile Include="Core\Services\AgentConfigurationService.cs" />
     <Compile Include="Core\Services\AgentControlDefinitionService.cs" />
     <Compile Include="Core\Services\IAgentConfigurationService.cs" />
@@ -171,6 +171,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Scripts\Systemmonitor.UIConfiguration.js" />
     <Content Include="Scripts\libraries\knockout-sortable.js" />
     <Content Include="Scripts\libraries\knockout-sortable.min.js" />
     <Content Include="Scripts\libraries\underscore.string.js" />
@@ -241,6 +242,7 @@
     </None>
     <None Include="Styles\Source\agent-group-overview.chirp.less" />
     <None Include="Styles\Source\agent-group.chirp.less" />
+    <Content Include="Styles\Source\ui-configuration.chirp.less" />
     <None Include="Styles\Source\libraries\font-awesome.css">
       <DependentUpon>font-awesome.chirp.less</DependentUpon>
     </None>
@@ -270,6 +272,12 @@
     </Content>
     <Content Include="Styles\Source\global.min.css">
       <DependentUpon>global.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Source\ui-configuration.css">
+      <DependentUpon>ui-configuration.chirp.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\Source\ui-configuration.min.css">
+      <DependentUpon>ui-configuration.chirp.less</DependentUpon>
     </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>

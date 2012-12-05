@@ -9,13 +9,13 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Core.Services
 {
 	public class AgentConfigurationService : IAgentConfigurationService
 	{
-		private readonly IAgentConfigurationDataAccessor agentConfigurationDataAccessor;
+		private readonly IConfigurationDataAccessor<AgentConfiguration> agentConfigurationDataAccessor;
 
 		private readonly IDefaultAgentConfigurationProvider defaultAgentConfigurationProvider;
 
 		private readonly IKnownAgentsProvider knownAgentsProvider;
 
-		public AgentConfigurationService(IAgentConfigurationDataAccessor agentConfigurationDataAccessor, IDefaultAgentConfigurationProvider defaultAgentConfigurationProvider, IKnownAgentsProvider knownAgentsProvider)
+		public AgentConfigurationService(IConfigurationDataAccessor<AgentConfiguration> agentConfigurationDataAccessor, IDefaultAgentConfigurationProvider defaultAgentConfigurationProvider, IKnownAgentsProvider knownAgentsProvider)
 		{
 			if (agentConfigurationDataAccessor == null)
 			{
