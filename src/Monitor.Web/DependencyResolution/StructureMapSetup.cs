@@ -1,6 +1,5 @@
 using SignalKo.SystemMonitor.Common.Model;
 using SignalKo.SystemMonitor.Common.Services;
-using SignalKo.SystemMonitor.Monitor.Web.Controllers;
 using SignalKo.SystemMonitor.Monitor.Web.Core.Configuration;
 using SignalKo.SystemMonitor.Monitor.Web.Core.DataAccess;
 using SignalKo.SystemMonitor.Monitor.Web.Core.Services;
@@ -25,7 +24,6 @@ namespace SignalKo.SystemMonitor.Monitor.Web.DependencyResolution
 					/* configuration */
 					x.For<IFileSystemDataStoreConfigurationProvider>().Use<AppConfigFileSystemDataStoreConfigurationProvider>();
 					x.For<IDefaultAgentConfigurationProvider>().Use<AppConfigDefaultAgentConfigurationProvider>();
-					x.For<IServerConfigurationRepository>().Use<JsonFileConfigurationRepository>();
 
 					/* data access */
 					x.For<IConfigurationDataAccessor<AgentConfiguration>>().Use<JsonConfigurationDataAccessor<AgentConfiguration>>();

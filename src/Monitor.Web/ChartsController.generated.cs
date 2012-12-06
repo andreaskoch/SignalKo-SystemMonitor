@@ -20,8 +20,10 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
-    public partial class ChartsController {
+namespace SignalKo.SystemMonitor.Monitor.Web.Controllers
+{
+    public partial class ChartsController
+    {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ChartsController() { }
 
@@ -29,21 +31,24 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
         protected ChartsController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult AgentGroup() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.AgentGroup);
+        public System.Web.Mvc.ActionResult AgentGroup()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AgentGroup);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -59,13 +64,15 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNamesClass {
+        public class ActionNamesClass
+        {
             public readonly string AgentGroupOverview = "AgentGroupOverview";
             public readonly string AgentGroup = "AgentGroup";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants {
+        public class ActionNameConstants
+        {
             public const string AgentGroupOverview = "AgentGroupOverview";
             public const string AgentGroup = "AgentGroup";
         }
@@ -75,30 +82,42 @@ namespace SignalKo.SystemMonitor.Monitor.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_AgentGroup AgentGroupParams { get { return s_params_AgentGroup; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_AgentGroup {
+        public class ActionParamsClass_AgentGroup
+        {
             public readonly string groupName = "groupName";
         }
-        static readonly ViewNames s_views = new ViewNames();
+        static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ViewNames Views { get { return s_views; } }
+        public ViewsClass Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ViewNames {
+        public class ViewsClass
+        {
+            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+            public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+            public class _ViewNamesClass
+            {
+                public readonly string AgentGroup = "AgentGroup";
+                public readonly string AgentGroupOverview = "AgentGroupOverview";
+            }
             public readonly string AgentGroup = "~/Views/Charts/AgentGroup.cshtml";
             public readonly string AgentGroupOverview = "~/Views/Charts/AgentGroupOverview.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_ChartsController: SignalKo.SystemMonitor.Monitor.Web.Controllers.ChartsController {
+    public class T4MVC_ChartsController : SignalKo.SystemMonitor.Monitor.Web.Controllers.ChartsController
+    {
         public T4MVC_ChartsController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult AgentGroupOverview() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.AgentGroupOverview);
+        public override System.Web.Mvc.ActionResult AgentGroupOverview()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AgentGroupOverview);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult AgentGroup(string groupName) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.AgentGroup);
+        public override System.Web.Mvc.ActionResult AgentGroup(string groupName)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AgentGroup);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "groupName", groupName);
             return callInfo;
         }

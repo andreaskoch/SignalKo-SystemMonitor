@@ -89,6 +89,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
     </Reference>
+    <Reference Include="T4MVCExtensions">
+      <HintPath>..\packages\T4MVCExtensions.3.0.3\lib\net40\T4MVCExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivator, Version=1.5.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebActivator.1.5.2\lib\net40\WebActivator.dll</HintPath>
@@ -106,6 +109,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AgentConfigurationController.cs" />
+    <Compile Include="Controllers\Api\AgentConfigurationController.cs" />
     <Compile Include="Controllers\Api\AgentControlDefinitionController.cs" />
     <Compile Include="Controllers\Api\GroupConfigurationController.cs" />
     <Compile Include="Controllers\Api\SystemInformationArchiveController.cs" />
@@ -117,8 +121,6 @@
     <Compile Include="Core\Configuration\FileSystemDataStoreConfiguration.cs" />
     <Compile Include="Core\Configuration\IDefaultAgentConfigurationProvider.cs" />
     <Compile Include="Core\Configuration\IFileSystemDataStoreConfigurationProvider.cs" />
-    <Compile Include="Core\Configuration\IServerConfigurationRepository.cs" />
-    <Compile Include="Core\Configuration\JsonFileConfigurationRepository.cs" />
     <Compile Include="Core\DataAccess\FilesystemSystemInformationArchiveAccessor.cs" />
     <Compile Include="Core\DataAccess\IConfigurationDataAccessor.cs" />
     <Compile Include="Core\DataAccess\ISystemInformationArchiveAccessor.cs" />
@@ -126,8 +128,10 @@
     <Compile Include="Core\DataAccess\JsonConfigurationDataAccessor.cs" />
     <Compile Include="Core\Services\AgentConfigurationService.cs" />
     <Compile Include="Core\Services\AgentControlDefinitionService.cs" />
+    <Compile Include="Core\Services\GroupConfigurationService.cs" />
     <Compile Include="Core\Services\IAgentConfigurationService.cs" />
     <Compile Include="Core\Services\IAgentControlDefinitionService.cs" />
+    <Compile Include="Core\Services\IGroupConfigurationService.cs" />
     <Compile Include="Core\Services\IKnownAgentsProvider.cs" />
     <Compile Include="Core\Services\KnownAgentsProvider.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -146,14 +150,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="T4MVC.ModelUnbinder.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="UIConfigurationController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModelOrchestrators\AgentConfigurationViewModelOrchestrator.cs" />
+    <Compile Include="ViewModelOrchestrators\GroupConfigurationViewModelOrchestrator.cs" />
     <Compile Include="ViewModelOrchestrators\IAgentConfigurationViewModelOrchestrator.cs" />
+    <Compile Include="ViewModelOrchestrators\IGroupConfigurationViewModelOrchestrator.cs" />
     <Compile Include="ViewModelOrchestrators\IMemoryStatusOrchestrator.cs" />
     <Compile Include="ViewModelOrchestrators\IProcessorStatusOrchestrator.cs" />
     <Compile Include="ViewModelOrchestrators\IStorageStatusOrchestrator.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="ViewModelOrchestrators\SystemStatusOrchestrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AgentConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\GroupConfigurationViewModel.cs" />
     <Compile Include="ViewModels\SystemStatusPointViewModel.cs" />
     <Compile Include="ViewModels\SystemStatusViewModel.cs" />
   </ItemGroup>
@@ -279,6 +283,7 @@
     <Content Include="Styles\Source\ui-configuration.min.css">
       <DependentUpon>ui-configuration.chirp.less</DependentUpon>
     </Content>
+    <Content Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -313,10 +318,11 @@
     </Content>
     <None Include="Styles\Source\global.chirp.less" />
     <None Include="Styles\Source\libraries\font-awesome.chirp.less" />
-    <None Include="T4MVC.tt">
+    <Content Include="T4MVC.tt.hooks.t4" />
+    <Content Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </None>
+    </Content>
     <None Include="T4MVC.tt.settings.t4" />
   </ItemGroup>
   <ItemGroup>

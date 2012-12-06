@@ -66,8 +66,7 @@
 @section CustomScripts {
 	<script type="text/javascript">
 		var uiConfigurationOptions = {
-			ViewModelLoadUrl: '@Url.Action(MVC.UIConfiguration.ActionNames.Load)',
-			ViewModelSaveUrl: '@Url.Action(MVC.UIConfiguration.ActionNames.Save)',
+			ApiUrl: '/api/groupconfiguration',
 			SuccessCallback: function (message) {
 				console.log(message);
 			},

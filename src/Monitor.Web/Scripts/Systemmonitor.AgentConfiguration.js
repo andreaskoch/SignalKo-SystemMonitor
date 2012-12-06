@@ -411,9 +411,10 @@ $.extend(SystemMonitor, {
 			*/
 			self.SaveConfiguration = function () {
 				$.ajax({
-					url: self.GetViewModelSaveUrl(),
+					url: self.GetApiUrl(),
 					type: "POST",
-					contentType: "application/json; charset=utf-8",
+					contentType: "application/json",
+					dataType: "json",
 					data: function () {
 						var jsonData = ko.toJSON(self);
 						return jsonData;
@@ -436,19 +437,11 @@ $.extend(SystemMonitor, {
 				}
 
 				/**
-					Get the ViewModel save URL.
-					@name GetViewModelSaveUrl
+					Get the api URL.
+					@name GetApiUrl
 				*/
-				self.GetViewModelSaveUrl = function () {
-					return configuration.ViewModelSaveUrl;
-				};
-				
-				/**
-					Get the ViewModel load URL.
-					@name GetViewModelLoadUrl
-				*/
-				self.GetViewModelLoadUrl = function () {
-					return configuration.ViewModelLoadUrl;
+				self.GetApiUrl = function () {
+					return configuration.ApiUrl;
 				};
 				
 				/**
@@ -484,18 +477,18 @@ $.extend(SystemMonitor, {
 			*/
 			(function() {
 				$.ajax({
-					url: self.GetViewModelLoadUrl(),
+					url: self.GetApiUrl(),
 					type: "GET",
-					contentType: "application/json; charset=utf-8",
-					success: function (agentConfigurationViewModel) {
-						if (!agentConfigurationViewModel || !agentConfigurationViewModel.Configuration) {
+					dataType: "json",
+					success: function (model) {
+						if (!model || !model.Configuration) {
 							errorCallback("Cannot load empty agent configuration.");
 							return;
 						}
 
-						self.UnconfiguredAgents = ko.observableArray(agentConfigurationViewModel.UnconfiguredAgents);
+						self.UnconfiguredAgents = ko.observableArray(model.UnconfiguredAgents);
 
-						var agentConfiguration = agentConfigurationViewModel.Configuration;
+						var agentConfiguration = model.Configuration;
 						
 						self.Hostaddress(agentConfiguration.Hostaddress);
 						self.Hostname(agentConfiguration.Hostname);

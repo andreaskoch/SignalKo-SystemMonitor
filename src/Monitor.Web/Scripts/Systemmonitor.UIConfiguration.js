@@ -135,9 +135,10 @@ $.extend(SystemMonitor, {
 			*/
 			self.SaveConfiguration = function () {
 				$.ajax({
-					url: self.GetViewModelSaveUrl(),
+					url: self.GetApiUrl(),
 					type: "POST",
-					contentType: "application/json; charset=utf-8",
+					contentType: "application/json",
+					dataType: "json",
 					data: function () {
 						var jsonData = ko.toJSON(self);
 						return jsonData;
@@ -160,19 +161,11 @@ $.extend(SystemMonitor, {
 				}
 
 				/**
-					Get the ViewModel save URL.
-					@name GetViewModelSaveUrl
+					Get the api URL.
+					@name GetApiUrl
 				*/
-				self.GetViewModelSaveUrl = function () {
-					return configuration.ViewModelSaveUrl;
-				};
-
-				/**
-					Get the ViewModel load URL.
-					@name GetViewModelLoadUrl
-				*/
-				self.GetViewModelLoadUrl = function () {
-					return configuration.ViewModelLoadUrl;
+				self.GetApiUrl = function () {
+					return configuration.ApiUrl;
 				};
 
 				/**
@@ -208,19 +201,19 @@ $.extend(SystemMonitor, {
 			*/
 			(function () {
 				$.ajax({
-					url: self.GetViewModelLoadUrl(),
+					url: self.GetApiUrl(),
 					type: "GET",
-					contentType: "application/json; charset=utf-8",
-					success: function (groupConfiguration) {
-						if (!groupConfiguration) {
+					dataType: "json",
+					success: function (model) {
+						if (!model) {
 							errorCallback("Cannot load empty group configuration.");
 							return;
 						}
 
-						self.UnassignedAgents = ko.observableArray(groupConfiguration.UnassignedAgents);
+						self.UnassignedAgents = ko.observableArray(model.UnassignedAgents);
 
-						for (var i = 0; i < groupConfiguration.Groups.length; i++) {
-							var groupConfig = groupConfiguration.Groups[i];
+						for (var i = 0; i < model.Groups.length; i++) {
+							var groupConfig = model.Groups[i];
 							self.Groups.push(new groupViewModel(groupConfig));
 						}
 

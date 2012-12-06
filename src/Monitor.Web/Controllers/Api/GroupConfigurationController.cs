@@ -1,29 +1,60 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Net.Http;
+using System.Web.Http;
 
-using SignalKo.SystemMonitor.Common.Model.Configuration;
-using SignalKo.SystemMonitor.Monitor.Web.Core.Configuration;
+using SignalKo.SystemMonitor.Common.Model;
+using SignalKo.SystemMonitor.Monitor.Web.Core.Services;
+using SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators;
+using SignalKo.SystemMonitor.Monitor.Web.ViewModels;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.Controllers.Api
 {
-    public class GroupConfigurationController : ApiController
-    {
-        private readonly IServerConfigurationRepository configurationRepository;
+	public class GroupConfigurationController : ApiController
+	{
+		private readonly IGroupConfigurationService groupConfigurationService;
 
-        public GroupConfigurationController(IServerConfigurationRepository configurationRepository)
-        {
-            this.configurationRepository = configurationRepository;
-        }
+		private readonly IAgentConfigurationService agentConfigurationService;
 
-        public MachineGroupConfiguration Get()
-        {
+		private readonly IGroupConfigurationViewModelOrchestrator groupConfigurationViewModelOrchestrator;
 
-            MachineGroupConfiguration configuration = this.configurationRepository.LoadConfiguration();
-            return configuration;
-        }
+		public GroupConfigurationController(IGroupConfigurationService groupConfigurationService, IAgentConfigurationService agentConfigurationService, IGroupConfigurationViewModelOrchestrator groupConfigurationViewModelOrchestrator)
+		{
+			if (groupConfigurationService == null)
+			{
+				throw new ArgumentNullException("groupConfigurationService");
+			}
+			if (agentConfigurationService == null)
+			{
+				throw new ArgumentNullException("agentConfigurationService");
+			}
 
-        public void Put(MachineGroupConfiguration configuration)
-        {
-            this.configurationRepository.SaveConfiguration(configuration);
-        }
-    }
+			if (groupConfigurationViewModelOrchestrator == null)
+			{
+				throw new ArgumentNullException("groupConfigurationViewModelOrchestrator");
+			}
+
+			this.groupConfigurationService = groupConfigurationService;
+			this.agentConfigurationService = agentConfigurationService;
+			this.groupConfigurationViewModelOrchestrator = groupConfigurationViewModelOrchestrator;
+		}
+
+		public GroupConfigurationViewModel Get()
+		{
+			var groupConfiguration = this.groupConfigurationService.GetGroupConfiguration();
+			var agentConfiguration = this.agentConfigurationService.GetAgentConfiguration();
+
+			GroupConfigurationViewModel viewModel = this.groupConfigurationViewModelOrchestrator.GetGroupConfigurationViewModel(groupConfiguration, agentConfiguration.AgentInstanceConfigurations.ToArray());
+			return viewModel;
+		}
+
+		public void Post(GroupConfiguration groupConfiguration)
+		{
+			if (groupConfiguration == null)
+			{
+				throw new HttpRequestException("The supplied group configuration cannot be null.");
+			}
+
+			this.groupConfigurationService.SaveGroupConfiguration(groupConfiguration);
+		}
+	}
 }
