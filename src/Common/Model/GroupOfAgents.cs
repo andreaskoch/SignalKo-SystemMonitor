@@ -1,9 +1,10 @@
-using System.Collections.Generic;
 
 namespace SignalKo.SystemMonitor.Common.Model
 {
-	public class GroupOfAgents : Group
+	public class GroupOfAgents
 	{
-		public List<string> Agents { get; set; }
+		public string Name { get; set; }
+
+		public string[] Agents { get; set; }
 	}
 }

@@ -41,7 +41,6 @@
     <Compile Include="Model\AgentConfiguration.cs" />
     <Compile Include="Model\AgentControlDefinition.cs" />
     <Compile Include="Model\AgentInstanceConfiguration.cs" />
-    <Compile Include="Model\Group.cs" />
     <Compile Include="Model\GroupConfiguration.cs" />
     <Compile Include="Model\GroupOfAgents.cs" />
     <Compile Include="Model\HttpStatusCodeCheckResult.cs" />

@@ -11,16 +11,15 @@ if (typeof (SystemMonitor) === 'undefined') {
 }
 
 ko.bindingHandlers.sortableListOfAgents = {
-	init: function (element, valueAccessor, allBindingsAccessor, context) {
-		$(element).data("sortList", valueAccessor()); //attach meta-data
+	init: function (element, valueAccessor) {
+		$(element).data("sortList", valueAccessor());
 		$(element).sortable({
 			update: function (event, ui) {
 				var item = ko.dataFor(ui.item[0]);
 				if (item) {
-					//identify parents
 					var originalParent = ui.item.data("parentList");
 					var newParent = ui.item.parent().data("sortList");
-					//figure out its new position
+					
 					var position = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
 					if (position >= 0) {
 						originalParent.remove(item);
@@ -36,17 +35,16 @@ ko.bindingHandlers.sortableListOfAgents = {
 };
 
 ko.bindingHandlers.sortableListOfAgentGroups = {
-	init: function (element, valueAccessor, allBindingsAccessor, context) {
-		$(element).data("sortList", valueAccessor()); //attach meta-data
+	init: function (element, valueAccessor) {
+		$(element).data("sortList", valueAccessor());
 		$(element).sortable({
 			update: function (event, ui) {
 				var item = ko.dataFor(ui.item[0]);
-				//var item = ui.item.data("sortItem");
+				
 				if (item) {
-					//identify parents
 					var originalParent = ui.item.data("parentList");
 					var newParent = ui.item.parent().data("sortList");
-					//figure out its new position
+					
 					var position = ko.utils.arrayIndexOf(ui.item.parent().children(), ui.item[0]);
 					if (position >= 0) {
 						originalParent.remove(item);
@@ -61,7 +59,6 @@ ko.bindingHandlers.sortableListOfAgentGroups = {
 	}
 };
 
-//attach meta-data
 ko.bindingHandlers.sortableItem = {
 	init: function (element, valueAccessor) {
 		var options = valueAccessor();
@@ -70,7 +67,6 @@ ko.bindingHandlers.sortableItem = {
 	}
 };
 
-//control visibility, give element focus, and select the contents (in order)
 ko.bindingHandlers.visibleAndSelect = {
 	update: function (element, valueAccessor) {
 		ko.bindingHandlers.visible.update(element, valueAccessor);
@@ -105,11 +101,7 @@ $.extend(SystemMonitor, {
 			var self = this;
 
 			self.Groups = ko.observableArray();
-			self.UnassignedAgents = ko.observableArray();
-
-			//self.Groups.subscribe(function (newValue) {
-			//	alert("The person's new name is " + newValue);
-			//});
+			self.KnownAgents = ko.observableArray();
 
 			self.addGroup = function () {
 				var group = new groupViewModel({ "Name": "New Group", "Agents": [] });
@@ -210,12 +202,13 @@ $.extend(SystemMonitor, {
 							return;
 						}
 
-						self.UnassignedAgents = ko.observableArray(model.UnassignedAgents);
+						_.each(model.KnownAgents, function(agent) {
+							self.KnownAgents.push(agent);
+						});
 
-						for (var i = 0; i < model.Groups.length; i++) {
-							var groupConfig = model.Groups[i];
-							self.Groups.push(new groupViewModel(groupConfig));
-						}
+						_.each(model.Groups, function (group) {
+							self.Groups.push(new groupViewModel(group));
+						});
 
 						ko.applyBindings(self);
 						successCallback("Group configuration loaded.");

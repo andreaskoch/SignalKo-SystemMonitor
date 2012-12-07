@@ -1,25 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-
 namespace SignalKo.SystemMonitor.Common.Model
 {
-	public class GroupConfiguration : IEnumerable<Group>
+	public class GroupConfiguration
 	{
-		public GroupConfiguration()
-		{
-			this.Groups = new List<Group>();
-		}
+		public string Name { get; set; }
 
-		public List<Group> Groups { get; set; }
-
-		public IEnumerator<Group> GetEnumerator()
-		{
-			return this.Groups.GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.GetEnumerator();
-		}
+		public GroupOfAgents[] Groups { get; set; }
 	}
 }

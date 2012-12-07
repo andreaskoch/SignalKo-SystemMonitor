@@ -21,10 +21,10 @@
 		<label>Unassigned agents</label>
 		
 		<!-- Agents -->
-		<ul class="agent-dropzone" data-bind="foreach: UnassignedAgents, sortableListOfAgents: UnassignedAgents, parentList: UnassignedAgents">
+		<ul class="agent-dropzone" data-bind="foreach: KnownAgents, sortableListOfAgents: KnownAgents, parentList: KnownAgents">
 			
 			<!-- Agent -->
-			<li data-bind="sortableItem: { item: $data, parentList: $parent.UnassignedAgents }, text: $data"></li>
+			<li data-bind="sortableItem: { item: $data, parentList: $parent.KnownAgents }, text: $data"></li>
 		</ul>
 
 	</div>

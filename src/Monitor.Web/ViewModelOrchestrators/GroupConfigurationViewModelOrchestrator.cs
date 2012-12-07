@@ -1,44 +1,45 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using SignalKo.SystemMonitor.Common.Model;
-using SignalKo.SystemMonitor.Monitor.Web.Controllers;
+using SignalKo.SystemMonitor.Monitor.Web.Core.Services;
 using SignalKo.SystemMonitor.Monitor.Web.ViewModels;
 
 namespace SignalKo.SystemMonitor.Monitor.Web.ViewModelOrchestrators
 {
 	public class GroupConfigurationViewModelOrchestrator : IGroupConfigurationViewModelOrchestrator
 	{
-		public GroupConfigurationViewModel GetGroupConfigurationViewModel(GroupConfiguration groupConfiguration, AgentInstanceConfiguration[] agentInstanceConfigurations)
+		private readonly IAgentConfigurationService agentConfigurationService;
+
+		public GroupConfigurationViewModelOrchestrator(IAgentConfigurationService agentConfigurationService)
+		{
+			if (agentConfigurationService == null)
+			{
+				throw new ArgumentNullException("agentConfigurationService");
+			}
+
+			this.agentConfigurationService = agentConfigurationService;
+		}
+
+		public GroupConfigurationViewModel GetGroupConfigurationViewModel(GroupConfiguration groupConfiguration)
 		{
 			if (groupConfiguration == null)
 			{
 				return new GroupConfigurationViewModel();
 			}
 
-			var agentGroups = groupConfiguration.Groups.Select(g => new GroupOfAgents { Name = g.Name }).ToList();
+			var agentConfiguration = this.agentConfigurationService.GetAgentConfiguration();
+			var agents = agentConfiguration.AgentInstanceConfigurations.Select(c => c.MachineName);
 
-			foreach (var agentInstanceConfiguration in agentInstanceConfigurations.Where(agentInstance => agentInstance.GroupNames != null && agentInstance.GroupNames.Any()))
-			{
-				foreach (var groupName in agentInstanceConfiguration.GroupNames)
-				{
-					if (!agentGroups.Any(agentGroup => agentGroup.Name.Equals(groupName, StringComparison.OrdinalIgnoreCase)))
-					{
-						agentGroups.Add(new GroupOfAgents { Name = groupName, Agents = new List<string> { agentInstanceConfiguration.MachineName } });
-					}
-					else
-					{
-						agentGroups.First(agentGroup => agentGroup.Name.Equals(groupName, StringComparison.OrdinalIgnoreCase)).Agents.Add(agentInstanceConfiguration.MachineName);
-					}
-				}
-			}
+			var agentGroups = groupConfiguration.Groups ?? new GroupOfAgents[] { };
 
-			var unassignedAgents =
-				agentInstanceConfigurations.Where(agentInstance => agentInstance.GroupNames == null || !agentInstance.GroupNames.Any()).Select(
-					agentInstance => agentInstance.MachineName).ToList();
+			return new GroupConfigurationViewModel { Groups = agentGroups.ToArray(), KnownAgents = agents.ToArray() };
+		}
 
-			return new GroupConfigurationViewModel { Groups = agentGroups, UnassignedAgents = unassignedAgents };
+		public GroupConfiguration GetGroupConfiguration(GroupConfigurationViewModel groupConfigurationViewModel)
+		{
+			var groups = groupConfigurationViewModel.Groups.Select(g => new GroupOfAgents { Name = g.Name, Agents = g.Agents });
+			return new GroupConfiguration { Groups = groups.ToArray() };
 		}
 	}
 }

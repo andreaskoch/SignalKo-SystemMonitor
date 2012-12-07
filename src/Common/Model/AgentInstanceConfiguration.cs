@@ -8,8 +8,6 @@ namespace SignalKo.SystemMonitor.Common.Model
 
 		public bool AgentIsEnabled { get; set; }
 
-		public List<string> GroupNames { get; set; }
-
 		public SystemPerformanceCollectorDefinition SystemPerformanceCollector { get; set; }
 
 		public HttpStatusCodeCheckDefinition HttpStatusCodeCheck { get; set; }
