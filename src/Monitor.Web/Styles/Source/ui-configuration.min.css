@@ -3,9 +3,19 @@
 .contextMenu>.actions>button{cursor:pointer}
 .contextMenu>.actions>button>i{margin-right:3px}
 .contextMenu>.actions>button:active{position:relative;top:1px}
-.ui-configuration .trash{background:red;height:50px}
-.ui-configuration>.unassigned-agents>ul{min-height:50px}
-.ui-configuration>.unassigned-agents>ul:active{border:1px dotted black}
-.ui-configuration>.groups>ul{margin:0;padding:0;cursor:default}
-.ui-configuration>.groups>ul>li>ul{min-height:50px}
-.ui-configuration>.groups>ul>li>ul:active{border:1px dotted black}
+.ui-configuration>.agents{float:left;height:100%;min-width:200px;padding:0 15px 0 0;margin:0 15px 0 0;border-right:1px dashed black}
+.ui-configuration>.agents>header{font-size:16px}
+.ui-configuration>.agents>ul{min-height:50px;margin:0;padding:0;list-style-type:none}
+.ui-configuration>.agents>ul>li{text-transform:lowercase;cursor:default;padding:2px 10px 2px 10px;margin:0 0 10px 0;border:1px solid black;border-radius:30px;-moz-border-radius:30px;-webkit-border-radius:30px}
+.ui-configuration>.agents>ul>li:active{background:rgba(255,255,255,0.8);border:1px dotted black}
+.ui-configuration>.groups{float:left;max-width:70%}
+.ui-configuration>.groups>ul{margin:0;padding:0;list-style-type:none}
+.ui-configuration>.groups>ul>li{float:left;min-width:200px;margin:0 25px 25px 0;border:1px solid black;background:#fff}
+.ui-configuration>.groups>ul>li:active{background:rgba(255,255,255,0.8)}
+.ui-configuration>.groups>ul>li>header{float:left;width:100%;background:#000}
+.ui-configuration>.groups>ul>li>header .view-mode>h3{float:left;color:#fff}
+.ui-configuration>.groups>ul>li>header .view-mode>.action-remove{float:right;color:white;cursor:pointer}
+.ui-configuration>.groups>ul>li>header>.edit-mode>input{width:95%;overflow:hidden}
+.ui-configuration>.groups>ul>li>ul{min-height:100px;margin:0;padding:0;list-style-type:none;list-style-position:inside}
+.ui-configuration>.groups>ul>li>ul>li{cursor:default;text-transform:lowercase;padding:2px 10px 2px 10px}
+.ui-configuration>.groups>ul>li>ul>li:active{border-radius:30px;-moz-border-radius:30px;-webkit-border-radius:30px;border:1px dotted black;background:rgba(255,255,255,0.8)}

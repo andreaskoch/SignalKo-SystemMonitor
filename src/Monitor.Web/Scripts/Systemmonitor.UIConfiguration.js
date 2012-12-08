@@ -108,6 +108,10 @@ $.extend(SystemMonitor, {
 				self.Groups.push(group);
 			};
 
+			self.removeGroup = function(group) {
+				self.Groups.remove(group);
+			};
+
 			self.selectedTask = ko.observable();
 			self.clearTask = function (data, event) {
 				if (data === self.selectedTask()) {

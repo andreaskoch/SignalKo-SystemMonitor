@@ -16,9 +16,11 @@
 
 <section class="content ui-configuration">
 
-	<div class="unassigned-agents">
+	<div class="agents">
 
-		<label>Unassigned agents</label>
+		<header title="A list of all available agents">
+			<h2>Agents</h2>
+		</header>
 		
 		<!-- Agents -->
 		<ul class="agent-dropzone" data-bind="foreach: KnownAgents, sortableListOfAgents: KnownAgents, parentList: KnownAgents">
@@ -31,7 +33,9 @@
 
 	<div class="groups">
 
-		<label>Groups</label>
+		<header title="A list of agent groups">
+			<h2>Groups</h2>
+		</header>
 		
 		<!-- Groups -->
 		<ul data-bind="foreach: Groups, sortableListOfAgentGroups: Groups, parentList: Groups">
@@ -40,15 +44,20 @@
 			<li data-bind="sortableItem: { item: $data, parentList: $parent.Groups }">
 				
 				<!-- Group name -->
-				<div>
-					<div data-bind="visible: !$root.isTaskSelected($data)">
-						<span data-bind="text: Name, click: $root.selectedTask"></span>
+				<header>
+					<div class="view-mode" data-bind="visible: !$root.isTaskSelected($data)">
+						<h3 data-bind="text: Name, click: $root.selectedTask">
+						</h3>
+
+						<div class="action-remove" title="Delete this group" data-bind="click: $root.removeGroup">
+							<i class="icon-remove"></i>
+						</div>
 					</div>
 
-					<div data-bind="visibleAndSelect: $root.isTaskSelected($data)">
+					<div class="edit-mode" data-bind="visibleAndSelect: $root.isTaskSelected($data)">
 						<input type="text" data-bind="value: Name, event: { blur: $root.clearTask }" />
 					</div>
-				</div>
+				</header>
 				
 				<!-- Agents assigned to this group -->
 				<ul class="agent-dropzone" data-bind="foreach: Agents, sortableListOfAgents: Agents, parentList: Agents">

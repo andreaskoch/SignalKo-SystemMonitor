@@ -44,48 +44,134 @@
 }
 
 .ui-configuration {
+	
+	>.agents {
+		float: left;
 
-	.trash {
-		background: red;
-		height: 50px;
-	}
+		height: 100%;
+		min-width: 200px;
 
-	>.unassigned-agents {
+		padding: 0 15px 0 0;
+		margin: 0 15px 0 0;
+
+		border-right: 1px dashed black;
+
+		>header {
+			font-size: 16px;
+		}
+
+		/* Agents */
 		>ul {
 			min-height: 50px;
 
-			&:active {
-				border: 1px dotted black;
-			}
+			margin: 0;
+			padding: 0;
 
+			list-style-type: none;
+
+			/* Agent */
 			>li {
+				text-transform: lowercase;
+				cursor: default;
 
+				padding: 2px 10px 2px 10px;
+				margin: 0 0 10px 0;
+
+				border: 1px solid black;
+
+				border-radius: 30px;
+				-moz-border-radius: 30px;
+				-webkit-border-radius: 30px;
+
+				&:active {
+					background: rgba(255, 255, 255, .8);
+					border: 1px dotted black;
+				}
 			}
 		}
 	}
 
 	>.groups {
+		float: left;
+		max-width: 70%;
+
+		>header {
+			
+		}
 
 		/* Groups */
 		>ul {
 			margin: 0;
 			padding: 0;
-			cursor: default;
+
+			list-style-type: none;
 
 			/* Group */
 			>li {
+				float: left;
+				min-width: 200px;
+
+				margin: 0 25px 25px 0;
+
+				border: 1px solid black;
+
+				background: #FFFFFF;
+
+				&:active {
+					background: rgba(255, 255, 255, .8);
+				}
+
+				>header {
+					float: left;
+					width: 100%;
+					background: #000000;
+
+					.view-mode {
+						>h3 {
+							float: left;
+							color: #FFFFFF;
+						}
+
+						>.action-remove {
+							float: right;
+							color: white;
+							cursor: pointer;
+						}
+					}
+
+					>.edit-mode {
+						>input {
+							width: 95%;
+							overflow: hidden;
+						}
+					}
+				}
 
 				/* Agents */
 				>ul {
-					min-height: 50px;
+					min-height: 100px;
 
-					&:active {
-						border: 1px dotted black;
-					}
+					margin: 0;
+					padding: 0;
+
+					list-style-type: none;
+					list-style-position: inside;
 
 					/* Agent */
 					>li {
+						cursor: default;
+						text-transform: lowercase;
+						padding: 2px 10px 2px 10px;
 
+						&:active {
+							border-radius: 30px;
+							-moz-border-radius: 30px;
+							-webkit-border-radius: 30px;
+
+							border: 1px dotted black;
+
+							background: rgba(255, 255, 255, .8);
+						}
 					}
 				}
 			}
