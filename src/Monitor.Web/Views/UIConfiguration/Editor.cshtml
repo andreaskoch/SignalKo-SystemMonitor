@@ -28,6 +28,11 @@
 			<!-- Agent -->
 			<li data-bind="sortableItem: { item: $data, parentList: $parent.KnownAgents }, text: $data"></li>
 		</ul>
+		
+		<!-- No agents indicator -->
+		<div class="nogroups-indicator" data-bind="visible: KnownAgents().length === 0">
+			There are currently no agents available.
+		</div>
 
 	</div>
 
@@ -68,6 +73,12 @@
 				</ul>
 			</li>
 		</ul>
+		
+		<!-- No groups indicator -->
+		<div class="nogroups-indicator" data-bind="visible: Groups().length === 0">
+			No Groups
+		</div>
+
 	</div>
 
 </section>

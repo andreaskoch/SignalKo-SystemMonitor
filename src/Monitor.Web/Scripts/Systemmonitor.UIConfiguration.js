@@ -101,7 +101,13 @@ $.extend(SystemMonitor, {
 			var self = this;
 
 			self.Groups = ko.observableArray();
-			self.KnownAgents = ko.observableArray();
+			self.KnownAgents = ko.observableArray().extend({ unique: "No duplicates allowed" });
+
+			self.KnownAgents.subscribe(function (newValue) {
+				console.log("Before", self.KnownAgents());
+				console.log("New value", newValue);
+				console.log("After", self.KnownAgents());
+			});
 
 			self.addGroup = function () {
 				var group = new groupViewModel({ "Name": "New Group", "Agents": [] });
